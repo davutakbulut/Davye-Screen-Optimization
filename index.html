@@ -124,7 +124,7 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      box-shadow: 0 1px 3px rgba(29, 78, 216, 0.25);
+      box-shadow: none;
     }
 
     /* Başlık ve Alt Yazı */
@@ -976,7 +976,7 @@
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 10px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      box-shadow: none;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -986,7 +986,7 @@
 
     .order-card:hover {
       border-color: var(--border-hover);
-      box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.07);
+      box-shadow: none;
     }
 
     .order-card {
@@ -999,7 +999,7 @@
 
     .order-card.status-taslak:hover {
       border-color: #f87171 !important;
-      box-shadow: 0 4px 14px -2px rgba(239, 68, 68, 0.15);
+      box-shadow: none;
     }
 
     .order-card.status-iptal {
@@ -1098,13 +1098,13 @@
 
     /* İade Durumları */
     .status-iade-bekliyor .card-v-fill { height: 100%; background: #f97316; border-top-left-radius: 9px; border-bottom-left-radius: 9px; }
-    .status-iade-bekliyor .card-v-check { background: #f97316; box-shadow: 0 1px 3px rgba(249, 115, 22, 0.4); }
+    .status-iade-bekliyor .card-v-check { background: #f97316; box-shadow: none; }
     .status-iade-edildi .card-v-fill { height: 100%; background: #be185d; border-top-left-radius: 9px; border-bottom-left-radius: 9px; }
-    .status-iade-edildi .card-v-check { background: #be185d; box-shadow: 0 1px 3px rgba(190, 24, 93, 0.4); }
+    .status-iade-edildi .card-v-check { background: #be185d; box-shadow: none; }
 
     /* İptal Edilen */
     .status-iptal .card-v-fill { height: 100%; background: #ef4444; border-top-left-radius: 9px; border-bottom-left-radius: 9px; }
-    .status-iptal .card-v-check { background: #ef4444; box-shadow: 0 1px 3px rgba(239, 68, 68, 0.4); }
+    .status-iptal .card-v-check { background: #ef4444; box-shadow: none; }
 
     .btn-card-expand {
       display: none;
@@ -3411,7 +3411,7 @@
       max-width: 175px;
       white-space: normal;
       text-align: center;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.35);
+      box-shadow: none;
       z-index: 99999;
       pointer-events: none;
       animation: tipFadeIn 0.15s ease-out;
@@ -3612,7 +3612,7 @@
     .order-card {
       position: relative;
       border-radius: 10px !important;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      box-shadow: none;
       transition: all 0.15s ease;
     }
 
@@ -3643,7 +3643,7 @@
     /* Hover Vurgusu */
     .container > .order-card:hover {
       border-color: #3b82f6 !important;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1) !important;
+      box-shadow: none;
       z-index: 2;
     }
 
@@ -3654,7 +3654,7 @@
     }
     .container > .order-card.status-taslak:hover {
       border-color: #f87171 !important;
-      box-shadow: 0 4px 14px -2px rgba(239, 68, 68, 0.25) !important;
+      box-shadow: none;
     }
   
     /* ========================================================================= */
@@ -3834,6 +3834,17 @@
       .davye-logo-badge {
         cursor: pointer;
       }
+    }
+
+  
+    /* Kart Gölgelerini Tamamen Kaldırma (Düz Flat Tasarım) */
+    .order-card,
+    .order-card:hover,
+    .container > .order-card,
+    .container > .order-card:hover,
+    .container > .order-card:nth-of-type(odd),
+    .container > .order-card:nth-of-type(even) {
+      box-shadow: none !important;
     }
 
   </style>
@@ -8417,7 +8428,7 @@
     <div class="modal-body" style="padding:16px 20px; gap:12px;">
       
       <!-- Termal Kargo Etiketi Önizleme Kutusu -->
-      <div style="background:#ffffff; border:2px solid #0f172a; border-radius:8px; padding:14px; box-shadow:0 4px 12px rgba(0,0,0,0.06);">
+      <div style="background:#ffffff; border:2px solid #0f172a; border-radius:8px; padding:14px; box-shadow: none;">
         
         <!-- Üst Başlık: Taşıyıcı & Desi -->
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #0f172a; padding-bottom:8px;">
@@ -8527,7 +8538,7 @@
       </div>
 
       <!-- Paketleme Görseli Kutusu -->
-      <div style="position:relative; background:#0f172a; border-radius:8px; overflow:hidden; border:1px solid #cbd5e1; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:240px; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+      <div style="position:relative; background:#0f172a; border-radius:8px; overflow:hidden; border:1px solid #cbd5e1; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:240px; box-shadow: none;">
         
         <img id="modalPackingPhotoImage" src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&amp;auto=format&amp;fit=crop&amp;q=80" alt="Paketleme Görseli" style="width:100%; max-height:280px; object-fit:cover; display:block;" onerror="this.style.display='none'; document.getElementById('modalPackingPhotoSvgFallback').style.display='flex';">
         
