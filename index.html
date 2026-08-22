@@ -3598,6 +3598,47 @@
       z-index: 2;
     }
 
+  
+    /* ========================================================================= */
+    /* MOBİL KART KÖŞE YUVARLATMA VE TAŞMA DÜZELTMELERİ                         */
+    /* ========================================================================= */
+    .order-card {
+      border-radius: 10px !important;
+      position: relative;
+    }
+
+    /* Kapalı Kartta Başlık Barının 4 Köşesi de Kusursuz Yuvarlak Olmalı */
+    .card-header-bar {
+      border-radius: 9px;
+      transition: background 0.15s ease, border-radius 0.15s ease;
+    }
+
+    /* Açık (Expanded) Kartta Üst Köşeler Yuvarlak, Alt Köşeler Düz */
+    .order-card.expanded .card-header-bar {
+      border-radius: 9px 9px 0 0 !important;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    /* Açık (Expanded) Kartta Gövdenin Alt Köşeleri Yuvarlak */
+    .order-card.expanded .card-body-grid {
+      border-radius: 0 0 9px 9px !important;
+    }
+
+    /* Not Barı Varsa Alt Köşelerin Yuvarlatılması */
+    .card-note-bar {
+      border-bottom-left-radius: 9px !important;
+      border-bottom-right-radius: 9px !important;
+      margin: 0 !important;
+      border-top: 1px dashed #fde047;
+      border-left: none !important;
+      border-right: none !important;
+      border-bottom: none !important;
+    }
+    .order-card:has(.card-note-bar) .card-header-bar {
+      border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+    }
+
   </style>
 </head>
 <body>
