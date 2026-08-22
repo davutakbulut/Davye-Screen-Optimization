@@ -72,6 +72,30 @@
     /* ========================================================================= */
     /* DAVYE ERP TOP HEADER BAR (Birebir Tasarım) */
     /* ========================================================================= */
+        /* Sayfa Ana Taşıyıcı & Üst Header: Sayfa Ortasında Dengeli Boşluklar */
+    .davye-header-container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 8px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 12px auto 30px auto;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-sizing: border-box;
+    }
+
     .davye-top-header {
       background: #ffffff;
       border-bottom: 1px solid var(--border-color);
@@ -82,15 +106,7 @@
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     }
 
-    .davye-header-container {
-      max-width: 1060px;
-      margin: 0 auto;
-      padding: 8px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
+    
 
     .davye-header-left {
       display: flex;
@@ -260,13 +276,19 @@
     }
 
     @media (max-width: 640px) {
-      .davye-brand-subtitle {
-        display: none;
-      }
       .davye-header-container {
         padding: 6px 8px;
         gap: 6px;
       }
+      .container {
+        padding: 0 6px;
+        margin: 6px auto 20px auto;
+        gap: 6px;
+      }
+      .davye-brand-subtitle {
+        display: none;
+      }
+      
       .davye-header-left {
         gap: 6px;
       }
@@ -326,10 +348,7 @@
         padding: 1.5px 4px;
         font-size: 9.5px;
       }
-      .davye-header-container {
-        padding: 5px 6px;
-        gap: 4px;
-      }
+      
       .davye-header-left {
         gap: 4px;
       }
@@ -338,15 +357,7 @@
       }
     }
 
-    /* Daha dar, ultra-kompakt ve yüksek bilgi yoğunluklu ana taşıyıcı */
-    .container {
-      max-width: 1060px;
-      margin: 10px auto 0 auto;
-      padding: 0 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    
 
     /* Üst Bar / Filtre Alanı */
     .top-toolbar {
@@ -2168,12 +2179,19 @@
     }
 
     @media (max-width: 640px) {
+      .davye-header-container {
+        padding: 6px 8px;
+        gap: 6px;
+      }
+      .container {
+        padding: 0 6px;
+        margin: 6px auto 20px auto;
+        gap: 6px;
+      }
       body {
         padding: 8px 6px;
       }
-      .container {
-        gap: 6px;
-      }
+      
       .top-toolbar {
         padding: 6px 8px;
         flex-direction: column;
@@ -2389,10 +2407,7 @@
 
     /* 480px ve Altı (Küçük Telefonlar) */
     @media (max-width: 480px) {
-      .container {
-        padding: 0 6px;
-        margin-top: 6px;
-      }
+      
       .top-toolbar {
         padding: 8px 10px;
       }
@@ -2506,9 +2521,7 @@
 
     /* 370px ve Altı (Ultra Kompakt Ekranlar: Samsung S8+, iPhone SE vb.) */
     @media (max-width: 370px) {
-      .container {
-        padding: 0 4px;
-      }
+      
       .card-header-bar {
         padding: 5px 6px;
         gap: 3.5px;
@@ -3533,10 +3546,7 @@
       position: relative;
     }
 
-    .container, .davye-top-header, .top-toolbar, .orders-list {
-      max-width: 100% !important;
-      box-sizing: border-box !important;
-    }
+    
 
     /* Mobilde (Touch Ekranlarda) Tooltip'lerin Ekranı Sağa Kaydırmasını Engelleme */
     @media (hover: none), (max-width: 768px) {
