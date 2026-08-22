@@ -8501,8 +8501,8 @@
       <div class="pagination-left">
         <span class="pagination-page-size-label">Sayfa Başına Göster:</span>
         <select id="pageSizeSelect" class="pagination-select" onchange="changePageSize(this.value)">
-          <option value="10">10</option>
-          <option value="25" selected>25</option>
+          <option value="10" selected>10</option>
+          <option value="25">25</option>
           <option value="50">50</option>
           <option value="100">100</option>
         </select>
@@ -11404,7 +11404,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // SAYFALAMA (PAGINATION) MOTORU
   // =========================================================================
   let currentPage = 1;
-  let pageSize = 25;
+  let pageSize = 10;
   let currentlyMatchedCards = [];
 
   function initPagination() {
