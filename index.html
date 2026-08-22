@@ -3606,48 +3606,57 @@
       border-bottom-right-radius: 0 !important;
     }
 
-      /* ========================================================================= */
-    /* ZEBRA STRIPED KART YAPISI (ÖZEL RENK PALETİ: #ffffff VE #e7ecf3)          */
+      
     /* ========================================================================= */
-    .order-card {
-      position: relative;
-      border-radius: 10px !important;
-      box-shadow: none;
-      transition: all 0.15s ease;
+    /* KARTLARI BELİRGİN AYRIŞTIRMA (13px GAP + DAHA NET & KESKİN KENARLIKLAR)   */
+    /* ========================================================================= */
+    .container {
+      gap: 13px !important;
     }
 
-    /* 1. SIRA (TEK): TAM BEYAZ (#ffffff) */
+    .order-card {
+      margin-bottom: 2px;
+      border-radius: 10px !important;
+    }
+
+    /* 1. SIRA (BEYAZ KART): NET GRİ ÇERÇEVE */
     .container > .order-card:nth-of-type(odd) {
       background-color: #ffffff !important;
-      border: 1px solid #e2e8f0 !important;
+      border: 1.5px solid #cbd5e1 !important;
     }
     .container > .order-card:nth-of-type(odd) .card-body-grid {
       background-color: #ffffff !important;
     }
     .container > .order-card:nth-of-type(odd) .card-header-bar {
       background-color: #ffffff !important;
+      border-bottom: 1px solid #e2e8f0;
     }
 
-    /* 2. SIRA (ÇİFT): YENİ AÇIK GRİ (#e7ecf3) */
+    /* 2. SIRA (GRİ KART): BELİRGİN KONTRAST ÇERÇEVE */
     .container > .order-card:nth-of-type(even) {
       background-color: #e7ecf3 !important;
-      border: 1px solid #cbd5e1 !important;
+      border: 1.5px solid #b7c5d3 !important;
     }
     .container > .order-card:nth-of-type(even) .card-body-grid {
       background-color: #e7ecf3 !important;
     }
     .container > .order-card:nth-of-type(even) .card-header-bar {
       background-color: #e7ecf3 !important;
+      border-bottom: 1px solid #cbd5e1;
     }
 
     /* Hover Vurgusu */
     .container > .order-card:hover {
-      border-color: #3b82f6 !important;
-      box-shadow: none;
+      border-color: #2563eb !important;
       z-index: 2;
     }
 
-    /* TAMAMLANMAMIŞ (TASLAK) SİPARİŞ KIRMIZI ÇERÇEVESİ (STROKE) */
+    @media (max-width: 640px) {
+      .container {
+        gap: 11px !important;
+      }
+    }
+
     .container > .order-card.status-taslak {
       border: 1.5px solid #fca5a5 !important;
       box-shadow: 0 0 0 1px #fecaca inset, 0 1px 4px rgba(239, 68, 68, 0.1) !important;
