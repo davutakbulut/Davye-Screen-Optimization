@@ -4084,6 +4084,79 @@
       }
     }
 
+      /* ========================================================================= */
+    /* VERİTABANI YÜKLENİYOR (DATABASE LOADER) OVERLAY                            */
+    /* ========================================================================= */
+    .card-loading-overlay {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      padding: 32px 20px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      border-radius: 0 0 9px 9px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    .order-card.expanded.loading .card-loading-overlay {
+      display: flex !important;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .order-card.expanded.loading .card-body-grid,
+    .order-card.expanded.loading .card-note-bar {
+      display: none !important;
+    }
+
+    .card-loading-spinner-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 36px;
+      height: 36px;
+    }
+
+    .card-loading-spinner {
+      width: 30px;
+      height: 30px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #2563eb;
+      border-right-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .card-loading-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-align: center;
+    }
+
+    .card-loading-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-loading-subtitle {
+      font-size: 11px;
+      font-weight: 500;
+      color: #64748b;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
   </style>
 </head>
 <body>
@@ -10571,7 +10644,9 @@
     });
   }
 
-  // Mobilde Kart Detaylarını Açma/Kapatma (Expand/Collapse)
+    // Kart Detaylarını Açma/Kapatma (4 Saniyelik Gerçekçi Veritabanı Loader Efekti ile)
+  const cardLoadTimers = new Map();
+
   function handleCardHeaderClick(event, headerElement) {
     if (event.target.closest('.actions-dropdown') || 
         event.target.closest('.card-checkbox') || 
@@ -10582,9 +10657,52 @@
     }
     
     const card = headerElement.closest('.order-card');
-    if (card) {
-      card.classList.toggle('expanded');
+    if (!card) return;
+
+    // Eğer zaten açıksa kapat
+    if (card.classList.contains('expanded')) {
+      card.classList.remove('expanded', 'loading');
+      if (cardLoadTimers.has(card)) {
+        clearTimeout(cardLoadTimers.get(card));
+        cardLoadTimers.delete(card);
+      }
+      return;
     }
+
+    // Kartı aç ve 4 saniye boyunca yükleme ekranı göster
+    card.classList.add('expanded', 'loading');
+
+    // Eğer kartın içinde loading overlay henüz yoksa ekle
+    let loader = card.querySelector('.card-loading-overlay');
+    if (!loader) {
+      loader = document.createElement('div');
+      loader.className = 'card-loading-overlay';
+      loader.innerHTML = `
+        <div class="card-loading-spinner-wrap">
+          <div class="card-loading-spinner"></div>
+        </div>
+        <div class="card-loading-meta">
+          <span class="card-loading-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+            Sipariş Detayları Yükleniyor...
+          </span>
+          <span class="card-loading-subtitle">Veritabanından canlı cari, fatura ve sevk kayıtları alınıyor</span>
+        </div>
+      `;
+      headerElement.insertAdjacentElement('afterend', loader);
+    }
+
+    if (cardLoadTimers.has(card)) {
+      clearTimeout(cardLoadTimers.get(card));
+    }
+
+    const timer = setTimeout(() => {
+      card.classList.remove('loading');
+      cardLoadTimers.delete(card);
+      if (window.lucide) lucide.createIcons();
+    }, 4000);
+
+    cardLoadTimers.set(card, timer);
   }
 
   // Durum Sekmeleri Alanında Fare Tekerleği ve Sürükleme ile Yatay Kaydırma
