@@ -3856,6 +3856,132 @@
       box-shadow: none !important;
     }
 
+  
+    /* ========================================================================= */
+    /* EN ALT SAYFALAMA (PAGINATION) BİLEŞENİ                                     */
+    /* ========================================================================= */
+    .pagination-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 12px 16px;
+      margin-top: 14px;
+      margin-bottom: 24px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      font-size: 12px;
+      color: #475569;
+    }
+
+    .pagination-left,
+    .pagination-right,
+    .pagination-center {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pagination-page-size-label {
+      font-weight: 600;
+      color: #64748b;
+      white-space: nowrap;
+    }
+
+    .pagination-select {
+      height: 32px;
+      padding: 0 28px 0 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f172a;
+      background: #f8fafc url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 8px center;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      cursor: pointer;
+      appearance: none;
+      outline: none;
+      transition: all 0.15s ease;
+    }
+    .pagination-select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+    }
+
+    .pagination-info {
+      font-weight: 600;
+      color: #475569;
+      white-space: nowrap;
+    }
+    .pagination-info strong {
+      color: #0f172a;
+    }
+
+    .pagination-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-page {
+      min-width: 32px;
+      height: 32px;
+      padding: 0 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-page:hover:not(:disabled):not(.active) {
+      background: #f1f5f9;
+      color: #0f172a;
+      border-color: #94a3b8;
+    }
+    .btn-page.active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+      font-weight: 700;
+      cursor: default;
+    }
+    .btn-page:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      background: #f8fafc;
+      border-color: #e2e8f0;
+      color: #94a3b8;
+    }
+    .btn-page svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    @media (max-width: 680px) {
+      .pagination-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 10px 12px;
+      }
+      .pagination-left {
+        justify-content: space-between;
+      }
+      .pagination-right {
+        justify-content: center;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -8367,6 +8493,34 @@
 
   </div>
 
+
+    <!-- ========================================================================= -->
+    <!-- EN ALT SAYFALAMA (PAGINATION) KONTROL ÇUBUĞU -->
+    <!-- ========================================================================= -->
+    <div class="pagination-bar" id="paginationBar">
+      <div class="pagination-left">
+        <span class="pagination-page-size-label">Sayfa Başına Göster:</span>
+        <select id="pageSizeSelect" class="pagination-select" onchange="changePageSize(this.value)">
+          <option value="10">10</option>
+          <option value="25" selected>25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+
+      <div class="pagination-center">
+        <span class="pagination-info" id="paginationInfo">
+          Toplam <strong>21</strong> Sipariş • Gösterilen: <strong>1 - 21</strong>
+        </span>
+      </div>
+
+      <div class="pagination-right">
+        <div class="pagination-nav" id="paginationNav">
+          <!-- Dinamik Butonlar JS ile Basılır -->
+        </div>
+      </div>
+    </div>
+
 <!-- ========================================================================= -->
 <!-- 1. SİPARİŞ DETAY MODAL POPUP -->
 <!-- ========================================================================= -->
@@ -11243,4 +11397,123 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   </script>
 
+<script>
+
+  // =========================================================================
+  // SAYFALAMA (PAGINATION) MOTORU
+  // =========================================================================
+  let currentPage = 1;
+  let pageSize = 25;
+  let currentlyMatchedCards = [];
+
+  function initPagination() {
+    // Başlangıçta tüm kartları al
+    const allCards = Array.from(document.querySelectorAll('.order-card'));
+    currentlyMatchedCards = allCards;
+    renderPagination();
+  }
+
+  function changePageSize(size) {
+    pageSize = parseInt(size, 10) || 25;
+    currentPage = 1;
+    renderPagination();
+  }
+
+  function goToPage(page) {
+    const totalPages = Math.max(1, Math.ceil(currentlyMatchedCards.length / pageSize));
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+    currentPage = page;
+    renderPagination();
+    
+    // Sayfanın başına yumuşak kaydır
+    const toolbar = document.querySelector('.top-toolbar');
+    if (toolbar) {
+      toolbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function renderPagination() {
+    const totalItems = currentlyMatchedCards.length;
+    const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, totalItems);
+
+    // 1. Tüm kartların görünürlüğünü güncelle
+    const allCards = Array.from(document.querySelectorAll('.order-card'));
+    allCards.forEach(card => {
+      // Kart eşleşenler içinde mi?
+      const matchIndex = currentlyMatchedCards.indexOf(card);
+      if (matchIndex !== -1 && matchIndex >= startIndex && matchIndex < endIndex) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // 2. Bilgi Metnini Güncelle
+    const infoEl = document.getElementById('paginationInfo');
+    if (infoEl) {
+      if (totalItems === 0) {
+        infoEl.innerHTML = 'Toplam <strong>0</strong> Sipariş Bulundu';
+      } else {
+        infoEl.innerHTML = `Toplam <strong>${totalItems}</strong> Sipariş • Gösterilen: <strong>${startIndex + 1} - ${endIndex}</strong>`;
+      }
+    }
+
+    // 3. Navigasyon Butonlarını Oluştur
+    const navEl = document.getElementById('paginationNav');
+    if (navEl) {
+      let navHtml = '';
+
+      // « İlk Sayfa Butonu
+      navHtml += `<button type="button" class="btn-page" onclick="goToPage(1)" ${currentPage === 1 ? 'disabled' : ''} title="İlk Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
+      </button>`;
+
+      // ‹ Önceki Sayfa Butonu
+      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} title="Önceki Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>`;
+
+      // Sayfa Numaraları
+      for (let p = 1; p <= totalPages; p++) {
+        // Çok fazla sayfa varsa akıllı kısaltma
+        if (totalPages <= 7 || p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) {
+          navHtml += `<button type="button" class="btn-page ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
+        } else if (p === currentPage - 2 || p === currentPage + 2) {
+          navHtml += `<span style="padding: 0 4px; color:#94a3b8;">...</span>`;
+        }
+      }
+
+      // Sonraki Sayfa › Butonu
+      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} title="Sonraki Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>`;
+
+      // Son Sayfa » Butonu
+      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''} title="Son Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
+      </button>`;
+
+      navEl.innerHTML = navHtml;
+    }
+
+    // Lucide ikonları tazele
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  }
+
+  // Filtreleme yapıldığında eşleşenleri güncelle ve sayfalamayı tazele
+  function updatePaginationWithMatchedCards(matchedCards) {
+    currentlyMatchedCards = matchedCards;
+    currentPage = 1;
+    renderPagination();
+  }
+
+  document.addEventListener("DOMContentLoaded", initPagination);
+</script>
 </body></html>
