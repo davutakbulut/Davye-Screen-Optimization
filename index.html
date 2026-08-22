@@ -10604,22 +10604,27 @@ window.addEventListener('DOMContentLoaded', () => {
   </script>
 
 
-  <!-- SİPARİŞ AÇIKLAMASI TAM METİN MODALI -->
-  <div id="orderDescModal" class="modal-overlay" onclick="closeDescModal(event)">
-    <div class="desc-modal-box" onclick="event.stopPropagation()">
-      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; border-bottom:1px solid #f1f5f9; padding-bottom:8px;">
-        <div style="display:flex; align-items:center; gap:6px; font-weight:700; font-size:13px; color:#0f172a;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span id="descModalTitle">Sipariş Açıklaması</span>
+    <!-- SİPARİŞ AÇIKLAMASI TAM METİN MODALI -->
+  <div class="modal-backdrop" id="orderDescModal" onclick="if(event.target===this) closeDescModal()">
+    <div class="modal-card" style="max-width: 480px; width: 92%;">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <div class="modal-title" id="descModalTitle">Sipariş Açıklaması</div>
         </div>
-        <button onclick="closeDescModal()" style="border:none; background:transparent; cursor:pointer; color:#94a3b8; font-size:16px; font-weight:bold;">✕</button>
+        <button class="modal-close-btn" onclick="closeDescModal()" title="Kapat">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
       </div>
-      <div id="descModalContent" style="font-size:12px; line-height:1.5; color:#334155; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px 12px; word-break:break-word; max-height:220px; overflow-y:auto; margin-bottom:12px;"></div>
-      <div style="display:flex; justify-content:flex-end; gap:8px;">
-        <button onclick="copyDescText()" style="display:inline-flex; align-items:center; gap:4px; font-size:11.5px; font-weight:600; background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; border-radius:5px; padding:6px 12px; cursor:pointer;">
+      <div class="modal-body" style="padding: 16px 20px;">
+        <div style="font-size: 11px; font-weight: 600; color: #64748b; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Müşteri Sipariş Notu &amp; Açıklama Metni:</div>
+        <div id="descModalContent" style="font-size: 12.5px; font-weight: 500; line-height: 1.6; color: #1e293b; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; word-break: break-word; max-height: 240px; overflow-y: auto;"></div>
+      </div>
+      <div class="modal-footer" style="padding: 12px 20px; display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn-modal-action btn-modal-secondary" onclick="copyDescText()" style="display: inline-flex; align-items: center; gap: 5px;">
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Metni Kopyala
         </button>
-        <button onclick="closeDescModal()" style="font-size:11.5px; font-weight:600; background:#0f172a; color:#ffffff; border:none; border-radius:5px; padding:6px 14px; cursor:pointer;">Kapat</button>
+        <button class="btn-modal-action btn-modal-primary" onclick="closeDescModal()">Kapat</button>
       </div>
     </div>
   </div>
@@ -10630,19 +10635,20 @@ window.addEventListener('DOMContentLoaded', () => {
       currentDescText = descText || '';
       document.getElementById('descModalTitle').innerText = `Sipariş #${orderId} - Açıklama`;
       document.getElementById('descModalContent').innerText = currentDescText;
-      document.getElementById('orderDescModal').classList.add('active');
+      const modal = document.getElementById('orderDescModal');
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
     }
-    function closeDescModal(e) {
-      if (!e || e.target === document.getElementById('orderDescModal') || e.target.tagName === 'BUTTON') {
-        document.getElementById('orderDescModal').classList.remove('active');
-      }
+    function closeDescModal() {
+      const modal = document.getElementById('orderDescModal');
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
     }
     function copyDescText() {
       if (currentDescText) {
         copyToClipboard(currentDescText);
-        showLiveToast('Açıklama panoya kopyalandı!');
+        showLiveToast('Açıklama metni panoya kopyalandı!');
       }
     }
   </script>
-
 </body></html>
