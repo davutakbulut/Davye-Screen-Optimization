@@ -1020,7 +1020,7 @@
       border-bottom-left-radius: 9px !important;
       z-index: 10 !important;
       pointer-events: none;
-      overflow: hidden;
+      overflow: visible !important;
     }
 
     .card-v-fill {
@@ -1030,11 +1030,12 @@
       width: 100% !important;
       background: #64748b; /* Varsayılan Gri */
       border-bottom-left-radius: 9px;
+      border-top-left-radius: 0;
       transition: height 0.3s ease;
       z-index: 11 !important;
     }
 
-    /* Sol Üst Köşedeki Yuvarlak Durum Rozeti / İkonu */
+    /* Sol Üst Köşedeki Yuvarlak Durum Rozeti / İkonu (Tamamen Görünür ve En Üstte) */
     .card-v-check {
       position: absolute !important;
       left: -6px !important;
@@ -1048,8 +1049,8 @@
       align-items: center !important;
       justify-content: center !important;
       border: 2px solid #ffffff !important;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.4) !important;
-      z-index: 15 !important;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.45) !important;
+      z-index: 25 !important;
       pointer-events: none;
     }
 
