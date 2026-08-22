@@ -11399,6 +11399,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 <script>
 
+  
   // =========================================================================
   // SAYFALAMA (PAGINATION) MOTORU
   // =========================================================================
@@ -11407,7 +11408,6 @@ window.addEventListener('DOMContentLoaded', () => {
   let currentlyMatchedCards = [];
 
   function initPagination() {
-    // Başlangıçta tüm kartları al
     const allCards = Array.from(document.querySelectorAll('.order-card'));
     currentlyMatchedCards = allCards;
     renderPagination();
@@ -11444,7 +11444,6 @@ window.addEventListener('DOMContentLoaded', () => {
     // 1. Tüm kartların görünürlüğünü güncelle
     const allCards = Array.from(document.querySelectorAll('.order-card'));
     allCards.forEach(card => {
-      // Kart eşleşenler içinde mi?
       const matchIndex = currentlyMatchedCards.indexOf(card);
       if (matchIndex !== -1 && matchIndex >= startIndex && matchIndex < endIndex) {
         card.style.display = 'flex';
@@ -11459,7 +11458,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (totalItems === 0) {
         infoEl.innerHTML = 'Toplam <strong>0</strong> Sipariş Bulundu';
       } else {
-        infoEl.innerHTML = `Toplam <strong>${totalItems}</strong> Sipariş • Gösterilen: <strong>${startIndex + 1} - ${endIndex}</strong>`;
+        infoEl.innerHTML = `Toplam <strong>${totalItems}</strong> Sipariş • Gösterilen: <strong>${startIndex + 1} - ${endIndex}</strong> (Sayfa ${currentPage}/${totalPages})`;
       }
     }
 
@@ -11480,7 +11479,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
       // Sayfa Numaraları
       for (let p = 1; p <= totalPages; p++) {
-        // Çok fazla sayfa varsa akıllı kısaltma
         if (totalPages <= 7 || p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) {
           navHtml += `<button type="button" class="btn-page ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
         } else if (p === currentPage - 2 || p === currentPage + 2) {
@@ -11501,19 +11499,25 @@ window.addEventListener('DOMContentLoaded', () => {
       navEl.innerHTML = navHtml;
     }
 
-    // Lucide ikonları tazele
+    if (window.refreshZebraStripes) {
+      refreshZebraStripes();
+    }
+
     if (window.lucide) {
       lucide.createIcons();
     }
   }
 
-  // Filtreleme yapıldığında eşleşenleri güncelle ve sayfalamayı tazele
   function updatePaginationWithMatchedCards(matchedCards) {
     currentlyMatchedCards = matchedCards;
     currentPage = 1;
     renderPagination();
   }
 
-  document.addEventListener("DOMContentLoaded", initPagination);
+  if (document.readyState === 'loading') {
+    document.addEventListener("DOMContentLoaded", initPagination);
+  } else {
+    initPagination();
+  }
 </script>
 </body></html>
