@@ -3557,46 +3557,7 @@
     }
 
   
-    /* ========================================================================= */
-    /* ZEBRA STRIPED KART YAPISI (SIRAYLA BEYAZ VE AÇIK GRİ ARKA PLAN)           */
-    /* ========================================================================= */
-    .order-card {
-      position: relative;
-      border-radius: 9px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
-      transition: all 0.15s ease;
-    }
-
-    /* 1. SIRA (TEK): TAM BEYAZ (#ffffff) */
-    .container > .order-card:nth-of-type(odd) {
-      background-color: #ffffff !important;
-      border: 1px solid #e2e8f0 !important;
-    }
-    .container > .order-card:nth-of-type(odd) .card-body-grid {
-      background-color: #ffffff !important;
-    }
-    .container > .order-card:nth-of-type(odd) .card-header-bar {
-      background-color: #f8fafc !important;
-    }
-
-    /* 2. SIRA (ÇİFT): AÇIK GRİ (#f1f5f9 / #e2e8f0 kenarlık) */
-    .container > .order-card:nth-of-type(even) {
-      background-color: #f1f5f9 !important;
-      border: 1px solid #cbd5e1 !important;
-    }
-    .container > .order-card:nth-of-type(even) .card-body-grid {
-      background-color: #f1f5f9 !important;
-    }
-    .container > .order-card:nth-of-type(even) .card-header-bar {
-      background-color: #e2e8f0 !important;
-    }
-
-    /* Hover Vurgusu */
-    .container > .order-card:hover {
-      border-color: #3b82f6 !important;
-      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1) !important;
-      z-index: 2;
-    }
+    
 
   
     /* ========================================================================= */
@@ -3639,6 +3600,46 @@
       border-bottom-right-radius: 0 !important;
     }
 
+      /* ========================================================================= */
+    /* ZEBRA STRIPED KART YAPISI (ÖZEL RENK PALETİ: #ffffff VE #e7ecf3)          */
+    /* ========================================================================= */
+    .order-card {
+      position: relative;
+      border-radius: 10px !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      transition: all 0.15s ease;
+    }
+
+    /* 1. SIRA (TEK): TAM BEYAZ (#ffffff) */
+    .container > .order-card:nth-of-type(odd) {
+      background-color: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+    .container > .order-card:nth-of-type(odd) .card-body-grid {
+      background-color: #ffffff !important;
+    }
+    .container > .order-card:nth-of-type(odd) .card-header-bar {
+      background-color: #ffffff !important;
+    }
+
+    /* 2. SIRA (ÇİFT): YENİ AÇIK GRİ (#e7ecf3) */
+    .container > .order-card:nth-of-type(even) {
+      background-color: #e7ecf3 !important;
+      border: 1px solid #cbd5e1 !important;
+    }
+    .container > .order-card:nth-of-type(even) .card-body-grid {
+      background-color: #e7ecf3 !important;
+    }
+    .container > .order-card:nth-of-type(even) .card-header-bar {
+      background-color: #e7ecf3 !important;
+    }
+
+    /* Hover Vurgusu */
+    .container > .order-card:hover {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1) !important;
+      z-index: 2;
+    }
   </style>
 </head>
 <body>
