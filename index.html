@@ -3857,24 +3857,29 @@
     }
 
   
-    /* ========================================================================= */
-    /* EN ALT SAYFALAMA (PAGINATION) BİLEŞENİ                                     */
+        /* ========================================================================= */
+    /* EN ALT SAYFALAMA (PAGINATION) BİLEŞENİ - MOBİLDE VE MASAÜSTÜNDE TEK SATIR  */
     /* ========================================================================= */
     .pagination-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      padding: 12px 16px;
-      margin-top: 14px;
-      margin-bottom: 24px;
+      gap: 6px;
+      padding: 7px 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
       background: #ffffff;
       border: 1px solid #cbd5e1;
       border-radius: 9px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-      font-size: 12px;
+      font-size: 11.5px;
       color: #475569;
+      box-sizing: border-box;
+      width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .pagination-bar::-webkit-scrollbar {
+      display: none;
     }
 
     .pagination-left,
@@ -3882,37 +3887,38 @@
     .pagination-center {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 5px;
+      flex-shrink: 0;
     }
 
-    .pagination-page-size-label {
-      font-weight: 600;
-      color: #64748b;
-      white-space: nowrap;
+    .pagination-center {
+      flex: 1;
+      justify-content: center;
+      text-align: center;
     }
 
     .pagination-select {
-      height: 32px;
-      padding: 0 28px 0 10px;
-      font-size: 12px;
+      height: 28px;
+      padding: 0 20px 0 7px;
+      font-size: 11px;
       font-weight: 700;
       color: #0f172a;
-      background: #f8fafc url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 8px center;
+      background: #f8fafc url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 5px center;
       border: 1px solid #cbd5e1;
       border-radius: 6px;
       cursor: pointer;
       appearance: none;
       outline: none;
-      transition: all 0.15s ease;
+      white-space: nowrap;
     }
     .pagination-select:focus {
       border-color: #3b82f6;
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
     }
 
     .pagination-info {
-      font-weight: 600;
-      color: #475569;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #334155;
       white-space: nowrap;
     }
     .pagination-info strong {
@@ -3922,22 +3928,23 @@
     .pagination-nav {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
+      flex-shrink: 0;
     }
 
     .btn-page {
-      min-width: 32px;
-      height: 32px;
-      padding: 0 8px;
+      min-width: 27px;
+      height: 27px;
+      padding: 0 5px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       background: #ffffff;
       border: 1px solid #cbd5e1;
-      border-radius: 6px;
+      border-radius: 5px;
       color: #334155;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11.5px;
+      font-weight: 700;
       cursor: pointer;
       user-select: none;
       transition: all 0.15s ease;
@@ -3952,33 +3959,33 @@
       background: #2563eb;
       color: #ffffff;
       border-color: #2563eb;
-      font-weight: 700;
       cursor: default;
     }
     .btn-page:disabled {
-      opacity: 0.45;
+      opacity: 0.35;
       cursor: not-allowed;
       background: #f8fafc;
       border-color: #e2e8f0;
       color: #94a3b8;
     }
     .btn-page svg {
-      width: 14px;
-      height: 14px;
+      width: 12px;
+      height: 12px;
     }
 
-    @media (max-width: 680px) {
+    @media (max-width: 480px) {
       .pagination-bar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-        padding: 10px 12px;
+        padding: 5px 6px;
+        gap: 4px;
       }
-      .pagination-left {
-        justify-content: space-between;
+      .pagination-info {
+        font-size: 11px;
       }
-      .pagination-right {
-        justify-content: center;
+      .btn-page {
+        min-width: 25px;
+        height: 25px;
+        font-size: 11px;
+        padding: 0 3px;
       }
     }
 
@@ -11456,9 +11463,9 @@ window.addEventListener('DOMContentLoaded', () => {
     const infoEl = document.getElementById('paginationInfo');
     if (infoEl) {
       if (totalItems === 0) {
-        infoEl.innerHTML = 'Toplam <strong>0</strong> Sipariş Bulundu';
+        infoEl.innerHTML = `<strong>0</strong> Sipariş`;
       } else {
-        infoEl.innerHTML = `Toplam <strong>${totalItems}</strong> Sipariş • Gösterilen: <strong>${startIndex + 1} - ${endIndex}</strong> (Sayfa ${currentPage}/${totalPages})`;
+        infoEl.innerHTML = `<strong>${startIndex + 1}-${endIndex}</strong> / ${totalItems} Sipariş`;
       }
     }
 
