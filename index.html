@@ -10644,8 +10644,9 @@
     });
   }
 
-    // Kart Detaylarını Açma/Kapatma (4 Saniyelik Gerçekçi Veritabanı Loader Efekti ile)
+  // Kart Detaylarını Açma/Kapatma (İlk Açılışta 4 Saniyelik Veritabanı Loader Efekti, Sonraki Açılışlarda Anında Açılma - Cache Mantığı)
   const cardLoadTimers = new Map();
+  const loadedCardsCache = new WeakSet();
 
   function handleCardHeaderClick(event, headerElement) {
     if (event.target.closest('.actions-dropdown') || 
@@ -10659,17 +10660,19 @@
     const card = headerElement.closest('.order-card');
     if (!card) return;
 
-    // Eğer zaten açıksa kapat
+    // Eğer zaten açıksa anında kapat
     if (card.classList.contains('expanded')) {
-      card.classList.remove('expanded', 'loading');
-      if (cardLoadTimers.has(card)) {
-        clearTimeout(cardLoadTimers.get(card));
-        cardLoadTimers.delete(card);
-      }
+      card.classList.remove('expanded');
       return;
     }
 
-    // Kartı aç ve 4 saniye boyunca yükleme ekranı göster
+    // Kart daha önce yüklendiyse (önbellekte varsa) anında aç, loader gösterme
+    if (loadedCardsCache.has(card)) {
+      card.classList.add('expanded');
+      return;
+    }
+
+    // İlk defa açılıyorsa: Kartı aç ve 4 saniye boyunca yükleme ekranı göster
     card.classList.add('expanded', 'loading');
 
     // Eğer kartın içinde loading overlay henüz yoksa ekle
@@ -10683,7 +10686,7 @@
         </div>
         <div class="card-loading-meta">
           <span class="card-loading-title">
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
             Sipariş Detayları Yükleniyor...
           </span>
           <span class="card-loading-subtitle">Veritabanından canlı cari, fatura ve sevk kayıtları alınıyor</span>
@@ -10698,6 +10701,7 @@
 
     const timer = setTimeout(() => {
       card.classList.remove('loading');
+      loadedCardsCache.add(card); // Önbelleğe kaydet
       cardLoadTimers.delete(card);
       if (window.lucide) lucide.createIcons();
     }, 4000);
