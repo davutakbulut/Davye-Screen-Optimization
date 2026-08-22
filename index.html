@@ -3562,35 +3562,39 @@
     /* ========================================================================= */
     .order-card {
       position: relative;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
       border-radius: 9px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
       transition: all 0.15s ease;
     }
 
-    /* Çift Numaralı Kartlar: Tam Beyaz */
-    .orders-list .order-card:nth-child(even) {
-      background: #ffffff;
-      border-color: #e2e8f0;
+    /* 1. SIRA (TEK): TAM BEYAZ (#ffffff) */
+    .container > .order-card:nth-of-type(odd) {
+      background-color: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
     }
-    .orders-list .order-card:nth-child(even) .card-header-bar {
-      background: #fafafa;
+    .container > .order-card:nth-of-type(odd) .card-body-grid {
+      background-color: #ffffff !important;
     }
-
-    /* Tek Numaralı Kartlar: Soft Açık Gri (Striped Kontrast) */
-    .orders-list .order-card:nth-child(odd) {
-      background: #f8fafc;
-      border-color: #cbd5e1;
-    }
-    .orders-list .order-card:nth-child(odd) .card-header-bar {
-      background: #f1f5f9;
+    .container > .order-card:nth-of-type(odd) .card-header-bar {
+      background-color: #f8fafc !important;
     }
 
-    /* Hover Durumu */
-    .orders-list .order-card:hover {
-      border-color: #94a3b8;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    /* 2. SIRA (ÇİFT): AÇIK GRİ (#f1f5f9 / #e2e8f0 kenarlık) */
+    .container > .order-card:nth-of-type(even) {
+      background-color: #f1f5f9 !important;
+      border: 1px solid #cbd5e1 !important;
+    }
+    .container > .order-card:nth-of-type(even) .card-body-grid {
+      background-color: #f1f5f9 !important;
+    }
+    .container > .order-card:nth-of-type(even) .card-header-bar {
+      background-color: #e2e8f0 !important;
+    }
+
+    /* Hover Vurgusu */
+    .container > .order-card:hover {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1) !important;
       z-index: 2;
     }
 
