@@ -1107,7 +1107,60 @@
     .status-iptal .card-v-check { background: #ef4444; box-shadow: none; }
 
     .btn-card-expand {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      max-width: 24px;
+      background: #f8fafc;
+      border-radius: 5px;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      cursor: pointer;
+      box-sizing: border-box;
+      transition: transform 0.2s ease, background 0.15s, color 0.15s, border-color 0.15s;
+      flex-shrink: 0;
+      padding: 0;
+    }
+    .btn-card-expand:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+      border-color: #94a3b8;
+    }
+    .btn-card-expand svg,
+    .btn-card-expand i {
+      width: 13px;
+      height: 13px;
+      stroke-width: 2.2;
+      transition: transform 0.2s ease;
+    }
+    .order-card.expanded .btn-card-expand svg,
+    .order-card.expanded .btn-card-expand i {
+      transform: rotate(180deg);
+    }
+    .order-card.expanded .btn-card-expand {
+      background: #0f172a;
+      color: #ffffff;
+      border-color: #0f172a;
+    }
+
+    /* Gövde ve Not Çubuğu: Varsayılan olarak kapalıdır */
+    .card-body-grid {
       display: none;
+    }
+    .card-note-bar {
+      display: none;
+    }
+
+    /* Açıldığında (expanded) */
+    .order-card.expanded .card-body-grid {
+      display: grid;
+      animation: slideDown 0.2s ease-out;
+    }
+    .order-card.expanded .card-note-bar {
+      display: flex;
     }
 
     /* 1. KART BAŞLIK ALANI (HEADER - 3 SATIRLI MOBİL UYUMLU DÜZEN) */
@@ -1118,6 +1171,7 @@
       border-top-left-radius: 9px;
       border-top-right-radius: 9px;
       transition: background 0.15s;
+      cursor: pointer;
     }
 
     .card-header-row {
@@ -1208,6 +1262,15 @@
         align-items: center;
         justify-content: space-between;
         gap: 8px;
+        padding: 6px 12px;
+        border-radius: 9px;
+      }
+      .order-card.expanded .card-header-bar {
+        border-radius: 9px 9px 0 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .order-card:not(.expanded) .card-header-bar {
+        border-bottom: none;
       }
       .card-header-row.row-1 {
         display: contents;
@@ -1220,28 +1283,63 @@
       }
       .card-header-row.row-1 .row-left {
         order: 1;
-      }
-      .card-header-row.row-1 .row-right {
-        order: 2;
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
       .card-header-row.row-2 .header-cari-name {
-        display: none; /* Masaüstünde cari 1. sütunda görünür */
+        order: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #0f172a;
+        margin: 0 4px;
+      }
+      .order-card.expanded .header-cari-name {
+        display: none !important;
+      }
+      .card-header-row.row-1 .row-right {
+        order: 3;
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
       .card-header-row.row-2 .sales-rep-badge {
-        order: 3;
+        order: 4;
+        display: inline-flex;
       }
       .card-header-row.row-3 .header-price-amount {
         display: none; /* Masaüstünde tutar 4. sütunda görünür */
       }
       .card-header-row.row-3 .row-left {
-        order: 4;
+        order: 5;
         margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
       .card-header-row.row-3 .row-right {
-        order: 5;
+        order: 6;
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
       .card-header-row.row-3 .btn-card-expand {
-        display: none; /* Expand butonu masaüstünde gizli */
+        order: 7;
+        display: inline-flex;
+      }
+
+      .card-body-grid {
+        grid-template-columns: 1.3fr 1.1fr 1.3fr 0.9fr;
+        padding: 10px 14px;
+        gap: 10px;
+        border-top: 1px solid #f1f5f9;
+        border-radius: 0 0 9px 9px;
+      }
+      .card-note-bar {
+        border-radius: 0;
       }
     }
 
