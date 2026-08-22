@@ -3427,6 +3427,69 @@
       transform: translateY(0);
     }
 
+  
+    /* ========================================================================= */
+    /* SİPARİŞ AÇIKLAMASI (FATURA & VADE ALANINDA KOMPAKT SATIR VE AÇILIR BUTON)  */
+    /* ========================================================================= */
+    .order-desc-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      margin-top: 2px;
+      padding-top: 2px;
+      border-top: 1px dashed #f1f5f9;
+      min-width: 0;
+    }
+    .order-desc-val-wrap {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .order-desc-text {
+      font-size: 11px;
+      font-weight: 500;
+      color: #475569;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 140px;
+    }
+    .btn-desc-more {
+      font-size: 9.5px;
+      font-weight: 600;
+      color: #2563eb;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 3px;
+      padding: 0 4px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+    .btn-desc-more:hover {
+      background: #dbeafe;
+      color: #1d4ed8;
+      border-color: #93c5fd;
+    }
+
+    /* Sipariş Açıklaması Modal / Dialog */
+    .desc-modal-box {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 16px 20px;
+      max-width: 440px;
+      width: 90%;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+    }
+
   </style>
 </head>
 <body>
@@ -3858,6 +3921,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">30 / 10 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Müşteri sevk öncesi steril ambalaj kontrolü ve UTS lot numarası eşleştirmesi talep etti." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Müşteri sevk öncesi steril ambalaj kontrolü ve UTS lot numarası eşleştirmesi talep etti.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68007', 'Müşteri sevk öncesi steril ambalaj kontrolü ve UTS lot numarası eşleştirmesi talep etti.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -4052,6 +4122,13 @@
         <div class="data-row">
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">21 / 09 / 2026</span>
+        </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Lütfen faturayı kurumsal e-posta adresine (muhasebe@serapbozteke.com) PDF olarak iletiniz." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Lütfen faturayı kurumsal e-posta adresine (muhasebe@serapbozteke.com) PDF olarak iletiniz.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68000', 'Lütfen faturayı kurumsal e-posta adresine (muhasebe@serapbozteke.com) PDF olarak iletiniz.')" title="Tamamını Gör">Tamamı</button>
+          </div>
         </div>
       </div>
 
@@ -4248,6 +4325,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">15 / 10 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Klinikte ameliyat var, ürünlerin saat 12:00 dan önce acil kuryeye teslim edilmesi gerekmektedir." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Klinikte ameliyat var, ürünlerin saat 12:00 dan önce acil kuryeye teslim edilmesi gerekmektedir.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68001', 'Klinikte ameliyat var, ürünlerin saat 12:00 dan önce acil kuryeye teslim edilmesi gerekmektedir.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -4431,6 +4515,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">20 / 11 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Kargo kolisi üzerine dikkat kırılabilir tıbbi malzeme etiketi yapıştırılsın." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Kargo kolisi üzerine dikkat kırılabilir tıbbi malzeme etiketi yapıştırılsın.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68012', 'Kargo kolisi üzerine dikkat kırılabilir tıbbi malzeme etiketi yapıştırılsın.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -4612,6 +4703,13 @@
         <div class="data-row">
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">Peşin / Havale</span>
+        </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Faturasız sevk irsaliyesi ve teslim tutanağı ile birlikte doktora elden teslim edilsin." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Faturasız sevk irsaliyesi ve teslim tutanağı ile birlikte doktora elden teslim edilsin.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68021', 'Faturasız sevk irsaliyesi ve teslim tutanağı ile birlikte doktora elden teslim edilsin.')" title="Tamamını Gör">Tamamı</button>
+          </div>
         </div>
       </div>
 
@@ -4797,6 +4895,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">30 / 10 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Toplama işlemi tamamlandı, koli içerisine firma promosyon broşürü eklendi." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Toplama işlemi tamamlandı, koli içerisine firma promosyon broşürü eklendi.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68004', 'Toplama işlemi tamamlandı, koli içerisine firma promosyon broşürü eklendi.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -4981,6 +5086,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">25 / 10 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="GİB e-fatura sisteminden onay beklenmektedir, muhasebe mutabakatı yapıldı." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">GİB e-fatura sisteminden onay beklenmektedir, muhasebe mutabakatı yapıldı.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68013', 'GİB e-fatura sisteminden onay beklenmektedir, muhasebe mutabakatı yapıldı.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -5163,6 +5275,13 @@
         <div class="data-row">
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">Kredi Kartı / Peşin</span>
+        </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Laboratuvar girişi arka kapıdan yapılacaktır, teslimat fişi imzalatılsın." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Laboratuvar girişi arka kapıdan yapılacaktır, teslimat fişi imzalatılsın.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68022', 'Laboratuvar girişi arka kapıdan yapılacaktır, teslimat fişi imzalatılsın.')" title="Tamamını Gör">Tamamı</button>
+          </div>
         </div>
       </div>
 
@@ -5348,6 +5467,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">21 / 11 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Ödeme havale ile tamamlandı, dekont kontrol masasına iletildi." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Ödeme havale ile tamamlandı, dekont kontrol masasına iletildi.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68014', 'Ödeme havale ile tamamlandı, dekont kontrol masasına iletildi.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -5531,6 +5657,13 @@
         <div class="data-row">
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">28 / 09 / 2026</span>
+        </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Kargo kurye barkodu oluşturuldu, akşam transfer aracına yüklenecek." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Kargo kurye barkodu oluşturuldu, akşam transfer aracına yüklenecek.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68002', 'Kargo kurye barkodu oluşturuldu, akşam transfer aracına yüklenecek.')" title="Tamamını Gör">Tamamı</button>
+          </div>
         </div>
       </div>
 
@@ -5716,6 +5849,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">20 / 11 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Müşteri kargoyu şubeden kendisi teslim alacaktır, şube teslim notu düşüldü." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Müşteri kargoyu şubeden kendisi teslim alacaktır, şube teslim notu düşüldü.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68015', 'Müşteri kargoyu şubeden kendisi teslim alacaktır, şube teslim notu düşüldü.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -5899,6 +6039,13 @@
         <div class="data-row">
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">20 / 11 / 2026</span>
+        </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Doktor teslimatı bizzat kendisi kontrol edip teslim alma tutanağını imzalayacak." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Doktor teslimatı bizzat kendisi kontrol edip teslim alma tutanağını imzalayacak.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68016', 'Doktor teslimatı bizzat kendisi kontrol edip teslim alma tutanağını imzalayacak.')" title="Tamamını Gör">Tamamı</button>
+          </div>
         </div>
       </div>
 
@@ -6084,6 +6231,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">19 / 11 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Faturası ve sevk belgeleri koli dışındaki şeffaf cebe yerleştirildi." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Faturası ve sevk belgeleri koli dışındaki şeffaf cebe yerleştirildi.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68017', 'Faturası ve sevk belgeleri koli dışındaki şeffaf cebe yerleştirildi.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -6267,6 +6421,13 @@
         <div class="data-row">
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">19 / 11 / 2026</span>
+        </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Hepsiburada siparişi, kargo takip numarası pazar yerine otomatik senkronize edildi." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Hepsiburada siparişi, kargo takip numarası pazar yerine otomatik senkronize edildi.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68018', 'Hepsiburada siparişi, kargo takip numarası pazar yerine otomatik senkronize edildi.')" title="Tamamını Gör">Tamamı</button>
+          </div>
         </div>
       </div>
 
@@ -6452,6 +6613,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">10 / 11 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Trendyol Express dağıtım kuryesi paketi zimmetine aldı, tahmini varış bugün." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Trendyol Express dağıtım kuryesi paketi zimmetine aldı, tahmini varış bugün.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68003', 'Trendyol Express dağıtım kuryesi paketi zimmetine aldı, tahmini varış bugün.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -6634,6 +6802,13 @@
         <div class="data-row">
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">Ödendi (Banka Havalesi)</span>
+        </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Faturasız numune teslimatı, klinik yetkilisi kaşe imza karşılığı teslim aldı." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Faturasız numune teslimatı, klinik yetkilisi kaşe imza karşılığı teslim aldı.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68023', 'Faturasız numune teslimatı, klinik yetkilisi kaşe imza karşılığı teslim aldı.')" title="Tamamını Gör">Tamamı</button>
+          </div>
         </div>
       </div>
 
@@ -6819,6 +6994,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">17 / 11 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Sipariş başarıyla müşteriye teslim edildi, dijital irsaliye arşive kaldırıldı." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Sipariş başarıyla müşteriye teslim edildi, dijital irsaliye arşive kaldırıldı.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68008', 'Sipariş başarıyla müşteriye teslim edildi, dijital irsaliye arşive kaldırıldı.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -7003,6 +7185,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">18 / 11 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Müşteri yanlış ürün seçtiğini belirtti, iade kargo kodu oluşturuldu kurye bekleniyor." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Müşteri yanlış ürün seçtiğini belirtti, iade kargo kodu oluşturuldu kurye bekleniyor.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68019', 'Müşteri yanlış ürün seçtiğini belirtti, iade kargo kodu oluşturuldu kurye bekleniyor.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -7186,6 +7375,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">16 / 11 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="İade koli depoya ulaştı, ürün kalite kontrolü yapıldı ödeme iadesi muhasebeye iletildi." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">İade koli depoya ulaştı, ürün kalite kontrolü yapıldı ödeme iadesi muhasebeye iletildi.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68020', 'İade koli depoya ulaştı, ürün kalite kontrolü yapıldı ödeme iadesi muhasebeye iletildi.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -7368,6 +7564,13 @@
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">15 / 11 / 2026</span>
         </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Ücret iadesi müşterinin kredi kartına başarıyla yapıldı, süreç tamamlandı." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Ücret iadesi müşterinin kredi kartına başarıyla yapıldı, süreç tamamlandı.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68024', 'Ücret iadesi müşterinin kredi kartına başarıyla yapıldı, süreç tamamlandı.')" title="Tamamını Gör">Tamamı</button>
+          </div>
+        </div>
       </div>
 
       <!-- 3. SÜTUN: Lojistik & Durum -->
@@ -7549,6 +7752,13 @@
         <div class="data-row">
           <span class="data-label">Vade Tarihi:</span>
           <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">-</span>
+        </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Müşteri talebiyle sipariş onay öncesi iptal edildi, herhangi bir tahsilat yapılmadı." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Müşteri talebiyle sipariş onay öncesi iptal edildi, herhangi bir tahsilat yapılmadı.</span>
+            <button class="btn-desc-more" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68006', 'Müşteri talebiyle sipariş onay öncesi iptal edildi, herhangi bir tahsilat yapılmadı.')" title="Tamamını Gör">Tamamı</button>
+          </div>
         </div>
       </div>
 
@@ -10378,6 +10588,48 @@ window.addEventListener('DOMContentLoaded', () => {
       target.addEventListener('blur', handleSave);
       target.addEventListener('keydown', handleKeyDown);
     });
+  </script>
+
+
+  <!-- SİPARİŞ AÇIKLAMASI TAM METİN MODALI -->
+  <div id="orderDescModal" class="modal-overlay" onclick="closeDescModal(event)">
+    <div class="desc-modal-box" onclick="event.stopPropagation()">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; border-bottom:1px solid #f1f5f9; padding-bottom:8px;">
+        <div style="display:flex; align-items:center; gap:6px; font-weight:700; font-size:13px; color:#0f172a;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span id="descModalTitle">Sipariş Açıklaması</span>
+        </div>
+        <button onclick="closeDescModal()" style="border:none; background:transparent; cursor:pointer; color:#94a3b8; font-size:16px; font-weight:bold;">✕</button>
+      </div>
+      <div id="descModalContent" style="font-size:12px; line-height:1.5; color:#334155; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px 12px; word-break:break-word; max-height:220px; overflow-y:auto; margin-bottom:12px;"></div>
+      <div style="display:flex; justify-content:flex-end; gap:8px;">
+        <button onclick="copyDescText()" style="display:inline-flex; align-items:center; gap:4px; font-size:11.5px; font-weight:600; background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; border-radius:5px; padding:6px 12px; cursor:pointer;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Metni Kopyala
+        </button>
+        <button onclick="closeDescModal()" style="font-size:11.5px; font-weight:600; background:#0f172a; color:#ffffff; border:none; border-radius:5px; padding:6px 14px; cursor:pointer;">Kapat</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentDescText = '';
+    function showFullDescModal(orderId, descText) {
+      currentDescText = descText || '';
+      document.getElementById('descModalTitle').innerText = `Sipariş #${orderId} - Açıklama`;
+      document.getElementById('descModalContent').innerText = currentDescText;
+      document.getElementById('orderDescModal').classList.add('active');
+    }
+    function closeDescModal(e) {
+      if (!e || e.target === document.getElementById('orderDescModal') || e.target.tagName === 'BUTTON') {
+        document.getElementById('orderDescModal').classList.remove('active');
+      }
+    }
+    function copyDescText() {
+      if (currentDescText) {
+        copyToClipboard(currentDescText);
+        showLiveToast('Açıklama panoya kopyalandı!');
+      }
+    }
   </script>
 
 </body></html>
