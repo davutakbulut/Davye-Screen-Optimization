@@ -3327,6 +3327,23 @@
       -webkit-text-size-adjust: none;
     }
 
+  
+    /* ========================================================================= */
+    /* TEL LINKLERINI VE ARAMAYA YÖNLENDİRMEYİ TAMAMEN ENGELLEME                */
+    /* ========================================================================= */
+    a[href^="tel:"],
+    a[href^="tel"],
+    a[href^="sms:"],
+    a[href^="mailto:"],
+    span.data-value a,
+    .data-value-copyable a,
+    .order-number-badge a {
+      color: inherit !important;
+      text-decoration: none !important;
+      pointer-events: none !important;
+      cursor: default !important;
+    }
+
   </style>
 </head>
 <body>
@@ -10185,4 +10202,28 @@ window.addEventListener('DOMContentLoaded', () => {
 </script>
 
 
-</div></body></html>
+</div><script>
+  // WebKit / iOS Safari tel: link engelleyici
+  document.addEventListener('DOMContentLoaded', () => {
+    function removeTelLinks() {
+      document.querySelectorAll('a[href^="tel:"]').forEach(el => {
+        const span = document.createElement('span');
+        span.innerHTML = el.innerHTML;
+        span.className = el.className;
+        el.parentNode.replaceChild(span, el);
+      });
+    }
+    removeTelLinks();
+    new MutationObserver(removeTelLinks).observe(document.body, { childList: true, subtree: true });
+    
+    // Global click listener to block any accidental tel: navigation
+    document.addEventListener('click', (e) => {
+      const anchor = e.target.closest('a[href^="tel:"]');
+      if (anchor) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+  });
+</script>
+</body></html>
