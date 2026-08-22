@@ -3503,6 +3503,27 @@
       box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
     }
 
+  
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw !important;
+      width: 100% !important;
+      position: relative;
+    }
+
+    .container, .davye-top-header, .top-toolbar, .orders-list {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Mobilde (Touch Ekranlarda) Tooltip'lerin Ekranı Sağa Kaydırmasını Engelleme */
+    @media (hover: none), (max-width: 768px) {
+      [data-tip]:hover::before,
+      [data-tip]:hover::after {
+        display: none !important;
+      }
+    }
+
   </style>
 </head>
 <body>
