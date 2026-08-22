@@ -3656,6 +3656,186 @@
       border-color: #f87171 !important;
       box-shadow: 0 4px 14px -2px rgba(239, 68, 68, 0.25) !important;
     }
+  
+    /* ========================================================================= */
+    /* SOL SİDEBAR MENÜ VE SAYFA YERLEŞİMİ (MASAÜSTÜ SABİT + MOBİL ÇEKMECE)      */
+    /* ========================================================================= */
+    .app-layout-wrapper {
+      display: flex;
+      width: 100%;
+      min-height: calc(100vh - 55px);
+      align-items: flex-start;
+      position: relative;
+    }
+
+    /* Sol Sidebar Ana Taşıyıcı */
+    .app-sidebar {
+      width: 225px;
+      min-width: 225px;
+      max-width: 225px;
+      background: #ffffff;
+      border-right: 1px solid var(--border-color);
+      min-height: calc(100vh - 55px);
+      padding: 14px 10px 30px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      box-sizing: border-box;
+      position: sticky;
+      top: 53px;
+      height: calc(100vh - 53px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: 95;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 transparent;
+    }
+    .app-sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .app-sidebar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    /* Menü Arama Kutusu */
+    .sidebar-search-box {
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .sidebar-search-input {
+      width: 100%;
+      height: 34px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 0 10px;
+      font-size: 11.5px;
+      color: #334155;
+      outline: none;
+      transition: all 0.15s ease;
+      box-sizing: border-box;
+    }
+    .sidebar-search-input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.12);
+    }
+    .sidebar-search-input::placeholder {
+      color: #94a3b8;
+      font-style: italic;
+    }
+
+    /* Menü Maddeleri */
+    .sidebar-menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar-menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 9px;
+      border-radius: 6px;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+      border: 1px solid transparent;
+    }
+    .sidebar-menu-item:hover {
+      background: #f8fafc;
+      color: #0f172a;
+      border-color: #f1f5f9;
+    }
+    .sidebar-menu-item.active {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-color: #dbeafe;
+    }
+    .sidebar-item-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .sidebar-item-left svg,
+    .sidebar-item-left i {
+      width: 15px;
+      height: 15px;
+      color: #64748b;
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+    .sidebar-menu-item:hover .sidebar-item-left svg,
+    .sidebar-menu-item:hover .sidebar-item-left i,
+    .sidebar-menu-item.active .sidebar-item-left svg {
+      color: #1d4ed8;
+    }
+    .sidebar-chevron {
+      width: 12px;
+      height: 12px;
+      color: #94a3b8;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    /* Sağ Ana İçerik Alanı */
+    .app-main-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Mobil Çekmece & Backdrop */
+    .sidebar-mobile-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .sidebar-mobile-backdrop.active {
+      display: block;
+      opacity: 1;
+    }
+
+    @media (max-width: 860px) {
+      .app-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        height: 100vh;
+        width: 260px;
+        min-width: 260px;
+        max-width: 260px;
+        z-index: 1001;
+        transform: translateX(-100%);
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 4px 0 25px rgba(15, 23, 42, 0.18);
+        padding-top: 16px;
+      }
+      .app-sidebar.open {
+        transform: translateX(0);
+      }
+      .davye-logo-badge {
+        cursor: pointer;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -3667,7 +3847,7 @@
   <div class="davye-header-container">
     <!-- Sol Bölüm: Logo, Marka Başlığı ve 3 Çizgili Menü Butonu -->
     <div class="davye-header-left">
-      <div class="davye-logo-badge" title="Davye ERP Menü">
+      <div class="davye-logo-badge" onclick="toggleSidebar()" title="Menüyü Aç/Kapat">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="3" y="3" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
           <rect x="9.75" y="3" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
@@ -3720,7 +3900,207 @@
     </div>
   </div>
 </header>
+<div class="app-layout-wrapper">
 
+<!-- ========================================================================= -->
+<!-- SOL SİDEBAR MENÜ (MASAÜSTÜ BİREBİR & MOBİL ÇEKMECE) -->
+<!-- ========================================================================= -->
+<div class="sidebar-mobile-backdrop" id="sidebarMobileBackdrop" onclick="toggleSidebar(false)"></div>
+
+<aside class="app-sidebar" id="appSidebar">
+  <!-- Mobil Kapatma Butonu & Logo Başlığı -->
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #f1f5f9;">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <div class="davye-logo-badge" style="width:28px; height:28px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="4.5" height="4.5" rx="1.2" fill="white"/><rect x="9.75" y="3" width="4.5" height="4.5" rx="1.2" fill="white"/><rect x="16.5" y="3" width="4.5" height="4.5" rx="1.2" fill="white"/><rect x="3" y="9.75" width="4.5" height="4.5" rx="1.2" fill="white"/><rect x="9.75" y="9.75" width="4.5" height="4.5" rx="1.2" fill="white"/><rect x="16.5" y="9.75" width="4.5" height="4.5" rx="1.2" fill="white"/><rect x="3" y="16.5" width="4.5" height="4.5" rx="1.2" fill="white"/><rect x="9.75" y="16.5" width="4.5" height="4.5" rx="1.2" fill="white"/><rect x="16.5" y="16.5" width="4.5" height="4.5" rx="1.2" fill="white"/></svg>
+      </div>
+      <span style="font-weight:800; font-size:15px; color:#0f172a;">Davye</span>
+    </div>
+    <button onclick="toggleSidebar(false)" style="background:transparent; border:none; color:#94a3b8; font-size:16px; cursor:pointer; padding:4px 6px;" title="Menüyü Kapat">✕</button>
+  </div>
+
+  <!-- Menü İçi Arama -->
+  <div class="sidebar-search-box">
+    <input type="text" id="sidebarMenuSearch" class="sidebar-search-input" placeholder="Menüde ara..." oninput="filterSidebarMenu(this.value)">
+  </div>
+
+  <!-- 19 Menü Kalemi -->
+  <ul class="sidebar-menu-list" id="sidebarMenuList">
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item active" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span>Toptan Sipariş</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="credit-card"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+          <span>Finans</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="warehouse"><path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/><path d="M6 18h12"/><path d="M6 14h12"/><rect width="12" height="12" x="6" y="10"/></svg>
+          <span>Depo İşlemleri</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="box"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+          <span>Koli İşlemleri</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          <span>Dental Piyasa</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="store"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>
+          <span>Kasa İşlemleri</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>Ticimax</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-bag"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span>Pazaryeri</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+          <span>Toptan Fatura</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="landmark"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+          <span>Banka İşlemleri</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bar-chart-2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+          <span>Ürün Raporları</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shield-check"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          <span>ITS</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="laptop"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>
+          <span>Sanal POS</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+          <span>Kargo</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Toptan Müşteri</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Kullanıcılar</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="line-chart"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          <span>Özel Raporlar</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          <span>Müşteri Talepleri</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+        <div class="sidebar-item-left">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>Ayarlar</span>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+    </li>
+  </ul>
+</aside>
+
+  <div class="app-main-content">
 <div class="container">
 
   <!-- Üst Filtre ve Arama Çubuğu (Arama ve İkon Buton Yan Yana) -->
@@ -10757,7 +11137,10 @@ window.addEventListener('DOMContentLoaded', () => {
   </script>
 
 
-    <!-- SİPARİŞ AÇIKLAMASI TAM METİN MODALI -->
+      </div>
+</div>
+
+<!-- SİPARİŞ AÇIKLAMASI TAM METİN MODALI -->
   <div class="modal-backdrop" id="orderDescModal" onclick="if(event.target===this) closeDescModal()">
     <div class="modal-card" style="max-width: 480px; width: 92%;">
       <div class="modal-header">
@@ -10804,4 +11187,40 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     }
   </script>
+
+  <script>
+    function toggleSidebar(show) {
+      const sidebar = document.getElementById('appSidebar');
+      const backdrop = document.getElementById('sidebarMobileBackdrop');
+      if (!sidebar) return;
+      
+      if (show === undefined) {
+        sidebar.classList.toggle('open');
+        if (backdrop) backdrop.classList.toggle('active');
+      } else if (show) {
+        sidebar.classList.add('open');
+        if (backdrop) backdrop.classList.add('active');
+      } else {
+        sidebar.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('active');
+      }
+    }
+
+    function filterSidebarMenu(query) {
+      const q = (query || '').toLowerCase().trim();
+      document.querySelectorAll('#sidebarMenuList li').forEach(li => {
+        const text = li.innerText.toLowerCase();
+        li.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+
+    function selectMenuItem(el) {
+      document.querySelectorAll('.sidebar-menu-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      if (window.innerWidth <= 860) {
+        toggleSidebar(false);
+      }
+    }
+  </script>
+
 </body></html>
