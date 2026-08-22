@@ -3901,6 +3901,20 @@
       border-color: #3b82f6;
     }
 
+    .pagination-info {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #475569;
+      background: #f1f5f9;
+      padding: 3px 7px;
+      border-radius: 5px;
+      border: 1px solid #e2e8f0;
+      white-space: nowrap;
+    }
+    .pagination-info strong {
+      color: #0f172a;
+    }
+
     .pagination-nav {
       display: flex;
       align-items: center;
@@ -8451,7 +8465,7 @@
 
 
     <!-- ========================================================================= -->
-    <!-- EN ALT SAYFALAMA (PAGINATION) KONTROL ÇUBUĞU (SOLDA ADET, SAĞDA SAYFALAR)  -->
+    <!-- EN ALT SAYFALAMA (PAGINATION) KONTROL ÇUBUĞU (SOLDA ADET & SAYAÇ, SAĞDA SAYFALAR) -->
     <!-- ========================================================================= -->
     <div class="pagination-bar" id="paginationBar">
       <div class="pagination-left">
@@ -8461,6 +8475,7 @@
           <option value="50">50 Adet</option>
           <option value="100">100 Adet</option>
         </select>
+        <span class="pagination-info" id="paginationInfo">1-10 / 21</span>
       </div>
 
       <div class="pagination-right">
