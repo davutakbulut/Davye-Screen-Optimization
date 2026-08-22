@@ -1731,7 +1731,7 @@
 
     /* 1.5 KART ÜST NOT BARI (FULL-WIDTH 1 SATIR ŞERİT - TEK TİP SARI) */
     .card-note-bar {
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: space-between;
       gap: 6px;
@@ -1743,6 +1743,9 @@
       color: #854d0e;
       cursor: pointer;
       transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .order-card.expanded .card-note-bar {
+      display: flex;
     }
 
     .card-note-bar:hover {
@@ -1834,13 +1837,17 @@
 
     /* 2. KART GÖVDE ALANI (İNCELTİLMİŞ ULTRA-KOMPAKT GRID) */
     .card-body-grid {
-      display: grid;
+      display: none;
       grid-template-columns: 1.15fr 1.15fr 1.05fr 0.85fr;
       padding: 6px 10px;
       gap: 8px;
       background: #ffffff;
       border-bottom-left-radius: 9px;
       border-bottom-right-radius: 9px;
+    }
+    .order-card.expanded .card-body-grid {
+      display: grid;
+      animation: slideDown 0.2s ease-out;
     }
 
     .grid-col {
