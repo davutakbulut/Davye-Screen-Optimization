@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Davye Sipariş Yönetim Paneli - Canlı Sistem Dökümantasyonu</title>
+  <!-- Plus Jakarta Sans & JetBrains Mono (index.html ile birebir aynı fontlar) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ========================================================================= */
+    /* 1. INDEX.HTML CSS DEĞİŞKENLERİ & ORİJİNAL TEMA AYARLARI */
+    /* ========================================================================= */
+    :root {
+      --bg-body: #f1f5f9;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-sub: #475569;
+      --border-color: #e2e8f0;
+      --border-hover: #cbd5e1;
+      
+      /* Durum Renkleri */
+      --status-taslak: #475569;
+      --status-taslak-bg: #f1f5f9;
+      --status-taslak-border: #cbd5e1;
+
+      --status-alindi: #2563eb;
+      --status-alindi-bg: #eff6ff;
+      --status-alindi-border: #bfdbfe;
+
+      --status-hazirlaniyor: #d97706;
+      --status-hazirlaniyor-bg: #fffbeb;
+      --status-hazirlaniyor-border: #fde68a;
+
+      --status-kargo-bekliyor: #7c3aed;
+      --status-kargo-bekliyor-bg: #f5f3ff;
+      --status-kargo-bekliyor-border: #ddd6fe;
+
+      --status-kargoda: #0891b2;
+      --status-kargoda-bg: #ecfeff;
+      --status-kargoda-border: #a5f3fc;
+
+      --status-fatura-bekliyor: #ea580c;
+      --status-fatura-bekliyor-bg: #fff7ed;
+      --status-fatura-bekliyor-border: #ffedd5;
+
+      --status-faturalandi: #059669;
+      --status-faturalandi-bg: #ecfdf5;
+      --status-faturalandi-border: #a7f3d0;
+
+      --status-iptal: #dc2626;
+      --status-iptal-bg: #fef2f2;
+      --status-iptal-border: #fecaca;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ========================================================================= */
+    /* 2. DÖKÜMANTASYON LAYOUT: TOP HEADER, SIDEBAR, CONTENT & FOOTER */
+    /* ========================================================================= */
+    .doc-top-header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .doc-header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .doc-brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .doc-logo-box {
+      width: 38px;
+      height: 38px;
+      background: #1d4ed8;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+    }
+
+    .doc-brand-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.2px;
+    }
+
+    .doc-brand-subtitle {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .doc-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-live-preview {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-live-preview:hover {
+      background: #1d4ed8;
+      color: #ffffff;
+    }
+
+    /* Ana Gövde Alanı (Sol Sidebar + Sağ İçerik) */
+    .doc-main-wrapper {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex: 1;
+      padding: 20px 24px;
+      gap: 24px;
+      box-sizing: border-box;
+    }
+
+    /* Sol Sidebar & Arama */
+    .doc-sidebar {
+      width: 290px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 75px;
+      height: calc(100vh - 100px);
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      box-sizing: border-box;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .doc-search-box {
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .doc-search-box input {
+      width: 100%;
+      padding: 8px 12px 8px 34px;
+      border: 1px solid var(--border-color);
+      border-radius: 7px;
+      font-size: 12.5px;
+      background: #f8fafc;
+      outline: none;
+      color: #0f172a;
+      transition: all 0.2s;
+    }
+
+    .doc-search-box input:focus {
+      background: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37,99,235,0.1);
+    }
+
+    .doc-search-box svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+    }
+
+    .doc-nav-list {
+      list-style: none;
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 4px;
+    }
+
+    .doc-nav-group-title {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin: 14px 0 6px 4px;
+    }
+
+    .doc-nav-item a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #475569;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      line-height: 1.2;
+    }
+
+    .doc-nav-item a:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .doc-nav-item.active a {
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 700;
+    }
+
+    /* Sağ İçerik Alanı */
+    .doc-content-area {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .doc-card-section {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .doc-section-header {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 14px;
+    }
+
+    .doc-section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 5px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .doc-section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.3px;
+      margin-bottom: 6px;
+    }
+
+    .doc-section-desc {
+      font-size: 13.5px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .doc-meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 12.5px;
+    }
+
+    .doc-meta-table th {
+      background: #f8fafc;
+      padding: 8px 12px;
+      text-align: left;
+      font-weight: 700;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+    }
+
+    .doc-meta-table td {
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      color: #1e293b;
+    }
+
+    .doc-meta-table tr:nth-child(even) {
+      background: #fafbfc;
+    }
+
+    /* Kod Açıklama Kutuları */
+    .doc-info-banner {
+      background: #f8fafc;
+      border-left: 4px solid #3b82f6;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 16px;
+      margin: 14px 0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .doc-info-banner.why {
+      border-left-color: #10b981;
+      background: #f0fdf4;
+    }
+
+    .doc-info-banner.action {
+      border-left-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .doc-info-title {
+      font-weight: 800;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ========================================================================= */
+    /* 3. INDEX.HTML'DEN BİREBİR ALINAN ORİJİNAL KART VE ROZET CSS STİLLERİ */
+    /* ========================================================================= */
+    .order-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 9px;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .card-v-progress {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #e2e8f0;
+      border-radius: 9px 0 0 9px;
+      z-index: 10;
+    }
+
+    .card-v-check {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .card-v-check svg { width: 10px; height: 10px; }
+
+    .card-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    .order-card.expanded .card-header-bar {
+      border-radius: 9px 9px 0 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-header-row.row-1,
+    .card-header-row.row-2,
+    .card-header-row.row-3 {
+      display: contents;
+    }
+
+    .order-number-badge {
+      order: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 1px 6px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      color: #0f172a;
+      cursor: pointer;
+    }
+    .order-number-badge:hover { background: #f1f5f9; border-color: #94a3b8; }
+    .order-number-badge svg { width: 11px; height: 11px; color: #64748b; }
+
+    .header-cari-name {
+      order: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f172a;
+      margin: 0 4px;
+    }
+    .header-cari-name svg { width: 13px; height: 13px; color: #2563eb; }
+
+    .order-card.expanded .header-cari-name {
+      display: none !important;
+    }
+
+    .card-header-row.row-1 .row-right {
+      order: 3;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .delivery-type-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      color: #475569;
+    }
+    .delivery-type-icon svg { width: 12px; height: 12px; }
+
+    .depo-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 1px 5px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    .order-datetime {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #64748b;
+    }
+    .order-datetime svg { width: 12px; height: 12px; }
+
+    .sales-rep-badge {
+      order: 4;
+      display: inline-flex;
+      align-items: center;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+    }
+
+    .card-header-row.row-3 .row-left {
+      order: 5;
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+    .status-pill svg { width: 12px; height: 12px; }
+
+    .pill-taslak { background: var(--status-taslak-bg); color: var(--status-taslak); border: 1px solid var(--status-taslak-border); }
+    .pill-alindi { background: var(--status-alindi-bg); color: var(--status-alindi); border: 1px solid var(--status-alindi-border); }
+    .pill-hazirlaniyor { background: var(--status-hazirlaniyor-bg); color: var(--status-hazirlaniyor); border: 1px solid var(--status-hazirlaniyor-border); }
+    .pill-kargoda { background: var(--status-kargoda-bg); color: var(--status-kargoda); border: 1px solid var(--status-kargoda-border); }
+    .pill-faturalandi { background: var(--status-faturalandi-bg); color: var(--status-faturalandi); border: 1px solid var(--status-faturalandi-border); }
+    .pill-iptal { background: var(--status-iptal-bg); color: var(--status-iptal); border: 1px solid var(--status-iptal-border); }
+
+    .card-header-row.row-3 .row-right {
+      order: 6;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-actions {
+      height: 24px;
+      padding: 0 8px;
+      background: #0f172a;
+      color: #ffffff;
+      border: 1px solid #0f172a;
+      border-radius: 5px;
+      font-size: 11.5px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+    }
+    .btn-actions svg { width: 11px; height: 11px; }
+
+    .btn-card-expand {
+      width: 24px;
+      height: 24px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .btn-card-expand svg { width: 13px; height: 13px; transition: transform 0.2s; }
+    .order-card.expanded .btn-card-expand svg { transform: rotate(180deg); }
+
+    /* Açık Kart Gövdesi (4 Sütun Grid) */
+    .card-body-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1.1fr 1.3fr 0.9fr;
+      padding: 10px 14px;
+      gap: 10px;
+      border-top: 1px solid #f1f5f9;
+      border-radius: 0 0 9px 9px;
+      background: #ffffff;
+    }
+
+    .grid-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .col-title {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .col-title svg { width: 12px; height: 12px; }
+
+    .data-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 11.5px;
+      line-height: 1.25;
+    }
+
+    .data-label {
+      color: var(--text-muted);
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    .data-value {
+      color: var(--text-main);
+      font-weight: 600;
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .data-value-copyable {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .data-value-copyable:hover { color: #2563eb; }
+    .data-value-copyable svg { width: 11px; height: 11px; color: #94a3b8; }
+
+    .finance-col {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 6px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .price-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .price-title { font-size: 10.5px; font-weight: 600; color: #64748b; }
+    .price-amount { font-size: 14.5px; font-weight: 800; color: #0f172a; }
+
+    /* Footer */
+    .doc-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border-color);
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================= -->
+  <!-- 1. ÜST LOGO & BAŞLIK HEADER (INDEX.HTML İLE BİREBİR LOGO & FONT) -->
+  <!-- ========================================================================= -->
+  <header class="doc-top-header">
+    <div class="doc-header-container">
+      <a href="index.html" class="doc-brand-group">
+        <div class="doc-logo-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-grid-2x2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 12h18"/><path d="M12 3v18"/></svg>
+        </div>
+        <div>
+          <div class="doc-brand-title">DAVYE SİPARİŞ YÖNETİM SİSTEMİ</div>
+          <div class="doc-brand-subtitle">Resmi Mimari, Kod & UI/UX Dökümantasyonu</div>
+        </div>
+      </a>
+      <div class="doc-header-actions">
+        <a href="../index.html" target="_blank" class="btn-live-preview">
+          <span>Canlı Sipariş Panelini Aç</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 2. ANA GÖVDE: SOLDA CANLI ARAMALI SIDEBAR + SAĞDA DETAYLI DÖKÜMANTASYON -->
+  <!-- ========================================================================= -->
+  <div class="doc-main-wrapper">
+    
+    <!-- SOL SIDEBAR (ARAMALI & SIRALI HİYERARŞİ) -->
+    <aside class="doc-sidebar">
+      <div class="doc-search-box">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="docSearchInput" placeholder="Dökümanda ara (örn: loader, badge, cari)..." oninput="filterDocNavigation(this.value)">
+      </div>
+
+      <ul class="doc-nav-list" id="docNavList">
+        <div class="doc-nav-group-title">1. Sistem Genel Mimarisi</div>
+        <li class="doc-nav-item active" data-keywords="genel mimari prensipler layout responsive mobil masaustu"><a href="#section-architecture"><i data-lucide="layout"></i> Mimari & Grid Kuralları</a></li>
+        <li class="doc-nav-item" data-keywords="zebra striping flat tasarim renk paleti arka plan"><a href="#section-colors"><i data-lucide="palette"></i> Renkler & Zebra Şerit</a></li>
+
+        <div class="doc-nav-group-title">2. Kart Yapısı & Veritabanı</div>
+        <li class="doc-nav-item" data-keywords="kart kapali acik baslik header body 4 sutun grid"><a href="#section-card-structure"><i data-lucide="layers"></i> Kart Yapısı (Kapalı/Açık)</a></li>
+        <li class="doc-nav-item" data-keywords="loader veritabani 4 saniye cache onbellek weakset simülasyon"><a href="#section-loader-cache"><i data-lucide="database"></i> 4s Loader & Cache</a></li>
+
+        <div class="doc-nav-group-title">3. Rozetler & Alan Detayları</div>
+        <li class="doc-nav-item" data-keywords="siparis numarasi 3 hane 007 kopyala panoya"><a href="#section-order-badge"><i data-lucide="hash"></i> 3 Hane Sipariş No</a></li>
+        <li class="doc-nav-item" data-keywords="durum rozetleri taslak alindi hazirlaniyor sevk iptal iade"><a href="#section-status-pills"><i data-lucide="tag"></i> Durum Rozetleri</a></li>
+        <li class="doc-nav-item" data-keywords="depo md mrl teslimat dhl kurye satis kanali trendyol dental"><a href="#section-meta-badges"><i data-lucide="truck"></i> Depo & Taşıyıcı & Kanal</a></li>
+
+        <div class="doc-nav-group-title">4. İşlemler & Modallar</div>
+        <li class="doc-nav-item" data-keywords="islemler menusu detaya git musteri detay islemi kopyala sil fatura"><a href="#section-actions-menu"><i data-lucide="more-horizontal"></i> İşlemler Menüsü (8 Aksiyon)</a></li>
+        <li class="doc-nav-item" data-keywords="modallar detay crm barkod zpl iptal kargo takip"><a href="#section-modals"><i data-lucide="app-window"></i> Modallar & CRM Akışları</a></li>
+
+        <div class="doc-nav-group-title">5. Filtreler & Sayfalama</div>
+        <li class="doc-nav-item" data-keywords="filtre sekmeler yatay scroll drawer cekmece sayfalama 1-10 / 21"><a href="#section-filters-pagination"><i data-lucide="filter"></i> Filtreler & Sayfalama</a></li>
+      </ul>
+    </aside>
+
+    <!-- SAĞ İÇERİK (GENELDEN DETAYA SIRALI VE GEREKÇELİ ANLATIM) -->
+    <main class="doc-content-area" id="docContentArea">
+
+      <!-- BÖLÜM 1: GENEL MİMARİ -->
+      <section class="doc-card-section" id="section-architecture">
+        <div class="doc-section-header">
+          <span class="doc-section-tag">Bölüm 1</span>
+          <h2 class="doc-section-title">Sistem Mimarisi & Responsive Grid Prensipleri</h2>
+          <p class="doc-section-desc">
+            Sipariş yönetim panelinin masaüstü ve mobil ekranlardaki yerleşim mantığı, performans optimizasyonları ve DOM hiyerarşisi.
+          </p>
+        </div>
+
+        <div class="doc-info-banner why">
+          <div class="doc-info-title"><i data-lucide="check-circle-2"></i> Neden Bu Yapı Seçildi?</div>
+          Operasyon ekibi binlerce satırlık sipariş listesini incelerken ekranı tek bir bakışta tarayabilmelidir. Bu nedenle masaüstünde tüm kartlar kapalı tek satırlık başlıkla gelir; kullanıcı sadece ilgilendiği kartı açarak altındaki 4 sütunlu detaylara ulaşır.
+        </div>
+
+        <table class="doc-meta-table">
+          <thead>
+            <tr>
+              <th>Görünüm Türü</th>
+              <th>Medya Sorgusu (Breakpoint)</th>
+              <th>Başlık Düzeni</th>
+              <th>Gövde Düzeni</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Masaüstü (Desktop)</strong></td>
+              <td><code>@media (min-width: 641px)</code></td>
+              <td>Tek yatay esnek satır (<code>display: flex; gap: 8px</code>). Açılınca Cari Adı başlıktan gizlenir.</td>
+              <td>4 Sütunlu Grid: <code>1.3fr 1.1fr 1.3fr 0.9fr</code></td>
+            </tr>
+            <tr>
+              <td><strong>Mobil (Mobile)</strong></td>
+              <td><code>@media (max-width: 640px)</code></td>
+              <td>3 Ayrı Satır (1. Satır: Sipariş No & Tarih, 2. Satır: Cari Adı & Kanal, 3. Satır: Tutar & Rozet)</td>
+              <td>Tek sütun dikey kart gövdesi (dikey akış)</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- BÖLÜM 2: RENKLER & ZEBRA ÇİZGİLERİ -->
+      <section class="doc-card-section" id="section-colors">
+        <div class="doc-section-header">
+          <span class="doc-section-tag">Bölüm 2</span>
+          <h2 class="doc-section-title">Renk Paleti & Zebra Striping (#ffffff / #f0f6fe)</h2>
+          <p class="doc-section-desc">
+            Göz yorgunluğunu önleyen ve ardışık kartların birbiriyle karışmasını engelleyen zebra arka plan renk kuralı.
+          </p>
+        </div>
+
+        <div class="doc-info-banner why">
+          <div class="doc-info-title"><i data-lucide="info"></i> Neden Zebra Striping ve Flat Tasarım?</div>
+          Yoğun sipariş listelerinde kart gölgeleri (<code>box-shadow</code>) görsel gürültü oluşturur. Kartlar düz kenarlık (<code>border: 1px solid #cbd5e1</code>) ve tekil kartlarda <code>#ffffff</code>, çift kartlarda <code>#f0f6fe</code> (hafif pastel mavi) arka planla ayrıştırılarak en yüksek okunabilirlik elde edilmiştir.
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 14px;">
+          <div style="flex: 1; padding: 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;">
+            <strong>Tekil Satırlar (Odd Cards):</strong> <code>#ffffff</code> (Saf Beyaz)
+          </div>
+          <div style="flex: 1; padding: 14px; background: #f0f6fe; border: 1px solid #cbd5e1; border-radius: 8px;">
+            <strong>Çift Satırlar (Even Cards):</strong> <code>#f0f6fe</code> (Pastel Buz Mavisi)
+          </div>
+        </div>
+      </section>
+
+      <!-- BÖLÜM 3: KART YAPISI (BİREBİR HTML CANLI KART ÖRNEĞİ) -->
+      <section class="doc-card-section" id="section-card-structure">
+        <div class="doc-section-header">
+          <span class="doc-section-tag">Bölüm 3</span>
+          <h2 class="doc-section-title">Sipariş Kartı Yapısı (Canlı HTML Kart)</h2>
+          <p class="doc-section-desc">
+            Aşağıdaki kart, ana sayfadaki (<code>index.html</code>) kart yapısı ile birebir aynı CSS ve HTML ile çalışır. Tıklayarak açıp kapatabilirsiniz.
+          </p>
+        </div>
+
+        <!-- Birebir Canlı Sipariş Kartı Örneği -->
+        <div class="order-card status-taslak" style="margin-top: 16px;">
+          <div class="card-v-progress" style="background:#e2e8f0;">
+            <div class="card-v-check" style="background:#64748b;"><i data-lucide="loader-2"></i></div>
+          </div>
+
+          <div class="card-header-bar" onclick="this.closest('.order-card').classList.toggle('expanded')">
+            <div class="card-header-row row-1">
+              <div class="row-left">
+                <div class="order-number-badge" title="Tamamını kopyala: 1-WS-2-68007">
+                  <span>007</span>
+                  <i data-lucide="copy"></i>
+                </div>
+              </div>
+              <div class="row-right">
+                <span class="delivery-type-icon" title="Teslimat: DHL Kargo (KA)"><i data-lucide="truck"></i></span>
+                <span class="depo-badge">MD</span>
+                <span class="order-datetime"><i data-lucide="calendar"></i> 22-08-2026 <i data-lucide="clock" style="margin-left:2px;"></i> 01:10</span>
+              </div>
+            </div>
+
+            <div class="card-header-row row-2">
+              <span class="header-cari-name">
+                <i data-lucide="building-2"></i>
+                <span>ÖZEL DENTAPARK POLİKLİNİĞİ</span>
+                <span style="color:#64748b; font-weight:500;">/ Kadıköy</span>
+              </span>
+              <span class="sales-rep-badge">DENTAL PİYASA</span>
+            </div>
+
+            <div class="card-header-row row-3">
+              <div class="row-left">
+                <span class="status-pill pill-taslak"><i data-lucide="clock"></i> Tamamlanmamış Sipariş</span>
+              </div>
+              <div class="row-right">
+                <button class="btn-actions" onclick="event.stopPropagation()">İşlemler ▾</button>
+                <button class="btn-card-expand"><i data-lucide="chevron-down"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body-grid">
+            <!-- 1. Sütun: Cari -->
+            <div class="grid-col">
+              <div class="col-title"><i data-lucide="building-2"></i> Cari Bilgileri | Tüzel</div>
+              <div class="data-row"><span class="data-label">Ünvan:</span> <span class="data-value">ÖZEL DENTAPARK POLİKLİNİĞİ</span></div>
+              <div class="data-row"><span class="data-label">VKN / VD:</span> <span class="data-value">8472910482 - Kadıköy V.D.</span></div>
+              <div class="data-row"><span class="data-label">UTS / GLN:</span> <span class="data-value">2660008472910 / 8680008472910</span></div>
+              <div class="data-row"><span class="data-label">Adres:</span> <span class="data-value">Suadiye, Kadıköy / İstanbul</span></div>
+            </div>
+
+            <!-- 2. Sütun: Fatura -->
+            <div class="grid-col">
+              <div class="col-title"><i data-lucide="file-check"></i> Fatura &amp; Vade</div>
+              <div class="data-row"><span class="data-label">Fatura Tipi:</span> <span class="data-value">Faturalı-E-Fatura</span></div>
+              <div class="data-row"><span class="data-label">Fatura No:</span> <span class="data-value">Tamamlanmamış</span></div>
+              <div class="data-row"><span class="data-label">Vade:</span> <span class="data-value" style="font-weight:700;">30 / 10 / 2026</span></div>
+              <div class="data-row"><span class="data-label">Açıklama:</span> <span class="data-value" title="Steril ambalaj kontrolü">Steril ambalaj kontrolü talep edildi...</span></div>
+            </div>
+
+            <!-- 3. Sütun: Lojistik -->
+            <div class="grid-col">
+              <div class="col-title"><i data-lucide="truck"></i> Lojistik &amp; Sevk</div>
+              <div class="data-row"><span class="data-label">Teslimat:</span> <span class="data-value">DHL Kargo (KA)</span></div>
+              <div class="data-row"><span class="data-label">Ürün:</span> <span class="data-value"><strong>64 / 0</strong> Adet</span></div>
+              <div class="data-row"><span class="data-label">Kargo:</span> <span class="data-value" style="color:#64748b;">Taslak / Onay Bekliyor</span></div>
+            </div>
+
+            <!-- 4. Sütun: Finans -->
+            <div class="grid-col finance-col">
+              <div class="price-group">
+                <span class="price-title">Sipariş Tutarı</span>
+                <span class="price-amount" style="color:#dc2626;">8.420,00 ₺</span>
+              </div>
+              <div class="price-group">
+                <span class="price-title">Ödeme:</span>
+                <span style="font-size:12px; font-weight:700; color:#dc2626;">0,00 ₺</span>
+              </div>
+              <div class="price-group">
+                <span class="price-title">Bakiye Durumu:</span>
+                <span style="font-size:11px; font-weight:700; color:#dc2626;">Ödeme Alınmadı</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="doc-info-banner action">
+          <div class="doc-info-title"><i data-lucide="mouse-pointer"></i> Tıklanıldığında Ne Oluyor?</div>
+          Karta tıklandığında <code>handleCardHeaderClick()</code> fonksiyonu tetiklenir. Başlıktaki Cari Adı gizlenir, altındaki 4 sütunlu <code>card-body-grid</code> aşağı doğru açılır ve sağdaki ok 180° döner.
+        </div>
+      </section>
+
+      <!-- BÖLÜM 4: 4s VERİTABANI LOADER & CACHE -->
+      <section class="doc-card-section" id="section-loader-cache">
+        <div class="doc-section-header">
+          <span class="doc-section-tag">Bölüm 4</span>
+          <h2 class="doc-section-title">4 Saniyelik Veritabanı Loader ve Client-Side Cache</h2>
+          <p class="doc-section-desc">
+            Sistemin gerçekçi bir ERP veritabanı sorgusu simülasyonu sağlaması ve aynı oturumda gereksiz beklemeleri önleyen hafıza yönetimi.
+          </p>
+        </div>
+
+        <div class="doc-info-banner why">
+          <div class="doc-info-title"><i data-lucide="cpu"></i> Neden 4 Saniye ve Neden Cache Yapıldı?</div>
+          Kullanıcı panelde kartları açarken sanki canlı sunucudan veya ERP API'sinden detaylı stok, cari bakiye ve kargo hareketleri sorgulanıyormuş hissi oluşturmak için 4 saniyelik şık bir animasyon eklendi. Ancak kullanıcı aynı kartı kapatıp tekrar açtığında bu veriler tarayıcı önbelleğinde (<code>WeakSet</code>) bulunduğu için <strong>tekrar loader görmez ve anında açılır</strong>.
+        </div>
+
+        <table class="doc-meta-table">
+          <thead>
+            <tr>
+              <th>Durum</th>
+              <th>Tetikleyici</th>
+              <th>Davranış & Süreç</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>İlk Açılış (First Open)</strong></td>
+              <td>Kullanıcı kapalı karta ilk kez tıklar</td>
+              <td><code>.loading</code> sınıfı eklenir; 4000ms boyunca animasyonlu spinner ve <em>"Veritabanından canlı cari, fatura ve sevk kayıtları alınıyor"</em> mesajı gösterilir. Süre bitince kart verileri açılır ve <code>loadedCardsCache.add(card)</code> ile hafızaya alınır.</td>
+            </tr>
+            <tr>
+              <td><strong>Sonraki Açılışlar (Cached)</strong></td>
+              <td>Kullanıcı kartı kapatıp tekrar tıklar</td>
+              <td><code>loadedCardsCache.has(card)</code> kontrol edilir; kart daha önce yüklendiği için loader gösterilmeden <strong>0ms gecikme ile anında açılır</strong>.</td>
+            </tr>
+            <tr>
+              <td><strong>Sayfa Yenileme (F5 / Refresh)</strong></td>
+              <td>Tarayıcı yenilendiğinde</td>
+              <td>Bellek sıfırlanır ve ilk tıklamada yeniden canlı sorgulama simülasyonu çalışır.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- BÖLÜM 5: 3 HANE SİPARİŞ NUMARASI -->
+      <section class="doc-card-section" id="section-order-badge">
+        <div class="doc-section-header">
+          <span class="doc-section-tag">Bölüm 5</span>
+          <h2 class="doc-section-title">3 Haneli Sipariş Numarası & Tam Kopyalama</h2>
+          <p class="doc-section-desc">
+            Kart başlığında alan tasarrufu sağlayan kompakt numara gösterimi ve panoya tam sipariş kodu aktarımı.
+          </p>
+        </div>
+
+        <div class="doc-info-banner why">
+          <div class="doc-info-title"><i data-lucide="copy"></i> Neden Sadece Son 3 Hane Gösteriliyor?</div>
+          Masaüstü ve mobil ekranlarda sipariş kodunun tamamı (<code>#1-WS-2-68007</code>) uzun yer kaplayarak diğer kritik bilgileri (Cari Adı, Durum Rozeti vb.) sıkıştırmaktaydı. Sadece son 3 hane (<code>007</code>, <code>000</code>, <code>021</code>) gösterilerek kompaktlık sağlandı.
+        </div>
+
+        <div class="doc-info-banner action">
+          <div class="doc-info-title"><i data-lucide="clipboard-check"></i> Kopyalama Davranışı</div>
+          Kullanıcı <code>007</code> rozetine veya kopyala ikonuna tıkladığında <code>copyToClipboard('1-WS-2-68007')</code> fonksiyonu çalışır; panoya <strong>tam sipariş numarası</strong> kopyalanır ve ekranda <em>"1-WS-2-68007 panoya kopyalandı!"</em> toast bildirimi gösterilir. Arama kutusuna hem <code>007</code> hem de <code>1-WS-2-68007</code> yazıldığında kart bulunur.
+        </div>
+      </section>
+
+      <!-- BÖLÜM 6: DURUM ROZETLERİ -->
+      <section class="doc-card-section" id="section-status-pills">
+        <div class="doc-section-header">
+          <span class="doc-section-tag">Bölüm 6</span>
+          <h2 class="doc-section-title">Sipariş Durum Rozetleri & Renk Kodları</h2>
+          <p class="doc-section-desc">
+            Siparişin operasyonel yaşam döngüsünü belirten standart durum rozetleri.
+          </p>
+        </div>
+
+        <table class="doc-meta-table">
+          <thead>
+            <tr>
+              <th>Durum Adı</th>
+              <th>Canlı Görünüm</th>
+              <th>CSS Sınıfı</th>
+              <th>Anlamı & Tetiklenme Koşulu</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Tamamlanmamış</strong></td>
+              <td><span class="status-pill pill-taslak"><i data-lucide="clock"></i> Tamamlanmamış</span></td>
+              <td><code>.pill-taslak</code></td>
+              <td>Taslak aşamasında, sepet onay bekliyor.</td>
+            </tr>
+            <tr>
+              <td><strong>Sipariş Alındı</strong></td>
+              <td><span class="status-pill pill-alindi"><i data-lucide="check"></i> Sipariş Alındı</span></td>
+              <td><code>.pill-alindi</code></td>
+              <td>Ödeme onaylandı, depo iş emri kuyruğuna girdi.</td>
+            </tr>
+            <tr>
+              <td><strong>Hazırlanıyor</strong></td>
+              <td><span class="status-pill pill-hazirlaniyor"><i data-lucide="package"></i> Hazırlanıyor</span></td>
+              <td><code>.pill-hazirlaniyor</code></td>
+              <td>Depo el terminali (WMS) ile ürünler toplanıyor.</td>
+            </tr>
+            <tr>
+              <td><strong>Kargoya Verildi</strong></td>
+              <td><span class="status-pill pill-kargoda"><i data-lucide="truck"></i> Kargoya Verildi</span></td>
+              <td><code>.pill-kargoda</code></td>
+              <td>Taşıyıcı firmaya teslim edildi, takip no aktif.</td>
+            </tr>
+            <tr>
+              <td><strong>Faturalandı</strong></td>
+              <td><span class="status-pill pill-faturalandi"><i data-lucide="file-check"></i> Faturası Kesildi</span></td>
+              <td><code>.pill-faturalandi</code></td>
+              <td>GİB E-Fatura entegrasyonu tamamlandı.</td>
+            </tr>
+            <tr>
+              <td><strong>İptal Edildi</strong></td>
+              <td><span class="status-pill pill-iptal"><i data-lucide="x-circle"></i> İptal Edildi</span></td>
+              <td><code>.pill-iptal</code></td>
+              <td>Müşteri veya operasyon tarafından iptal edildi.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- BÖLÜM 7: İŞLEMLER MENÜSÜ -->
+      <section class="doc-card-section" id="section-actions-menu">
+        <div class="doc-section-header">
+          <span class="doc-section-tag">Bölüm 7</span>
+          <h2 class="doc-section-title">İşlemler Menüsü (8 Operasyonel Aksiyon)</h2>
+          <p class="doc-section-desc">
+            Her kartın sağ üst köşesindeki "İşlemler ▾" butonuna tıklandığında açılan menü seçenekleri ve tetikledikleri işlemler.
+          </p>
+        </div>
+
+        <table class="doc-meta-table">
+          <thead>
+            <tr>
+              <th>Aksiyon</th>
+              <th>İkon & Renk</th>
+              <th>Tetiklenen Fonksiyon</th>
+              <th>Ne Yapar?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Detaya Git</strong></td>
+              <td><span style="color:#2563eb; font-weight:700;"><i data-lucide="edit-3"></i> Detaya Git</span></td>
+              <td><code>openDetailModal(orderId)</code></td>
+              <td>Sipariş kalemleri, lot numaraları, indirimler ve lojistik hareketlerini içeren tam detay modalını açar.</td>
+            </tr>
+            <tr>
+              <td><strong>Müşteri Detay</strong></td>
+              <td><i data-lucide="user"></i> Müşteri Detay</td>
+              <td><code>openCustomerModal(orderId)</code></td>
+              <td>Müşterinin VKN, Vergi Dairesi, GLN, UTS, Adres, Telefon ve Cari Risk Limitini gösteren CRM modalını açar.</td>
+            </tr>
+            <tr>
+              <td><strong>İşlemi Kopyala</strong></td>
+              <td><i data-lucide="printer"></i> İşlemi Kopyala</td>
+              <td><code>duplicateOrder(orderId)</code></td>
+              <td>Siparişi klonlar ve yeni bir taslak sipariş oluşturur.</td>
+            </tr>
+            <tr>
+              <td><strong>Fatura Kes / Görüntüle</strong></td>
+              <td><i data-lucide="file-text"></i> Fatura</td>
+              <td><code>openDetailModal(orderId)</code></td>
+              <td>E-Fatura kesme veya mevcut faturayı PDF/XML olarak görüntüleme ekranını açar.</td>
+            </tr>
+            <tr>
+              <td><strong>İrsaliye Yazdır</strong></td>
+              <td><i data-lucide="file-check"></i> İrsaliye</td>
+              <td><code>printModalOrder()</code></td>
+              <td>Termal veya A4 yazıcı formatında sevk irsaliyesi yazdırır.</td>
+            </tr>
+            <tr>
+              <td><strong>Not Ekle</strong></td>
+              <td><i data-lucide="message-square"></i> Not Ekle</td>
+              <td><code>openNoteModal(orderId)</code></td>
+              <td>Kartın üstüne sarı acil müşteri notu (<code>card-note-bar</code>) ekler.</td>
+            </tr>
+            <tr>
+              <td><strong>Siparişi İptal Et</strong></td>
+              <td><span style="color:#dc2626;"><i data-lucide="x-circle"></i> İptal Et</span></td>
+              <td><code>openCancelModal(orderId)</code></td>
+              <td>Gerekçe seçtirerek siparişi iptal durumuna geçirir.</td>
+            </tr>
+            <tr>
+              <td><strong>Sil</strong></td>
+              <td><span style="color:#dc2626; font-weight:700;"><i data-lucide="trash-2"></i> Sil</span></td>
+              <td><code>deleteOrder(orderId)</code></td>
+              <td>Onay aldıktan sonra kartı animasyonla listeden tamamen siler.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- BÖLÜM 8: FİLTRELER & SAYFALAMA -->
+      <section class="doc-card-section" id="section-filters-pagination">
+        <div class="doc-section-header">
+          <span class="doc-section-tag">Bölüm 8</span>
+          <h2 class="doc-section-title">Filtreleme Çekmecesi & Sayfalama Sayacı</h2>
+          <p class="doc-section-desc">
+            Üst sekmeler, gelişmiş filtreleme ve sayfalama barı tasarımı.
+          </p>
+        </div>
+
+        <div class="doc-info-banner why">
+          <div class="doc-info-title"><i data-lucide="sliders"></i> Filtreleme Mimarisi</div>
+          Kullanıcılar durum sekmelerinden tek tıkla siparişleri filtreleyebilir. Daha derin sorgular için sağdan kayarak açılan <strong>Kapsamlı Filtre Çekmecesi</strong> (<code>#filterDrawer</code>) kullanılır (Cari kod, satıcı kodu, işlem no, iade kutuları).
+        </div>
+
+        <div class="doc-info-banner action">
+          <div class="doc-info-title"><i data-lucide="list-ordered"></i> Sayfalama Sayacı Kuralı</div>
+          Sayfa boyutu seçicisinin hemen yanında <code>[ 1-10 / 21 ]</code> rozeti yer alır. Bu rozet kullanıcının toplam 21 kayıttan kaçıncı aralıkta olduğunu tek bakışta görmesini sağlar.
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 3. ALT FOOTER -->
+  <!-- ========================================================================= -->
+  <footer class="doc-footer">
+    <div><strong>Davye Sipariş Yönetim Paneli Dökümantasyonu</strong> • Geliştirilen tüm mimari ve bileşenlerin yaşayan resmi kılavuzudur.</div>
+  </footer>
+
+  <!-- Lucide Icons & Arama Scripti -->
+  <script>
+    lucide.createIcons();
+
+    // Sol Sidebar Canlı Filtreleme Fonksiyonu
+    function filterDocNavigation(query) {
+      query = query.toLowerCase().trim();
+      const items = document.querySelectorAll('.doc-nav-item');
+      const titles = document.querySelectorAll('.doc-nav-group-title');
+
+      items.forEach(item => {
+        const text = item.innerText.toLowerCase();
+        const keywords = item.getAttribute('data-keywords') || '';
+        if (text.includes(query) || keywords.includes(query)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // Aktif Sidebar Linkini Vurgulama
+    document.querySelectorAll('.doc-nav-item a').forEach(link => {
+      link.addEventListener('click', function() {
+        document.querySelectorAll('.doc-nav-item').forEach(i => i.classList.remove('active'));
+        this.closest('.doc-nav-item').classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
