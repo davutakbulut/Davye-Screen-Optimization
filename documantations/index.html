@@ -259,9 +259,7 @@
       gap: 24px;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    /* Smooth scroll only on anchor clicks */
 
     .doc-card-section {
       background: #ffffff;
@@ -1400,36 +1398,32 @@
       });
     });
 
-    // Otomatik Eşzamanlı ScrollSpy (Sağ Taraf Kaydıkça Sol Menünün Otomatik Seçilmesi)
+    // Ultra-Hızlı Performanslı ScrollSpy (IntersectionObserver ile 60fps Akıcı Kaydırma)
     const sections = document.querySelectorAll('.doc-card-section');
     const navItems = document.querySelectorAll('.doc-nav-item');
 
-    window.addEventListener('scroll', function() {
-      let currentSectionId = '';
-      const scrollPosition = window.scrollY + 120; // Header ofset payı
+    const observerOptions = {
+      root: null,
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0
+    };
 
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-          currentSectionId = section.getAttribute('id');
-        }
-      });
-
-      if (currentSectionId) {
-        navItems.forEach(item => {
-          const link = item.querySelector('a');
-          if (link && link.getAttribute('href') === '#' + currentSectionId) {
-            if (!item.classList.contains('active')) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const currentId = entry.target.getAttribute('id');
+          navItems.forEach(item => {
+            const link = item.querySelector('a');
+            if (link && link.getAttribute('href') === '#' + currentId) {
               navItems.forEach(i => i.classList.remove('active'));
               item.classList.add('active');
-              // Sidebar içinde görünür alanda tut
-              item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
             }
-          }
-        });
-      }
-    }, { passive: true });
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
   </script>
 </body>
 </html>
