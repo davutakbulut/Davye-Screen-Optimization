@@ -882,6 +882,144 @@
       }
     }
 
+
+    /* ========================================================================= */
+    /* BİREBİR INDEX.HTML TAMAMLAYICI STİLLER */
+    /* ========================================================================= */
+    .card-v-fill { width: 100%; height: 16.66%; background: #64748b; border-radius: 9px 0 0 0; }
+    .header-district { color: #64748b; font-weight: 500; }
+    .header-price-amount { font-size: 11px; font-weight: 700; color: #dc2626; margin-right: 4px; display: none; }
+    .price-unpaid { color: #dc2626; }
+    
+    .actions-dropdown { position: relative; display: inline-block; }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 4px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      z-index: 100;
+      min-width: 170px;
+      padding: 4px 0;
+    }
+    .actions-dropdown.show .dropdown-menu { display: block; }
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 7px 12px;
+      font-size: 12px;
+      color: #334155;
+      background: none;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .dropdown-item:hover { background: #f1f5f9; color: #0f172a; }
+    .dropdown-item svg { width: 14px; height: 14px; }
+    .dropdown-divider { height: 1px; background: #e2e8f0; margin: 4px 0; }
+    .dropdown-item.text-danger { color: #dc2626; }
+    .dropdown-item.text-danger:hover { background: #fef2f2; color: #b91c1c; }
+
+    .cari-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      margin-bottom: 2px;
+    }
+    .cari-title-left { display: inline-flex; align-items: center; gap: 4px; }
+    .cari-title-left svg { width: 13px; height: 13px; color: #2563eb; }
+    .copy-inline-icon { width: 11px; height: 11px; color: #94a3b8; margin-left: 2px; }
+
+    .badge-qty {
+      display: inline-flex;
+      align-items: center;
+      padding: 1px 6px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .order-desc-row { align-items: flex-start !important; }
+    .order-desc-val-wrap {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      max-width: 68%;
+    }
+    .order-desc-text {
+      font-size: 11px;
+      color: #475569;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.25;
+      text-align: right;
+    }
+    .btn-desc-eye {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      padding: 1px;
+    }
+    .btn-desc-eye:hover { color: #2563eb; }
+    .btn-desc-eye svg { width: 13px; height: 13px; }
+
+    .cargo-tracking-row { margin-top: 4px; }
+    .cargo-tracking-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 100%;
+      padding: 3.5px 8px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+      border: 1px solid;
+    }
+    .cargo-tracking-btn.btn-pending {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #64748b;
+    }
+    .cargo-tracking-btn svg { width: 12px; height: 12px; }
+
+    .price-paid-row { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; color: #64748b; }
+    .price-paid-val { font-weight: 700; }
+    .payment-status-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+    .payment-status-tag.pay-unpaid {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+    }
+
   </style>
 </head>
 <body>
@@ -1024,204 +1162,422 @@
         </div>
       </section>
 
-      <!-- BÖLÜM 3: KART YAPISI (CANLI KART ÖRNEĞİ) -->
+            <!-- BÖLÜM 3: KART YAPISI (CANLI KART ÖRNEĞİ) -->
       <section class="doc-card-section" id="section-card-structure">
         <div class="doc-section-header">
           <span class="doc-section-tag">Bölüm 3</span>
           <h2 class="doc-section-title">Sipariş Kartı Yapısı (Canlı HTML & CSS Önizleme)</h2>
           <p class="doc-section-desc">
-            Ana sayfadaki (<code>index.html</code>) kart yapısı ile birebir aynı CSS ve HTML ile çalışan canlı interaktif kartlar. Kartların üzerine tıklayarak açıp kapatabilirsiniz.
+            Ana sayfadaki (<code>index.html</code>) 1. sipariş kartı (<code>#1-WS-2-68007</code>) ile <strong>birebir aynı veriler, rozetler, ikonlar ve etiketlerle</strong> çalışan canlı kartlar. Kart başlığına tıklayarak açıp kapatabilirsiniz.
           </p>
         </div>
 
         <h3 style="font-size: 14.5px; font-weight: 800; color: #0f172a; margin: 16px 0 8px 0; display: flex; align-items: center; gap: 6px;">
-          <i data-lucide="monitor" style="width:16px; height:16px; color:#2563eb;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
           1. Masaüstü Canlı Kart Görünümü (Desktop View)
         </h3>
         <p style="font-size: 12px; color: #64748b; margin-bottom: 10px;">
-          Kapalıyken tek satırda Cari Adı görünür; tıklandığında başlıktaki Cari Adı gizlenir ve altta 4 sütunlu <code>card-body-grid</code> açılır.
+          Masaüstünde kapalıyken tek satırda Cari Adı görünür; tıklandığında başlıktaki Cari Adı gizlenir ve altta 4 sütunlu <code>card-body-grid</code> açılır.
         </p>
 
-        <!-- Masaüstü Canlı Kart -->
-        <div class="order-card status-taslak" style="margin-bottom: 20px;">
-          <div class="card-v-progress" style="background:#e2e8f0;">
-            <div class="card-v-check" style="background:#64748b;"><i data-lucide="loader-2"></i></div>
+        <!-- Masaüstü Canlı Kart (Birebir index.html Verileri) -->
+        <div style="margin-bottom: 24px;">
+          <!-- KART: #1-WS-2-68007 (status-taslak) -->
+  <!-- ========================================================================= -->
+  <div class="order-card status-taslak" data-status="status-taslak">
+    
+    <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
+    <div class="card-v-progress" title="Sipariş İlerlemesi: 1/6 (Tamamlanmamış Sipariş)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
+      <div class="card-v-check"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="loader-2" aria-hidden="true" class="lucide lucide-loader-2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg></div>
+      <div class="card-v-fill"></div>
+    </div>
+
+    <!-- Üst Başlık (3 Satırlı Yapı) -->
+    <div class="card-header-bar" onclick="toggleDemoCard(this)">
+      <!-- 1. Satır: Sipariş No, Depo, Tarih, Saat -->
+      <div class="card-header-row row-1">
+        <div class="row-left">
+          <div class="order-number-badge" data-order-id="1-WS-2-68007" onclick="event.stopPropagation(); copyToClipboard('1-WS-2-68007')" title="Tamamını kopyala: 1-WS-2-68007" data-tip="Sipariş No: 1-WS-2-68007">
+            <span>007</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
           </div>
+        </div>
+        <div class="row-right">
+          <span class="delivery-type-icon" title="Teslimat: DHL Kargo (KA)" data-tip="Teslimat / Taşıma Türü İkonu • Lojistik modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg></span>
+          <span class="depo-badge" data-tip=\"Depo Kodu\">MD</span>
+          <span class="order-datetime" data-tip=\"Sipariş Tarih & Saati\">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar" aria-hidden="true" class="lucide lucide-calendar"><path d="M8 2v3"></path><path d="M16 2v3"></path><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18"></path></svg> 22-08-2026
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" style="margin-left: 2px;" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> 01:10
+          </span>
+        </div>
+      </div>
 
-          <div class="card-header-bar" onclick="toggleDemoCard(this)">
-            <div class="card-header-row row-1">
-              <div class="row-left">
-                <div class="order-number-badge" title="Tamamını kopyala: 1-WS-2-68007">
-                  <span>007</span>
-                  <i data-lucide="copy"></i>
-                </div>
-              </div>
-              <div class="row-right">
-                <span class="delivery-type-icon" title="Teslimat: DHL Kargo (KA)"><i data-lucide="truck"></i></span>
-                <span class="depo-badge">MD</span>
-                <span class="order-datetime"><i data-lucide="calendar"></i> 22-08-2026 <i data-lucide="clock" style="margin-left:2px;"></i> 01:10</span>
-              </div>
-            </div>
+      <!-- 2. Satır: Müşteri Adı / İlçe, Kullanıcı (Sipariş Kaynağı) -->
+      <div class="card-header-row row-2">
+        <span class="header-cari-name" style="" data-tip=\"Cari / Müşteri Ünvanı\">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="building-2" aria-hidden="true" class="lucide lucide-building-2"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg>
+          <span>ÖZEL DENTAPARK POLİKLİNİĞİ</span>
+          <span class="header-district">/ Kadıköy</span>
+        </span>
+        <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
+      </div>
 
-            <div class="card-header-row row-2">
-              <span class="header-cari-name">
-                <i data-lucide="building-2"></i>
-                <span>ÖZEL DENTAPARK POLİKLİNİĞİ</span>
-                <span style="color:#64748b; font-weight:500;">/ Kadıköy</span>
-              </span>
-              <span class="sales-rep-badge">DENTAL PİYASA</span>
-            </div>
-
-            <div class="card-header-row row-3">
-              <div class="row-left">
-                <span class="status-pill pill-taslak"><i data-lucide="clock"></i> Tamamlanmamış Sipariş</span>
-              </div>
-              <div class="row-right">
-                <button class="btn-actions" onclick="event.stopPropagation()">İşlemler ▾</button>
-                <button class="btn-card-expand" onclick="event.stopPropagation(); toggleDemoCard(this.closest('.order-card').querySelector('.card-header-bar'))"><i data-lucide="chevron-down"></i></button>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-body-grid">
-            <!-- 1. Sütun: Cari -->
-            <div class="grid-col">
-              <div class="col-title"><i data-lucide="building-2"></i> Cari Bilgileri | Tüzel</div>
-              <div class="data-row"><span class="data-label">Ünvan:</span> <span class="data-value">ÖZEL DENTAPARK POLİKLİNİĞİ</span></div>
-              <div class="data-row"><span class="data-label">VKN / VD:</span> <span class="data-value">8472910482 - Kadıköy V.D.</span></div>
-              <div class="data-row"><span class="data-label">UTS / GLN:</span> <span class="data-value">2660008472910 / 8680008472910</span></div>
-              <div class="data-row"><span class="data-label">Adres:</span> <span class="data-value">Suadiye, Kadıköy / İstanbul</span></div>
-            </div>
-
-            <!-- 2. Sütun: Fatura -->
-            <div class="grid-col">
-              <div class="col-title"><i data-lucide="file-check"></i> Fatura &amp; Vade</div>
-              <div class="data-row"><span class="data-label">Fatura Tipi:</span> <span class="data-value">Faturalı-E-Fatura</span></div>
-              <div class="data-row"><span class="data-label">Fatura No:</span> <span class="data-value">Tamamlanmamış</span></div>
-              <div class="data-row"><span class="data-label">Vade:</span> <span class="data-value" style="font-weight:700;">30 / 10 / 2026</span></div>
-              <div class="data-row"><span class="data-label">Açıklama:</span> <span class="data-value" title="Steril ambalaj kontrolü">Steril ambalaj kontrolü talep edildi...</span></div>
-            </div>
-
-            <!-- 3. Sütun: Lojistik -->
-            <div class="grid-col">
-              <div class="col-title"><i data-lucide="truck"></i> Lojistik &amp; Sevk</div>
-              <div class="data-row"><span class="data-label">Teslimat:</span> <span class="data-value">DHL Kargo (KA)</span></div>
-              <div class="data-row"><span class="data-label">Ürün:</span> <span class="data-value"><strong>64 / 0</strong> Adet</span></div>
-              <div class="data-row"><span class="data-label">Kargo:</span> <span class="data-value" style="color:#64748b;">Taslak / Onay Bekliyor</span></div>
-            </div>
-
-            <!-- 4. Sütun: Finans -->
-            <div class="grid-col finance-col">
-              <div class="price-group">
-                <span class="price-title">Sipariş Tutarı</span>
-                <span class="price-amount" style="color:#dc2626;">8.420,00 ₺</span>
-              </div>
-              <div class="price-group">
-                <span class="price-title">Ödeme:</span>
-                <span style="font-size:12px; font-weight:700; color:#dc2626;">0,00 ₺</span>
-              </div>
-              <div class="price-group">
-                <span class="price-title">Bakiye Durumu:</span>
-                <span style="font-size:11px; font-weight:700; color:#dc2626;">Ödeme Alınmadı</span>
-              </div>
+      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <div class="card-header-row row-3">
+        <div class="row-left">
+          <span class="header-price-amount price-unpaid" data-tip=\"Sipariş Tutarı\">8.420,00 ₺</span>
+          <span class="status-pill pill-taslak"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> Tamamlanmamış Sipariş</span>
+        </div>
+        <div class="row-right">
+          <div class="actions-dropdown" onclick="event.stopPropagation()">
+            <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
+              İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <div class="dropdown-menu">
+              <button class="dropdown-item" onclick="openDetailModal('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> <span style="color:#2563eb; font-weight:600;">Detaya Git</span></button>
+              <button class="dropdown-item" onclick="openCustomerModal('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="user" aria-hidden="true" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Müşteri Detay</button>
+              <button class="dropdown-item" onclick="duplicateOrder('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="printer" aria-hidden="true" class="lucide lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg> İşlemi Kopyala</button>
+              <button class="dropdown-item" onclick="openDetailModal('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Fatura Kes / Görüntüle</button>
+              <button class="dropdown-item" onclick="printModalOrder()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m9 15 2 2 4-4"/></svg> İrsaliye Yazdır</button>
+              <button class="dropdown-item" onclick="openNoteModal('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-square" aria-hidden="true" class="lucide lucide-message-square"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg> Not Ekle</button>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item text-danger" onclick="openCancelModal('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" class="lucide lucide-x-circle"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> Siparişi İptal Et</button>
+              <button class="dropdown-item text-danger" onclick="deleteOrder('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg> <span style="color:#dc2626; font-weight:600;">Sil</span></button>
             </div>
           </div>
+          <button class="btn-card-expand" title="Detayları Aç/Kapat" data-tip="Kart Detaylarını Aç/Kapat • Arayüz Genişletme Kontrolü">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gövde 4 Sütun Grid -->
+    <div class="card-body-grid">
+      <!-- 1. SÜTUN: Cari & Müşteri -->
+      <div class="grid-col">
+        <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="building-2" aria-hidden="true" class="lucide lucide-building-2"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg> Cari Bilgileri | Tüzel Kurumsal</div>
+        <div class="data-value cari-name" onclick="copyToClipboard('ÖZEL DENTAPARK POLİKLİNİĞİ')" title="Kopyala: ÖZEL DENTAPARK POLİKLİNİĞİ" style="">
+          <span class="cari-title-left"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="building-2" aria-hidden="true" class="lucide lucide-building-2"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg> ÖZEL DENTAPARK POLİKLİNİĞİ</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+        </div>
+        <div class="data-row">
+          <span class="data-label">VKN:</span>
+          <span class="data-value data-value-copyable" data-tip="Vergi Kimlik Numarası (VKN) • GİB / Cari Kart Veritabanından gelir" data-tip=\"Vergi Kimlik Numarası\" onclick="copyToClipboard('8472910482')" title="Kopyala: 8472910482">
+            <span><a href="tel:8472910482">8472910482</a></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Vergi Dairesi:</span>
+          <span class="data-value data-value-copyable" data-tip="Bağlı Olunan Vergi Dairesi • GİB / Cari Hesap detayından gelir" data-tip=\"Vergi Dairesi\" onclick="copyToClipboard('Kadıköy V.D.')" title="Kopyala: Kadıköy V.D.">
+            <span>Kadıköy V.D.</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">GLN:</span>
+          <span class="data-value data-value-copyable" data-tip="Global Lokasyon Numarası (GLN) • Sağlık Bakanlığı İlaç/Tıbbi Cihaz Takip Sisteminden gelir" data-tip=\"GLN Numarası\" onclick="copyToClipboard('8680008472910')" title="Kopyala: 8680008472910">
+            <span><a href="tel:8680008472910">8680008472910</a></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">UTS:</span>
+          <span class="data-value data-value-copyable" data-tip="Ürün Takip Sistemi (ÜTS) Firma Tanımlayıcı No • TİTCK ÜTS Entegrasyonundan gelir" data-tip=\"ÜTS Numarası\" onclick="copyToClipboard('2660008472910')" title="Kopyala: 2660008472910">
+            <span><a href="tel:2660008472910">2660008472910</a></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Adres:</span>
+          <span class="data-value data-value-copyable" data-tip="Tam Açık Teslimat & Sevk Adresi • Müşteri Teslimat Adres Defterinden gelir" data-tip=\"Teslimat Adresi\" onclick="copyToClipboard('Bağdat Cad. No: 142 Kat: 2 Daire: 5, Suadiye, Kadıköy / İstanbul')" title="Tam Adresi Kopyala: Bağdat Cad. No: 142 Kat: 2 Daire: 5, Suadiye, Kadıköy / İstanbul">
+            <span>Kadıköy / İstanbul</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- 2. SÜTUN: Fatura & Vade -->
+      <div class="grid-col">
+        <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura &amp; Vade</div>
+        <div class="data-row">
+          <span class="data-label">Fatura Tipi:</span>
+          <span class="data-value" data-tip="Fatura Belge Türü (E-Fatura / E-Arşiv / Faturasız) • Cari E-Dönüşüm profilinden gelir">Faturalı-E-Fatura</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Fatura No:</span>
+          <span class="data-value data-value-copyable" data-tip="ERP / Muhasebe Fatura Seri ve Sıra Numarası • GİB E-Fatura Entegrasyonundan gelir" data-tip=\"Fatura Numarası\" onclick="copyToClipboard('Tamamlanmamış')" title="Kopyala: Tamamlanmamış">
+            <span style="color:#475569; font-weight:700;">Tamamlanmamış</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">E-Fatura Seri:</span>
+          <span class="data-value data-value-copyable" data-tip="GİB E-Fatura / E-Arşiv 16 Haneli Belge Numarası • Özel Entegratörden gelir" onclick="copyToClipboard('-')" title="Kopyala: -">
+            <span>-</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Vade Tarihi:</span>
+          <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">30 / 10 / 2026</span>
+        </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Müşteri sevk öncesi steril ambalaj kontrolü ve UTS lot numarası eşleştirmesi talep etti." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Müşteri sevk öncesi steril ambalaj kontrolü ve UTS lot numarası eşleştirmesi talep etti.</span>
+            <button class="btn-desc-eye" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68007', 'Müşteri sevk öncesi steril ambalaj kontrolü ve UTS lot numarası eşleştirmesi talep etti.')" title="Açıklamanın Tamamını Gör" data-tip="Açıklamanın Tamamını Aç"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye" class="lucide lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. SÜTUN: Lojistik & Durum -->
+      <div class="grid-col">
+        <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg> Lojistik &amp; Durum</div>
+        <div class="data-row">
+          <span class="data-label">Teslimat:</span>
+          <span class="data-value data-value-copyable" data-tip="Kargo / Taşıyıcı Firma Adı ve Kodu • Lojistik Entegrasyonu / Taşıyıcı Sözleşmesinden gelir" data-tip=\"Kargo Taşıyıcı Firması\" onclick="copyToClipboard('DHL Kargo (KA)')" title="Kopyala: DHL Kargo (KA)">
+            <span>DHL Kargo (KA)</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Ürün Sayısı:</span>
+          <span class="data-value" data-tip="Siparişteki Toplam Ürün ve Toplanan Ürün Miktarı • Depo El Terminali (WMS) sayımından gelir"><span class="badge-qty" title="Toplam Ürün: 64 | Toplanan: 0"><strong>64 / 0</strong> Adet</span></span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Kargo Durumu:</span>
+          <span class="data-value" data-tip="Anlık Kargo / Sevk Operasyon Aşaması • Kargo Entegrasyonu / Depo Takibinden gelir" style="color: #64748b; font-weight:600;">Taslak / Onay Bekliyor</span>
+        </div>
+        <div class="cargo-tracking-row"><a href="javascript:void(0)" onclick="openDetailModal('1-WS-2-68007')" class="cargo-tracking-btn btn-pending" style="flex:1;" data-tip="Canlı Kargo Takip & Sevk Barkodu Butonu • Kargo API & ZPL Servisinden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> Tamamlanmamış / Onay Bekliyor</a></div>
+      </div>
+
+      <!-- 4. SÜTUN: Finansal Özet -->
+      <div class="grid-col finance-col">
+        <div class="price-group">
+          <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
+          <span class="price-amount" style="color: #dc2626;">8.420,00 ₺</span>
+        </div>
+        <div class="price-group" style="margin-top: 2px;">
+          <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
+            <span>Ödeme:</span>
+            <span class="price-paid-val" style="color: #dc2626;">0,00 ₺</span>
+          </div>
+          <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg> Ödenmedi</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
         </div>
 
         <h3 style="font-size: 14.5px; font-weight: 800; color: #0f172a; margin: 24px 0 8px 0; display: flex; align-items: center; gap: 6px;">
-          <i data-lucide="smartphone" style="width:16px; height:16px; color:#2563eb;"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
           2. Mobil Canlı Kart Görünümü (Mobile 3-Row View)
         </h3>
         <p style="font-size: 12px; color: #64748b; margin-bottom: 10px;">
           Mobilde (@media max-width: 640px) kart başlığı tam 3 satırdır ve tıklandığında dikey tek sütun açılır.
         </p>
 
-        <!-- Mobil Canlı Kart Çerçevesi -->
+        <!-- Mobil Canlı Kart Çerçevesi (Birebir index.html Verileri) -->
         <div class="mobile-phone-preview-box">
           <div style="font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between;">
             <span>📱 Mobil Ekran Simülasyonu (360px)</span>
             <span>Dokunun &amp; Açın</span>
           </div>
-          
-          <div class="order-card status-taslak">
-            <div class="card-v-progress" style="background:#e2e8f0;">
-              <div class="card-v-check" style="background:#64748b;"><i data-lucide="loader-2"></i></div>
-            </div>
+          <!-- KART: #1-WS-2-68007 (status-taslak) -->
+  <!-- ========================================================================= -->
+  <div class="order-card status-taslak" data-status="status-taslak">
+    
+    <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
+    <div class="card-v-progress" title="Sipariş İlerlemesi: 1/6 (Tamamlanmamış Sipariş)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
+      <div class="card-v-check"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="loader-2" aria-hidden="true" class="lucide lucide-loader-2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg></div>
+      <div class="card-v-fill"></div>
+    </div>
 
-            <div class="card-header-bar" onclick="toggleDemoCard(this)">
-              <!-- 1. Satır: Sipariş No & Depo & Tarih/Saat -->
-              <div class="card-header-row row-1">
-                <div class="row-left">
-                  <div class="order-number-badge">
-                    <span>007</span>
-                    <i data-lucide="copy"></i>
-                  </div>
-                </div>
-                <div class="row-right">
-                  <span class="delivery-type-icon"><i data-lucide="truck"></i></span>
-                  <span class="depo-badge">MD</span>
-                  <span class="order-datetime"><i data-lucide="calendar"></i> 22-08-2026 01:10</span>
-                </div>
-              </div>
+    <!-- Üst Başlık (3 Satırlı Yapı) -->
+    <div class="card-header-bar" onclick="toggleDemoCard(this)">
+      <!-- 1. Satır: Sipariş No, Depo, Tarih, Saat -->
+      <div class="card-header-row row-1">
+        <div class="row-left">
+          <div class="order-number-badge" data-order-id="1-WS-2-68007" onclick="event.stopPropagation(); copyToClipboard('1-WS-2-68007')" title="Tamamını kopyala: 1-WS-2-68007" data-tip="Sipariş No: 1-WS-2-68007">
+            <span>007</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </div>
+        </div>
+        <div class="row-right">
+          <span class="delivery-type-icon" title="Teslimat: DHL Kargo (KA)" data-tip="Teslimat / Taşıma Türü İkonu • Lojistik modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg></span>
+          <span class="depo-badge" data-tip=\"Depo Kodu\">MD</span>
+          <span class="order-datetime" data-tip=\"Sipariş Tarih & Saati\">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar" aria-hidden="true" class="lucide lucide-calendar"><path d="M8 2v3"></path><path d="M16 2v3"></path><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18"></path></svg> 22-08-2026
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" style="margin-left: 2px;" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> 01:10
+          </span>
+        </div>
+      </div>
 
-              <!-- 2. Satır: Cari Adı & İlçe & Satış Kanalı -->
-              <div class="card-header-row row-2">
-                <span class="header-cari-name">
-                  <i data-lucide="building-2"></i>
-                  <span>ÖZEL DENTAPARK POLİKLİNİĞİ</span>
-                  <span style="color:#64748b; font-weight:500;">/ Kadıköy</span>
-                </span>
-                <span class="sales-rep-badge">DENTAL PİYASA</span>
-              </div>
+      <!-- 2. Satır: Müşteri Adı / İlçe, Kullanıcı (Sipariş Kaynağı) -->
+      <div class="card-header-row row-2">
+        <span class="header-cari-name" style="" data-tip=\"Cari / Müşteri Ünvanı\">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="building-2" aria-hidden="true" class="lucide lucide-building-2"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg>
+          <span>ÖZEL DENTAPARK POLİKLİNİĞİ</span>
+          <span class="header-district">/ Kadıköy</span>
+        </span>
+        <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
+      </div>
 
-              <!-- 3. Satır: Durum Rozeti & İşlemler Butonu & Aç/Kapa Oku -->
-              <div class="card-header-row row-3">
-                <div class="row-left">
-                  <span class="status-pill pill-taslak"><i data-lucide="clock"></i> Tamamlanmamış</span>
-                </div>
-                <div class="row-right">
-                  <button class="btn-actions" onclick="event.stopPropagation()">İşlemler ▾</button>
-                  <button class="btn-card-expand" onclick="event.stopPropagation(); toggleDemoCard(this.closest('.order-card').querySelector('.card-header-bar'))"><i data-lucide="chevron-down"></i></button>
-                </div>
-              </div>
-            </div>
-
-            <div class="card-body-grid">
-              <!-- 1. Sütun: Cari -->
-              <div class="grid-col">
-                <div class="col-title"><i data-lucide="building-2"></i> Cari Bilgileri | Tüzel</div>
-                <div class="data-row"><span class="data-label">Ünvan:</span> <span class="data-value">ÖZEL DENTAPARK POLİKLİNİĞİ</span></div>
-                <div class="data-row"><span class="data-label">VKN / VD:</span> <span class="data-value">8472910482 - Kadıköy V.D.</span></div>
-                <div class="data-row"><span class="data-label">Adres:</span> <span class="data-value">Suadiye, Kadıköy / İstanbul</span></div>
-              </div>
-
-              <!-- 2. Sütun: Fatura -->
-              <div class="grid-col">
-                <div class="col-title"><i data-lucide="file-check"></i> Fatura &amp; Vade</div>
-                <div class="data-row"><span class="data-label">Fatura Tipi:</span> <span class="data-value">Faturalı-E-Fatura</span></div>
-                <div class="data-row"><span class="data-label">Vade:</span> <span class="data-value" style="font-weight:700;">30 / 10 / 2026</span></div>
-              </div>
-
-              <!-- 3. Sütun: Lojistik -->
-              <div class="grid-col">
-                <div class="col-title"><i data-lucide="truck"></i> Lojistik &amp; Sevk</div>
-                <div class="data-row"><span class="data-label">Teslimat:</span> <span class="data-value">DHL Kargo (KA)</span></div>
-                <div class="data-row"><span class="data-label">Ürün:</span> <span class="data-value"><strong>64 / 0</strong> Adet</span></div>
-              </div>
-
-              <!-- 4. Sütun: Finans -->
-              <div class="grid-col finance-col" style="margin-top: 4px;">
-                <div class="price-group">
-                  <span class="price-title">Sipariş Tutarı:</span>
-                  <span class="price-amount" style="color:#dc2626;">8.420,00 ₺</span>
-                </div>
-              </div>
+      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <div class="card-header-row row-3">
+        <div class="row-left">
+          <span class="header-price-amount price-unpaid" data-tip=\"Sipariş Tutarı\">8.420,00 ₺</span>
+          <span class="status-pill pill-taslak"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> Tamamlanmamış Sipariş</span>
+        </div>
+        <div class="row-right">
+          <div class="actions-dropdown" onclick="event.stopPropagation()">
+            <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
+              İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <div class="dropdown-menu">
+              <button class="dropdown-item" onclick="openDetailModal('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> <span style="color:#2563eb; font-weight:600;">Detaya Git</span></button>
+              <button class="dropdown-item" onclick="openCustomerModal('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="user" aria-hidden="true" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Müşteri Detay</button>
+              <button class="dropdown-item" onclick="duplicateOrder('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="printer" aria-hidden="true" class="lucide lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg> İşlemi Kopyala</button>
+              <button class="dropdown-item" onclick="openDetailModal('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Fatura Kes / Görüntüle</button>
+              <button class="dropdown-item" onclick="printModalOrder()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m9 15 2 2 4-4"/></svg> İrsaliye Yazdır</button>
+              <button class="dropdown-item" onclick="openNoteModal('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-square" aria-hidden="true" class="lucide lucide-message-square"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg> Not Ekle</button>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item text-danger" onclick="openCancelModal('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" class="lucide lucide-x-circle"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> Siparişi İptal Et</button>
+              <button class="dropdown-item text-danger" onclick="deleteOrder('1-WS-2-68007')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg> <span style="color:#dc2626; font-weight:600;">Sil</span></button>
             </div>
           </div>
+          <button class="btn-card-expand" title="Detayları Aç/Kapat" data-tip="Kart Detaylarını Aç/Kapat • Arayüz Genişletme Kontrolü">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gövde 4 Sütun Grid -->
+    <div class="card-body-grid">
+      <!-- 1. SÜTUN: Cari & Müşteri -->
+      <div class="grid-col">
+        <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="building-2" aria-hidden="true" class="lucide lucide-building-2"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg> Cari Bilgileri | Tüzel Kurumsal</div>
+        <div class="data-value cari-name" onclick="copyToClipboard('ÖZEL DENTAPARK POLİKLİNİĞİ')" title="Kopyala: ÖZEL DENTAPARK POLİKLİNİĞİ" style="">
+          <span class="cari-title-left"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="building-2" aria-hidden="true" class="lucide lucide-building-2"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg> ÖZEL DENTAPARK POLİKLİNİĞİ</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+        </div>
+        <div class="data-row">
+          <span class="data-label">VKN:</span>
+          <span class="data-value data-value-copyable" data-tip="Vergi Kimlik Numarası (VKN) • GİB / Cari Kart Veritabanından gelir" data-tip=\"Vergi Kimlik Numarası\" onclick="copyToClipboard('8472910482')" title="Kopyala: 8472910482">
+            <span><a href="tel:8472910482">8472910482</a></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Vergi Dairesi:</span>
+          <span class="data-value data-value-copyable" data-tip="Bağlı Olunan Vergi Dairesi • GİB / Cari Hesap detayından gelir" data-tip=\"Vergi Dairesi\" onclick="copyToClipboard('Kadıköy V.D.')" title="Kopyala: Kadıköy V.D.">
+            <span>Kadıköy V.D.</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">GLN:</span>
+          <span class="data-value data-value-copyable" data-tip="Global Lokasyon Numarası (GLN) • Sağlık Bakanlığı İlaç/Tıbbi Cihaz Takip Sisteminden gelir" data-tip=\"GLN Numarası\" onclick="copyToClipboard('8680008472910')" title="Kopyala: 8680008472910">
+            <span><a href="tel:8680008472910">8680008472910</a></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">UTS:</span>
+          <span class="data-value data-value-copyable" data-tip="Ürün Takip Sistemi (ÜTS) Firma Tanımlayıcı No • TİTCK ÜTS Entegrasyonundan gelir" data-tip=\"ÜTS Numarası\" onclick="copyToClipboard('2660008472910')" title="Kopyala: 2660008472910">
+            <span><a href="tel:2660008472910">2660008472910</a></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Adres:</span>
+          <span class="data-value data-value-copyable" data-tip="Tam Açık Teslimat & Sevk Adresi • Müşteri Teslimat Adres Defterinden gelir" data-tip=\"Teslimat Adresi\" onclick="copyToClipboard('Bağdat Cad. No: 142 Kat: 2 Daire: 5, Suadiye, Kadıköy / İstanbul')" title="Tam Adresi Kopyala: Bağdat Cad. No: 142 Kat: 2 Daire: 5, Suadiye, Kadıköy / İstanbul">
+            <span>Kadıköy / İstanbul</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- 2. SÜTUN: Fatura & Vade -->
+      <div class="grid-col">
+        <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura &amp; Vade</div>
+        <div class="data-row">
+          <span class="data-label">Fatura Tipi:</span>
+          <span class="data-value" data-tip="Fatura Belge Türü (E-Fatura / E-Arşiv / Faturasız) • Cari E-Dönüşüm profilinden gelir">Faturalı-E-Fatura</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Fatura No:</span>
+          <span class="data-value data-value-copyable" data-tip="ERP / Muhasebe Fatura Seri ve Sıra Numarası • GİB E-Fatura Entegrasyonundan gelir" data-tip=\"Fatura Numarası\" onclick="copyToClipboard('Tamamlanmamış')" title="Kopyala: Tamamlanmamış">
+            <span style="color:#475569; font-weight:700;">Tamamlanmamış</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">E-Fatura Seri:</span>
+          <span class="data-value data-value-copyable" data-tip="GİB E-Fatura / E-Arşiv 16 Haneli Belge Numarası • Özel Entegratörden gelir" onclick="copyToClipboard('-')" title="Kopyala: -">
+            <span>-</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Vade Tarihi:</span>
+          <span class="data-value" data-tip="Ödeme Vade Bitiş Tarihi • Cari Ödeme Koşulları & Sözleşme parametrelerinden hesaplanır" data-tip=\"Ödeme Vade Tarihi\" style="font-weight:700; color:#0f172a;">30 / 10 / 2026</span>
+        </div>
+        <div class="data-row order-desc-row">
+          <span class="data-label">Açıklama:</span>
+          <div class="order-desc-val-wrap">
+            <span class="order-desc-text" title="Müşteri sevk öncesi steril ambalaj kontrolü ve UTS lot numarası eşleştirmesi talep etti." data-tip="Sipariş Açıklaması • E-Ticaret / ERP Sipariş Notundan gelir">Müşteri sevk öncesi steril ambalaj kontrolü ve UTS lot numarası eşleştirmesi talep etti.</span>
+            <button class="btn-desc-eye" onclick="event.stopPropagation(); showFullDescModal('1-WS-2-68007', 'Müşteri sevk öncesi steril ambalaj kontrolü ve UTS lot numarası eşleştirmesi talep etti.')" title="Açıklamanın Tamamını Gör" data-tip="Açıklamanın Tamamını Aç"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye" class="lucide lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. SÜTUN: Lojistik & Durum -->
+      <div class="grid-col">
+        <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg> Lojistik &amp; Durum</div>
+        <div class="data-row">
+          <span class="data-label">Teslimat:</span>
+          <span class="data-value data-value-copyable" data-tip="Kargo / Taşıyıcı Firma Adı ve Kodu • Lojistik Entegrasyonu / Taşıyıcı Sözleşmesinden gelir" data-tip=\"Kargo Taşıyıcı Firması\" onclick="copyToClipboard('DHL Kargo (KA)')" title="Kopyala: DHL Kargo (KA)">
+            <span>DHL Kargo (KA)</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+          </span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Ürün Sayısı:</span>
+          <span class="data-value" data-tip="Siparişteki Toplam Ürün ve Toplanan Ürün Miktarı • Depo El Terminali (WMS) sayımından gelir"><span class="badge-qty" title="Toplam Ürün: 64 | Toplanan: 0"><strong>64 / 0</strong> Adet</span></span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Kargo Durumu:</span>
+          <span class="data-value" data-tip="Anlık Kargo / Sevk Operasyon Aşaması • Kargo Entegrasyonu / Depo Takibinden gelir" style="color: #64748b; font-weight:600;">Taslak / Onay Bekliyor</span>
+        </div>
+        <div class="cargo-tracking-row"><a href="javascript:void(0)" onclick="openDetailModal('1-WS-2-68007')" class="cargo-tracking-btn btn-pending" style="flex:1;" data-tip="Canlı Kargo Takip & Sevk Barkodu Butonu • Kargo API & ZPL Servisinden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> Tamamlanmamış / Onay Bekliyor</a></div>
+      </div>
+
+      <!-- 4. SÜTUN: Finansal Özet -->
+      <div class="grid-col finance-col">
+        <div class="price-group">
+          <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
+          <span class="price-amount" style="color: #dc2626;">8.420,00 ₺</span>
+        </div>
+        <div class="price-group" style="margin-top: 2px;">
+          <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
+            <span>Ödeme:</span>
+            <span class="price-paid-val" style="color: #dc2626;">0,00 ₺</span>
+          </div>
+          <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg> Ödenmedi</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
         </div>
 
         <div class="doc-banner action">
-          <div class="doc-banner-title"><i data-lucide="mouse-pointer"></i> Tıklanıldığında Ne Oluyor? (Adım 3215):</div>
+          <div class="doc-banner-title"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="m13 13 6 6"/></svg> Tıklanıldığında Ne Oluyor? (Adım 3215):</div>
           Karta tıklandığında <code>toggleDemoCard()</code> fonksiyonu tetiklenir. Kartın <code>.expanded</code> sınıfı açılır/kapanır; masaüstünde başlıktaki Cari Adı gizlenerek 4 sütunlu <code>card-body-grid</code> açılır, mobilde ise dikey kart gövdesi gösterilir.
         </div>
       </section>
@@ -1514,6 +1870,31 @@
 
     
     
+    
+    function toggleDropdown(btn) {
+      const dropdown = btn.closest('.actions-dropdown');
+      if (dropdown) {
+        document.querySelectorAll('.actions-dropdown').forEach(d => {
+          if (d !== dropdown) d.classList.remove('show');
+        });
+        dropdown.classList.toggle('show');
+      }
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.actions-dropdown')) {
+        document.querySelectorAll('.actions-dropdown').forEach(d => d.classList.remove('show'));
+      }
+    });
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Panoya kopyalandı: ' + text);
+      }).catch(() => {
+        prompt('Kopyala:', text);
+      });
+    }
+
     // Canlı Önizleme Kartlarını Açıp Kapatma Fonksiyonu
     function toggleDemoCard(headerEl) {
       const card = headerEl.closest('.order-card');
