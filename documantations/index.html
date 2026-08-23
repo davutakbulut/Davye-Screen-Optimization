@@ -624,6 +624,111 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* 12'li Hızlı Sıralama Çubuğu Stilleri */
+    .inline-sort-bar-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 8px 0 10px 0;
+      padding: 2px 2px 6px 2px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+    }
+    .inline-sort-bar-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .inline-sort-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      padding-right: 2px;
+    }
+
+    .sort-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      height: 30px;
+      padding: 0 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #475569;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      user-select: none;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .sort-chip:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+
+    .sort-chip.active-desc {
+      background: #eff6ff;
+      border-color: #3b82f6;
+      color: #1d4ed8;
+      font-weight: 700;
+      box-shadow: 0 1px 2px rgba(59, 130, 246, 0.12);
+    }
+
+    .sort-chip.active-asc {
+      background: #eff6ff;
+      border-color: #3b82f6;
+      color: #1d4ed8;
+      font-weight: 700;
+      box-shadow: 0 1px 2px rgba(59, 130, 246, 0.12);
+    }
+
+    .sort-chip-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      color: #64748b;
+    }
+    .sort-chip:hover .sort-chip-icon { color: #0f172a; }
+    .sort-chip.active-desc .sort-chip-icon,
+    .sort-chip.active-asc .sort-chip-icon { color: #2563eb; }
+
+    .sort-indicator {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 12px;
+      height: 12px;
+      margin-left: 2px;
+      flex-shrink: 0;
+    }
+    .sort-indicator svg {
+      width: 12px;
+      height: 12px;
+      color: #94a3b8;
+      transition: all 0.15s ease;
+    }
+    .sort-chip:hover .sort-indicator svg { color: #64748b; }
+    .sort-chip.active-desc .sort-indicator svg,
+    .sort-chip.active-asc .sort-indicator svg { color: #2563eb; }
+
     /* Mobil Çerçeve Simülatörü */
     .mobile-phone-preview-box {
       max-width: 420px;
@@ -1328,8 +1433,9 @@
         <li class="doc-nav-item" data-keywords="islemler menusu detaya git musteri detay islemi kopyala sil fatura irsaliye not iptal"><a href="#section-actions-menu"><i data-lucide="more-horizontal"></i> İşlemler Menüsü (8 Aksiyon)</a></li>
         <li class="doc-nav-item" data-keywords="modallar detay crm barkod zpl iptal kargo takip aciklama"><a href="#section-modals"><i data-lucide="app-window"></i> Modallar & CRM Akışları</a></li>
 
-        <div class="doc-nav-group-title">5. Filtreler & Sayfalama</div>
+        <div class="doc-nav-group-title">5. Filtreler, Sıralama & Sayfalama</div>
         <li class="doc-nav-item" data-keywords="filtre sekmeler yatay scroll drawer cekmece sayfalama 1-10 / 21"><a href="#section-filters-pagination"><i data-lucide="filter"></i> Filtreler & Sayfalama Sayacı</a></li>
+        <li class="doc-nav-item" data-keywords="12li siralama 3 kademeli dongu chip azalan artan varsayilan tutar vade cari siparis no depo teslimat"><a href="#section-inline-sorting"><i data-lucide="arrow-up-down"></i> 12'li Hızlı Sıralama Çubuğu</a></li>
       </ul>
     </aside>
 
@@ -2303,12 +2409,141 @@
         </div>
 
       </section>
+
+      <!-- BÖLÜM 11: 12'Lİ HIZLI SIRALAMA ÇUBUĞU -->
+      <section class="doc-card-section" id="section-inline-sorting">
+        <div class="doc-section-header">
+          <span class="doc-section-tag">Bölüm 11</span>
+          <h2 class="doc-section-title">12'li Hızlı Sıralama Çubuğu & 3-Kademeli Döngü Mantığı</h2>
+          <p class="doc-section-desc">
+            <code>top-toolbar</code> alanının hemen altında yer alan, açılır dropdown yerine yan yana dizilen ve 3 kademeli tıklama döngüsüyle (Varsayılan ⇄ / Azalan ↓ / Artan ↑) çalışan sıralama sistemi.
+          </p>
+        </div>
+
+        <div class="doc-banner why">
+          <div class="doc-banner-title"><i data-lucide="check-circle-2"></i> Neden Yapıldı & Kullanıcı Mantığı:</div>
+          Kullanıcının siparişleri tek tıkla 12 farklı kritere göre hızla filtreleyip sıralayabilmesi için dropdown menü açma zorunluluğu ortadan kaldırılmış; yatayda kaydırılabilir kompakt chip mimarisi getirilmiştir.
+        </div>
+
+        <div class="table-responsive-wrap"><table class="doc-meta-table">
+          <thead>
+            <tr>
+              <th>Tıklama Aşaması</th>
+              <th>Durum Kodu</th>
+              <th>İkon & Görünüm</th>
+              <th>Sıralama Davranışı</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Başlangıç / Sıfırlandı</strong></td>
+              <td><code>State 0</code></td>
+              <td>Nötr Gri Yatay Çift Ok (<code>⇄</code>)</td>
+              <td>Varsayılan sipariş sıralaması (<code>51898</code>'den <code>51878</code>'e doğru ardışık büyükten küçüğe).</td>
+            </tr>
+            <tr>
+              <td><strong>1. Tıklama</strong></td>
+              <td><code>State 1 (.active-desc)</code></td>
+              <td>Mavi Vurgu & Aşağı Ok (<code>↓</code>)</td>
+              <td>Büyükten Küçüğe / En Yeni / En Yüksek / Z - A / En Çok sıralama.</td>
+            </tr>
+            <tr>
+              <td><strong>2. Tıklama</strong></td>
+              <td><code>State 2 (.active-asc)</code></td>
+              <td>Mavi Vurgu & Yukarı Ok (<code>↑</code>)</td>
+              <td>Küçükten Büyüğe / En Eski / En Düşük / A - Z / En Az sıralama.</td>
+            </tr>
+            <tr>
+              <td><strong>3. Tıklama</strong></td>
+              <td><code>State 0</code></td>
+              <td>Nötr Gri Yatay Çift Ok (<code>⇄</code>)</td>
+              <td>Sıralama sıfırlanır ve varsayılan listeye (<code>State 0</code>) geri dönülür.</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <div style="margin-top: 20px;">
+          <div style="font-size: 11.5px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">Canlı 12'li Sıralama Çubuğu Simülatörü (Tıklayıp Deneyin):</div>
+          
+          <div class="inline-sort-bar-wrapper" style="background:#ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px 10px;">
+            <div class="inline-sort-title">
+              <i data-lucide="arrow-up-down"></i>
+              <span>Sırala:</span>
+            </div>
+            
+            <button type="button" class="sort-chip" onclick="demoCycleSort('order-no', this)">
+              <span class="sort-chip-icon"><i data-lucide="hash"></i></span>
+              <span class="sort-chip-label">Sipariş No</span>
+              <span class="sort-indicator"><i data-lucide="arrow-up-down"></i></span>
+            </button>
+            <button type="button" class="sort-chip" onclick="demoCycleSort('date', this)">
+              <span class="sort-chip-icon"><i data-lucide="calendar"></i></span>
+              <span class="sort-chip-label">Tarih</span>
+              <span class="sort-indicator"><i data-lucide="arrow-up-down"></i></span>
+            </button>
+            <button type="button" class="sort-chip" onclick="demoCycleSort('cari', this)">
+              <span class="sort-chip-icon"><i data-lucide="building-2"></i></span>
+              <span class="sort-chip-label">Cari</span>
+              <span class="sort-indicator"><i data-lucide="arrow-up-down"></i></span>
+            </button>
+            <button type="button" class="sort-chip" onclick="demoCycleSort('price', this)">
+              <span class="sort-chip-icon"><i data-lucide="wallet"></i></span>
+              <span class="sort-chip-label">Tutar</span>
+              <span class="sort-indicator"><i data-lucide="arrow-up-down"></i></span>
+            </button>
+            <button type="button" class="sort-chip" onclick="demoCycleSort('remaining', this)">
+              <span class="sort-chip-icon"><i data-lucide="alert-circle"></i></span>
+              <span class="sort-chip-label">Kalan Tutar</span>
+              <span class="sort-indicator"><i data-lucide="arrow-up-down"></i></span>
+            </button>
+            <button type="button" class="sort-chip" onclick="demoCycleSort('vade', this)">
+              <span class="sort-chip-icon"><i data-lucide="clock"></i></span>
+              <span class="sort-chip-label">Vade</span>
+              <span class="sort-indicator"><i data-lucide="arrow-up-down"></i></span>
+            </button>
+            <button type="button" class="sort-chip" onclick="demoCycleSort('qty', this)">
+              <span class="sort-chip-icon"><i data-lucide="package"></i></span>
+              <span class="sort-chip-label">Ürün Adedi</span>
+              <span class="sort-indicator"><i data-lucide="arrow-up-down"></i></span>
+            </button>
+            <button type="button" class="sort-chip" onclick="demoCycleSort('picked', this)">
+              <span class="sort-chip-icon"><i data-lucide="check-circle-2"></i></span>
+              <span class="sort-chip-label">Toplanan</span>
+              <span class="sort-indicator"><i data-lucide="arrow-up-down"></i></span>
+            </button>
+            <button type="button" class="sort-chip" onclick="demoCycleSort('depo', this)">
+              <span class="sort-chip-icon"><i data-lucide="warehouse"></i></span>
+              <span class="sort-chip-label">Depo</span>
+              <span class="sort-indicator"><i data-lucide="arrow-up-down"></i></span>
+            </button>
+            <button type="button" class="sort-chip" onclick="demoCycleSort('channel', this)">
+              <span class="sort-chip-icon"><i data-lucide="store"></i></span>
+              <span class="sort-chip-label">Satış Kanalı</span>
+              <span class="sort-indicator"><i data-lucide="arrow-up-down"></i></span>
+            </button>
+            <button type="button" class="sort-chip" onclick="demoCycleSort('invoice', this)">
+              <span class="sort-chip-icon"><i data-lucide="file-check"></i></span>
+              <span class="sort-chip-label">Fatura Durumu</span>
+              <span class="sort-indicator"><i data-lucide="arrow-up-down"></i></span>
+            </button>
+            <button type="button" class="sort-chip" onclick="demoCycleSort('delivery', this)">
+              <span class="sort-chip-icon"><i data-lucide="truck"></i></span>
+              <span class="sort-chip-label">Teslimat Türü</span>
+              <span class="sort-indicator"><i data-lucide="arrow-up-down"></i></span>
+            </button>
+          </div>
+          
+          <div id="demoSortStatusText" style="font-size: 11.5px; font-weight: 600; color: #64748b; margin-top: 8px;">
+            Aktif Sıralama: <span style="color:#0f172a;">Varsayılan (State 0)</span>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
   <!-- FOOTER -->
   <footer class="doc-footer">
-    <div><strong>Davye Sipariş Yönetim Paneli Dökümantasyonu</strong> • <strong>Son Güncelleme:</strong> 23 / 08 / 2026 04:00 • Konuşma geçmişindeki tüm gerçek kullanıcı kuralları ve korelasyonlarla oluşturulmuştur.</div>
+    <div><strong>Davye Sipariş Yönetim Paneli Dökümantasyonu</strong> • <strong>Son Güncelleme:</strong> 23 / 08 / 2026 15:05 • Konuşma geçmişindeki tüm gerçek kullanıcı kuralları ve korelasyonlarla oluşturulmuştur.</div>
   </footer>
 
   <script>
@@ -2332,6 +2567,43 @@
     
     
     
+    // 12'li Sıralama Demo Simülatörü
+    const demoSortStates = {};
+    const DEMO_SORT_ICONS = {
+      neutral: '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>',
+      down: '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>',
+      up: '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>'
+    };
+
+    function demoCycleSort(key, btn) {
+      const currentState = demoSortStates[key] || 0;
+      const nextState = (currentState + 1) % 3;
+
+      document.querySelectorAll('#section-inline-sorting .sort-chip').forEach(c => {
+        c.classList.remove('active-desc', 'active-asc');
+        const ind = c.querySelector('.sort-indicator');
+        if (ind) ind.innerHTML = DEMO_SORT_ICONS.neutral;
+      });
+
+      demoSortStates[key] = nextState;
+      const label = btn.querySelector('.sort-chip-label')?.innerText || key;
+      const statusText = document.getElementById('demoSortStatusText');
+      const indicator = btn.querySelector('.sort-indicator');
+
+      if (nextState === 0) {
+        if (indicator) indicator.innerHTML = DEMO_SORT_ICONS.neutral;
+        if (statusText) statusText.innerHTML = `Aktif Sıralama: <span style="color:#0f172a;">Varsayılan (State 0 - Sıfırlandı)</span>`;
+      } else if (nextState === 1) {
+        btn.classList.add('active-desc');
+        if (indicator) indicator.innerHTML = DEMO_SORT_ICONS.down;
+        if (statusText) statusText.innerHTML = `Aktif Sıralama: <span style="color:#2563eb; font-weight:700;">${label} (State 1: Büyükten Küçüğe ↓)</span>`;
+      } else if (nextState === 2) {
+        btn.classList.add('active-asc');
+        if (indicator) indicator.innerHTML = DEMO_SORT_ICONS.up;
+        if (statusText) statusText.innerHTML = `Aktif Sıralama: <span style="color:#2563eb; font-weight:700;">${label} (State 2: Küçükten Büyüğe ↑)</span>`;
+      }
+    }
+
     function toggleDropdown(btn) {
       const dropdown = btn.closest('.actions-dropdown');
       if (dropdown) {

@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 23 / 08 / 2026 04:00  
+> **Son Sistem Güncellemesi:** 23 / 08 / 2026 15:05  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -96,6 +96,18 @@ Her kartın işlemler menüsünde şu 6 aksiyon eksiksiz yer alır:
 1. Kısmi ödeme yapılmış siparişlerde tutar alanı hem başlıkta hem de finansal özet sütununda `[Toplam Tutar ₺] / [Kalan Ödenmemiş Tutar ₺]` formatında gösterilir (örn: `1.920,00 ₺ / 920,00 ₺` veya `12.500,00 ₺ / 7.500,00 ₺`).
 2. Soldaki toplam sipariş tutarı **Siyah** (`.price-total` - `#0f172a`), ayırıcı eğik çizgi **Gri** (`.price-divider` - `#94a3b8`), sağdaki ödenmemiş kalan tutar ise **Kırmızı** (`.price-remaining` - `#dc2626`) olarak vurgulanır.
 3. Ödeme durumu rozeti `pay-partial` (`Kısmi Ödendi`) sarı/amber tonlarında gösterilir.
+
+---
+
+### M. 12'li Hızlı Sıralama Çubuğu ve 3-Kademeli Tıklama Döngüsü (.inline-sort-bar-wrapper)
+1. `top-toolbar` alanının hemen altında, açılır dropdown yerine yan yana duran yatayda kaydırılabilir **12 adet sıralama chipleri** yer alır (`Sipariş No`, `Tarih`, `Cari`, `Tutar`, `Kalan Tutar`, `Vade`, `Ürün Adedi`, `Toplanan`, `Depo`, `Satış Kanalı`, `Fatura Durumu`, `Teslimat Türü`).
+2. **3-Kademeli Döngü Mantığı (3-State Cycle):**
+   - **Başlangıç / Nötr (State 0):** Yatay çift ok (`⇄` - `SORT_SVG_ICONS.neutral`).
+   - **1. Tıklama (State 1):** Büyükten Küçüğe / Azalan / En Yeni (Aşağı Ok `↓` - `.active-desc`).
+   - **2. Tıklama (State 2):** Küçükten Büyüğe / Artan / En Eski (Yukarı Ok `↑` - `.active-asc`).
+   - **3. Tıklama (State 0):** Sıralama sıfırlanır ve varsayılan sıralamaya (`51898`'den `51878`'e) geri döner.
+3. Başka bir chip tıklandığında önceki aktif chip derhal nötr duruma (`⇄`) döner ve yeni chip 1. tıklama (State 1) ile başlar.
+4. Sıralama yapıldığında sayfalama (`paginationBar`) daima listenin en altında kalır ve sayfa numarası `1`'e alınarak güncellenir.
 
 ---
 
