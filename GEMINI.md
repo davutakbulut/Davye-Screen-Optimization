@@ -47,8 +47,8 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
 
 ### E. Doğrulanmış Gerçek Veri Kuralı (Anti-Halüsinasyon)
 1. **Depo Kodları:** Yalnızca `MD` (Dental Ürünler) ve `ED` (Ecza Ürünleri) kodları kullanılabilir. Başka hayali depo kodu (MRL, GCL vb.) yazılamaz.
-2. **Satış Kanalları:** `TRENDYOL AŞ. ŞTİ.`, `DENTAL PİYASA`, `HEPSİBURADA`.
-3. **Taşıyıcı Kargo Firmaları:** `DHL Kargo (KA)`, `Trendyol Express (KA)`, `HepsiJet (GÖ)`.
+2. **Satış Kanalları:** `TRENDYOL AŞ. ŞTİ.`, `DENTAL PİYASA`, `HEPSİBURADA`, `DAVUT AKBULUT`.
+3. **Taşıyıcı Kargo & Teslimat Türleri:** `DHL Kargo (KA)`, `Trendyol Express (KA)`, `HepsiJet (GÖ)`, `Elden Teslim`.
 
 ### F. İşlemler Menüsü (8 Aksiyon)
 Her kartın işlemler menüsünde şu 8 aksiyon eksiksiz yer alır:
