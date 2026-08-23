@@ -580,15 +580,75 @@
     .btn-card-expand svg { width: 13px; height: 13px; transition: transform 0.2s; }
     .order-card.expanded .btn-card-expand svg { transform: rotate(180deg); }
 
-    /* Açık Gövde (4 Sütun Grid) */
-    .card-body-grid {
-      display: grid;
+    /* Kapalı / Açık Kart Gövdesi (Default: display: none) */
+    .order-card .card-body-grid {
+      display: none !important;
+    }
+
+    .order-card.expanded .card-body-grid {
+      display: grid !important;
       grid-template-columns: 1.3fr 1.1fr 1.3fr 0.9fr;
       padding: 10px 14px;
       gap: 10px;
       border-top: 1px solid #f1f5f9;
       border-radius: 0 0 9px 9px;
       background: #ffffff;
+      animation: fadeInGrid 0.2s ease;
+    }
+
+    @keyframes fadeInGrid {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mobil Çerçeve Simülatörü */
+    .mobile-phone-preview-box {
+      max-width: 420px;
+      margin: 16px 0;
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      border-radius: 16px;
+      padding: 14px 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .mobile-phone-preview-box .order-card.expanded .card-body-grid {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px;
+      padding: 8px 10px;
+    }
+    .mobile-phone-preview-box .card-header-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px 10px;
+    }
+    .mobile-phone-preview-box .card-header-row.row-1,
+    .mobile-phone-preview-box .card-header-row.row-2,
+    .mobile-phone-preview-box .card-header-row.row-3 {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .mobile-phone-preview-box .card-header-row.row-1 .row-left,
+    .mobile-phone-preview-box .card-header-row.row-1 .row-right,
+    .mobile-phone-preview-box .card-header-row.row-3 .row-left,
+    .mobile-phone-preview-box .card-header-row.row-3 .row-right {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .mobile-phone-preview-box .card-header-row.row-3 .row-left {
+      margin-left: 0;
+    }
+    .mobile-phone-preview-box .header-cari-name {
+      display: inline-flex !important;
+      font-size: 11px;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .grid-col { display: flex; flex-direction: column; gap: 4px; }
@@ -970,17 +1030,25 @@
           <span class="doc-section-tag">Bölüm 3</span>
           <h2 class="doc-section-title">Sipariş Kartı Yapısı (Canlı HTML & CSS Önizleme)</h2>
           <p class="doc-section-desc">
-            Ana sayfadaki (<code>index.html</code>) kart yapısı ile birebir aynı CSS ve HTML ile çalışan canlı kart. Tıklayarak açıp kapatabilirsiniz.
+            Ana sayfadaki (<code>index.html</code>) kart yapısı ile birebir aynı CSS ve HTML ile çalışan canlı interaktif kartlar. Kartların üzerine tıklayarak açıp kapatabilirsiniz.
           </p>
         </div>
 
-        <!-- Birebir Canlı Sipariş Kartı Örneği -->
-        <div class="order-card status-taslak" style="margin-top: 16px;">
+        <h3 style="font-size: 14.5px; font-weight: 800; color: #0f172a; margin: 16px 0 8px 0; display: flex; align-items: center; gap: 6px;">
+          <i data-lucide="monitor" style="width:16px; height:16px; color:#2563eb;"></i>
+          1. Masaüstü Canlı Kart Görünümü (Desktop View)
+        </h3>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 10px;">
+          Kapalıyken tek satırda Cari Adı görünür; tıklandığında başlıktaki Cari Adı gizlenir ve altta 4 sütunlu <code>card-body-grid</code> açılır.
+        </p>
+
+        <!-- Masaüstü Canlı Kart -->
+        <div class="order-card status-taslak" style="margin-bottom: 20px;">
           <div class="card-v-progress" style="background:#e2e8f0;">
             <div class="card-v-check" style="background:#64748b;"><i data-lucide="loader-2"></i></div>
           </div>
 
-          <div class="card-header-bar" onclick="this.closest('.order-card').classList.toggle('expanded')">
+          <div class="card-header-bar" onclick="toggleDemoCard(this)">
             <div class="card-header-row row-1">
               <div class="row-left">
                 <div class="order-number-badge" title="Tamamını kopyala: 1-WS-2-68007">
@@ -1010,7 +1078,7 @@
               </div>
               <div class="row-right">
                 <button class="btn-actions" onclick="event.stopPropagation()">İşlemler ▾</button>
-                <button class="btn-card-expand"><i data-lucide="chevron-down"></i></button>
+                <button class="btn-card-expand" onclick="event.stopPropagation(); toggleDemoCard(this.closest('.order-card').querySelector('.card-header-bar'))"><i data-lucide="chevron-down"></i></button>
               </div>
             </div>
           </div>
@@ -1060,9 +1128,101 @@
           </div>
         </div>
 
+        <h3 style="font-size: 14.5px; font-weight: 800; color: #0f172a; margin: 24px 0 8px 0; display: flex; align-items: center; gap: 6px;">
+          <i data-lucide="smartphone" style="width:16px; height:16px; color:#2563eb;"></i>
+          2. Mobil Canlı Kart Görünümü (Mobile 3-Row View)
+        </h3>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 10px;">
+          Mobilde (@media max-width: 640px) kart başlığı tam 3 satırdır ve tıklandığında dikey tek sütun açılır.
+        </p>
+
+        <!-- Mobil Canlı Kart Çerçevesi -->
+        <div class="mobile-phone-preview-box">
+          <div style="font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between;">
+            <span>📱 Mobil Ekran Simülasyonu (360px)</span>
+            <span>Dokunun &amp; Açın</span>
+          </div>
+          
+          <div class="order-card status-taslak">
+            <div class="card-v-progress" style="background:#e2e8f0;">
+              <div class="card-v-check" style="background:#64748b;"><i data-lucide="loader-2"></i></div>
+            </div>
+
+            <div class="card-header-bar" onclick="toggleDemoCard(this)">
+              <!-- 1. Satır: Sipariş No & Depo & Tarih/Saat -->
+              <div class="card-header-row row-1">
+                <div class="row-left">
+                  <div class="order-number-badge">
+                    <span>007</span>
+                    <i data-lucide="copy"></i>
+                  </div>
+                </div>
+                <div class="row-right">
+                  <span class="delivery-type-icon"><i data-lucide="truck"></i></span>
+                  <span class="depo-badge">MD</span>
+                  <span class="order-datetime"><i data-lucide="calendar"></i> 22-08-2026 01:10</span>
+                </div>
+              </div>
+
+              <!-- 2. Satır: Cari Adı & İlçe & Satış Kanalı -->
+              <div class="card-header-row row-2">
+                <span class="header-cari-name">
+                  <i data-lucide="building-2"></i>
+                  <span>ÖZEL DENTAPARK POLİKLİNİĞİ</span>
+                  <span style="color:#64748b; font-weight:500;">/ Kadıköy</span>
+                </span>
+                <span class="sales-rep-badge">DENTAL PİYASA</span>
+              </div>
+
+              <!-- 3. Satır: Durum Rozeti & İşlemler Butonu & Aç/Kapa Oku -->
+              <div class="card-header-row row-3">
+                <div class="row-left">
+                  <span class="status-pill pill-taslak"><i data-lucide="clock"></i> Tamamlanmamış</span>
+                </div>
+                <div class="row-right">
+                  <button class="btn-actions" onclick="event.stopPropagation()">İşlemler ▾</button>
+                  <button class="btn-card-expand" onclick="event.stopPropagation(); toggleDemoCard(this.closest('.order-card').querySelector('.card-header-bar'))"><i data-lucide="chevron-down"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body-grid">
+              <!-- 1. Sütun: Cari -->
+              <div class="grid-col">
+                <div class="col-title"><i data-lucide="building-2"></i> Cari Bilgileri | Tüzel</div>
+                <div class="data-row"><span class="data-label">Ünvan:</span> <span class="data-value">ÖZEL DENTAPARK POLİKLİNİĞİ</span></div>
+                <div class="data-row"><span class="data-label">VKN / VD:</span> <span class="data-value">8472910482 - Kadıköy V.D.</span></div>
+                <div class="data-row"><span class="data-label">Adres:</span> <span class="data-value">Suadiye, Kadıköy / İstanbul</span></div>
+              </div>
+
+              <!-- 2. Sütun: Fatura -->
+              <div class="grid-col">
+                <div class="col-title"><i data-lucide="file-check"></i> Fatura &amp; Vade</div>
+                <div class="data-row"><span class="data-label">Fatura Tipi:</span> <span class="data-value">Faturalı-E-Fatura</span></div>
+                <div class="data-row"><span class="data-label">Vade:</span> <span class="data-value" style="font-weight:700;">30 / 10 / 2026</span></div>
+              </div>
+
+              <!-- 3. Sütun: Lojistik -->
+              <div class="grid-col">
+                <div class="col-title"><i data-lucide="truck"></i> Lojistik &amp; Sevk</div>
+                <div class="data-row"><span class="data-label">Teslimat:</span> <span class="data-value">DHL Kargo (KA)</span></div>
+                <div class="data-row"><span class="data-label">Ürün:</span> <span class="data-value"><strong>64 / 0</strong> Adet</span></div>
+              </div>
+
+              <!-- 4. Sütun: Finans -->
+              <div class="grid-col finance-col" style="margin-top: 4px;">
+                <div class="price-group">
+                  <span class="price-title">Sipariş Tutarı:</span>
+                  <span class="price-amount" style="color:#dc2626;">8.420,00 ₺</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="doc-banner action">
           <div class="doc-banner-title"><i data-lucide="mouse-pointer"></i> Tıklanıldığında Ne Oluyor? (Adım 3215):</div>
-          Karta tıklandığında <code>handleCardHeaderClick()</code> fonksiyonu tetiklenir. Başlıktaki Cari Adı gizlenir (çünkü açılan 1. sütunda aynı veri detaylı olarak vardır), 4 sütunlu <code>card-body-grid</code> aşağı doğru açılır ve sağdaki ok 180° döner.
+          Karta tıklandığında <code>toggleDemoCard()</code> fonksiyonu tetiklenir. Kartın <code>.expanded</code> sınıfı açılır/kapanır; masaüstünde başlıktaki Cari Adı gizlenerek 4 sütunlu <code>card-body-grid</code> açılır, mobilde ise dikey kart gövdesi gösterilir.
         </div>
       </section>
 
@@ -1353,6 +1513,15 @@
     }
 
     
+    
+    // Canlı Önizleme Kartlarını Açıp Kapatma Fonksiyonu
+    function toggleDemoCard(headerEl) {
+      const card = headerEl.closest('.order-card');
+      if (card) {
+        card.classList.toggle('expanded');
+      }
+    }
+
     // Mobil Sidebar Aç / Kapat Fonksiyonları
     function toggleMobileSidebar(e) {
       if (window.innerWidth <= 900) {
