@@ -1,6 +1,7 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme ve Senkronizasyon Kuralları
 
-Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
+> **Son Sistem Güncellemesi:** 23 / 08 / 2026 04:00  
+> Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
 
@@ -10,12 +11,13 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
 1. **Daha Önce Yapıldı mı / Nasıl Tasarlandı?**
    * `documantations/index.html` ve hafıza/kurallar taranır.
    * Eğer o alanla ilgili mevcut bir kural, tasarım kararı veya bileşen varsa:
-     - **Mevcut Yapıyı Koru:** Daha önce alınmış kararları (örn: flat tasarım, `#ffffff / #f0f6fe` zebra striping, mobilde 3 satır, 3 haneli sipariş no, 4s cache vb.) bozmadan geliştirme yapılır.
+     - **Mevcut Yapıyı Koru:** Daha önce alınmış kararları (örn: flat tasarım, `#ffffff / #f0f6fe` zebra striping, mobilde 3 satır, 3 haneli sipariş no, 4s cache, 33ch cari limiti vb.) bozmadan geliştirme yapılır.
      - **Dökümantasyonu Güncelle:** İlgili alan `documantations/index.html` içinde bulunarak yeni mantık ve güncel kod ile revize edilir.
    * Eğer yepyeni bir özellikse:
      - **Yeni Başlık Aç:** `documantations/index.html` sayfasına uygun kategori altında yeni bir bölüm (Section) eklenir.
      - **Sidebar'a Ekle:** Sol sidebar menüsüne yeni başlık ve arama anahtar kelimeleri (`data-keywords`) eklenir.
      - **Gerekçelendir:** "Neden yapıldı?", "Nereden tetikleniyor?", "Tıklanınca ne oluyor?" mantıkları yazılır.
+     - **Tarih & Saat Damgası Ekle (Zorunlu):** Eklenen her yeni öğenin veya kuralın ne zaman eklendiği/güncellendiği **`DD / MM / YYYY HH:mm`** formatında hem `GEMINI.md` hem de `documantations/index.html` içerisine kaydedilmelidir.
 
 ---
 
@@ -100,4 +102,5 @@ Her kartın işlemler menüsünde şu 6 aksiyon eksiksiz yer alır:
 
 ## 🔄 4. OTOMATİK DÖKÜMANTASYON SENKRONİZASYONU (DOCS SYNC)
 1. Her kod değişikliğinde `index.html` ve `documantations/index.html` eşzamanlı olarak güncellenmelidir.
-2. Değişiklikler her zaman `git add index.html documantations/index.html GEMINI.md` şeklinde tek bir anlamlı commit ile GitHub `main` dalına pushlanmalıdır.
+2. Eklenen veya güncellenen her kural/özellik için en son güncellenme tarih ve saati (`DD / MM / YYYY HH:mm`) `GEMINI.md` ve dökümantasyona işlenmelidir.
+3. Değişiklikler her zaman `git add index.html documantations/index.html GEMINI.md` şeklinde tek bir anlamlı commit ile GitHub `main` dalına pushlanmalıdır.
