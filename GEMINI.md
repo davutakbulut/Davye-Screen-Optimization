@@ -36,10 +36,11 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
 2. Aynı oturumda (sayfa yenilenene kadar) karta tekrar tıklandığında veri önbellekten (`loadedCardsCache = new WeakSet()`) **0ms gecikmeyle anında gelir**.
 3. Sayfa yenilendiğinde (F5) önbellek sıfırlanır.
 
-### C. Sipariş Numarası Gösterimi
-1. Kart başlığında yalnızca son 3 hane (örn: `007`, `000`, `021`) görünür; başında `...` yer almaz.
-2. Tıklandığında veya panoya kopyalandığında sipariş kodunun **tamamı** (`1-WS-2-68007`) kopyalanır.
-3. Arama kutusunda hem 3 haneli (`007`) hem de tam kod (`1-WS-2-68007`) ile arama yapılabilir.
+### C. Sipariş Numarası Gösterimi & Sıralama
+1. Kart başlığında son 3 hane (örn: `021`, `020`, `019` ... `001`) görünür; başında `...` yer almaz.
+2. Sipariş kodunun tamamı sonu 5 haneli sayı olacak biçimde **`1-WS-2-68021`** formatındadır ve listede büyükten küçüğe doğru (`68021`'den `68001`'e) sıralanır.
+3. Tıklandığında veya panoya kopyalandığında sipariş kodunun **tamamı** (`1-WS-2-68021`) kopyalanır.
+4. Arama kutusunda hem 3 haneli (`021`) hem de tam kod (`1-WS-2-68021`) ile arama yapılabilir.
 
 ### D. Renk Paleti, Zebra Striping & Flat Tasarım
 1. Tekil satırlar `#ffffff` (Saf Beyaz), çift satırlar `#f0f6fe` (Pastel Soft Mavi).
