@@ -259,12 +259,17 @@
       gap: 24px;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     .doc-card-section {
       background: #ffffff;
       border: 1px solid var(--border-color);
       border-radius: 12px;
       padding: 24px 28px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      scroll-margin-top: 75px; /* Sticky header için kusursuz hizalama */
     }
 
     .doc-section-header {
@@ -1160,12 +1165,52 @@
       });
     }
 
+    // Tıklama ile Düzgün Kaydırma ve Vurgulama
     document.querySelectorAll('.doc-nav-item a').forEach(link => {
-      link.addEventListener('click', function() {
-        document.querySelectorAll('.doc-nav-item').forEach(i => i.classList.remove('active'));
-        this.closest('.doc-nav-item').classList.add('active');
+      link.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId && targetId.startsWith('#')) {
+          e.preventDefault();
+          const targetEl = document.querySelector(targetId);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+            document.querySelectorAll('.doc-nav-item').forEach(i => i.classList.remove('active'));
+            this.closest('.doc-nav-item').classList.add('active');
+          }
+        }
       });
     });
+
+    // Otomatik Eşzamanlı ScrollSpy (Sağ Taraf Kaydıkça Sol Menünün Otomatik Seçilmesi)
+    const sections = document.querySelectorAll('.doc-card-section');
+    const navItems = document.querySelectorAll('.doc-nav-item');
+
+    window.addEventListener('scroll', function() {
+      let currentSectionId = '';
+      const scrollPosition = window.scrollY + 120; // Header ofset payı
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          currentSectionId = section.getAttribute('id');
+        }
+      });
+
+      if (currentSectionId) {
+        navItems.forEach(item => {
+          const link = item.querySelector('a');
+          if (link && link.getAttribute('href') === '#' + currentSectionId) {
+            if (!item.classList.contains('active')) {
+              navItems.forEach(i => i.classList.remove('active'));
+              item.classList.add('active');
+              // Sidebar içinde görünür alanda tut
+              item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+          }
+        });
+      }
+    }, { passive: true });
   </script>
 </body>
 </html>
