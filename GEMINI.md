@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 23 / 08 / 2026 15:25  
+> **Son Sistem Güncellemesi:** 23 / 08 / 2026 15:30  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -30,6 +30,7 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
    * Tıklandığında başlıktaki Cari Adı gizlenir ve 4 sütunlu `card-body-grid` açılır (`1.3fr 1.1fr 1.3fr 0.9fr`).
    * Başlıktaki ok 180° döner.
 2. **Mobil (Mobile `@media (max-width: 640px)`):**
+   * Üst header (`.davye-top-header`) mobilde de sayfa kaydırıldığında **en üstte sabit (fixed)** kalır.
    * 3 satırlı başlık yapısı (`.row-1`, `.row-2`, `.row-3`) ve buton hiyerarşisi **asla bozulamaz**.
    * Dokunulduğunda dikey tek sütunlu gövde açılır.
    * Sayfa genelinde yatay taşma (`overflow-x`) kesinlikle engellenmelidir (`overflow-x: clip`).
