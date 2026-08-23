@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 23 / 08 / 2026 15:05  
+> **Son Sistem Güncellemesi:** 23 / 08 / 2026 15:10  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -100,7 +100,7 @@ Her kartın işlemler menüsünde şu 6 aksiyon eksiksiz yer alır:
 ---
 
 ### M. 12'li Hızlı Sıralama Çubuğu ve 3-Kademeli Tıklama Döngüsü (.inline-sort-bar-wrapper)
-1. `top-toolbar` alanının hemen altında, açılır dropdown yerine yan yana duran yatayda kaydırılabilir **12 adet sıralama chipleri** yer alır (`Sipariş No`, `Tarih`, `Cari`, `Tutar`, `Kalan Tutar`, `Vade`, `Ürün Adedi`, `Toplanan`, `Depo`, `Satış Kanalı`, `Fatura Durumu`, `Teslimat Türü`).
+1. `top-toolbar` ve `status-filters` alanlarının hemen altında, açılır dropdown yerine yan yana duran yatayda kaydırılabilir **12 adet sıralama chipleri** yer alır (`Sipariş No`, `Tarih`, `Cari`, `Tutar`, `Kalan Tutar`, `Vade`, `Ürün Adedi`, `Toplanan`, `Depo`, `Satış Kanalı`, `Fatura Durumu`, `Teslimat Türü`).
 2. **3-Kademeli Döngü Mantığı (3-State Cycle):**
    - **Başlangıç / Nötr (State 0):** Yatay çift ok (`⇄` - `SORT_SVG_ICONS.neutral`).
    - **1. Tıklama (State 1):** Büyükten Küçüğe / Azalan / En Yeni (Aşağı Ok `↓` - `.active-desc`).

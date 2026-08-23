@@ -4634,7 +4634,62 @@
     </div>
   </div>
 
-  <!-- 12'Lİ HIZLI VERİ SIRALAMA ÇUBUĞU (3 KADEMELİ DÖNGÜ: Varsayılan ⇄ / Azalan ↓ / Artan ↑) -->
+  <!-- 2. DURUM SEKMELERİ (STATUS FILTERS - ÜSTTE) -->
+  <div class="status-filters">
+    <button class="filter-tab active" onclick="filterCards('all', this)">
+      Tümü <span class="tab-count">21</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-taslak', this)">
+      Tamamlanmamış <span class="tab-count">1</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-alindi', this)">
+      Sipariş Alındı <span class="tab-count">1</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-hazirlaniyor', this)">
+      Hazırlanıyor <span class="tab-count">2</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-hazirlandi', this)">
+      Hazırlandı <span class="tab-count">1</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-paketleme-bekliyor', this)">
+      Paketleme Bekliyor <span class="tab-count">2</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-paketlendi', this)">
+      Paketlendi <span class="tab-count">3</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-kargo-bekliyor', this)">
+      Kargo Bekliyor <span class="tab-count">2</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-kargoda', this)">
+      Kargoya Verildi <span class="tab-count">2</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-teslim-edildi', this)">
+      Teslim Edildi <span class="tab-count">3</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-fatura-bekliyor', this)">
+      Fatura Bekliyor <span class="tab-count">6</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-faturalandi', this)">
+      Faturası Kesildi <span class="tab-count">5</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-faturasiz', this)">
+      Faturasız <span class="tab-count">4</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-iade-bekliyor', this)">
+      İade Kargo Bekleniyor <span class="tab-count">1</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-iade-onaylandi', this)">
+      İade Ödemesi Bekleniyor <span class="tab-count">1</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-iade-edildi', this)">
+      İade Edildi <span class="tab-count">1</span>
+    </button>
+    <button class="filter-tab" onclick="filterCards('status-iptal', this)">
+      İptal Edildi <span class="tab-count">1</span>
+    </button>
+  </div>
+
+  <!-- 3. 12'Lİ HIZLI VERİ SIRALAMA ÇUBUĞU (INLINE SORT BAR - ALTA) -->
   <div class="inline-sort-bar-wrapper" id="inlineSortBar">
     <div class="inline-sort-title">
       <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-up-down" aria-hidden="true" class="lucide lucide-arrow-up-down"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>
@@ -4725,64 +4780,6 @@
       <span class="sort-indicator"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></span>
     </button>
   </div>
-    
-  <div class="status-filters">
-      <button class="filter-tab active" onclick="filterCards('all', this)">
-        Tümü <span class="tab-count">21</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-taslak', this)">
-        Tamamlanmamış <span class="tab-count">1</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-alindi', this)">
-        Sipariş Alındı <span class="tab-count">1</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-hazirlaniyor', this)">
-        Hazırlanıyor <span class="tab-count">2</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-hazirlandi', this)">
-        Hazırlandı <span class="tab-count">1</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-paketleme-bekliyor', this)">
-        Paketleme Bekliyor <span class="tab-count">2</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-paketlendi', this)">
-        Paketlendi <span class="tab-count">3</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-kargo-bekliyor', this)">
-        Kargo Bekliyor <span class="tab-count">2</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-kargoda', this)">
-        Kargoya Verildi <span class="tab-count">2</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-teslim-edildi', this)">
-        Teslim Edildi <span class="tab-count">3</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-fatura-bekliyor', this)">
-        Fatura Bekliyor <span class="tab-count">6</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-faturalandi', this)">
-        Faturası Kesildi <span class="tab-count">5</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-faturasiz', this)">
-        Faturasız <span class="tab-count">4</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-iade-bekliyor', this)">
-        İade Kargo Bekleniyor <span class="tab-count">1</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-iade-onaylandi', this)">
-        İade Ödemesi Bekleniyor <span class="tab-count">1</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-iade-edildi', this)">
-        İade Edildi <span class="tab-count">1</span>
-      </button>
-      <button class="filter-tab" onclick="filterCards('status-iptal', this)">
-        İptal Edildi <span class="tab-count">1</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
-  <!-- SAĞDAN AÇILAN KAPSAMLI FİLTRELEME PANELİ (DRAWER / SLIDE-IN PANEL) -->
   <!-- ========================================================================= -->
   <div class="filter-drawer-backdrop" id="filterDrawerBackdrop" onclick="closeFilterDrawer()"></div>
   <div class="filter-drawer" id="filterDrawer">
