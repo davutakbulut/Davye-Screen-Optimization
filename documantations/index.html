@@ -645,6 +645,88 @@
       color: #64748b;
       margin-top: auto;
     }
+
+    /* ========================================================================= */
+    /* MOBİL VE RESPONSIVE DRAWER SIDEBAR STİLLERİ */
+    /* ========================================================================= */
+    .doc-sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(2px);
+      z-index: 200;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .doc-sidebar-mobile-header {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .doc-main-wrapper {
+        flex-direction: column;
+        padding: 12px 14px;
+        gap: 16px;
+      }
+
+      .doc-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        height: 100vh;
+        width: 300px;
+        max-width: 85vw;
+        z-index: 250;
+        border-radius: 0 16px 16px 0;
+        box-shadow: 10px 0 25px rgba(0, 0, 0, 0.15);
+        transform: translateX(-100%);
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+        padding-top: 14px;
+      }
+
+      .doc-sidebar.show {
+        transform: translateX(0);
+      }
+
+      .doc-sidebar-backdrop.show {
+        display: block;
+        opacity: 1;
+      }
+
+      .doc-sidebar-mobile-header {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .doc-header-container {
+        padding: 8px 14px;
+      }
+      .doc-brand-title {
+        font-size: 13.5px;
+      }
+      .doc-brand-subtitle {
+        font-size: 9px;
+      }
+      .btn-live-preview span {
+        display: none;
+      }
+      .btn-live-preview {
+        padding: 5px 8px;
+      }
+      .doc-card-section {
+        padding: 16px 14px;
+      }
+      .card-body-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -654,7 +736,7 @@
   <!-- ========================================================================= -->
   <header class="doc-top-header">
     <div class="doc-header-container">
-      <a href="index.html" class="doc-brand-group">
+      <div class="doc-brand-group" onclick="toggleMobileSidebar(event)" style="cursor:pointer;" title="Menüyü Aç/Kapat (Mobilde Menü)">
         <div class="doc-logo-box">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-grid-2x2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 12h18"/><path d="M12 3v18"/></svg>
         </div>
@@ -662,7 +744,7 @@
           <div class="doc-brand-title">DAVYE SİPARİŞ YÖNETİM SİSTEMİ</div>
           <div class="doc-brand-subtitle">Resmi Mimari, Kod & UI/UX Dökümantasyonu</div>
         </div>
-      </a>
+      </div>
       <a href="../index.html" target="_blank" class="btn-live-preview">
         <span>Canlı Sipariş Panelini Aç</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
@@ -673,10 +755,20 @@
   <!-- ========================================================================= -->
   <!-- MAIN -->
   <!-- ========================================================================= -->
+  <!-- MOBİL SIDEBAR BACKDROP -->
+  <div class="doc-sidebar-backdrop" id="docSidebarBackdrop" onclick="closeMobileSidebar()"></div>
+
   <div class="doc-main-wrapper">
     
     <!-- SIDEBAR -->
-    <aside class="doc-sidebar">
+    <aside class="doc-sidebar" id="docSidebar">
+      <div class="doc-sidebar-mobile-header">
+        <span style="font-weight:800; font-size:13.5px; color:#0f172a; display:flex; align-items:center; gap:6px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 12h18"/><path d="M12 3v18"/></svg>
+          Döküman Menüsü
+        </span>
+        <button type="button" onclick="closeMobileSidebar()" style="background:none; border:none; color:#64748b; font-size:18px; cursor:pointer; padding:2px 6px;">✕</button>
+      </div>
       <div class="doc-search-box">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         <input type="text" id="docSearchInput" placeholder="Dökümanda ara (örn: loader, badge, cari)..." oninput="filterDocNavigation(this.value)">
@@ -1165,8 +1257,44 @@
       });
     }
 
+    
+    // Mobil Sidebar Aç / Kapat Fonksiyonları
+    function toggleMobileSidebar(e) {
+      if (window.innerWidth <= 900) {
+        const sidebar = document.getElementById('docSidebar');
+        const backdrop = document.getElementById('docSidebarBackdrop');
+        const isOpen = sidebar.classList.contains('show');
+        if (isOpen) {
+          closeMobileSidebar();
+        } else {
+          openMobileSidebar();
+        }
+      }
+    }
+
+    function openMobileSidebar() {
+      const sidebar = document.getElementById('docSidebar');
+      const backdrop = document.getElementById('docSidebarBackdrop');
+      if (sidebar) sidebar.classList.add('show');
+      if (backdrop) backdrop.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileSidebar() {
+      const sidebar = document.getElementById('docSidebar');
+      const backdrop = document.getElementById('docSidebarBackdrop');
+      if (sidebar) sidebar.classList.remove('show');
+      if (backdrop) backdrop.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
     // Tıklama ile Düzgün Kaydırma ve Vurgulama
     document.querySelectorAll('.doc-nav-item a').forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 900) {
+          closeMobileSidebar();
+        }
+      });
       link.addEventListener('click', function(e) {
         const targetId = this.getAttribute('href');
         if (targetId && targetId.startsWith('#')) {
