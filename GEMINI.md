@@ -85,9 +85,10 @@ Her kartın işlemler menüsünde şu 6 aksiyon eksiksiz yer alır:
 
 ---
 
-### K. Cari İsimleri Karakter Sınırı ve Yatay Kaydırma (33ch)
-1. Kart başlığında (`.header-cari-name`) ve gövde 1. sütunundaki (`.cari-name .cari-title-left`) cari/müşteri ünvanları `max-width: 33ch` ile sınırlandırılır (`GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİ` referans genişliği).
+### K. Cari İsimleri Karakter Sınırı ve Yatay Kaydırma (33ch) & Sabit İkon
+1. Kart başlığında (`.header-cari-name span:first-of-type`) ve gövde 1. sütunundaki (`.cari-name .cari-title-left`) cari/müşteri ünvanları `max-width: 33ch` ile sınırlandırılır (`GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİ` referans genişliği).
 2. 33 karakterden uzun ünvanlar kart düzenini bozmaz veya alt satıra taşmaz; `overflow-x: auto; scrollbar-width: none;` sayesinde yatayda kaydırılabilir.
+3. Cari adının solundaki ikon (Bina/Klinik/Şahıs `svg`), metin ne kadar uzun olursa olsun **asla kaybolmaz veya daralmaz** (`flex-shrink: 0 !important; min-width: 12px; display: inline-block;`).
 
 ---
 

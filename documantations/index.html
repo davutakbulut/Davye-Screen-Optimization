@@ -453,6 +453,10 @@
       font-weight: 700;
       color: #0f172a;
       margin: 0 4px;
+      white-space: nowrap;
+      min-width: 0;
+    }
+    .header-cari-name span:first-of-type {
       max-width: 33ch;
       overflow-x: auto;
       overflow-y: hidden;
@@ -460,9 +464,20 @@
       scrollbar-width: none;
       -ms-overflow-style: none;
       -webkit-overflow-scrolling: touch;
+      display: inline-block;
+      vertical-align: middle;
     }
-    .header-cari-name::-webkit-scrollbar { display: none; }
-    .header-cari-name svg { width: 13px; height: 13px; color: #2563eb; flex-shrink: 0; }
+    .header-cari-name span:first-of-type::-webkit-scrollbar { display: none; }
+    .header-cari-name svg,
+    .header-cari-name i {
+      width: 13px !important;
+      height: 13px !important;
+      min-width: 13px !important;
+      min-height: 13px !important;
+      color: #2563eb !important;
+      flex-shrink: 0 !important;
+      display: inline-block !important;
+    }
 
     .order-card.expanded .header-cari-name {
       display: none !important;
