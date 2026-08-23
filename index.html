@@ -4680,12 +4680,12 @@
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
           <div class="adv-form-group">
             <label class="adv-label">Başlangıç Tarihi</label>
-            <input type="date" id="advBaslangicTarih" class="adv-input" value="2026-07-23">
+            <input type="date" id="advBaslangicTarih" class="adv-input">
           </div>
 
           <div class="adv-form-group">
             <label class="adv-label">Bitiş Tarihi</label>
-            <input type="date" id="advBitisTarih" class="adv-input" value="2026-08-22">
+            <input type="date" id="advBitisTarih" class="adv-input">
           </div>
         </div>
 
@@ -10789,59 +10789,123 @@
 
   // Kapsamlı Filtrelemeyi Uygula
   function applyAdvancedFilter() {
-    const cariAciklama = document.getElementById('advCariAciklama').value.toLowerCase().trim();
-    const cariKod = document.getElementById('advCariKod').value.toLowerCase().trim();
-    const saticiKodu = document.getElementById('advSaticiKodu').value.toLowerCase().trim();
-    const satisTemsilcisi = document.getElementById('advSatisTemsilcisi').value.toLowerCase().trim();
-    const islemNo = document.getElementById('advIslemNo').value.toLowerCase().trim();
-    const urunKodu = document.getElementById('advUrunKodu').value.toLowerCase().trim();
+    const cariAciklama = (document.getElementById('advCariAciklama')?.value || '').toLocaleLowerCase('tr-TR').trim();
+    const cariKod = (document.getElementById('advCariKod')?.value || '').toLocaleLowerCase('tr-TR').trim();
+    const saticiKodu = (document.getElementById('advSaticiKodu')?.value || '').toLocaleLowerCase('tr-TR').trim();
+    const satisTemsilcisi = (document.getElementById('advSatisTemsilcisi')?.value || '').toLocaleLowerCase('tr-TR').trim();
+    const islemNo = (document.getElementById('advIslemNo')?.value || '').toLocaleLowerCase('tr-TR').trim();
+    const urunKodu = (document.getElementById('advUrunKodu')?.value || '').toLocaleLowerCase('tr-TR').trim();
     
-    const checkIade = document.getElementById('advCheckIade').checked;
-    const checkTamamlandi = document.getElementById('advCheckTamamlandi').checked;
-    const checkOnaylandi = document.getElementById('advCheckOnaylandi').checked;
+    const baslangicTarihVal = document.getElementById('advBaslangicTarih')?.value || '';
+    const bitisTarihVal = document.getElementById('advBitisTarih')?.value || '';
+    
+    const startDate = baslangicTarihVal ? new Date(baslangicTarihVal + 'T00:00:00').getTime() : null;
+    const endDate = bitisTarihVal ? new Date(bitisTarihVal + 'T23:59:59').getTime() : null;
 
-    const cards = document.querySelectorAll('.order-card');
-    let matchCount = 0;
+    const checkIade = document.getElementById('advCheckIade')?.checked || false;
+    const checkTamamlandi = document.getElementById('advCheckTamamlandi')?.checked || false;
+    const checkOnaylandi = document.getElementById('advCheckOnaylandi')?.checked || false;
 
-    cards.forEach(card => {
-      const cardText = card.innerText.toLowerCase();
-      const status = card.dataset.status || '';
+    const allCards = Array.from(document.querySelectorAll('.order-card'));
 
-      let match = true;
+    const filteredCards = allCards.filter(card => {
+      const orderId = card.querySelector('.order-number-badge')?.dataset?.orderId || card.dataset.orderId || '';
+      const orderData = ordersDatabase[orderId] || {};
+      const cardText = (card.innerText + ' ' + orderId).toLocaleLowerCase('tr-TR');
 
-      if (cariAciklama && !cardText.includes(cariAciklama)) match = false;
-      if (cariKod && !cardText.includes(cariKod)) match = false;
-      if (saticiKodu && !cardText.includes(saticiKodu)) match = false;
-      if (satisTemsilcisi && !cardText.includes(satisTemsilcisi)) match = false;
-      if (islemNo && !cardText.includes(islemNo)) match = false;
-      if (urunKodu && !cardText.includes(urunKodu)) match = false;
-
-      // Checkbox mantığı
-      if (checkIade && status !== 'status-iptal' && !cardText.includes('iade')) match = false;
-      if (checkTamamlandi && status !== 'status-faturalandi' && !cardText.includes('teslim')) match = false;
-      if (checkOnaylandi && status === 'status-iptal') match = false;
-
-      if (match) {
-        card.style.display = 'flex';
-        matchCount++;
-      } else {
-        card.style.display = 'none';
+      // 1. Cari Açıklama / Adı
+      if (cariAciklama) {
+        const cariName = (orderData.cariName || '').toLocaleLowerCase('tr-TR');
+        if (!cardText.includes(cariAciklama) && !cariName.includes(cariAciklama)) return false;
       }
+
+      // 2. Cari Kodu / VKN / GLN / UTS
+      if (cariKod) {
+        const taxId = (orderData.taxId || '').toLocaleLowerCase('tr-TR');
+        const gln = (orderData.gln || '').toLocaleLowerCase('tr-TR');
+        const uts = (orderData.uts || '').toLocaleLowerCase('tr-TR');
+        if (!cardText.includes(cariKod) && !taxId.includes(cariKod) && !gln.includes(cariKod) && !uts.includes(cariKod)) return false;
+      }
+
+      // 3. Satıcı Kodu / Depo
+      if (saticiKodu) {
+        const depo = (orderData.depo || '').toLocaleLowerCase('tr-TR');
+        if (!cardText.includes(saticiKodu) && !depo.includes(saticiKodu)) return false;
+      }
+
+      // 4. Satış Temsilcisi / Satış Kanalı
+      if (satisTemsilcisi) {
+        const rep = (orderData.salesRep || '').toLocaleLowerCase('tr-TR');
+        if (!cardText.includes(satisTemsilcisi) && !rep.includes(satisTemsilcisi)) return false;
+      }
+
+      // 5. İşlem Numarası (Tam kod veya 3 haneli kod)
+      if (islemNo) {
+        const badgeSpan = card.querySelector('.order-number-badge span')?.innerText.trim().toLocaleLowerCase('tr-TR') || '';
+        if (!orderId.toLocaleLowerCase('tr-TR').includes(islemNo) && !badgeSpan.includes(islemNo) && !cardText.includes(islemNo)) return false;
+      }
+
+      // 6. Ürün Kodu veya Ürün Adı
+      if (urunKodu) {
+        const items = orderData.items || [];
+        const hasItemMatch = items.some(it => (it.code || '').toLocaleLowerCase('tr-TR').includes(urunKodu) || (it.name || '').toLocaleLowerCase('tr-TR').includes(urunKodu));
+        if (!hasItemMatch && !cardText.includes(urunKodu)) return false;
+      }
+
+      // 7. Tarih Aralığı Filtresi
+      if (startDate || endDate) {
+        const dateStr = card.querySelector('.order-datetime')?.innerText || orderData.date || '';
+        const orderTime = parseDateTime(dateStr);
+        if (orderTime > 0) {
+          if (startDate && orderTime < startDate) return false;
+          if (endDate && orderTime > endDate) return false;
+        }
+      }
+
+      // 8. Checkbox Bayrakları
+      if (checkIade) {
+        const isReturn = card.classList.contains('status-iade-bekliyor') || card.classList.contains('status-iade-onaylandi') || card.classList.contains('status-iade-edildi');
+        if (!isReturn) return false;
+      }
+
+      if (checkTamamlandi) {
+        const isCompleted = card.classList.contains('status-teslim-edildi') || card.classList.contains('status-faturalandi');
+        if (!isCompleted) return false;
+      }
+
+      if (checkOnaylandi) {
+        const isCancelledOrDraft = card.classList.contains('status-taslak') || card.classList.contains('status-iptal');
+        if (isCancelledOrDraft) return false;
+      }
+
+      return true;
     });
+
+    // Sayfalama ve listeyi güncelle
+    currentlyMatchedCards = filteredCards;
+    currentPage = 1;
+    if (typeof renderPagination === 'function') {
+      renderPagination();
+    }
+    if (typeof updateStatusTabCounts === 'function') {
+      updateStatusTabCounts();
+    }
 
     // Drawer'ı kapat
     closeFilterDrawer();
 
     // Filtre aktiflik noktasını güncelle
-    const hasFilter = !!(cariAciklama || cariKod || saticiKodu || satisTemsilcisi || islemNo || urunKodu || checkIade || checkTamamlandi || checkOnaylandi);
+    const hasFilter = !!(cariAciklama || cariKod || saticiKodu || satisTemsilcisi || islemNo || urunKodu || baslangicTarihVal || bitisTarihVal || checkIade || checkTamamlandi || checkOnaylandi);
     const dot = document.getElementById('filterActiveDot');
     if (dot) dot.style.display = hasFilter ? 'block' : 'none';
 
     // Bildirim göster
     const toast = document.getElementById('toast');
-    toast.innerText = 'Filtreleme uygulandı: ' + matchCount + ' sipariş bulundu.';
-    toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    if (toast) {
+      toast.innerText = `Filtreleme uygulandı: ${filteredCards.length} sipariş bulundu.`;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    }
   }
 
   // Tümünü Çek Butonu
@@ -10849,15 +10913,18 @@
     resetAdvancedFilter();
     closeFilterDrawer();
     const toast = document.getElementById('toast');
-    toast.innerText = 'Tüm siparişler listelendi.';
-    toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    if (toast) {
+      toast.innerText = 'Tüm siparişler listelendi.';
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
   }
 
   // Filtreleri Sıfırla / Temizle
   function resetAdvancedFilter() {
-    document.getElementById('advFilterForm').reset();
-    document.getElementById('orderSearch').value = '';
+    document.getElementById('advFilterForm')?.reset();
+    const searchInput = document.getElementById('orderSearch');
+    if (searchInput) searchInput.value = '';
     
     const dot = document.getElementById('filterActiveDot');
     if (dot) dot.style.display = 'none';
@@ -10867,10 +10934,14 @@
     const firstTab = document.querySelector('.filter-tab');
     if (firstTab) firstTab.classList.add('active');
 
-    const cards = document.querySelectorAll('.order-card');
-    cards.forEach(card => {
-      card.style.display = 'flex';
-    });
+    currentlyMatchedCards = Array.from(document.querySelectorAll('.order-card'));
+    currentPage = 1;
+    if (typeof renderPagination === 'function') {
+      renderPagination();
+    }
+    if (typeof updateStatusTabCounts === 'function') {
+      updateStatusTabCounts();
+    }
   }
 
   // Kart Detaylarını Açma/Kapatma (İlk Açılışta 4 Saniyelik Veritabanı Loader Efekti, Sonraki Açılışlarda Anında Açılma - Cache Mantığı)
