@@ -4037,11 +4037,15 @@
       padding: 0;
       margin: 0;
     }
+    .sidebar-menu-group {
+      display: flex;
+      flex-direction: column;
+    }
     .sidebar-menu-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 9px;
+      padding: 7px 9px;
       border-radius: 6px;
       color: #475569;
       font-size: 12px;
@@ -4061,6 +4065,9 @@
       background: #eff6ff;
       color: #1d4ed8;
       border-color: #dbeafe;
+    }
+    .sidebar-menu-item.expanded .sidebar-chevron {
+      transform: rotate(180deg);
     }
     .sidebar-item-left {
       display: flex;
@@ -4089,6 +4096,60 @@
       color: #94a3b8;
       flex-shrink: 0;
       transition: transform 0.2s ease;
+    }
+
+    /* Akordeon Alt Menü Stilleri */
+    .sidebar-sub-menu {
+      display: none;
+      list-style: none;
+      padding: 2px 0 4px 10px;
+      margin: 2px 0 4px 8px;
+      border-left: 1.5px solid #e2e8f0;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .sidebar-sub-menu.show {
+      display: flex;
+    }
+    .sidebar-sub-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 8px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #64748b;
+      text-decoration: none;
+      transition: all 0.12s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sidebar-sub-item:hover {
+      color: #0f172a;
+      background: #f8fafc;
+    }
+    .sidebar-sub-item.active {
+      color: #1d4ed8;
+      background: #eff6ff;
+      font-weight: 700;
+      border-color: #dbeafe;
+    }
+    .sidebar-sub-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      flex-shrink: 0;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .sidebar-sub-item:hover .sidebar-sub-dot,
+    .sidebar-sub-item.active .sidebar-sub-dot {
+      background: #1d4ed8;
+      transform: scale(1.3);
     }
 
     /* Sağ Ana İçerik Alanı - Masaüstünde Sabit Sidebar Boşluğu */
@@ -4453,178 +4514,354 @@
     <input type="text" id="sidebarMenuSearch" class="sidebar-search-input" placeholder="Menüde ara..." oninput="filterSidebarMenu(this.value)">
   </div>
 
-  <!-- 19 Menü Kalemi -->
+  <!-- 19 Menü Kalemi & Alt Menüleri -->
   <ul class="sidebar-menu-list" id="sidebarMenuList">
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item active" onclick="selectMenuItem(this)">
+    <!-- 1. Toptan Sipariş -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item default-open expanded active" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
           <span>Toptan Sipariş</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu show">
+        <li><a href="/process-list/order/ws/unconfirmed" class="sidebar-sub-item active" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Toptan Satış Siparişleri</span></a></li>
+        <li><a href="/fair-sale" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>IDEX2026</span></a></li>
+        <li><a href="/process-list/proposal/ws/unconfirmed" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Toptan Satış Teklifleri</span></a></li>
+        <li><a href="/order-state" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Sipariş Durumu</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 2. Finans -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="credit-card"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
           <span>Finans</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/due-transactions-v2" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Vadesi Gelen Müşteriler</span></a></li>
+        <li><a href="/due-transactions" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Vadesi Gelen Faturalar</span></a></li>
+        <li><a href="/called-customers" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Müşteri Arama Takibi</span></a></li>
+        <li><a href="/debit-process-list/3" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Müşteri Sair / Borç Alacak Girişi</span></a></li>
+        <li><a href="/debit-process-list/1" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Tedarikçi Sair / Borç Alacak Girişi</span></a></li>
+        <li><a href="/credit-cart-payment-process-list" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Kredi Kartı Ödemeleri</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 3. Depo İşlemleri -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="warehouse"><path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/><path d="M6 18h12"/><path d="M6 14h12"/><rect width="12" height="12" x="6" y="10"/></svg>
           <span>Depo İşlemleri</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/davye-orders-managament/1/2" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Alınan Siparişler</span></a></li>
+        <li><a href="/ecza-shelf-count-list/C" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raf Sayımı (Komple)</span></a></li>
+        <li><a href="/ecza-shelf-count-detail" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raf Sayım detay</span></a></li>
+        <li><a href="/ecza-shelf-count-list/CP" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raf Sayımı (Ürün Bazında)</span></a></li>
+        <li><a href="/ecza-shelf-count-list/CI" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Rafa Ürün Ekle</span></a></li>
+        <li><a href="/ecza-shelf-count-list/CO" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raftan Ürün Çıkar</span></a></li>
+        <li><a href="/ecza-shelf-count-list/CR" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raf Sıfırla</span></a></li>
+        <li><a href="/shelf" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raf</span></a></li>
+        <li><a href="/davye-warehouse-operation-list/rws7" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>İade Faturaları</span></a></li>
+        <li><a href="/ecza-shelf-count-list/B" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Etiket Oluştur</span></a></li>
+        <li><a href="/ecza-shelf-count-list/RST" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raflar Arası İstek</span></a></li>
+        <li><a href="/ecza-shelf-count-list/ST" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raflar Arası Transfer</span></a></li>
+        <li><a href="/ecza-shelf-count-list/RWT" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Depolar Arası İstek</span></a></li>
+        <li><a href="/ecza-shelf-count-list/WT" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Depolar Arası Transfer</span></a></li>
+        <li><a href="/davye-warehouse-operation-list/wt" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Havuzda Kalan Transfer</span></a></li>
+        <li><a href="/davye-warehouse-operation-list/bp" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Havuzda Kalan Alış</span></a></li>
+        <li><a href="/ecza-shelf-count-list/CCI" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>İptal Sipariş Yerleştirme</span></a></li>
+        <li><a href="/ecza-shelf-count-list/RCI" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>İade Sipariş Yerleştirme</span></a></li>
+        <li><a href="/workflow-shelf" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raf Ekstresi</span></a></li>
+        <li><a href="/packages-of-products" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Ürün Paket Adetleri</span></a></li>
+        <li><a href="/generate-shelf-transfer-request" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raf Transfer Talebi</span></a></li>
+        <li><a href="/shelf-transfer-request-list" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raf Transfer Talepleri</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 4. Koli İşlemleri -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="box"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
           <span>Koli İşlemleri</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/ecza-shelf-count-list/PC" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Koli Sayımı</span></a></li>
+        <li><a href="/ecza-shelf-count-list/PI" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Koliye Ürün Ekle</span></a></li>
+        <li><a href="/ecza-shelf-count-list/SPI" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Rafa Koli Ekle</span></a></li>
+        <li><a href="/ecza-shelf-count-list/PO" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Koliden Ürün Çıkar</span></a></li>
+        <li><a href="/ecza-shelf-count-list/SPO" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raftan Koli Çıkar</span></a></li>
+        <li><a href="/ecza-shelf-count-list/PR" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Koli Sıfırla (Rafsız)</span></a></li>
+        <li><a href="/ecza-shelf-count-list/STP" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Raflar Arası Transfer - Koli</span></a></li>
+        <li><a href="/ecza-shelf-count-list/PCS" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Rafta Koli Sayımı</span></a></li>
+        <li><a href="/package-break" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Koli Böl</span></a></li>
+        <li><a href="/create-barcode-from-order" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Alıştan Koli Oluştur</span></a></li>
+        <li><a href="/create-barcode-from-transfer" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Transferden Koli Oluştur</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 5. Dental Piyasa -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
           <span>Dental Piyasa</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/transferred-orders" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Aktarılan Siparişler</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 6. Kasa İşlemleri -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="store"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>
           <span>Kasa İşlemleri</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/cash-process-list/1" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Nakit Kasa Tahsil</span></a></li>
+        <li><a href="/cash-process-list/2" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Nakit Kasa Tediye</span></a></li>
+        <li><a href="/cash-process-list/3" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Kasalar Arası Virman</span></a></li>
+        <li><a href="/cash-accounts" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Kasalar</span></a></li>
+        <li><a href="/raport/cash-account-extract-report" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Kasa Ekstresi</span></a></li>
+        <li><a href="/raport/cash-balance-raport" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Kasa Bakiye Raporu</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 7. Ticimax -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="zap"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           <span>Ticimax</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/ticimax-stock" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Ticimax Stok Güncelle</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 8. Pazaryeri -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-bag"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
           <span>Pazaryeri</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/davye-warehouse-operation-list/rws7" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Alınan İadeler</span></a></li>
+        <li><a href="/trendyol/transferred-orders" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Aktarılan Siparişler</span></a></li>
+        <li><a href="/trendyol/buybox-items" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Buybox Ürünleri</span></a></li>
+        <li><a href="/trendyol/cargo" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Kargo</span></a></li>
+        <li><a href="/create-return-invoice" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>İade Faturası Kes</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 9. Toptan Fatura -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
           <span>Toptan Fatura</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/process-list/invoice/ws" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Toptan Satış Faturaları</span></a></li>
+        <li><a href="/process-list/invoice/bp" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Alış Faturaları</span></a></li>
+        <li><a href="/update-nebim-process" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Fatura Güncelle</span></a></li>
+        <li><a href="/process-list/expense/ep" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Masraf Alış</span></a></li>
+        <li><a href="/process-list/expense/exs" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Masraf Faturası</span></a></li>
+        <li><a href="/process-list/expense/epc" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Masraf Alış (Kasa)</span></a></li>
+        <li><a href="/create-return-invoice" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>İade Faturası Kes</span></a></li>
+        <li><a href="/delete-return-invoice" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>İade Faturası Listesi</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 10. Banka İşlemleri -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="landmark"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
           <span>Banka İşlemleri</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/bank-process-list/4" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Gelen Havale</span></a></li>
+        <li><a href="/bank-process-list/5" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Gönderilen Havale</span></a></li>
+        <li><a href="/bank-process-list/7" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Banka İşlem Fişi</span></a></li>
+        <li><a href="/bank-accounts" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Bankalar</span></a></li>
+        <li><a href="/raport/bank-account-extract-report" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Banka Ekstresi</span></a></li>
+        <li><a href="/raport/bank-balance-raport" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Banka Bakiye Raporu</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 11. Ürün Raporları -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="bar-chart-2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
           <span>Ürün Raporları</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/davye-frez" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Katalog Sayfası</span></a></li>
+        <li><a href="/davye-product-inventory-raport/1" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Ürün Envanter Raporu Filtreli</span></a></li>
+        <li><a href="/davye-product-inventory-raport/2" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Ürün Envanter Raporu Filtreli - 2</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 12. ITS -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shield-check"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
           <span>ITS</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/its-notifications/1" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Satış Bildirimleri Listesi</span></a></li>
+        <li><a href="/its-notifications/2" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Müşteri Listesi</span></a></li>
+        <li><a href="/its-notifications/3" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Bildiri Yap</span></a></li>
+        <li><a href="/its-notifications/4" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Stok Durum Listesi</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 13. Sanal POS -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="laptop"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>
           <span>Sanal POS</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/virtual-pos" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Sanal Pos</span></a></li>
+        <li><a href="/pos-payment-list" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Sanal Pos Ödemeleri</span></a></li>
+        <li><a href="/create-payment-link/manual" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Tutar İle Ödeme Linki Oluştur</span></a></li>
+        <li><a href="/create-payment-link/invoice" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Fatura Ödeme Linki Oluştur</span></a></li>
+        <li><a href="/create-payment-link/balance" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Bakiye Ödeme Linki Oluştur</span></a></li>
+        <li><a href="/payment-links" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Ödeme Lİnkleri</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 14. Kargo -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
           <span>Kargo</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/cargo-list" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Kargolar</span></a></li>
+        <li><a href="/create-cargo" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Kargo Oluştur</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 15. Toptan Müşteri -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           <span>Toptan Müşteri</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/customers/whosale" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Müşteri Listesi</span></a></li>
+        <li><a href="/davye-all-customers" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Bayi &amp; Müşteri Güncelleme Paneli</span></a></li>
+        <li><a href="/davye-extract-raport" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Bayi Ekstre Raporu</span></a></li>
+        <li><a href="/raport/customer-extract" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Müşteri Ekstresi</span></a></li>
+        <li><a href="/raport/get-customer-balance" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Müşteri Bakiye Raporu</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 16. Kullanıcılar -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           <span>Kullanıcılar</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/user-list" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Kullanıcılar</span></a></li>
+        <li><a href="/authorization" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Yetkilendirme</span></a></li>
+        <li><a href="/role-list" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Rol &amp; Sayfa Yönetimi</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 17. Özel Raporlar -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="line-chart"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
           <span>Özel Raporlar</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/special-raport" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Rapor Listesi</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 18. Müşteri Talepleri -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-circle"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
           <span>Müşteri Talepleri</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/davye-customer-claims" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Müşteri Talepleri</span></a></li>
+      </ul>
     </li>
-    <li>
-      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="selectMenuItem(this)">
+
+    <!-- 19. Ayarlar -->
+    <li class="sidebar-menu-group">
+      <a href="javascript:void(0)" class="sidebar-menu-item" onclick="toggleSidebarMenu(this)">
         <div class="sidebar-item-left">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="settings"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
           <span>Ayarlar</span>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="sidebar-chevron"><path d="m6 9 6 6 6-6"/></svg>
       </a>
+      <ul class="sidebar-sub-menu">
+        <li><a href="/log-managament" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Loglar</span></a></li>
+        <li><a href="/infos" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Genel Ayarlar</span></a></li>
+        <li><a href="/service-management" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Servisler</span></a></li>
+        <li><a href="/process-attribute" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>İşlem Özellikleri</span></a></li>
+        <li><a href="/notification-settings" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Bildirim Ayarları</span></a></li>
+        <li><a href="/pages-translate" class="sidebar-sub-item" onclick="selectSubMenuItem(this, event)"><span class="sidebar-sub-dot"></span><span>Çeviri Yönetimi</span></a></li>
+      </ul>
     </li>
   </ul>
 </aside>
@@ -12131,20 +12368,76 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    function toggleSidebarMenu(menuBtn) {
+      const parentGroup = menuBtn.closest('.sidebar-menu-group');
+      const subMenu = parentGroup?.querySelector('.sidebar-sub-menu');
+      if (!subMenu) return;
+
+      const isExpanded = menuBtn.classList.contains('expanded');
+      menuBtn.classList.toggle('expanded', !isExpanded);
+      subMenu.classList.toggle('show', !isExpanded);
+    }
+
+    function selectSubMenuItem(subItem, event) {
+      if (event) event.stopPropagation();
+      document.querySelectorAll('.sidebar-sub-item').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.sidebar-menu-item').forEach(el => el.classList.remove('active'));
+      
+      subItem.classList.add('active');
+      const parentGroup = subItem.closest('.sidebar-menu-group');
+      const topBtn = parentGroup?.querySelector('.sidebar-menu-item');
+      if (topBtn) topBtn.classList.add('active');
+
+      if (window.innerWidth <= 860) {
+        toggleSidebar(false);
+      }
+    }
+
     function filterSidebarMenu(query) {
-      const q = (query || '').toLowerCase().trim();
-      document.querySelectorAll('#sidebarMenuList li').forEach(li => {
-        const text = li.innerText.toLowerCase();
-        li.style.display = text.includes(q) ? '' : 'none';
+      query = (query || '').toLocaleLowerCase('tr-TR').trim();
+      const groups = document.querySelectorAll('.sidebar-menu-group');
+
+      groups.forEach(group => {
+        const topItem = group.querySelector('.sidebar-menu-item');
+        const subItems = group.querySelectorAll('.sidebar-sub-item');
+        const topText = (topItem?.innerText || '').toLocaleLowerCase('tr-TR');
+        let hasMatch = topText.includes(query);
+        let anySubMatch = false;
+
+        subItems.forEach(sub => {
+          const subText = (sub.innerText || '').toLocaleLowerCase('tr-TR');
+          if (!query || subText.includes(query)) {
+            sub.style.display = 'flex';
+            if (query && subText.includes(query)) anySubMatch = true;
+          } else {
+            sub.style.display = 'none';
+          }
+        });
+
+        const subMenu = group.querySelector('.sidebar-sub-menu');
+        if (!query) {
+          group.style.display = 'block';
+          if (topItem && !topItem.classList.contains('default-open')) {
+            topItem.classList.remove('expanded');
+            if (subMenu) subMenu.classList.remove('show');
+          } else if (topItem && topItem.classList.contains('default-open')) {
+            topItem.classList.add('expanded');
+            if (subMenu) subMenu.classList.add('show');
+          }
+        } else if (hasMatch || anySubMatch) {
+          group.style.display = 'block';
+          if (anySubMatch && subMenu) {
+            topItem?.classList.add('expanded');
+            subMenu.classList.add('show');
+          }
+        } else {
+          group.style.display = 'none';
+        }
       });
     }
 
     function selectMenuItem(el) {
-      document.querySelectorAll('.sidebar-menu-item').forEach(i => i.classList.remove('active'));
-      el.classList.add('active');
-      if (window.innerWidth <= 860) {
-        toggleSidebar(false);
-      }
+      toggleSidebarMenu(el);
     }
   </script>
 
