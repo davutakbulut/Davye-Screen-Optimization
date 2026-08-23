@@ -78,6 +78,12 @@ Her kartın işlemler menüsünde şu 8 aksiyon eksiksiz yer alır:
 
 ---
 
+### J. Tarih Formatı Standartı (DD / MM / YYYY)
+1. Kart başlığında, detay modallarında, kargo çizelgesinde ve sistem genelinde tüm tarihler tire yerine boşluklu eğik çizgi ile **`DD / MM / YYYY`** (örn: `21 / 08 / 2026`) formatında gösterilir.
+2. Vade tarihleri ve sipariş oluşturma tarihleri bu formatla tam uyumludur.
+
+---
+
 ## 📖 3. DÖKÜMANTASYON SAYFASI KURALLARI (`documantations/index.html`)
 1. **Sabit Header (Fixed):** Üst başlık hem masaüstünde hem mobilde `position: fixed` olarak en üstte sabit kalır.
 2. **Masaüstü Sticky Sidebar:** Sol menü `position: sticky; top: 78px; align-self: flex-start;` ile masaüstünde kaydırma boyunca sabit kalır.
