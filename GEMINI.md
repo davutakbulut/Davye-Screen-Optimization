@@ -68,7 +68,7 @@ Her kartın işlemler menüsünde şu 8 aksiyon eksiksiz yer alır:
 
 ### H. Sayfalama & Sayaç Düzeni
 1. Sayfa başına seçim (`10 Adet ▾`) solda, sayfa numaraları sağda konumlandırılır.
-2. Seçicinin hemen yanında `[ 1-10 / 21 ]` kompakt sayaç rozeti yer alır.
+2. Seçicinin hemen yanında `1-10 / 21` sayaç metni yer alır (arka plansız ve çerçevesiz düz yazı formatında).
 
 ---
 
