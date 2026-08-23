@@ -91,6 +91,13 @@ Her kartın işlemler menüsünde şu 6 aksiyon eksiksiz yer alır:
 
 ---
 
+### L. Kısmi Ödeme Tutar Gösterimi (Siyah / Kırmızı)
+1. Kısmi ödeme yapılmış siparişlerde tutar alanı hem başlıkta hem de finansal özet sütununda `[Toplam Tutar ₺] / [Kalan Ödenmemiş Tutar ₺]` formatında gösterilir (örn: `1.920,00 ₺ / 920,00 ₺` veya `12.500,00 ₺ / 7.500,00 ₺`).
+2. Soldaki toplam sipariş tutarı **Siyah** (`.price-total` - `#0f172a`), ayırıcı eğik çizgi **Gri** (`.price-divider` - `#94a3b8`), sağdaki ödenmemiş kalan tutar ise **Kırmızı** (`.price-remaining` - `#dc2626`) olarak vurgulanır.
+3. Ödeme durumu rozeti `pay-partial` (`Kısmi Ödendi`) sarı/amber tonlarında gösterilir.
+
+---
+
 ## 📖 3. DÖKÜMANTASYON SAYFASI KURALLARI (`documantations/index.html`)
 1. **Sabit Header (Fixed):** Üst başlık hem masaüstünde hem mobilde `position: fixed` olarak en üstte sabit kalır.
 2. **Masaüstü Sticky Sidebar:** Sol menü `position: sticky; top: 78px; align-self: flex-start;` ile masaüstünde kaydırma boyunca sabit kalır.

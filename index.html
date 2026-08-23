@@ -5506,7 +5506,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount" style="color: #d97706;" data-tip="Sipariş Tutarı">12.500,00 ₺</span>
+          <span class="header-price-amount" data-tip="Sipariş Tutarı (Toplam / Kalan Tutar)"><span class="price-total">12.500,00 ₺</span> <span class="price-divider">/</span> <span class="price-remaining">7.500,00 ₺</span></span>
           <div class="status-pills-wrap"><span class="status-pill pill-hazirlaniyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="package" aria-hidden="true" class="lucide lucide-package"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg> Hazırlanıyor</span><span class="status-pill pill-taslak" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-minus" aria-hidden="true" class="lucide lucide-file-minus"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M9 15h6"></path></svg> Faturasız</span></div>
         </div>
         <div class="row-right">
@@ -5635,13 +5635,17 @@
       <!-- 4. SÜTUN: Finansal Özet -->
       <div class="grid-col finance-col">
         <div class="price-group">
-          <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount" style="color: #d97706;">12.500,00 ₺</span>
+          <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı / Kalan Bakiye • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
+          <span class="price-amount"><span class="price-total" style="color:#0f172a;">12.500,00 ₺</span> <span class="price-divider" style="color:#94a3b8; font-weight:600; margin:0 2px;">/</span> <span class="price-remaining" style="color:#dc2626;">7.500,00 ₺</span></span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
-            <span>Ödeme:</span>
-            <span class="price-paid-val" style="color: #d97706;">5.000,00 ₺</span>
+            <span>Ödenen:</span>
+            <span class="price-paid-val" style="color: #16a34a;">5.000,00 ₺</span>
+          </div>
+          <div class="price-paid-row" style="margin-top: 1px;" data-tip="Kalan Ödenmemiş Tutar / Açık Bakiye">
+            <span>Kalan:</span>
+            <span class="price-paid-val" style="color: #dc2626;">7.500,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-partial" data-tip="Mali Ödeme Durumu • Kısmi Ödeme Yapıldı"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-alert-circle"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg> Kısmi Ödendi</span>
         </div>
