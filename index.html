@@ -100,9 +100,13 @@
       background: #ffffff;
       border-bottom: 1px solid var(--border-color);
       width: 100%;
-      position: sticky;
+      position: fixed;
       top: 0;
-      z-index: 100;
+      left: 0;
+      right: 0;
+      height: 53px;
+      box-sizing: border-box;
+      z-index: 1000;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     }
 
@@ -3960,26 +3964,28 @@
     .app-layout-wrapper {
       display: flex;
       width: 100%;
-      min-height: calc(100vh - 55px);
+      min-height: calc(100vh - 53px);
+      margin-top: 53px;
       align-items: flex-start;
       position: relative;
     }
 
-    /* Sol Sidebar Ana Taşıyıcı */
+    /* Sol Sidebar Ana Taşıyıcı - Masaüstünde Sabit */
     .app-sidebar {
       width: 225px;
       min-width: 225px;
       max-width: 225px;
       background: #ffffff;
       border-right: 1px solid var(--border-color);
-      min-height: calc(100vh - 55px);
       padding: 14px 10px 30px 12px;
       display: flex;
       flex-direction: column;
       gap: 5px;
       box-sizing: border-box;
-      position: sticky;
+      position: fixed;
       top: 53px;
+      left: 0;
+      bottom: 0;
       height: calc(100vh - 53px);
       overflow-y: auto;
       overflow-x: hidden;
@@ -4085,12 +4091,15 @@
       transition: transform 0.2s ease;
     }
 
-    /* Sağ Ana İçerik Alanı */
+    /* Sağ Ana İçerik Alanı - Masaüstünde Sabit Sidebar Boşluğu */
     .app-main-content {
       flex: 1;
+      margin-left: 225px;
+      width: calc(100% - 225px);
       min-width: 0;
       display: flex;
       flex-direction: column;
+      box-sizing: border-box;
     }
 
     /* Mobil Çekmece & Backdrop */
@@ -4127,6 +4136,10 @@
       }
       .app-sidebar.open {
         transform: translateX(0);
+      }
+      .app-main-content {
+        margin-left: 0;
+        width: 100%;
       }
       .davye-logo-badge {
         cursor: pointer;

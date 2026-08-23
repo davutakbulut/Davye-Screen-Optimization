@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 23 / 08 / 2026 15:10  
+> **Son Sistem Güncellemesi:** 23 / 08 / 2026 15:25  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -25,6 +25,7 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
 
 ### A. Masaüstü & Mobil Bütünlüğü
 1. **Masaüstü (Desktop):**
+   * Üst header (`.davye-top-header`) ve sol sidebar menü (`.app-sidebar`) ekran kaydırıldığında **daima sabit (fixed)** kalır; sağdaki sipariş listesi (`.app-main-content`) bağımsız olarak kayar.
    * Kapalı kartlar tek satırlık başlıkla gelir ve Cari Adı görünür.
    * Tıklandığında başlıktaki Cari Adı gizlenir ve 4 sütunlu `card-body-grid` açılır (`1.3fr 1.1fr 1.3fr 0.9fr`).
    * Başlıktaki ok 180° döner.
