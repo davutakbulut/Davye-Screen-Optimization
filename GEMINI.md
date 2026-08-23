@@ -71,6 +71,13 @@ Her kartın işlemler menüsünde şu 8 aksiyon eksiksiz yer alır:
 
 ---
 
+### I. Müşteri Notu Şeridi (.card-note-bar)
+1. Kart kapalıyken de (`.order-card:not(.expanded)`) acil müşteri notunun derhal fark edilebilmesi için `.card-note-bar` **her zaman görünürdür** (`display: flex`).
+2. Kapalıyken alt köşeleri yuvarlaktır (`border-radius: 0 0 9px 9px`); kart açıldığında gövdenin üstünde düz şerit olarak kalır (`border-radius: 0`).
+3. Tıklandığında veya "Kopyala" butonuna basıldığında not metni panoya kopyalanır.
+
+---
+
 ## 📖 3. DÖKÜMANTASYON SAYFASI KURALLARI (`documantations/index.html`)
 1. **Sabit Header (Fixed):** Üst başlık hem masaüstünde hem mobilde `position: fixed` olarak en üstte sabit kalır.
 2. **Masaüstü Sticky Sidebar:** Sol menü `position: sticky; top: 78px; align-self: flex-start;` ile masaüstünde kaydırma boyunca sabit kalır.
