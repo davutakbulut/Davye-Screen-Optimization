@@ -453,8 +453,16 @@
       font-weight: 700;
       color: #0f172a;
       margin: 0 4px;
+      max-width: 33ch;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
     }
-    .header-cari-name svg { width: 13px; height: 13px; color: #2563eb; }
+    .header-cari-name::-webkit-scrollbar { display: none; }
+    .header-cari-name svg { width: 13px; height: 13px; color: #2563eb; flex-shrink: 0; }
 
     .order-card.expanded .header-cari-name {
       display: none !important;

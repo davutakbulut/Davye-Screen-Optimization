@@ -83,6 +83,12 @@ Her kartın işlemler menüsünde şu 6 aksiyon eksiksiz yer alır:
 
 ---
 
+### K. Cari İsimleri Karakter Sınırı ve Yatay Kaydırma (33ch)
+1. Kart başlığında (`.header-cari-name`) ve gövde 1. sütunundaki (`.cari-name .cari-title-left`) cari/müşteri ünvanları `max-width: 33ch` ile sınırlandırılır (`GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİ` referans genişliği).
+2. 33 karakterden uzun ünvanlar kart düzenini bozmaz veya alt satıra taşmaz; `overflow-x: auto; scrollbar-width: none;` sayesinde yatayda kaydırılabilir.
+
+---
+
 ## 📖 3. DÖKÜMANTASYON SAYFASI KURALLARI (`documantations/index.html`)
 1. **Sabit Header (Fixed):** Üst başlık hem masaüstünde hem mobilde `position: fixed` olarak en üstte sabit kalır.
 2. **Masaüstü Sticky Sidebar:** Sol menü `position: sticky; top: 78px; align-self: flex-start;` ile masaüstünde kaydırma boyunca sabit kalır.
