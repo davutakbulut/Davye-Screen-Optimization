@@ -10860,45 +10860,58 @@
     document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
     if (button) button.classList.add('active');
 
-    const allCards = Array.from(document.querySelectorAll('.order-card'));
-    if (statusClass === 'all') {
-      currentlyMatchedCards = allCards;
-    } else {
-      currentlyMatchedCards = allCards.filter(card => {
-        const statuses = (card.dataset.status || '').split(' ');
-        return statuses.includes(statusClass) || card.classList.contains(statusClass);
-      });
+    applyGlobalFilters();
+  }
+
+  // Canlı Arama ve Sekme Filtrelerini Merkezi Uygula (Sayfalama ile Tam Uyumlu)
+  function applyGlobalFilters() {
+    const searchInput = document.getElementById('orderSearch');
+    const query = (searchInput?.value || '').toLocaleLowerCase('tr-TR').trim();
+    
+    // Aktif durum sekmesini tespit et
+    const activeTab = document.querySelector('.filter-tab.active');
+    let activeStatus = 'all';
+    if (activeTab) {
+      const onclickAttr = activeTab.getAttribute('onclick') || '';
+      const match = onclickAttr.match(/filterCards\('([^']+)'/);
+      if (match) activeStatus = match[1];
     }
+
+    const allCards = Array.from(document.querySelectorAll('.order-card'));
+
+    currentlyMatchedCards = allCards.filter(card => {
+      // 1. Durum Sekmesi Kontrolü
+      if (activeStatus !== 'all') {
+        const statuses = (card.dataset.status || '').split(' ');
+        const matchesStatus = statuses.includes(activeStatus) || card.classList.contains(activeStatus);
+        if (!matchesStatus) return false;
+      }
+
+      // 2. Arama Metni Kontrolü (Sipariş No, 3 haneli kod, Cari Adı, Açıklama vb.)
+      if (query) {
+        const orderId = (card.querySelector('.order-number-badge')?.dataset?.orderId || card.dataset.orderId || '').toLocaleLowerCase('tr-TR');
+        const badgeSpan = (card.querySelector('.order-number-badge span')?.innerText || '').toLocaleLowerCase('tr-TR').trim();
+        const cardText = (card.innerText + ' ' + orderId + ' ' + badgeSpan).toLocaleLowerCase('tr-TR');
+        if (!cardText.includes(query)) return false;
+      }
+
+      return true;
+    });
+
     currentPage = 1;
     if (typeof renderPagination === 'function') {
       renderPagination();
-    } else {
-      allCards.forEach(card => {
-        if (currentlyMatchedCards.includes(card)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
     }
-    updateStatusTabCounts();
+    if (typeof updateStatusTabCounts === 'function') {
+      updateStatusTabCounts();
+    }
   }
 
-  // Canlı Arama Filtresi
-  document.getElementById('orderSearch').addEventListener('input', function(e) {
-    const query = e.target.value.toLowerCase().trim();
-    const cards = document.querySelectorAll('.order-card');
-
-    cards.forEach(card => {
-      const cardOrderId = card.querySelector('.order-number-badge')?.dataset?.orderId || '';
-      const text = (card.innerText + ' ' + cardOrderId).toLowerCase();
-      if (text.includes(query)) {
-        card.style.display = 'flex';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  });
+  // Canlı Arama Filtresi (Sayfalama Bypass'ı Kesinlikle Engellendi)
+  const orderSearchInput = document.getElementById('orderSearch');
+  if (orderSearchInput) {
+    orderSearchInput.addEventListener('input', applyGlobalFilters);
+  }
 
   // Kapsamlı Filtre Paneli Açma / Kapatma (Sağdan Slide-in Drawer)
   function openFilterDrawer() {
@@ -11380,21 +11393,7 @@
       }
     });
 
-    const activeTab = document.querySelector('.filter-tab.active');
-    const onclickAttr = activeTab?.getAttribute('onclick') || '';
-    const match = onclickAttr.match(/filterCards\('([^']+)'/);
-    const statusClass = match ? match[1] : 'all';
-
-    if (statusClass === 'all') {
-      currentlyMatchedCards = sortedCards;
-    } else {
-      currentlyMatchedCards = sortedCards.filter(c => (c.dataset.status || '').split(' ').includes(statusClass) || c.classList.contains(statusClass));
-    }
-
-    currentPage = 1;
-    if (typeof renderPagination === 'function') {
-      renderPagination();
-    }
+    applyGlobalFilters();
   }
 
   function showSortToast(text) {
