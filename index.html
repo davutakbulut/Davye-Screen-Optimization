@@ -11092,7 +11092,6 @@
     document.querySelectorAll('.sort-item').forEach(el => el.classList.remove('active'));
     if (itemEl) itemEl.classList.add('active');
 
-    const container = document.querySelector('.container');
     const cards = Array.from(document.querySelectorAll('.order-card'));
 
     cards.sort((a, b) => {
