@@ -51,16 +51,14 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
 2. **Satış Kanalları:** `TRENDYOL AŞ. ŞTİ.`, `DENTAL PİYASA`, `HEPSİBURADA`, `DAVUT AKBULUT`.
 3. **Taşıyıcı Kargo & Teslimat Türleri:** `DHL Kargo (KA)`, `Trendyol Express (KA)`, `HepsiJet (GÖ)`, `Elden Teslim`.
 
-### F. İşlemler Menüsü (8 Aksiyon)
-Her kartın işlemler menüsünde şu 8 aksiyon eksiksiz yer alır:
+### F. İşlemler Menüsü (6 Aksiyon)
+Her kartın işlemler menüsünde şu 6 aksiyon eksiksiz yer alır:
 1. `Detaya Git` (Sipariş detay modalını açar)
 2. `Müşteri Detay` (Cari CRM modalını açar)
 3. `İşlemi Kopyala` (Siparişi klonlar)
-4. `Fatura Kes / Görüntüle` (E-Fatura ekranını açar)
-5. `İrsaliye Yazdır` (Yazdırma formatı üretir)
-6. `Not Ekle` (Kart üstüne sarı acil not barı ekler)
-7. `Siparişi İptal Et` (İptal modalı ve gerekçe seçtirir)
-8. `Sil` (Listeden animasyonla siler)
+4. `Not Ekle` (Kart üstüne sarı acil not barı ekler)
+5. `Siparişi İptal Et` (İptal modalı ve gerekçe seçtirir)
+6. `Sil` (Listeden animasyonla siler)
 
 ### G. Fotoğraflı Paketleme Kontrolü
 1. Kamera ikonu yalnızca paketlenmiş veya paketleme masasına girmiş siparişlerde gösterilir (`Paketleme Bekliyor`, `Paketlendi`, `Kargo Bekliyor`, `Kargoda`, `Teslim Edildi`).
