@@ -11076,8 +11076,34 @@
       }
     });
 
-    // Kartları DOM'a sıralı olarak yeniden yerleştir
-    cards.forEach(card => container.appendChild(card));
+    const container = document.querySelector('.container') || document.body;
+    const paginationBar = document.getElementById('paginationBar');
+
+    // Kartları paginationBar'ın hemen öncesine sıralı yerleştir (Sayfalama alta kalsın)
+    cards.forEach(card => {
+      if (paginationBar) {
+        paginationBar.parentNode.insertBefore(card, paginationBar);
+      } else {
+        container.appendChild(card);
+      }
+    });
+
+    // Aktif filtreye göre sayfalamayı güncelle
+    const activeTab = document.querySelector('.filter-tab.active');
+    const onclickAttr = activeTab?.getAttribute('onclick') || '';
+    const match = onclickAttr.match(/filterCards\('([^']+)'/);
+    const statusClass = match ? match[1] : 'all';
+
+    if (statusClass === 'all') {
+      currentlyMatchedCards = cards;
+    } else {
+      currentlyMatchedCards = cards.filter(c => (c.dataset.status || '').split(' ').includes(statusClass) || c.classList.contains(statusClass));
+    }
+
+    currentPage = 1;
+    if (typeof renderPagination === 'function') {
+      renderPagination();
+    }
 
     // Toast bildirimi
     const label = itemEl ? itemEl.querySelector('span')?.innerText : 'Sıralandı';
@@ -11091,13 +11117,15 @@
 
   // Yardımcı parse fonksiyonları
   function parseDateTime(str) {
-    const match = str.match(/(\d{2})-(\d{2})-(\d{4})\s+(\d{2}):(\d{2}):(\d{2})/);
+    const match = str.match(/(\d{2})\s*[\/\-]\s*(\d{2})\s*[\/\-]\s*(\d{4})(?:\s+(\d{2}):(\d{2}))?/);
     if (!match) return 0;
-    return new Date(`${match[3]}-${match[2]}-${match[1]}T${match[4]}:${match[5]}:${match[6]}`).getTime();
+    const hour = match[4] || '00';
+    const min = match[5] || '00';
+    return new Date(`${match[3]}-${match[2]}-${match[1]}T${hour}:${min}:00`).getTime();
   }
 
   function parseDateOnly(str) {
-    const match = str.match(/(\d{2})-(\d{2})-(\d{4})/);
+    const match = str.match(/(\d{2})\s*[\/\-]\s*(\d{2})\s*[\/\-]\s*(\d{4})/);
     if (!match) return 9999999999999;
     return new Date(`${match[3]}-${match[2]}-${match[1]}`).getTime();
   }
