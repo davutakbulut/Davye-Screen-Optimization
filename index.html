@@ -4586,10 +4586,10 @@
         Sipariş Alındı <span class="tab-count">1</span>
       </button>
       <button class="filter-tab" onclick="filterCards('status-hazirlaniyor', this)">
-        Hazırlanıyor <span class="tab-count">1</span>
+        Hazırlanıyor <span class="tab-count">2</span>
       </button>
       <button class="filter-tab" onclick="filterCards('status-hazirlandi', this)">
-        Hazırlandı <span class="tab-count">2</span>
+        Hazırlandı <span class="tab-count">1</span>
       </button>
       <button class="filter-tab" onclick="filterCards('status-paketleme-bekliyor', this)">
         Paketleme Bekliyor <span class="tab-count">2</span>
@@ -10161,7 +10161,11 @@
           card.style.transition = 'all 0.3s ease';
           card.style.opacity = '0';
           card.style.transform = 'scale(0.95)';
-          setTimeout(() => { card.remove(); }, 300);
+          setTimeout(() => {
+            card.remove();
+            if (typeof updateStatusTabCounts === 'function') updateStatusTabCounts();
+            if (typeof initPagination === 'function') initPagination();
+          }, 300);
         }
       });
       const toast = document.getElementById('toast');
@@ -10681,20 +10685,59 @@
     });
   }
 
+  // Durum Sekmelerindeki Sipariş Sayılarını Dinamik Hesapla
+  function updateStatusTabCounts() {
+    const allCards = document.querySelectorAll('.order-card');
+    const totalCount = allCards.length;
+
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      const countEl = tab.querySelector('.tab-count');
+      if (!countEl) return;
+
+      const onclickAttr = tab.getAttribute('onclick') || '';
+      const match = onclickAttr.match(/filterCards\('([^']+)'/);
+      if (!match) return;
+
+      const statusKey = match[1];
+      if (statusKey === 'all') {
+        countEl.textContent = totalCount;
+      } else {
+        const count = Array.from(allCards).filter(card => {
+          const statuses = (card.dataset.status || '').split(' ');
+          return statuses.includes(statusKey) || card.classList.contains(statusKey);
+        }).length;
+        countEl.textContent = count;
+      }
+    });
+  }
+
   // Durum Sekmesi Filtreleme
   function filterCards(statusClass, button) {
     document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
     if (button) button.classList.add('active');
 
-    const cards = document.querySelectorAll('.order-card');
-    cards.forEach(card => {
-      const statuses = (card.dataset.status || '').split(' ');
-      if (statusClass === 'all' || statuses.includes(statusClass) || card.dataset.status === statusClass) {
-        card.style.display = 'flex';
-      } else {
-        card.style.display = 'none';
-      }
-    });
+    const allCards = Array.from(document.querySelectorAll('.order-card'));
+    if (statusClass === 'all') {
+      currentlyMatchedCards = allCards;
+    } else {
+      currentlyMatchedCards = allCards.filter(card => {
+        const statuses = (card.dataset.status || '').split(' ');
+        return statuses.includes(statusClass) || card.classList.contains(statusClass);
+      });
+    }
+    currentPage = 1;
+    if (typeof renderPagination === 'function') {
+      renderPagination();
+    } else {
+      allCards.forEach(card => {
+        if (currentlyMatchedCards.includes(card)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+    updateStatusTabCounts();
   }
 
   // Canlı Arama Filtresi
@@ -11788,6 +11831,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const allCards = Array.from(document.querySelectorAll('.order-card'));
     currentlyMatchedCards = allCards;
     renderPagination();
+    if (typeof updateStatusTabCounts === 'function') updateStatusTabCounts();
   }
 
   function changePageSize(size) {
