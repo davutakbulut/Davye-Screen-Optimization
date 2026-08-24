@@ -1276,6 +1276,44 @@
       to { transform: rotate(360deg); }
     }
 
+    
+    /* Alınan Siparişler WMS Toplama Durumları */
+    .order-card.status-tamamlandi .card-v-fill {
+      height: 100% !important;
+      background: #10b981 !important;
+      border-top-left-radius: 9px;
+      border-bottom-left-radius: 9px;
+    }
+    .order-card.status-tamamlandi .card-v-check {
+      background: #10b981 !important;
+      box-shadow: 0 1px 4px rgba(16, 185, 129, 0.5) !important;
+      color: #ffffff !important;
+    }
+    .order-card.status-tamamlandi .card-v-check svg,
+    .order-card.status-tamamlandi .card-v-check i {
+      stroke-width: 3.5 !important;
+    }
+
+    .order-card.status-kismi-toplandi .card-v-fill {
+      height: 50% !important;
+      background: #3b82f6 !important;
+    }
+    .order-card.status-kismi-toplandi .card-v-check {
+      background: #3b82f6 !important;
+      box-shadow: 0 1px 4px rgba(59, 130, 246, 0.45) !important;
+      color: #ffffff !important;
+    }
+
+    .order-card.status-bekliyor .card-v-fill {
+      height: 15% !important;
+      background: #94a3b8 !important;
+    }
+    .order-card.status-bekliyor .card-v-check {
+      background: #94a3b8 !important;
+      box-shadow: 0 1px 4px rgba(148, 163, 184, 0.45) !important;
+      color: #ffffff !important;
+    }
+
     /* 1. DURUM: DEVAM EDİYOR (Tek Tip Gri Dolum - Aşamalı Yükseliş) */
     .status-taslak .card-v-fill { height: 15%; background: #64748b; }
     .status-alindi .card-v-fill { height: 25%; background: #64748b; }
@@ -5677,14 +5715,25 @@
     let html = '';
     list.forEach(order => {
       const isCompleted = order.pickedQty >= order.qty;
+      const isPartial = order.pickedQty > 0 && order.pickedQty < order.qty;
       const orderShortNo = order.id.slice(-3);
 
+      let cardStatusClass = 'status-bekliyor';
+      let checkIcon = 'package';
+      if (isCompleted) {
+        cardStatusClass = 'status-tamamlandi';
+        checkIcon = 'check';
+      } else if (isPartial) {
+        cardStatusClass = 'status-kismi-toplandi';
+        checkIcon = 'loader-2';
+      }
+
       html += `
-        <div class="order-card ${isCompleted ? 'status-hazirlandi' : 'status-alindi'}" id="card-${order.id}" data-order-id="${order.id}">
+        <div class="order-card ${cardStatusClass}" id="card-${order.id}" data-order-id="${order.id}">
           <!-- Sol Dikey İlerleme Çubuğu -->
-          <div class="card-v-progress" title="Sipariş Toplama İlerlemesi">
-            <div class="card-v-check"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="${isCompleted ? 'check-circle-2' : 'package-check'}" class="lucide lucide-check-circle-2"></svg></div>
-            <div class="card-v-fill" style="${isCompleted ? 'height:100%;' : 'height:20%;'}"></div>
+          <div class="card-v-progress" title="Sipariş Toplama İlerlemesi: ${order.pickedQty} / ${order.qty}">
+            <div class="card-v-check"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${isCompleted ? '3.5' : '2.5'}" stroke-linecap="round" stroke-linejoin="round" data-lucide="${checkIcon}" class="lucide lucide-${checkIcon}"></svg></div>
+            <div class="card-v-fill"></div>
           </div>
 
           <!-- Üst Başlık (3 Satırlı Kusursuz Yapı) -->
