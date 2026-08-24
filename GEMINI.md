@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 24 / 08 / 2026 03:15  
+> **Son Sistem Güncellemesi:** 24 / 08 / 2026 03:19  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -52,7 +52,7 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
 
 ### E. Doğrulanmış Gerçek Veri Kuralı (Anti-Halüsinasyon)
 1. **Depo Kodları:** Yalnızca `MD` (Dental Ürünler) ve `ED` (Ecza Ürünleri) kodları kullanılabilir. Başka hayali depo kodu (MRL, GCL vb.) yazılamaz.
-2. **Satış Kanalları:** `TRENDYOL AŞ. ŞTİ.`, `DENTAL PİYASA`, `HEPSİBURADA`, `DAVUT AKBULUT`.
+2. **Satış Kanalları:** `DAVUT AKBULUT`, `ÜMİT VELİOĞLU`, `GÖKHAN YANAR`, `ERDİ EKİZ`, `FURKAN KARAKUŞ`, `553 YUSUF ÖZGÜR`, `TRENDYOL AŞ. ŞTİ.`, `DENTAL PİYASA`, `HEPSİBURADA`.
 3. **Taşıyıcı Kargo & Teslimat Türleri:** `DHL Kargo (KA)`, `Trendyol Express (KA)`, `HepsiJet (GÖ)`, `Elden Teslim`.
 
 ### F. İşlemler Menüsü (6 Aksiyon)
