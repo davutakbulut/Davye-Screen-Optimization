@@ -1443,37 +1443,43 @@
       gap: 5px;
     }
 
-    /* 3. Satır Açıklama (Kapalıyken Görünür, Açıldığında Gizlenir) */
+    /* 3. Satır Açıklama & Masaüstü Aksiyon Butonları */
     .card-header-row.row-desc {
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      text-align: left;
-      gap: 4px;
+      justify-content: space-between;
       width: 100%;
+      padding: 2px 0 0 0;
+      gap: 10px;
+      box-sizing: border-box;
+    }
+    .row-desc-left {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      min-width: 0;
       font-size: 10.5px;
       color: #475569;
-      padding: 1.5px 0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      box-sizing: border-box;
     }
-    .card-header-row.row-desc svg,
-    .card-header-row.row-desc i,
-    .card-header-row.row-desc .lucide {
+    .row-desc-left svg,
+    .row-desc-left i,
+    .row-desc-left .lucide {
       width: 11px !important;
       height: 11px !important;
       color: #64748b !important;
       flex-shrink: 0 !important;
       stroke-width: 2 !important;
     }
-    .card-header-row.row-desc .header-desc-label {
+    .row-desc-left .header-desc-label {
       font-weight: 700;
       color: #475569;
       flex-shrink: 0;
     }
-    .card-header-row.row-desc .header-desc-content {
+    .row-desc-left .header-desc-content {
       color: #64748b;
       white-space: nowrap;
       overflow: hidden;
@@ -1481,9 +1487,34 @@
       min-width: 0;
       text-align: left;
     }
-    .order-card.expanded .card-header-row.row-desc {
+    .row-desc-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .order-card.expanded .card-header-row.row-desc .row-desc-left {
       display: none !important;
     }
+    .order-card.expanded .card-header-row.row-desc {
+      justify-content: flex-end;
+      padding: 0;
+    }
+
+    @media (max-width: 640px) {
+      .row-desc-right.desktop-actions {
+        display: none !important;
+      }
+      .mobile-actions {
+        display: flex !important;
+      }
+    }
+    @media (min-width: 641px) {
+      .mobile-actions {
+        display: none !important;
+      }
+    }
+
 
 
     .header-district {
@@ -5886,14 +5917,7 @@
               <span class="sales-rep-badge">${order.salesRep}</span>
             </div>
 
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-            <div class="card-header-row row-desc">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
-              <span class="header-desc-label">Açıklama:</span>
-              <span class="header-desc-content">${order.desc}</span>
-            </div>
-
-            <!-- 4. Satır: Tutar, Toplama Durumu ve Aksiyon Butonları -->
+            <!-- 3. Satır: Tutar ve Toplama Durumu -->
             <div class="card-header-row row-3">
               <div class="row-left">
                 <span class="header-price-amount">${order.totalPrice}</span>
@@ -5911,7 +5935,47 @@
                   ) : ''}
                 </div>
               </div>
-              <div class="row-right">
+              <!-- Mobilde Görünen Aksiyonlar -->
+              <div class="row-right mobile-actions">
+                <a href="siparis-toplama.html?orderId=${order.id}" class="btn-actions" style="background:#2563eb; border-color:#1d4ed8; text-decoration:none; gap:5px; height:24px; font-size:11px; padding:0 8px;" onclick="event.stopPropagation()" title="Raftan Toplama Ekranını Başlat">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="scan-barcode" class="lucide lucide-scan-barcode"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 7v10"/><path d="M12 7v10"/><path d="M17 7v10"/></svg> Siparişi Topla
+                </a>
+
+                <div class="actions-dropdown" onclick="event.stopPropagation()">
+                  <button type="button" class="btn-actions" onclick="toggleDropdown(this)" title="İşlemler Menüsü" style="height:24px; font-size:11px; padding:0 8px;">
+                    İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+                  </button>
+                  <div class="dropdown-menu">
+                    <button type="button" class="dropdown-item" onclick="createCargoOrder('${order.id}')">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                      <span>Kargo Oluştur</span>
+                    </button>
+                    <button type="button" class="dropdown-item" onclick="openReceiptModal('${order.id}')">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="receipt" class="lucide lucide-receipt"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg>
+                      <span>Fiş Yazdır</span>
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <button type="button" class="dropdown-item" onclick="toggleCancelOrder('${order.id}')">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${order.isCancelled ? '#059669' : '#dc2626'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="${order.isCancelled ? 'check-circle' : 'x-circle'}" class="lucide"><circle cx="12" cy="12" r="10"/><path d="${order.isCancelled ? 'm9 12 2 2 4-4' : 'm15 9-6 6M9 9l6 6'}"/></svg>
+                      <span style="font-weight:600; color:${order.isCancelled ? '#059669' : '#dc2626'};">${order.isCancelled ? 'Siparişin İptalini Kaldır' : 'Siparişi İptal Et'}</span>
+                    </button>
+                  </div>
+                </div>
+
+                <button type="button" class="btn-card-expand" onclick="toggleCardDirect(this, event)" title="Detayları Aç/Kapat">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- 4. Satır Açıklama & Masaüstü Aksiyon Butonları (Aynı Satırda) -->
+            <div class="card-header-row row-desc">
+              <div class="row-desc-left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+                <span class="header-desc-label">Açıklama:</span>
+                <span class="header-desc-content">${order.desc}</span>
+              </div>
+              <div class="row-desc-right desktop-actions">
                 <a href="siparis-toplama.html?orderId=${order.id}" class="btn-actions" style="background:#2563eb; border-color:#1d4ed8; text-decoration:none; gap:5px; height:24px; font-size:11px; padding:0 8px;" onclick="event.stopPropagation()" title="Raftan Toplama Ekranını Başlat">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="scan-barcode" class="lucide lucide-scan-barcode"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 7v10"/><path d="M12 7v10"/><path d="M17 7v10"/></svg> Siparişi Topla
                 </a>
