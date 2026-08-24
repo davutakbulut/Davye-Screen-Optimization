@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 24 / 08 / 2026 03:19  
+> **Son Sistem Güncellemesi:** 24 / 08 / 2026 03:23  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -110,6 +110,14 @@ Her kartın işlemler menüsünde şu 6 aksiyon eksiksiz yer alır:
    - **3. Tıklama (State 0):** Sıralama sıfırlanır ve varsayılan sıralamaya (`51898`'den `51878`'e) geri döner.
 3. Başka bir chip tıklandığında önceki aktif chip derhal nötr duruma (`⇄`) döner ve yeni chip 1. tıklama (State 1) ile başlar.
 4. Sıralama yapıldığında sayfalama (`paginationBar`) daima listenin en altında kalır ve sayfa numarası `1`'e alınarak güncellenir.
+
+---
+
+### N. Pazaryeri Siparişleri Etiketleme & "Pazaryerleri Gizli" Filtresi (.marketplace-toggle-label)
+1. Satış kanalı `TRENDYOL AŞ. ŞTİ.` veya `HEPSİBURADA` olan siparişler DOM'da `data-order-group="Pazaryeri Siparişleri"` ve `data-is-marketplace="true"` olarak etiketlenir (`ordersDatabase` içinde `orderGroup: "Pazaryeri Siparişleri"`, `isMarketplace: true`).
+2. Üst toolbar filtre alanında `#btnAdvToggle` butonunun yanında varsayılan olarak **seçili (`checked: true`)** gelen `Pazaryerleri Gizli` onay kutusu (`#hideMarketplaceCheck`) yer alır.
+3. Onay kutusu işaretliyken pazaryeri siparişleri gizlenir ve sayfalama ile durum sekmeleri yalnızca direkt siparişleri sayar/gösterir.
+4. Tik kaldırıldığında (`checked: false`), pazaryeri siparişleri listede orijinal kronolojik/sıralı yerlerine derhal geri döner ve sayaçlar güncellenir.
 
 ---
 

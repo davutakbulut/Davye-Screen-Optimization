@@ -511,6 +511,67 @@
     }
 
     /* İkonik Kapsamlı Filtre Butonu */
+    
+    .marketplace-toggle-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      height: 34px;
+      padding: 0 11px;
+      background: #ffffff;
+      border: 1px solid var(--border-color, #e2e8f0);
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .marketplace-toggle-label:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #1e293b;
+    }
+
+    .marketplace-toggle-label input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid #94a3b8;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      background: #ffffff;
+      display: grid;
+      place-content: center;
+      transition: all 0.15s ease;
+      margin: 0;
+    }
+
+    .marketplace-toggle-label input[type="checkbox"]::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+      transform: scale(0);
+      transform-origin: center;
+      transition: 120ms transform ease-in-out;
+      background-color: #ffffff;
+    }
+
+    .marketplace-toggle-label input[type="checkbox"]:checked {
+      background-color: #2563eb;
+      border-color: #2563eb;
+    }
+
+    .marketplace-toggle-label input[type="checkbox"]:checked::before {
+      transform: scale(1);
+    }
+
     .btn-adv-toggle {
       display: inline-flex;
       align-items: center;
@@ -4513,6 +4574,11 @@
           <path d="M7 10l5 5 5-5z"></path>
         </svg>
       </button>
+      <!-- Pazaryerleri Gizli Checkbox Toggle -->
+      <label class="marketplace-toggle-label" title="Trendyol ve Hepsiburada siparişlerini listede gizle/göster" data-tip="Pazaryeri Sipariş Filtresi • Trendyol ve Hepsiburada siparişlerini listede gizler veya sırasına dahil eder">
+        <input type="checkbox" id="hideMarketplaceCheck" checked onchange="toggleMarketplaceFilter(this.checked)">
+        <span class="marketplace-toggle-text">Pazaryerleri Gizli</span>
+      </label>
     </div>
   </div>
 </header>
@@ -4908,6 +4974,11 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders-horizontal" aria-hidden="true" class="lucide lucide-sliders-horizontal"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></svg>
         <span class="filter-active-dot" id="filterActiveDot"></span>
       </button>
+      <!-- Pazaryerleri Gizli Checkbox Toggle -->
+      <label class="marketplace-toggle-label" title="Trendyol ve Hepsiburada siparişlerini listede gizle/göster" data-tip="Pazaryeri Sipariş Filtresi • Trendyol ve Hepsiburada siparişlerini listede gizler veya sırasına dahil eder">
+        <input type="checkbox" id="hideMarketplaceCheck" checked onchange="toggleMarketplaceFilter(this.checked)">
+        <span class="marketplace-toggle-text">Pazaryerleri Gizli</span>
+      </label>
     </div>
   </div>
 
@@ -5147,7 +5218,7 @@
 <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-51898 (status-taslak) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-taslak" data-status="status-taslak">
+  <div class="order-card status-taslak" data-status="status-taslak" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 1/6 (Tamamlanmamış Sipariş)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -5333,7 +5404,7 @@
   </div>
 <!-- KART: #1-WS-2-51897 (status-alindi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-alindi" data-status="status-alindi">
+  <div class="order-card status-alindi is-marketplace" data-status="status-alindi" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 2/6 (Sipariş Alındı)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -5531,7 +5602,7 @@
   </div>
 <!-- KART: #1-WS-2-51896 (status-hazirlaniyor) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-hazirlaniyor" data-status="status-hazirlaniyor">
+  <div class="order-card status-hazirlaniyor" data-status="status-hazirlaniyor" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 3/6 (Hazırlanıyor)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -5729,7 +5800,7 @@
   </div>
 <!-- KART: #1-WS-2-51895 (status-hazirlandi status-fatura-bekliyor) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-hazirlandi status-fatura-bekliyor" data-status="status-hazirlandi status-fatura-bekliyor">
+  <div class="order-card status-hazirlandi status-fatura-bekliyor" data-status="status-hazirlandi status-fatura-bekliyor" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 3.5/6 (Hazırlandı / Fatura Bekliyor)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -5915,7 +5986,7 @@
   </div>
 <!-- KART: #1-WS-2-51894 (status-hazirlaniyor status-faturasiz) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-hazirlaniyor status-faturasiz" data-status="status-hazirlaniyor status-faturasiz">
+  <div class="order-card status-hazirlaniyor status-faturasiz" data-status="status-hazirlaniyor status-faturasiz" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 3/6 (Hazırlanıyor - Faturasız)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -6105,7 +6176,7 @@
   </div>
 <!-- KART: #1-WS-2-51893 (status-paketleme-bekliyor status-fatura-bekliyor) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-paketleme-bekliyor status-fatura-bekliyor" data-status="status-paketleme-bekliyor status-fatura-bekliyor">
+  <div class="order-card status-paketleme-bekliyor status-fatura-bekliyor" data-status="status-paketleme-bekliyor status-fatura-bekliyor" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 4/6 (Paketleme Bekliyor / Fatura Bekliyor)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -6294,7 +6365,7 @@
   </div>
 <!-- KART: #1-WS-2-51892 (status-paketlendi status-fatura-bekliyor) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-paketlendi status-fatura-bekliyor" data-status="status-paketlendi status-fatura-bekliyor">
+  <div class="order-card status-paketlendi status-fatura-bekliyor is-marketplace" data-status="status-paketlendi status-fatura-bekliyor" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 4/6 (Paketlendi / Fatura Bekliyor)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -6483,7 +6554,7 @@
   </div>
 <!-- KART: #1-WS-2-51891 (status-paketlendi status-faturasiz) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-paketlendi status-faturasiz" data-status="status-paketlendi status-faturasiz">
+  <div class="order-card status-paketlendi status-faturasiz is-marketplace" data-status="status-paketlendi status-faturasiz" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 4.5/6 (Paketlendi - Faturasız)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -6672,7 +6743,7 @@
   </div>
 <!-- KART: #1-WS-2-51890 (status-paketleme-bekliyor status-faturalandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-paketleme-bekliyor status-faturalandi" data-status="status-paketleme-bekliyor status-faturalandi">
+  <div class="order-card status-paketleme-bekliyor status-faturalandi" data-status="status-paketleme-bekliyor status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 4/6 (Paketleme Bekliyor / Faturası Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -6861,7 +6932,7 @@
   </div>
 <!-- KART: #1-WS-2-51889 (status-kargo-bekliyor status-fatura-bekliyor) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-kargo-bekliyor status-fatura-bekliyor" data-status="status-kargo-bekliyor status-fatura-bekliyor">
+  <div class="order-card status-kargo-bekliyor status-fatura-bekliyor is-marketplace" data-status="status-kargo-bekliyor status-fatura-bekliyor" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 4.5/6 (Kargo Bekliyor / Fatura Bekliyor)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -7050,7 +7121,7 @@
   </div>
 <!-- KART: #1-WS-2-51888 (status-kargoda status-fatura-bekliyor) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-kargoda status-fatura-bekliyor" data-status="status-kargoda status-fatura-bekliyor">
+  <div class="order-card status-kargoda status-fatura-bekliyor is-marketplace" data-status="status-kargoda status-fatura-bekliyor" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 5/6 (Kargoya Verildi / Fatura Bekliyor)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -7239,7 +7310,7 @@
   </div>
 <!-- KART: #1-WS-2-51887 (status-teslim-edildi status-fatura-bekliyor) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-teslim-edildi status-fatura-bekliyor" data-status="status-teslim-edildi status-fatura-bekliyor">
+  <div class="order-card status-teslim-edildi status-fatura-bekliyor" data-status="status-teslim-edildi status-fatura-bekliyor" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 5.5/6 (Teslim Edildi / Fatura Bekliyor)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -7428,7 +7499,7 @@
   </div>
 <!-- KART: #1-WS-2-51886 (status-paketlendi status-faturalandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-paketlendi status-faturalandi" data-status="status-paketlendi status-faturalandi">
+  <div class="order-card status-paketlendi status-faturalandi" data-status="status-paketlendi status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 5/6 (Paketlendi / Faturası Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -7617,7 +7688,7 @@
   </div>
 <!-- KART: #1-WS-2-51885 (status-kargo-bekliyor status-faturalandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-kargo-bekliyor status-faturalandi" data-status="status-kargo-bekliyor status-faturalandi">
+  <div class="order-card status-kargo-bekliyor status-faturalandi is-marketplace" data-status="status-kargo-bekliyor status-faturalandi" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 5/6 (Kargo Bekliyor / Faturası Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -7806,7 +7877,7 @@
   </div>
 <!-- KART: #1-WS-2-51884 (status-kargoda status-faturalandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-kargoda status-faturalandi" data-status="status-kargoda status-faturalandi">
+  <div class="order-card status-kargoda status-faturalandi is-marketplace" data-status="status-kargoda status-faturalandi" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 5/6 (Kargoya Verildi / Faturası Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -7995,7 +8066,7 @@
   </div>
 <!-- KART: #1-WS-2-51883 (status-teslim-edildi status-faturasiz) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-teslim-edildi status-faturasiz" data-status="status-teslim-edildi status-faturasiz">
+  <div class="order-card status-teslim-edildi status-faturasiz" data-status="status-teslim-edildi status-faturasiz" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 6/6 (Teslim Edildi - Faturasız Tamamlandı)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -8184,7 +8255,7 @@
   </div>
 <!-- KART: #1-WS-2-51882 (status-teslim-edildi status-faturalandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-teslim-edildi status-faturalandi" data-status="status-teslim-edildi status-faturalandi">
+  <div class="order-card status-teslim-edildi status-faturalandi" data-status="status-teslim-edildi status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 6/6 (Teslim Edildi / Faturası Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -8373,7 +8444,7 @@
   </div>
 <!-- KART: #1-WS-2-51881 (status-iade-bekliyor) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-iade-bekliyor" data-status="status-iade-bekliyor">
+  <div class="order-card status-iade-bekliyor" data-status="status-iade-bekliyor" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="İade Süreci: 1/3 (İade Edildi, İade Kargo Bekleniyor)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -8559,7 +8630,7 @@
   </div>
 <!-- KART: #1-WS-2-51880 (status-iade-onaylandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-iade-onaylandi" data-status="status-iade-onaylandi">
+  <div class="order-card status-iade-onaylandi" data-status="status-iade-onaylandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="İade Süreci: 2/3 (İade Kargo Onaylandı, İade Ödemesi Bekleniyor)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -8745,7 +8816,7 @@
   </div>
 <!-- KART: #1-WS-2-51879 (status-iade-edildi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-iade-edildi" data-status="status-iade-edildi">
+  <div class="order-card status-iade-edildi is-marketplace" data-status="status-iade-edildi" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="İade Süreci: 3/3 (İade Edildi - Tamamlandı)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -8931,7 +9002,7 @@
   </div>
 <!-- KART: #1-WS-2-51878 (status-iptal status-faturasiz) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-iptal status-faturasiz" data-status="status-iptal status-faturasiz">
+  <div class="order-card status-iptal status-faturasiz is-marketplace" data-status="status-iptal status-faturasiz" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İptal Edildi (İşlem Görmedi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -9129,7 +9200,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-68016 (status-alindi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-alindi" data-status="status-alindi">
+  <div class="order-card status-alindi" data-status="status-alindi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Sipariş Alındı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -9324,7 +9395,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67875 (status-hazirlandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-hazirlandi" data-status="status-hazirlandi">
+  <div class="order-card status-hazirlandi" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -9519,7 +9590,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67647 (status-kargo-bekliyor) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-kargo-bekliyor" data-status="status-kargo-bekliyor">
+  <div class="order-card status-kargo-bekliyor" data-status="status-kargo-bekliyor" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Kargo Bekliyor" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -9714,7 +9785,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67674 (status-kargoda) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-kargoda" data-status="status-kargoda">
+  <div class="order-card status-kargoda" data-status="status-kargoda" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Kargoda" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -9909,7 +9980,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67874 (status-faturalandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-faturalandi" data-status="status-faturalandi">
+  <div class="order-card status-faturalandi" data-status="status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Faturalandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -10104,7 +10175,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67839 (status-hazirlandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-hazirlandi" data-status="status-hazirlandi">
+  <div class="order-card status-hazirlandi" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -10299,7 +10370,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67693 (status-hazirlaniyor) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-hazirlaniyor" data-status="status-hazirlaniyor">
+  <div class="order-card status-hazirlaniyor" data-status="status-hazirlaniyor" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlanıyor" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -10494,7 +10565,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-63902 (status-teslim-edildi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi">
+  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -10689,7 +10760,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-65813 (status-teslim-edildi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi">
+  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -10884,7 +10955,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67621 (status-teslim-edildi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi">
+  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -11079,7 +11150,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-66902 (status-teslim-edildi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi">
+  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -11274,7 +11345,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67846 (status-faturalandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-faturalandi" data-status="status-faturalandi">
+  <div class="order-card status-faturalandi" data-status="status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Faturalandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -11469,7 +11540,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67576 (status-kargoda) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-kargoda" data-status="status-kargoda">
+  <div class="order-card status-kargoda" data-status="status-kargoda" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Kargoda" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -11664,7 +11735,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67833 (status-hazirlandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-hazirlandi" data-status="status-hazirlandi">
+  <div class="order-card status-hazirlandi" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -11859,7 +11930,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67782 (status-teslim-edildi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi">
+  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -12054,7 +12125,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-63758 (status-teslim-edildi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi">
+  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -12249,7 +12320,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67553 (status-teslim-edildi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi">
+  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -12444,7 +12515,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-60004 (status-teslim-edildi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi">
+  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -12639,7 +12710,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-63729 (status-faturalandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-faturalandi" data-status="status-faturalandi">
+  <div class="order-card status-faturalandi" data-status="status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Faturalandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -12834,7 +12905,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67998 (status-hazirlandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-hazirlandi" data-status="status-hazirlandi">
+  <div class="order-card status-hazirlandi" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -13029,7 +13100,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67986 (status-kargo-bekliyor) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-kargo-bekliyor" data-status="status-kargo-bekliyor">
+  <div class="order-card status-kargo-bekliyor" data-status="status-kargo-bekliyor" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Kargo Bekliyor" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -13224,7 +13295,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67896 (status-hazirlandi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-hazirlandi" data-status="status-hazirlandi">
+  <div class="order-card status-hazirlandi" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -13419,7 +13490,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67758 (status-kargoda) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-kargoda" data-status="status-kargoda">
+  <div class="order-card status-kargoda" data-status="status-kargoda" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Kargoda" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -13614,7 +13685,7 @@
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67008 (status-teslim-edildi) -->
   <!-- ========================================================================= -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi">
+  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -13852,6 +13923,11 @@
       <button type="button" class="btn-modal-action btn-modal-primary" onclick="closeModal()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg> Tamam
       </button>
+      <!-- Pazaryerleri Gizli Checkbox Toggle -->
+      <label class="marketplace-toggle-label" title="Trendyol ve Hepsiburada siparişlerini listede gizle/göster" data-tip="Pazaryeri Sipariş Filtresi • Trendyol ve Hepsiburada siparişlerini listede gizler veya sırasına dahil eder">
+        <input type="checkbox" id="hideMarketplaceCheck" checked onchange="toggleMarketplaceFilter(this.checked)">
+        <span class="marketplace-toggle-text">Pazaryerleri Gizli</span>
+      </label>
     </div>
   </div>
 </div>
@@ -13878,6 +13954,11 @@
       <button type="button" class="btn-modal-action btn-modal-primary" onclick="saveOrderNote()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="save" aria-hidden="true" class="lucide lucide-save"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"></path><path d="M7 3v4a1 1 0 0 0 1 1h7"></path></svg> Notu Kaydet
       </button>
+      <!-- Pazaryerleri Gizli Checkbox Toggle -->
+      <label class="marketplace-toggle-label" title="Trendyol ve Hepsiburada siparişlerini listede gizle/göster" data-tip="Pazaryeri Sipariş Filtresi • Trendyol ve Hepsiburada siparişlerini listede gizler veya sırasına dahil eder">
+        <input type="checkbox" id="hideMarketplaceCheck" checked onchange="toggleMarketplaceFilter(this.checked)">
+        <span class="marketplace-toggle-text">Pazaryerleri Gizli</span>
+      </label>
     </div>
   </div>
 </div>
@@ -13945,6 +14026,11 @@
       <button type="button" class="btn-modal-action btn-modal-primary" onclick="printBarcode()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="printer" aria-hidden="true" class="lucide lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"></path><rect x="6" y="14" width="12" height="8" rx="1"></rect></svg> Termal Etiket Yazdır (100x150)
       </button>
+      <!-- Pazaryerleri Gizli Checkbox Toggle -->
+      <label class="marketplace-toggle-label" title="Trendyol ve Hepsiburada siparişlerini listede gizle/göster" data-tip="Pazaryeri Sipariş Filtresi • Trendyol ve Hepsiburada siparişlerini listede gizler veya sırasına dahil eder">
+        <input type="checkbox" id="hideMarketplaceCheck" checked onchange="toggleMarketplaceFilter(this.checked)">
+        <span class="marketplace-toggle-text">Pazaryerleri Gizli</span>
+      </label>
     </div>
   </div>
 </div>
@@ -13976,6 +14062,11 @@
       <button type="button" class="btn-modal-action" style="background:#dc2626; color:#fff;" onclick="confirmOrderCancel()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> İptali Onayla
       </button>
+      <!-- Pazaryerleri Gizli Checkbox Toggle -->
+      <label class="marketplace-toggle-label" title="Trendyol ve Hepsiburada siparişlerini listede gizle/göster" data-tip="Pazaryeri Sipariş Filtresi • Trendyol ve Hepsiburada siparişlerini listede gizler veya sırasına dahil eder">
+        <input type="checkbox" id="hideMarketplaceCheck" checked onchange="toggleMarketplaceFilter(this.checked)">
+        <span class="marketplace-toggle-text">Pazaryerleri Gizli</span>
+      </label>
     </div>
   </div>
 </div>
@@ -14042,6 +14133,11 @@
       <button type="button" class="btn-modal-action btn-modal-primary" onclick="downloadPackingPhoto()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="download" aria-hidden="true" class="lucide lucide-download"><path d="M12 15V3"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="m7 10 5 5 5-5"></path></svg> Görseli İndir
       </button>
+      <!-- Pazaryerleri Gizli Checkbox Toggle -->
+      <label class="marketplace-toggle-label" title="Trendyol ve Hepsiburada siparişlerini listede gizle/göster" data-tip="Pazaryeri Sipariş Filtresi • Trendyol ve Hepsiburada siparişlerini listede gizler veya sırasına dahil eder">
+        <input type="checkbox" id="hideMarketplaceCheck" checked onchange="toggleMarketplaceFilter(this.checked)">
+        <span class="marketplace-toggle-text">Pazaryerleri Gizli</span>
+      </label>
     </div>
   </div>
 </div>
@@ -14168,6 +14264,8 @@
       cargoStatus: "Kargo Hazırlığı Bekleniyor",
       cargoTrack: "DHL Kargo (KA)",
       note: "zeynep söylemez adresine sevk edilecek",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-101",
@@ -14175,7 +14273,7 @@
                 "qty": 24,
                 "price": "75,00 ₺",
                 "total": "1.800,00 ₺"
-        },
+    },
         {
                 "code": "DNT-202",
                 "name": "Sterilizasyon Rulosu 10cm x 200m",
@@ -14217,6 +14315,8 @@
       cargoStatus: "Raflardan Toplandı (Hazır)",
       cargoTrack: "DHL Kargo (KA)",
       note: "ZEYNEP SOYLEMEZ",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "IMP-901",
@@ -14259,6 +14359,8 @@
       cargoStatus: "Paketlendi / Sevkıyat Bekleniyor",
       cargoTrack: "DHL-6764701",
       note: "ZEYNEP SOYLEMEZ",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-401",
@@ -14266,7 +14368,7 @@
                 "qty": 50,
                 "price": "95,00 ₺",
                 "total": "4.750,00 ₺"
-        },
+    },
         {
                 "code": "DNT-402",
                 "name": "Universal Bond Yapıştırıcı Ajan (5ml)",
@@ -14308,6 +14410,8 @@
       cargoStatus: "Kurye Aracında Dağıtımda",
       cargoTrack: "DHL: 67674019",
       note: "zeynep söylemez",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "IMP-770",
@@ -14350,6 +14454,8 @@
       cargoStatus: "Faturası Kesildi / Paketleme Sırasında",
       cargoTrack: "DHL-6787401",
       note: "zenit dental ağız ve diş sağlığı anlaşmalı sevkıyat",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-301",
@@ -14357,7 +14463,7 @@
                 "qty": 120,
                 "price": "65,00 ₺",
                 "total": "7.800,00 ₺"
-        },
+    },
         {
                 "code": "DNT-302",
                 "name": "Artikain HCl Dental Anestezik Solüsyon (50 Ampul)",
@@ -14399,6 +14505,8 @@
       cargoStatus: "Depoda Hazırlandı / Sevk Emri Bekleniyor",
       cargoTrack: "DHL Kargo (KA)",
       note: "Zehra ebrar Şimşek",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "IMP-880",
@@ -14441,6 +14549,8 @@
       cargoStatus: "Depoda Toplama Devam Ediyor",
       cargoTrack: "DHL Kargo (KA)",
       note: "Zafer diş kliniği",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-505",
@@ -14483,6 +14593,8 @@
       cargoStatus: "Müşteriye Bizzat Teslim Edildi",
       cargoTrack: "TEX: 63902019",
       note: "Zafer dental diş kliniği ek teslimat",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-109",
@@ -14525,6 +14637,8 @@
       cargoStatus: "Klinik Yetkilisine Teslim Edildi",
       cargoTrack: "DHL: 65813091",
       note: "Zafer dental diş kliniği ana sevkiyat",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "IMP-999",
@@ -14567,6 +14681,8 @@
       cargoStatus: "Depodan Elden Teslim Edildi",
       cargoTrack: "Elden Teslim",
       note: "yusuf bey teslim aldı",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-220",
@@ -14609,6 +14725,8 @@
       cargoStatus: "Depodan Elden Teslim Edildi",
       cargoTrack: "Elden Teslim",
       note: "yusuf bey teslim aldı",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-330",
@@ -14651,6 +14769,8 @@
       cargoStatus: "Paketlendi / Sevkıyat Bekleniyor",
       cargoTrack: "DHL-6784601",
       note: "Yiğit dental",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-450",
@@ -14658,7 +14778,7 @@
                 "qty": 28,
                 "price": "320,00 ₺",
                 "total": "8.960,00 ₺"
-        },
+    },
         {
                 "code": "DNT-451",
                 "name": "Dental Otoklav Sterilizasyon Torbası 200lü",
@@ -14700,6 +14820,8 @@
       cargoStatus: "Kurye Aracında Dağıtımda",
       cargoTrack: "TEX: 67576019",
       note: "yeşil dentale bırakılacak",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-610",
@@ -14742,6 +14864,8 @@
       cargoStatus: "Depoda Hazırlandı / Teslimat Bekliyor",
       cargoTrack: "Elden Teslim",
       note: "Yarın elden teslim alacak",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "IMP-550",
@@ -14749,7 +14873,7 @@
                 "qty": 90,
                 "price": "180,00 ₺",
                 "total": "16.200,00 ₺"
-        },
+    },
         {
                 "code": "IMP-551",
                 "name": "Resorbe Olabilen Kolajen Membran 20x30mm",
@@ -14791,6 +14915,8 @@
       cargoStatus: "Klinik Görevlisine Bizzat Teslim Edildi",
       cargoTrack: "Elden Teslim",
       note: "Yaren Hemşire - Araçla Teslim Edildi",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "ECZ-101",
@@ -14833,6 +14959,8 @@
       cargoStatus: "Kargo Alıcıya Teslim Edildi",
       cargoTrack: "DHL: 63758019",
       note: "YAMAÇ DENTAL KORUPARK",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-209",
@@ -14875,6 +15003,8 @@
       cargoStatus: "Kargo Alıcıya Teslim Edildi",
       cargoTrack: "DHL: 67553019",
       note: "YAMAÇ DENTAL",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-210",
@@ -14917,6 +15047,8 @@
       cargoStatus: "Depodan Elden Teslim Alındı",
       cargoTrack: "Elden Teslim",
       note: "Whatsapp Marketing - Yusuf",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-105",
@@ -14959,6 +15091,8 @@
       cargoStatus: "Paketlendi / Sevkıyat Peronunda",
       cargoTrack: "DHL-6372901",
       note: "Whatsapp - PAYTR Ödeme Onaylandı",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-315",
@@ -15001,6 +15135,8 @@
       cargoStatus: "Depoda Hazırlandı / Özel Kurye Bekleniyor",
       cargoTrack: "Elden Teslim",
       note: "Whatsapp - Kurye ile Teslim Edilecek",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-420",
@@ -15043,6 +15179,8 @@
       cargoStatus: "HepsiJet Kuryesi Bekleniyor",
       cargoTrack: "HJ-6798601",
       note: "Whatsapp Siparişi",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-520",
@@ -15085,6 +15223,8 @@
       cargoStatus: "Depoda Hazırlandı / Elden Teslimat Bekliyor",
       cargoTrack: "Elden Teslim",
       note: "Whatsapp Siparişi",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "ECZ-205",
@@ -15127,6 +15267,8 @@
       cargoStatus: "Kurye Aracında Dağıtımda",
       cargoTrack: "DHL: 67758019",
       note: "Whatsapp Siparişi",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-112",
@@ -15169,6 +15311,8 @@
       cargoStatus: "Numune Paketi Teslim Edildi",
       cargoTrack: "TEX: 67008019",
       note: "Whatsapp Numune Siparişi",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         {
                 "code": "DNT-001",
@@ -15211,6 +15355,8 @@
       cargoStatus: "Tamamlanmamış Aşama",
       cargoTrack: "DHL Kargo (KA)",
       note: "-",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         { code: "DNT-990", name: "Dental Otoklav Cihazı Sterilizasyon Poşeti (200 Adet)", qty: 4, price: "855,00 ₺", total: "3.420,00 ₺" },
         { code: "IMP-770", name: "Premium Zirkonyum Blok A2 (Disk 98mm)", qty: 5, price: "1.000,00 ₺", total: "5.000,00 ₺" }
@@ -15248,6 +15394,8 @@
       cargoStatus: "Kurye Çağrısı Bekleniyor",
       cargoTrack: "Trendyol Express (KA)",
       note: "Müşteri Talebi: Lütfen faturayı kurumsal e-posta adresine (muhasebe@bozteke.com) iletiniz. Ürünler orijinal kutusunda olsun. (TY-4094767168)",
+      orderGroup: "Pazaryeri Siparişleri",
+      isMarketplace: true,
       items: [
         { code: "DNT-101", name: "Dental Muayene Aynası Seti (10 Adet)", qty: 50, price: "8,00 ₺", total: "400,00 ₺" },
         { code: "DNT-204", name: "Steril Cerrahi Maske (50li Kutu)", qty: 50, price: "5,68 ₺", total: "284,00 ₺" }
@@ -15285,6 +15433,8 @@
       cargoStatus: "Depo Toplama Aşamasında",
       cargoTrack: "DHL Kargo (KA)",
       note: "-",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         { code: "DNT-301", name: "Dental Kompozit Dolgu Seti (Nano Hibrit)", qty: 10, price: "85,00 ₺", total: "850,00 ₺" },
         { code: "DNT-302", name: "Asit Jel %37 Fosforik Asit (3ml Şırınga)", qty: 30, price: "20,00 ₺", total: "600,00 ₺" }
@@ -15322,6 +15472,8 @@
       cargoStatus: "Toplama Bitti / Fatura Bekliyor",
       cargoTrack: "DHL Kargo (KA)",
       note: "-",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         { code: "DNT-401", name: "Cerrahi Elevatör Seti (5 Parça Paslanmaz Çelik)", qty: 5, price: "320,00 ₺", total: "1.600,00 ₺" },
         { code: "DNT-402", name: "Dental Angldurva 1:1 Standart Push Button", qty: 2, price: "760,00 ₺", total: "1.520,00 ₺" }
@@ -15359,6 +15511,8 @@
       cargoStatus: "Elden Teslim / Hazırlanıyor",
       cargoTrack: "Elden Teslim",
       note: "-",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         { code: "DNT-501", name: "Işıklı Aeratör Başlığı 4 Delikli LED", qty: 1, price: "950,00 ₺", total: "950,00 ₺" }
       ]
@@ -15395,6 +15549,8 @@
       cargoStatus: "Barkod Basıldı / Paketleme Masasında",
       cargoTrack: "DHL-6800491",
       note: "-",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         { code: "DNT-601", name: "Endodontik Kanal Eğesi Ni-Ti Set (6lı Paket)", qty: 8, price: "300,00 ₺", total: "2.400,00 ₺" }
       ]
@@ -15431,6 +15587,8 @@
       cargoStatus: "Koli Mühürlendi / Kurye Alımı Bekleniyor",
       cargoTrack: "TEX-6801391",
       note: 'Müşteri Notu: Lütfen koli üzerine "KIRILACAK ÜRÜN - DENTAL ALÇI" etiketi yapıştırılsın.',
+      orderGroup: "Pazaryeri Siparişleri",
+      isMarketplace: true,
       items: [
         { code: "DNT-701", name: "Tip 4 Sert Dental Model Alçısı (5 Kg Kova)", qty: 6, price: "320,00 ₺", total: "1.920,00 ₺" }
       ]
@@ -15467,6 +15625,8 @@
       cargoStatus: "Sevkıyat Peronunda / Kurye Çağrıldı",
       cargoTrack: "TEX-6802219",
       note: "-",
+      orderGroup: "Pazaryeri Siparişleri",
+      isMarketplace: true,
       items: [
         { code: "DNT-801", name: "Dental Akrilik Toz Likit Seti Pembe", qty: 12, price: "400,00 ₺", total: "4.800,00 ₺" }
       ]
@@ -15503,6 +15663,8 @@
       cargoStatus: "Sevkıyat Peronunda / DHL Bekleniyor",
       cargoTrack: "DHL-6801482",
       note: "-",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         { code: "DNT-901", name: "Dental İmplant Transfer Parçası ve Analog", qty: 20, price: "280,00 ₺", total: "5.600,00 ₺" }
       ]
@@ -15539,6 +15701,8 @@
       cargoStatus: "HepsiJet Kuryesi Alımı Bekleniyor",
       cargoTrack: "HJ-91827364501",
       note: "-",
+      orderGroup: "Pazaryeri Siparişleri",
+      isMarketplace: true,
       items: [
         { code: "DNT-102", name: "Ortodontik Mum & Hijyen Bakım Kiti", qty: 15, price: "52,00 ₺", total: "780,00 ₺" }
       ]
@@ -15575,6 +15739,8 @@
       cargoStatus: "Taşıyıcı Araçta / Transfer Merkezinde",
       cargoTrack: "TEX-391827461",
       note: "-",
+      orderGroup: "Pazaryeri Siparişleri",
+      isMarketplace: true,
       items: [
         { code: "IMP-101", name: "Titanyum Dental İmplant Gövdesi (3.8 x 10mm)", qty: 5, price: "1.350,00 ₺", total: "6.750,00 ₺" }
       ]
@@ -15611,6 +15777,8 @@
       cargoStatus: "Alıcıya Bizzat Teslim Edildi",
       cargoTrack: "DHL-49182039",
       note: "-",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         { code: "DNT-202", name: "Dental Işıklı Dolgu Cihazı Koruma Kılıfı (100 Adet)", qty: 30, price: "70,00 ₺", total: "2.100,00 ₺" }
       ]
@@ -15647,6 +15815,8 @@
       cargoStatus: "Paketlendi / Sevkıyat Hazır",
       cargoTrack: "DHL-6801723",
       note: "-",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         { code: "DNT-305", name: "Dental Cerrahi Frez Seti Elmas Uçlu (10 Parça)", qty: 6, price: "700,00 ₺", total: "4.200,00 ₺" }
       ]
@@ -15683,6 +15853,8 @@
       cargoStatus: "Koli Hazırlandı / HepsiJet Bekleniyor",
       cargoTrack: "HJ-73819204910",
       note: "-",
+      orderGroup: "Pazaryeri Siparişleri",
+      isMarketplace: true,
       items: [
         { code: "DNT-405", name: "Dental Ölçü Maddesi Silikon Bazlı A-Tipi", qty: 5, price: "370,00 ₺", total: "1.850,00 ₺" }
       ]
@@ -15719,6 +15891,8 @@
       cargoStatus: "Dağıtımda / Kurye Aracında",
       cargoTrack: "TEX-481920192",
       note: "-",
+      orderGroup: "Pazaryeri Siparişleri",
+      isMarketplace: true,
       items: [
         { code: "DNT-505", name: "Dental Cerrahi Dikiş İpliği İpek 3/0 (36 Adet)", qty: 18, price: "400,00 ₺", total: "7.200,00 ₺" }
       ]
@@ -15755,6 +15929,8 @@
       cargoStatus: "Klinik Görevlisine Teslim Edildi",
       cargoTrack: "DHL-491820491",
       note: "-",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         { code: "DNT-605", name: "Numune Diş Beyazlatma Jeli %16 Karbamid Peroksit", qty: 20, price: "60,00 ₺", total: "1.200,00 ₺" }
       ]
@@ -15791,6 +15967,8 @@
       cargoStatus: "Kemal Gülüş Bizzat Teslim Aldı",
       cargoTrack: "DHL-491820918",
       note: "-",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         { code: "IMP-201", name: "Premium Titanyum İmplant Seti ve Cerrahi Kaset", qty: 4, price: "2.225,00 ₺", total: "8.900,00 ₺" }
       ]
@@ -15827,6 +16005,8 @@
       cargoStatus: "İade Kargosu Yolda (Depoya Geliyor)",
       cargoTrack: "DHL-819203918",
       note: "İade Nedeni: Sipariş edilen implant boyutu ile hekimin talep ettiği çap uyuşmadı, ürün açılmadan iade edildi.",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         { code: "IMP-301", name: "İmplant Abutment Düz Titanyum (Gingiva 2mm)", qty: 10, price: "340,00 ₺", total: "3.400,00 ₺" }
       ]
@@ -15863,6 +16043,8 @@
       cargoStatus: "İade Depoya Ulaştı & Kabul Edildi",
       cargoTrack: "DHL-738192019",
       note: "İade Nedeni: Fazla sipariş edilen dolgu cihazı bataryası orijinal ambalajında depoya kabul edildi.",
+      orderGroup: "Direkt Satış",
+      isMarketplace: false,
       items: [
         { code: "DNT-705", name: "LED Işınlı Dolgu Cihazı Yedek Bataryası", qty: 4, price: "700,00 ₺", total: "2.800,00 ₺" }
       ]
@@ -15899,6 +16081,8 @@
       cargoStatus: "İade Teslim Alındı & Süreç Tamamlandı",
       cargoTrack: "TEX-918274019",
       note: "-",
+      orderGroup: "Pazaryeri Siparişleri",
+      isMarketplace: true,
       items: [
         { code: "DNT-805", name: "Dental Fotoğraf Aynası Paslanmaz Çelik Set", qty: 5, price: "300,00 ₺", total: "1.500,00 ₺" }
       ]
@@ -15934,6 +16118,8 @@
       paymentStatus: "İptal",
       cargoStatus: "İşleme Alınmadı (İptal)",
       cargoTrack: "Trendyol Express (KA)",
+      orderGroup: "Pazaryeri Siparişleri",
+      isMarketplace: true,
       note: "İptal Nedeni: Müşteri siparişi kendisi panelden iptal etti.",
       items: [
         { code: "DNT-999", name: "Otomatik Aljinat Karıştırıcı Aksesuarı", qty: 15, price: "30,00 ₺", total: "450,00 ₺" }
@@ -16913,7 +17099,11 @@
 
   // Durum Sekmelerindeki Sipariş Sayılarını Dinamik Hesapla
   function updateStatusTabCounts() {
-    const allCards = document.querySelectorAll('.order-card');
+    const hideMarketplace = document.getElementById('hideMarketplaceCheck')?.checked ?? true;
+    const allCards = Array.from(document.querySelectorAll('.order-card')).filter(card => {
+      if (hideMarketplace && card.dataset.isMarketplace === 'true') return false;
+      return true;
+    });
     const totalCount = allCards.length;
 
     document.querySelectorAll('.filter-tab').forEach(tab => {
@@ -16946,6 +17136,12 @@
   }
 
   // Canlı Arama ve Sekme Filtrelerini Merkezi Uygula (Sayfalama ile Tam Uyumlu)
+  
+  function toggleMarketplaceFilter(checked) {
+    applyGlobalFilters();
+    showSortToast(checked ? 'Pazaryeri siparişleri gizlendi' : 'Pazaryeri siparişleri listelendi');
+  }
+
   function applyGlobalFilters() {
     const searchInput = document.getElementById('orderSearch');
     const query = (searchInput?.value || '').toLocaleLowerCase('tr-TR').trim();
@@ -16961,7 +17157,13 @@
 
     const allCards = Array.from(document.querySelectorAll('.order-card'));
 
+    const hideMarketplace = document.getElementById('hideMarketplaceCheck')?.checked ?? true;
+
     currentlyMatchedCards = allCards.filter(card => {
+      // 0. Pazaryeri Gizleme Kontrolü
+      if (hideMarketplace && card.dataset.isMarketplace === 'true') {
+        return false;
+      }
       // 1. Durum Sekmesi Kontrolü
       if (activeStatus !== 'all') {
         const statuses = (card.dataset.status || '').split(' ');
