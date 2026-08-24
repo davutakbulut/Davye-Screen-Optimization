@@ -5201,15 +5201,24 @@
         <!-- JS ile dinamik render edilir -->
       </div>
 
-      <!-- Sayfalama -->
-      <div class="pagination-bar" style="margin-top:14px;">
+      <!-- ========================================================================= -->
+      <!-- EN ALT SAYFALAMA (PAGINATION) KONTROL ÇUBUĞU (SOLDA ADET & SAYAÇ, SAĞDA SAYFALAR) -->
+      <!-- ========================================================================= -->
+      <div class="pagination-bar" id="paginationBar">
         <div class="pagination-left">
-          <select class="page-size-select" style="height:28px; font-size:11px;">
-            <option>25 Adet</option>
-            <option>50 Adet</option>
-            <option>100 Adet</option>
+          <select id="pageSizeSelect" class="pagination-select" onchange="changePageSize(this.value)" title="Sayfa Başına Kayıt">
+            <option value="10" selected>10 Adet</option>
+            <option value="25">25 Adet</option>
+            <option value="50">50 Adet</option>
+            <option value="100">100 Adet</option>
           </select>
-          <span style="font-family:'JetBrains Mono', monospace; font-size:11px; font-weight:700; color:#475569;">1-4 / 4 Sipariş</span>
+          <span class="pagination-info" id="paginationInfo"><strong>1-4</strong> / 4 Sipariş</span>
+        </div>
+
+        <div class="pagination-right">
+          <div class="pagination-nav" id="paginationNav">
+            <!-- Dinamik Butonlar JS ile Basılır -->
+          </div>
         </div>
       </div>
     </div>
@@ -5492,7 +5501,7 @@
 
   function filterWarehouseCards() {
     const query = (document.getElementById('orderSearch')?.value || '').toLowerCase().trim();
-    let filtered = warehouseDatabase.filter(o => {
+    currentFilteredList = warehouseDatabase.filter(o => {
       const matchQuery = !query || 
         o.orderRef.toLowerCase().includes(query) ||
         o.cariName.toLowerCase().includes(query) ||
@@ -5512,9 +5521,10 @@
       return matchQuery && matchFilter;
     });
 
-    renderWarehouseCards(filtered);
+    currentPage = 1;
+    renderPagination();
     const badge = document.getElementById('totalCountBadge');
-    if (badge) badge.innerText = `${filtered.length} Sipariş`;
+    if (badge) badge.innerText = `${currentFilteredList.length} Sipariş`;
   }
 
   function setWarehouseFilter(filter, btn) {
@@ -5595,7 +5605,91 @@
   }
 
   // İlk Yükleme
-  renderWarehouseCards(warehouseDatabase);
+  
+  let currentPage = 1;
+  let pageSize = 10;
+  let currentFilteredList = [...warehouseDatabase];
+
+  function changePageSize(val) {
+    pageSize = parseInt(val, 10) || 10;
+    currentPage = 1;
+    renderPagination();
+  }
+
+  function goToPage(pageNum) {
+    const totalPages = Math.ceil(currentFilteredList.length / pageSize) || 1;
+    if (pageNum < 1) pageNum = 1;
+    if (pageNum > totalPages) pageNum = totalPages;
+    currentPage = pageNum;
+    renderPagination();
+  }
+
+  function renderPagination() {
+    const totalItems = currentFilteredList.length;
+    const totalPages = Math.ceil(totalItems / pageSize) || 1;
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, totalItems);
+    const pageItems = currentFilteredList.slice(startIndex, endIndex);
+
+    renderWarehouseCards(pageItems);
+
+    const infoEl = document.getElementById('paginationInfo');
+    if (infoEl) {
+      if (totalItems === 0) {
+        infoEl.innerHTML = `<strong>0</strong> Sipariş`;
+      } else {
+        infoEl.innerHTML = `<strong>${startIndex + 1}-${endIndex}</strong> / ${totalItems} Sipariş`;
+      }
+    }
+
+    const navEl = document.getElementById('paginationNav');
+    if (navEl) {
+      let navHtml = '';
+
+      navHtml += `<button type="button" class="btn-page" onclick="goToPage(1)" ${currentPage === 1 ? 'disabled' : ''} title="İlk Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
+      </button>`;
+
+      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} title="Önceki Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>`;
+
+      for (let p = 1; p <= totalPages; p++) {
+        if (totalPages <= 7 || p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) {
+          navHtml += `<button type="button" class="btn-page ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
+        } else if (p === currentPage - 2 || p === currentPage + 2) {
+          navHtml += `<span style="padding: 0 4px; color:#94a3b8;">...</span>`;
+        }
+      }
+
+      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} title="Sonraki Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>`;
+
+      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''} title="Son Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
+      </button>`;
+
+      navEl.innerHTML = navHtml;
+    }
+
+    refreshZebraStripes();
+  }
+
+  function refreshZebraStripes() {
+    const visibleCards = Array.from(document.querySelectorAll('.order-card'));
+    visibleCards.forEach((card, idx) => {
+      const isOdd = (idx % 2 === 0);
+      const bg = isOdd ? '#ffffff' : '#f0f6fe';
+      card.style.backgroundColor = bg;
+      const header = card.querySelector('.card-header-bar');
+      if (header) header.style.backgroundColor = bg;
+    });
+  }
+
+  renderPagination();
 </script>
 </body>
 </html>
