@@ -5248,10 +5248,10 @@
           Tümü <span class="tab-count" id="countAll">13</span>
         </button>
         <button type="button" class="filter-tab active" onclick="setWarehouseFilter('pickable', this)">
-          Toplanabilir <span class="tab-count" id="countPickable">10</span>
+          Toplanabilir <span class="tab-count" id="countPickable">3</span>
         </button>
         <button type="button" class="filter-tab" onclick="setWarehouseFilter('unpickable', this)">
-          Toplanamaz <span class="tab-count" id="countUnpickable">3</span>
+          Toplanamaz <span class="tab-count" id="countUnpickable">4</span>
         </button>
         <button type="button" class="filter-tab" onclick="setWarehouseFilter('collected', this)">
           Toplanan <span class="tab-count" id="countCollected">6</span>
@@ -5935,8 +5935,8 @@
         (o.user && o.user.toLowerCase().includes(query));
 
       let matchFilter = true;
-      if (activeFilter === 'pickable') matchFilter = o.isPickable && !o.isCancelled;
-      else if (activeFilter === 'unpickable') matchFilter = !o.isPickable || o.isCancelled;
+      if (activeFilter === 'pickable') matchFilter = o.pickedQty < o.qty && o.isPickable && !o.isCancelled;
+      else if (activeFilter === 'unpickable') matchFilter = o.pickedQty < o.qty && (!o.isPickable || o.isCancelled);
       else if (activeFilter === 'collected') matchFilter = o.pickedQty >= o.qty && !o.isCancelled;
       else if (activeFilter === 'partial-invoiced') matchFilter = !!o.isPartialInvoiced;
       else if (activeFilter === 'missing-items') matchFilter = !!o.hasShortage;
@@ -6016,8 +6016,8 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -6097,8 +6097,8 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -6158,8 +6158,8 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -6239,8 +6239,8 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -6294,8 +6294,8 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -6375,8 +6375,8 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -6561,8 +6561,8 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -6642,8 +6642,8 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -6703,8 +6703,8 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -6784,8 +6784,8 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -6839,8 +6839,8 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -6920,8 +6920,8 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -7021,8 +7021,8 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -7102,8 +7102,8 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -7163,8 +7163,8 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -7244,8 +7244,8 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -7299,8 +7299,8 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -7380,8 +7380,8 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -7541,8 +7541,8 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -7622,8 +7622,8 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -7683,8 +7683,8 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -7764,8 +7764,8 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -7819,8 +7819,8 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
@@ -7900,8 +7900,8 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
     const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
     const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
     const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
