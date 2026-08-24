@@ -4873,6 +4873,45 @@
       to { transform: rotate(360deg); }
     }
 
+  
+    /* ========================================================================= */
+    /* ZEBRA STRIPING (#ffffff / #f0f6fe) & KART TEMASI                           */
+    /* ========================================================================= */
+    #warehouseCardsContainer > .order-card:nth-of-type(odd),
+    .order-card.card-zebra-white {
+      background-color: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+    #warehouseCardsContainer > .order-card:nth-of-type(odd) .card-header-bar,
+    .order-card.card-zebra-white .card-header-bar {
+      background-color: #ffffff !important;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    #warehouseCardsContainer > .order-card:nth-of-type(odd) .card-body-grid,
+    .order-card.card-zebra-white .card-body-grid {
+      background-color: #ffffff !important;
+    }
+
+    #warehouseCardsContainer > .order-card:nth-of-type(even),
+    .order-card.card-zebra-blue {
+      background-color: #f0f6fe !important;
+      border: 1.5px solid #bfdbfe !important;
+    }
+    #warehouseCardsContainer > .order-card:nth-of-type(even) .card-header-bar,
+    .order-card.card-zebra-blue .card-header-bar {
+      background-color: #e6f0fc !important;
+      border-bottom: 1px solid #dbeafe;
+    }
+    #warehouseCardsContainer > .order-card:nth-of-type(even) .card-body-grid,
+    .order-card.card-zebra-blue .card-body-grid {
+      background-color: #f0f6fe !important;
+    }
+
+    #warehouseCardsContainer > .order-card:hover {
+      border-color: #2563eb !important;
+      z-index: 2;
+    }
+
   </style>
 </head>
 <body>
@@ -5935,10 +5974,12 @@
     }
 
     let html = '';
-    list.forEach(order => {
+    list.forEach((order, idx) => {
       const isCompleted = order.pickedQty >= order.qty;
       const isPartial = order.pickedQty > 0 && order.pickedQty < order.qty;
       const orderShortNo = order.id.slice(-3);
+      const isEven = (idx % 2 === 1);
+      const zebraClass = isEven ? 'card-zebra-blue' : 'card-zebra-white';
 
       let cardStatusClass = 'status-bekliyor';
       let checkIcon = 'package';
@@ -5951,7 +5992,7 @@
       }
 
       html += `
-        <div class="order-card ${cardStatusClass}" id="card-${order.id}" data-order-id="${order.id}">
+        <div class="order-card ${cardStatusClass} ${zebraClass}" id="card-${order.id}" data-order-id="${order.id}">
           <!-- Sol Dikey İlerleme Çubuğu -->
           <div class="card-v-progress" title="Sipariş Toplama İlerlemesi: ${order.pickedQty} / ${order.qty}">
             <div class="card-v-check"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${isCompleted ? '3.5' : '2.5'}" stroke-linecap="round" stroke-linejoin="round" data-lucide="${checkIcon}" class="lucide lucide-${checkIcon}"></svg></div>
