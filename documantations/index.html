@@ -1951,134 +1951,341 @@
       width: 100%;
     }
 
-    /* Gövde 4 Sütun Grid */
-    .order-card .card-body-grid {
-      display: none !important;
+
+    /* 2. KART GÖVDE ALANI (FERAH & DENGELİ GRID - BİREBİR INDEX.HTML) */
+    .card-body-grid {
+      display: none;
+      grid-template-columns: 1.15fr 1.15fr 1.05fr 0.85fr;
+      padding: 9px 12px 10px 12px;
+      gap: 14px;
+      background: #ffffff;
+      border-bottom-left-radius: 9px;
+      border-bottom-right-radius: 9px;
+      border-top: 1px solid #f1f5f9;
+      box-sizing: border-box;
     }
     .order-card.expanded .card-body-grid {
       display: grid !important;
-      grid-template-columns: 1.3fr 1.1fr 1.3fr 0.9fr;
-      padding: 10px 14px;
-      gap: 12px;
-      border-top: 1px solid #f1f5f9;
-      border-radius: 0 0 9px 9px;
-      background: #ffffff;
-      animation: fadeInGrid 0.2s ease;
+      animation: slideDown 0.2s ease-out;
     }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .grid-col {
       display: flex;
       flex-direction: column;
       gap: 4px;
-      font-size: 11.5px;
+      position: relative;
     }
+
+    .grid-col:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: -7px;
+      top: 2px;
+      bottom: 2px;
+      width: 1px;
+      background: #f1f5f9;
+    }
+
     .col-title {
-      font-size: 11.5px;
-      font-weight: 800;
-      color: #0f172a;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 3px;
-      padding-bottom: 2px;
-      border-bottom: 1px solid #f1f5f9;
-    }
-    .col-title svg, .col-title i { width: 12px !important; height: 12px !important; color: #2563eb; }
-    .data-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 6px;
-      line-height: 1.35;
-    }
-    .data-label { color: #64748b; font-weight: 500; }
-    .data-value { color: #0f172a; font-weight: 600; text-align: right; word-break: break-word; }
-    .cari-name {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      font-size: 9.5px;
       font-weight: 700;
-      color: #0f172a;
-      cursor: pointer;
-      padding: 2px 0;
-    }
-    .cari-title-left {
-      display: inline-flex;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: #94a3b8;
+      display: flex;
       align-items: center;
       gap: 4px;
-      max-width: 28ch;
+      margin-bottom: 3px;
+      padding-bottom: 2px;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    .col-title svg,
+    .col-title i {
+      width: 11px !important;
+      height: 11px !important;
+      color: #94a3b8 !important;
+      flex-shrink: 0;
+    }
+
+    /* Veri Satırları (Key-Value) */
+    .data-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      font-size: 10.5px;
+      line-height: 1.35;
+      gap: 6px;
+      padding: 0.5px 0;
+    }
+
+    .data-label {
+      color: #64748b;
+      font-size: 10px;
+      font-weight: 500;
       white-space: nowrap;
     }
-    .cari-title-left svg, .cari-title-left i { width: 12px !important; height: 12px !important; color: #2563eb; flex-shrink: 0; }
-    .copy-inline-icon { width: 11px !important; height: 11px !important; color: #94a3b8; flex-shrink: 0; }
-    .badge-qty {
-      padding: 1px 5px;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1d4ed8;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 10.5px;
-    }
-    .cargo-tracking-row { margin-top: 4px; }
-    .cargo-tracking-btn {
-      width: 100%;
-      height: 24px;
-      background: #f8fafc;
-      border: 1px solid #cbd5e1;
-      border-radius: 5px;
-      font-size: 11px;
+
+    .data-value {
+      color: #0f172a;
       font-weight: 600;
-      color: #334155;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    .data-value.cari-name {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #0f172a;
+      text-align: left;
+      margin-bottom: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      cursor: pointer;
+      padding: 1px 2px;
+      border-radius: 3px;
+      transition: background 0.15s;
+    }
+
+    .data-value.cari-name:hover {
+      background: #f1f5f9;
+    }
+
+    .data-value.cari-name .cari-title-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      max-width: 33ch;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .data-value.cari-name .cari-title-left::-webkit-scrollbar {
+      display: none;
+    }
+
+    .data-value.cari-name .cari-title-left svg,
+    .data-value.cari-name .cari-title-left i {
+      width: 11px !important;
+      height: 11px !important;
+      color: #3b82f6 !important;
+      flex-shrink: 0;
+    }
+
+    .copy-inline-icon {
+      width: 10px !important;
+      height: 10px !important;
+      color: #94a3b8;
+      flex-shrink: 0;
+      transition: color 0.15s, transform 0.15s;
+      cursor: pointer;
+    }
+
+    .data-value.cari-name:hover .copy-inline-icon {
+      color: #2563eb;
+      transform: scale(1.18);
+    }
+
+    .badge-qty {
+      background: #f8fafc;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      padding: 0px 4px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .note-box {
+      margin-top: 1px;
+      padding: 2px 5px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 4px;
+      font-size: 9.5px;
+      color: #475569;
+      display: flex;
+      align-items: flex-start;
+      gap: 3px;
+      line-height: 1.2;
+      cursor: pointer;
+    }
+
+    .note-box svg,
+    .note-box i {
+      width: 10px !important;
+      height: 10px !important;
+      color: #64748b !important;
+      flex-shrink: 0;
+      margin-top: 0px;
+    }
+
+    /* Kargo Butonu & Takip */
+    .cargo-tracking-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+      width: 100%;
+    }
+
+    .cargo-tracking-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 4px;
+      padding: 3.5px 8px;
+      border-radius: 5px;
+      font-size: 10.5px;
+      font-weight: 600;
+      text-decoration: none;
       cursor: pointer;
+      transition: all 0.15s ease;
+      box-sizing: border-box;
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
     }
-    .cargo-tracking-btn svg, .cargo-tracking-btn i { width: 11px !important; height: 11px !important; }
+    .cargo-tracking-btn:hover {
+      background: #dbeafe;
+      border-color: #93c5fd;
+      color: #1d4ed8;
+    }
+    .cargo-tracking-btn svg, .cargo-tracking-btn i {
+      width: 12px !important;
+      height: 12px !important;
+      flex-shrink: 0;
+    }
+
+    /* Finansal Kolon (4. Sütun) */
     .finance-col {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      justify-content: flex-start;
+      justify-content: space-between;
+      align-items: flex-end;
+      text-align: right;
+      background: #fafbfc;
+      padding: 4px 6px;
+      border-radius: 5px;
+      border: 1px solid #f1f5f9;
+      box-sizing: border-box;
     }
+
     .price-group {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      align-items: flex-end;
+      width: 100%;
     }
-    .price-title { font-size: 10.5px; color: #64748b; font-weight: 600; }
-    .price-amount { font-size: 14px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: #0f172a; }
-    .price-paid-row { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: #64748b; }
-    .price-paid-val { font-weight: 700; color: #16a34a; font-family: 'JetBrains Mono', monospace; }
-    .payment-status-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 10.5px;
-      font-weight: 700;
-      margin-top: 2px;
-      width: fit-content;
+
+    .price-title {
+      font-size: 8.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #94a3b8;
+      margin-bottom: 0px;
     }
-    .payment-status-tag.pay-paid { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-    .customer-balance-row {
+
+    .price-amount {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.2px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .price-paid-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding-top: 4px;
-      margin-top: 2px;
-      border-top: 1px dashed #cbd5e1;
-      font-size: 11px;
+      gap: 3px;
+      font-size: 10px;
+      margin-top: 1px;
+      color: #64748b;
     }
-    .customer-balance-title { font-weight: 600; color: #64748b; }
-    .customer-balance-val { font-weight: 700; font-family: 'JetBrains Mono', monospace; }
-    .customer-balance-val.clean { color: #16a34a; }
-    .customer-balance-val.debt { color: #dc2626; }
-    .customer-balance-val.credit { color: #2563eb; }
+
+    .price-paid-val {
+      font-weight: 700;
+      color: #16a34a;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .payment-status-tag {
+      margin-top: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 0px 4px;
+      border-radius: 3px;
+    }
+
+    .payment-status-tag svg,
+    .payment-status-tag i {
+      width: 9px !important;
+      height: 9px !important;
+    }
+
+    .payment-status-tag.pay-paid {
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+    }
+
+    /* Müşteri Toplam Cari Bakiye Satırı (4. Sütun En Alt) */
+    .customer-balance-row {
+      margin-top: 3px;
+      padding-top: 3px;
+      border-top: 1px dashed #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      width: 100%;
+      font-size: 10px;
+      line-height: 1.25;
+      box-sizing: border-box;
+    }
+    .customer-balance-title {
+      color: #64748b;
+      font-weight: 500;
+      font-size: 9.5px;
+      white-space: nowrap;
+    }
+    .customer-balance-val {
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .customer-balance-val.clean {
+      color: #16a34a;
+    }
+    .customer-balance-val.debt {
+      color: #dc2626;
+    }
+    .customer-balance-val.credit {
+      color: #2563eb;
+    }
 
   </style>
 </head>
@@ -2803,14 +3010,14 @@
               </div>
             </div>
 
-            <!-- Gövde 4 Sütun Grid (Yüklendikten sonra açılır) -->
+                        <!-- Gövde 4 Sütun Grid (Yüklendikten sonra açılır) -->
             <div class="card-body-grid">
               <!-- 1. SÜTUN: Cari & Müşteri -->
               <div class="grid-col">
-                <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h4"/><path d="M10 8h4"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg> Cari Bilgileri | Şahıs Özel</div>
-                <div class="data-value cari-name" onclick="event.stopPropagation(); copyToClipboard('DR. AHMET YILMAZ DİŞ KLİNİĞİ')" title="Kopyala: DR. AHMET YILMAZ DİŞ KLİNİĞİ">
-                  <span class="cari-title-left"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h4"/><path d="M10 8h4"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg> DR. AHMET YILMAZ DİŞ KLİNİĞİ</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="building-2" aria-hidden="true" class="lucide lucide-building-2"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg> Cari Bilgileri | Şahıs Özel</div>
+                <div class="data-value cari-name" onclick="copyToClipboard('DR. AHMET YILMAZ DİŞ KLİNİĞİ')" title="Kopyala: DR. AHMET YILMAZ DİŞ KLİNİĞİ">
+                  <span class="cari-title-left"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="building-2" aria-hidden="true" class="lucide lucide-building-2"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg> DR. AHMET YILMAZ DİŞ KLİNİĞİ</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
                 </div>
                 <div class="data-row"><span class="data-label">TCKN:</span> <span class="data-value">38910294812</span></div>
                 <div class="data-row"><span class="data-label">Vergi Dairesi:</span> <span class="data-value">Şişli V.D.</span></div>
@@ -2821,34 +3028,34 @@
 
               <!-- 2. SÜTUN: Fatura & Vade -->
               <div class="grid-col">
-                <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="m9 15 2 2 4-4"/></svg> Fatura & Vade</div>
+                <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura &amp; Vade</div>
                 <div class="data-row"><span class="data-label">Fatura:</span> <span class="data-value" style="color:#d97706; font-weight:700;">Fatura Bekliyor</span></div>
                 <div class="data-row"><span class="data-label">Fatura No:</span> <span class="data-value">-</span></div>
                 <div class="data-row"><span class="data-label">Vade Tarihi:</span> <span class="data-value" style="font-weight:700;">15 / 11 / 2026</span></div>
-                <div class="data-row order-desc-row">
-                  <span class="data-label">Açıklama:</span>
-                  <span class="data-value">Cerrahi el aletleri ameliyat gününe yetişmeli, acil sevk lütfen.</span>
+                <div class="note-box" onclick="copyToClipboard('Cerrahi el aletleri ameliyat gününe yetişmeli, acil sevk lütfen.')" title="Kopyala: Açıklama Notu">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line><line x1="10" x2="8" y1="9" y2="9"></line></svg>
+                  <span>Cerrahi el aletleri ameliyat gününe yetişmeli, acil sevk lütfen.</span>
                 </div>
               </div>
 
               <!-- 3. SÜTUN: Lojistik & Durum -->
               <div class="grid-col">
-                <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg> Lojistik & Durum</div>
+                <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg> Lojistik &amp; Durum</div>
                 <div class="data-row"><span class="data-label">Teslimat:</span> <span class="data-value">DHL Kargo (KA)</span></div>
                 <div class="data-row"><span class="data-label">Ürün Sayısı:</span> <span class="data-value"><span class="badge-qty">3 / 6 Adet</span></span></div>
                 <div class="data-row"><span class="data-label">Kargo Durumu:</span> <span class="data-value" style="color:#2563eb; font-weight:700;">Depoda Toplanıyor</span></div>
-                <div class="cargo-tracking-row"><button type="button" class="cargo-tracking-btn" style="flex:1;"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg> DHL KA / Hazırlanıyor</button></div>
+                <div class="cargo-tracking-row"><button type="button" class="cargo-tracking-btn" style="flex:1;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg> DHL KA / Hazırlanıyor</button></div>
               </div>
 
               <!-- 4. SÜTUN: Finansal Özet -->
               <div class="grid-col finance-col">
                 <div class="price-group">
                   <span class="price-title">Sipariş Tutarı</span>
-                  <span class="price-amount" style="color:#0f172a;">14.850,00 ₺</span>
+                  <span class="price-amount">14.850,00 ₺</span>
                 </div>
                 <div class="price-group" style="margin-top: 2px;">
-                  <div class="price-paid-row"><span>Ödeme:</span> <span class="price-paid-val" style="color:#16a34a;">14.850,00 ₺</span></div>
-                  <span class="payment-status-tag pay-paid"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Ödendi</span>
+                  <div class="price-paid-row"><span>Ödeme:</span> <span class="price-paid-val">14.850,00 ₺</span></div>
+                  <span class="payment-status-tag pay-paid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Ödendi</span>
                 </div>
                 <div class="customer-balance-row">
                   <span class="customer-balance-title">Cari Bakiye:</span>
@@ -2856,6 +3063,7 @@
                 </div>
               </div>
             </div>
+          
 
           </div>
         </div>
