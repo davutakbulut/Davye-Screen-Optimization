@@ -6771,10 +6771,10 @@
 
       let matchFilter = true;
       if (activeFilter === 'pickable') matchFilter = o.pickedQty < o.qty && o.isPickable && !o.isCancelled;
-      else if (activeFilter === 'unpickable') matchFilter = o.pickedQty < o.qty && (!o.isPickable || o.isCancelled);
+      else if (activeFilter === 'unpickable') matchFilter = o.pickedQty < o.qty && !o.isPickable && !o.isCancelled;
       else if (activeFilter === 'collected') matchFilter = o.pickedQty >= o.qty && !o.isCancelled;
-      else if (activeFilter === 'partial-invoiced') matchFilter = !!o.isPartialInvoiced;
-      else if (activeFilter === 'missing-items') matchFilter = !!o.hasShortage;
+      else if (activeFilter === 'partial-invoiced') matchFilter = !!o.isPartialInvoiced && !o.isCancelled;
+      else if (activeFilter === 'missing-items') matchFilter = !!o.hasShortage && !o.isCancelled;
       else if (activeFilter === 'cancelled') matchFilter = !!o.isCancelled;
 
       return matchQuery && matchFilter;
@@ -6801,10 +6801,10 @@
 
     const total = baseList.length;
     const pickable = baseList.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = baseList.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
+    const unpickable = baseList.filter(o => o.pickedQty < o.qty && !o.isPickable && !o.isCancelled).length;
     const collected = baseList.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = baseList.filter(o => o.isPartialInvoiced).length;
-    const missingItems = baseList.filter(o => o.hasShortage).length;
+    const partialInvoiced = baseList.filter(o => o.isPartialInvoiced && !o.isCancelled).length;
+    const missingItems = baseList.filter(o => o.hasShortage && !o.isCancelled).length;
     const cancelled = baseList.filter(o => o.isCancelled).length;
 
     const setVal = (id, val) => {
