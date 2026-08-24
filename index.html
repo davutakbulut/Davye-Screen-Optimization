@@ -2511,6 +2511,40 @@
     }
 
     /* Finansal Kolon (4. Sütun) */
+    
+    /* Müşteri Toplam Cari Bakiye Satırı (4. Sütun En Alt) */
+    .customer-balance-row {
+      margin-top: 3px;
+      padding-top: 3px;
+      border-top: 1px dashed #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 10px;
+      line-height: 1.25;
+    }
+    .customer-balance-title {
+      color: #64748b;
+      font-weight: 500;
+      font-size: 9.5px;
+      white-space: nowrap;
+    }
+    .customer-balance-val {
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .customer-balance-val.debt {
+      color: #dc2626;
+    }
+    .customer-balance-val.clean {
+      color: #16a34a;
+    }
+    .customer-balance-val.credit {
+      color: #2563eb;
+    }
+
     .finance-col {
       display: flex;
       flex-direction: column;
@@ -2631,7 +2665,41 @@
       .grid-col:not(:last-child)::after {
         display: none;
       }
-      .finance-col {
+      
+    /* Müşteri Toplam Cari Bakiye Satırı (4. Sütun En Alt) */
+    .customer-balance-row {
+      margin-top: 3px;
+      padding-top: 3px;
+      border-top: 1px dashed #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 10px;
+      line-height: 1.25;
+    }
+    .customer-balance-title {
+      color: #64748b;
+      font-weight: 500;
+      font-size: 9.5px;
+      white-space: nowrap;
+    }
+    .customer-balance-val {
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .customer-balance-val.debt {
+      color: #dc2626;
+    }
+    .customer-balance-val.clean {
+      color: #16a34a;
+    }
+    .customer-balance-val.credit {
+      color: #2563eb;
+    }
+
+    .finance-col {
         align-items: stretch;
         text-align: left;
       }
@@ -2870,7 +2938,41 @@
         border-bottom: none;
         padding-bottom: 0;
       }
-      .finance-col {
+      
+    /* Müşteri Toplam Cari Bakiye Satırı (4. Sütun En Alt) */
+    .customer-balance-row {
+      margin-top: 3px;
+      padding-top: 3px;
+      border-top: 1px dashed #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 10px;
+      line-height: 1.25;
+    }
+    .customer-balance-title {
+      color: #64748b;
+      font-weight: 500;
+      font-size: 9.5px;
+      white-space: nowrap;
+    }
+    .customer-balance-val {
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .customer-balance-val.debt {
+      color: #dc2626;
+    }
+    .customer-balance-val.clean {
+      color: #16a34a;
+    }
+    .customer-balance-val.credit {
+      color: #2563eb;
+    }
+
+    .finance-col {
         background: #f8fafc;
         padding: 5px 6px;
         border: 1px solid #e2e8f0;
@@ -5625,6 +5727,10 @@
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path></svg> Ödenmedi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val debt">24.850,00 ₺ (Borç)</span>
+        </div>
       </div>
     </div>
 
@@ -5831,6 +5937,10 @@
             <span class="price-paid-val" style="color:#dc2626;">0,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"></svg> Ödenmedi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val debt">14.200,00 ₺ (Borç)</span>
         </div>
       </div>
     </div>
@@ -6040,6 +6150,10 @@
             <span class="price-paid-val" style="color:#dc2626;">0,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"></svg> Ödenmedi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val debt">38.500,00 ₺ (Borç)</span>
         </div>
       </div>
     </div>
@@ -6252,6 +6366,10 @@
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"></svg> Ödenmedi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val debt">9.750,00 ₺ (Borç)</span>
+        </div>
       </div>
     </div>
 
@@ -6460,6 +6578,10 @@
             <span class="price-paid-val" style="color:#dc2626;">0,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"></svg> Ödenmedi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -6670,6 +6792,10 @@
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"></svg> Ödenmedi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -6878,6 +7004,10 @@
             <span class="price-paid-val" style="color:#dc2626;">0,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"></svg> Ödenmedi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val debt">42.100,00 ₺ (Borç)</span>
         </div>
       </div>
     </div>
@@ -7088,6 +7218,10 @@
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"></svg> Ödenmedi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -7297,6 +7431,10 @@
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"></svg> Ödenmedi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val debt">22.400,00 ₺ (Borç)</span>
+        </div>
       </div>
     </div>
 
@@ -7505,6 +7643,10 @@
             <span class="price-paid-val" style="color:#dc2626;">0,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"></svg> Ödenmedi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -7717,6 +7859,10 @@
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle"></svg> Ödendi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val debt">19.650,00 ₺ (Borç)</span>
+        </div>
       </div>
     </div>
 
@@ -7928,6 +8074,10 @@
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"></svg> Ödenmedi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -8136,6 +8286,10 @@
             <span class="price-paid-val" style="color:#dc2626;">0,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"></svg> Ödenmedi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -8347,6 +8501,10 @@
             <span class="price-paid-val" style="color:#dc2626;">0,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-unpaid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-x-circle"></svg> Ödenmedi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -8770,6 +8928,10 @@
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle"></svg> Ödendi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -8980,6 +9142,10 @@
             <span class="price-paid-val" style="color:#16a34a; font-weight:700;">7.680,50 ₺</span>
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle"></svg> Ödendi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -9192,6 +9358,10 @@
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle"></svg> Ödendi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -9402,6 +9572,10 @@
             <span class="price-paid-val" style="color:#16a34a; font-weight:700;">0,10 ₺</span>
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle"></svg> Ödendi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -9820,6 +9994,10 @@
             <span class="price-paid-val" style="color:#16a34a; font-weight:700;">304.334,66 ₺</span>
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle"></svg> Ödendi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val debt">45.000,00 ₺ (Borç)</span>
         </div>
       </div>
     </div>
@@ -10451,6 +10629,10 @@
             <span class="price-paid-val" style="color:#16a34a; font-weight:700;">1.540,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle"></svg> Ödendi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -11089,6 +11271,10 @@
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -11288,6 +11474,10 @@
             <span class="price-paid-val" style="color: #16a34a;">3.150,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val debt">27.400,00 ₺ (Borç)</span>
         </div>
       </div>
     </div>
@@ -11493,6 +11683,10 @@
           </div>
           <span class="payment-status-tag pay-partial" data-tip="Mali Ödeme Durumu • Kısmi Ödeme Yapıldı"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-alert-circle"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg> Kısmi Ödendi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val debt">7.500,00 ₺ (Borç)</span>
+        </div>
       </div>
     </div>
 
@@ -11695,6 +11889,10 @@
             <span class="price-paid-val" style="color: #ea580c;">0,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-pending" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> Açık Hesap</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -11899,6 +12097,10 @@
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val debt">18.900,00 ₺ (Borç)</span>
+        </div>
       </div>
     </div>
 
@@ -12101,6 +12303,10 @@
             <span class="price-paid-val" style="color: #16a34a;">2.750,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -12305,6 +12511,10 @@
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -12507,6 +12717,10 @@
             <span class="price-paid-val" style="color: #16a34a;">320,50 ₺</span>
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -12711,6 +12925,10 @@
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -12913,6 +13131,10 @@
             <span class="price-paid-val" style="color: #16a34a;">1.850,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val debt">33.600,00 ₺ (Borç)</span>
         </div>
       </div>
     </div>
@@ -13117,6 +13339,10 @@
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -13319,6 +13545,10 @@
             <span class="price-paid-val" style="color: #16a34a;">5.340,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -13523,6 +13753,10 @@
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -13725,6 +13959,10 @@
             <span class="price-paid-val" style="color: #16a34a;">3.900,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -13929,6 +14167,10 @@
           </div>
           <span class="payment-status-tag pay-paid" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Ödendi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -14128,6 +14370,10 @@
             <span class="price-paid-val" style="color: #ea580c;">3.450,00 ₺</span>
           </div>
           <span class="payment-status-tag pay-pending" style="background:#fff7ed; color:#c2410c;" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> İade Kargo Bekleniyor</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -14329,6 +14575,10 @@
           </div>
           <span class="payment-status-tag pay-pending" style="background:#fef3c7; color:#b45309;" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> İade Ödemesi Bekleniyor</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -14529,6 +14779,10 @@
           </div>
           <span class="payment-status-tag pay-unpaid" style="background:#fdf2f8; color:#be185d;" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="corner-down-left" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-corner-down-left"><path d="M20 4v7a4 4 0 0 1-4 4H4"></path><path d="m9 10-5 5 5 5"></path></svg> İade Edildi</span>
         </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
+        </div>
       </div>
     </div>
 
@@ -14728,6 +14982,10 @@
             <span class="price-paid-val" style="color: #dc2626;">0,00 ₺ (İptal Edildi)</span>
           </div>
           <span class="payment-status-tag pay-unpaid" style="background:#fef2f2; color:#dc2626;" data-tip="Mali Ödeme Durumu (Ödendi / Ödenmedi / Açık Hesap) • Muhasebe / Tahsilat Takip modülünden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" style="width:11px;height:11px;" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg> İptal Edildi</span>
+        </div>
+        <div class="customer-balance-row" data-tip="Müşterinin Güncel Toplam Cari Hesap Bakiyesi • ERP Muhasebe Modülü">
+          <span class="customer-balance-title">Cari Bakiye:</span>
+          <span class="customer-balance-val clean">0,00 ₺</span>
         </div>
       </div>
     </div>
@@ -15114,6 +15372,7 @@
   // Mock ERP Sipariş Detay Veritabanı (21 Sipariş Tam Senkronize)
   const ordersDatabase = {
     "1-WS-2-68016": {
+      customerBalance: "14.200,00 ₺ (Borç)",
       orderNo: "1-WS-2-68016",
       statusClass: "status-alindi",
       statusText: "Sipariş Alındı",
@@ -15165,6 +15424,7 @@
 ]
     },
     "1-WS-2-67875": {
+      customerBalance: "16.400,00 ₺ (Borç)",
       orderNo: "1-WS-2-67875",
       statusClass: "status-hazirlandi",
       statusText: "Hazırlandı",
@@ -15209,6 +15469,7 @@
 ]
     },
     "1-WS-2-67647": {
+      customerBalance: "15.800,00 ₺ (Borç)",
       orderNo: "1-WS-2-67647",
       statusClass: "status-kargo-bekliyor",
       statusText: "Kargo Bekliyor",
@@ -15260,6 +15521,7 @@
 ]
     },
     "1-WS-2-67674": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-67674",
       statusClass: "status-kargoda",
       statusText: "Kargoda",
@@ -15304,6 +15566,7 @@
 ]
     },
     "1-WS-2-67874": {
+      customerBalance: "42.100,00 ₺ (Borç)",
       orderNo: "1-WS-2-67874",
       statusClass: "status-faturalandi",
       statusText: "Faturalandı",
@@ -15355,6 +15618,7 @@
 ]
     },
     "1-WS-2-67839": {
+      customerBalance: "8.900,00 ₺ (Borç)",
       orderNo: "1-WS-2-67839",
       statusClass: "status-hazirlandi",
       statusText: "Hazırlandı",
@@ -15399,6 +15663,7 @@
 ]
     },
     "1-WS-2-67693": {
+      customerBalance: "31.200,00 ₺ (Borç)",
       orderNo: "1-WS-2-67693",
       statusClass: "status-hazirlaniyor",
       statusText: "Hazırlanıyor",
@@ -15443,6 +15708,7 @@
 ]
     },
     "1-WS-2-63902": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-63902",
       statusClass: "status-teslim-edildi",
       statusText: "Teslim Edildi",
@@ -15487,6 +15753,7 @@
 ]
     },
     "1-WS-2-65813": {
+      customerBalance: "45.000,00 ₺ (Borç)",
       orderNo: "1-WS-2-65813",
       statusClass: "status-teslim-edildi",
       statusText: "Teslim Edildi",
@@ -15531,6 +15798,7 @@
 ]
     },
     "1-WS-2-67621": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-67621",
       statusClass: "status-teslim-edildi",
       statusText: "Teslim Edildi",
@@ -15575,6 +15843,7 @@
 ]
     },
     "1-WS-2-66902": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-66902",
       statusClass: "status-teslim-edildi",
       statusText: "Teslim Edildi",
@@ -15619,6 +15888,7 @@
 ]
     },
     "1-WS-2-67846": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-67846",
       statusClass: "status-faturalandi",
       statusText: "Faturalandı",
@@ -15670,6 +15940,7 @@
 ]
     },
     "1-WS-2-67576": {
+      customerBalance: "22.400,00 ₺ (Borç)",
       orderNo: "1-WS-2-67576",
       statusClass: "status-kargoda",
       statusText: "Kargoda",
@@ -15714,6 +15985,7 @@
 ]
     },
     "1-WS-2-67833": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-67833",
       statusClass: "status-hazirlandi",
       statusText: "Hazırlandı",
@@ -15765,6 +16037,7 @@
 ]
     },
     "1-WS-2-67782": {
+      customerBalance: "19.650,00 ₺ (Borç)",
       orderNo: "1-WS-2-67782",
       statusClass: "status-teslim-edildi",
       statusText: "Teslim Edildi",
@@ -15809,6 +16082,7 @@
 ]
     },
     "1-WS-2-63758": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-63758",
       statusClass: "status-teslim-edildi",
       statusText: "Teslim Edildi",
@@ -15853,6 +16127,7 @@
 ]
     },
     "1-WS-2-67553": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-67553",
       statusClass: "status-teslim-edildi",
       statusText: "Teslim Edildi",
@@ -15897,6 +16172,7 @@
 ]
     },
     "1-WS-2-60004": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-60004",
       statusClass: "status-teslim-edildi",
       statusText: "Teslim Edildi",
@@ -15941,6 +16217,7 @@
 ]
     },
     "1-WS-2-63729": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-63729",
       statusClass: "status-faturalandi",
       statusText: "Faturalandı",
@@ -15985,6 +16262,7 @@
 ]
     },
     "1-WS-2-67998": {
+      customerBalance: "38.500,00 ₺ (Borç)",
       orderNo: "1-WS-2-67998",
       statusClass: "status-hazirlandi",
       statusText: "Hazırlandı",
@@ -16029,6 +16307,7 @@
 ]
     },
     "1-WS-2-67986": {
+      customerBalance: "9.750,00 ₺ (Borç)",
       orderNo: "1-WS-2-67986",
       statusClass: "status-kargo-bekliyor",
       statusText: "Kargo Bekliyor",
@@ -16073,6 +16352,7 @@
 ]
     },
     "1-WS-2-67896": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-67896",
       statusClass: "status-hazirlandi",
       statusText: "Hazırlandı",
@@ -16117,6 +16397,7 @@
 ]
     },
     "1-WS-2-67758": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-67758",
       statusClass: "status-kargoda",
       statusText: "Kargoda",
@@ -16161,6 +16442,7 @@
 ]
     },
     "1-WS-2-67008": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-67008",
       statusClass: "status-teslim-edildi",
       statusText: "Teslim Edildi",
@@ -16205,6 +16487,7 @@
 ]
     },
     "1-WS-2-68017": {
+      customerBalance: "24.850,00 ₺ (Borç)",
       orderNo: "1-WS-2-68017",
       statusClass: "status-taslak",
       statusText: "Tamamlanmamış Sipariş",
@@ -16244,6 +16527,7 @@
       ]
     },
     "1-WS-2-51897": {
+      customerBalance: "12.350,00 ₺ (Borç)",
       orderNo: "1-WS-2-51897",
       statusClass: "status-alindi",
       statusText: "Sipariş Alındı",
@@ -16283,6 +16567,7 @@
       ]
     },
     "1-WS-2-51896": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51896",
       statusClass: "status-hazirlaniyor",
       statusText: "Hazırlanıyor",
@@ -16322,6 +16607,7 @@
       ]
     },
     "1-WS-2-51895": {
+      customerBalance: "27.400,00 ₺ (Borç)",
       orderNo: "1-WS-2-51895",
       statusClass: "status-hazirlandi",
       statusText: "Hazırlandı",
@@ -16361,6 +16647,7 @@
       ]
     },
     "1-WS-2-51894": {
+      customerBalance: "7.500,00 ₺ (Borç)",
       orderNo: "1-WS-2-51894",
       statusClass: "status-fatura-bekliyor",
       statusText: "Fatura Bekliyor",
@@ -16399,6 +16686,7 @@
       ]
     },
     "1-WS-2-51893": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51893",
       statusClass: "status-paketleme-bekliyor",
       statusText: "Paketleme Bekliyor",
@@ -16437,6 +16725,7 @@
       ]
     },
     "1-WS-2-51892": {
+      customerBalance: "18.900,00 ₺ (Borç)",
       orderNo: "1-WS-2-51892",
       statusClass: "status-paketlendi",
       statusText: "Paketlendi",
@@ -16475,6 +16764,7 @@
       ]
     },
     "1-WS-2-51891": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51891",
       statusClass: "status-kargo-bekliyor",
       statusText: "Kargo Bekliyor",
@@ -16513,6 +16803,7 @@
       ]
     },
     "1-WS-2-51890": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51890",
       statusClass: "status-kargo-bekliyor",
       statusText: "Kargo Bekliyor",
@@ -16551,6 +16842,7 @@
       ]
     },
     "1-WS-2-51889": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51889",
       statusClass: "status-kargo-bekliyor",
       statusText: "Kargo Bekliyor",
@@ -16589,6 +16881,7 @@
       ]
     },
     "1-WS-2-51888": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51888",
       statusClass: "status-kargoda",
       statusText: "Kargoda",
@@ -16627,6 +16920,7 @@
       ]
     },
     "1-WS-2-51887": {
+      customerBalance: "33.600,00 ₺ (Borç)",
       orderNo: "1-WS-2-51887",
       statusClass: "status-teslim-edildi",
       statusText: "Teslim Edildi",
@@ -16665,6 +16959,7 @@
       ]
     },
     "1-WS-2-51886": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51886",
       statusClass: "status-faturalandi",
       statusText: "Faturalandı",
@@ -16703,6 +16998,7 @@
       ]
     },
     "1-WS-2-51885": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51885",
       statusClass: "status-faturalandi",
       statusText: "Faturalandı",
@@ -16741,6 +17037,7 @@
       ]
     },
     "1-WS-2-51884": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51884",
       statusClass: "status-kargoda",
       statusText: "Kargoda",
@@ -16779,6 +17076,7 @@
       ]
     },
     "1-WS-2-51883": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51883",
       statusClass: "status-teslim-edildi",
       statusText: "Teslim Edildi",
@@ -16817,6 +17115,7 @@
       ]
     },
     "1-WS-2-51882": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51882",
       statusClass: "status-teslim-edildi",
       statusText: "Teslim Edildi",
@@ -16855,6 +17154,7 @@
       ]
     },
     "1-WS-2-51881": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51881",
       statusClass: "status-iade",
       statusText: "İade",
@@ -16893,6 +17193,7 @@
       ]
     },
     "1-WS-2-51880": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51880",
       statusClass: "status-iade",
       statusText: "İade Kabul Edildi",
@@ -16931,6 +17232,7 @@
       ]
     },
     "1-WS-2-51879": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51879",
       statusClass: "status-iade",
       statusText: "İade Tamamlandı",
@@ -16969,6 +17271,7 @@
       ]
     },
     "1-WS-2-51878": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51878",
       statusClass: "status-iptal",
       statusText: "İptal Edildi",
@@ -17012,6 +17315,7 @@
   const cargoDatabase = {
     // 1. HAREKETSİZ / TAKILMIŞ KARGOLAR (ERTESİ GÜN 12:00'YE KADAR HAREKET GÖRMEMİŞ VEYA AYNI DURUMDA KALMIŞ)
     "1-WS-2-67758": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-67758",
       cariName: "DR. ALTAN DEMİREL",
       carrier: "DHL Kargo (KA)",
@@ -17033,6 +17337,7 @@
       ]
     },
     "1-WS-2-67674": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-67674",
       cariName: "ÜMİT VELİOĞLU",
       carrier: "DHL Kargo (KA)",
@@ -17054,6 +17359,7 @@
       ]
     },
     "1-WS-2-51888": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51888",
       cariName: "MARMARA İMPLANT VE DİŞ MERKEZİ",
       carrier: "Trendyol Express (KA)",
@@ -17075,6 +17381,7 @@
     },
     // 2. NORMAL AKIŞTAKİ KARGOLAR (ZAMANINDA İLERLEYEN - UYARI YOK)
     "1-WS-2-67576": {
+      customerBalance: "22.400,00 ₺ (Borç)",
       orderNo: "1-WS-2-67576",
       cariName: "ÜLKÜ TÜRKMEN",
       carrier: "Trendyol Express (KA)",
@@ -17095,6 +17402,7 @@
       ]
     },
     "1-WS-2-51884": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51884",
       cariName: "ÖZLEM DENTAL KLİNİĞİ A.Ş.",
       carrier: "Trendyol Express (KA)",
@@ -17115,6 +17423,7 @@
     },
     // 3. TESLİM EDİLMİŞ SİPARİŞLER (TAMAMLANMIŞ TAM AKIŞ)
     "1-WS-2-67553": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-67553",
       cariName: "ÜMİT VELİOĞLU",
       carrier: "DHL Kargo (KA)",
@@ -17136,6 +17445,7 @@
       ]
     },
     "1-WS-2-67008": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-67008",
       cariName: "DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ",
       carrier: "Trendyol Express (KA)",
@@ -17156,6 +17466,7 @@
       ]
     },
     "1-WS-2-65813": {
+      customerBalance: "45.000,00 ₺ (Borç)",
       orderNo: "1-WS-2-65813",
       cariName: "ERDİ EKİZ",
       carrier: "DHL Kargo (KA)",
@@ -17176,6 +17487,7 @@
       ]
     },
     "1-WS-2-63902": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-63902",
       cariName: "ERDİ EKİZ",
       carrier: "Trendyol Express (KA)",
@@ -17195,6 +17507,7 @@
       ]
     },
     "1-WS-2-63758": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-63758",
       cariName: "ÜMİT VELİOĞLU",
       carrier: "DHL Kargo (KA)",
@@ -17214,6 +17527,7 @@
       ]
     },
     "1-WS-2-51887": {
+      customerBalance: "33.600,00 ₺ (Borç)",
       orderNo: "1-WS-2-51887",
       cariName: "DR. SELİM ERGÜN MUAYENEHANESİ",
       carrier: "DHL Kargo (KA)",
@@ -17234,6 +17548,7 @@
       ]
     },
     "1-WS-2-51883": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51883",
       cariName: "DR. TOLGA YILDIZ POLİKLİNİĞİ",
       carrier: "DHL Kargo (KA)",
@@ -17253,6 +17568,7 @@
       ]
     },
     "1-WS-2-51882": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51882",
       cariName: "GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ A.Ş.",
       carrier: "DHL Kargo (KA)",
@@ -17274,6 +17590,7 @@
     },
     // 4. İADE SÜREÇLERİ
     "1-WS-2-51881": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51881",
       cariName: "MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.",
       carrier: "DHL Kargo (KA)",
@@ -17294,6 +17611,7 @@
       ]
     },
     "1-WS-2-51880": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51880",
       cariName: "DR. BURAK ÖZKAN POLİKLİNİĞİ",
       carrier: "DHL Kargo (KA)",
@@ -17313,6 +17631,7 @@
       ]
     },
     "1-WS-2-51879": {
+      customerBalance: "0,00 ₺",
       orderNo: "1-WS-2-51879",
       cariName: "ESTETİK DENT AĞIZ VE DİŞ SAĞLIĞI POL.",
       carrier: "Trendyol Express (KA)",
