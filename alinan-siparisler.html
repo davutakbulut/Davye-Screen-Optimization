@@ -5505,7 +5505,7 @@
                   </div>
                 </div>
 
-                <button class="btn-card-expand" title="Detayları Aç/Kapat">
+                <button type="button" class="btn-card-expand" onclick="toggleCardDirect(this, event)" title="Detayları Aç/Kapat">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
                 </button>
               </div>
@@ -5577,8 +5577,17 @@
     if (window.lucide && lucide.createIcons) lucide.createIcons();
   }
 
+  function toggleCardDirect(btn, e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const card = btn.closest('.order-card');
+    if (card) card.classList.toggle('expanded');
+  }
+
   function handleCardClick(e, headerEl) {
-    if (e.target.closest('.card-checkbox') || e.target.closest('.order-number-badge') || e.target.closest('a') || e.target.closest('button')) {
+    if (e.target.closest('.card-checkbox') || e.target.closest('.order-number-badge') || e.target.closest('a') || e.target.closest('.actions-dropdown') || (e.target.closest('button') && !e.target.closest('.btn-card-expand'))) {
       return;
     }
     const card = headerEl.closest('.order-card');
