@@ -4114,7 +4114,7 @@
 
         <div class="doc-banner why">
           <div class="doc-banner-title"><i data-lucide="info"></i> İş Kuralı & Güvenlik Mantığı:</div>
-          Toplaması tamamen biten (<code>pickedQty >= qty</code>) veya iptal edilen siparişlerde mükerrer toplamayı önlemek için <strong>"Siparişi Topla"</strong> butonu başlıktan otomatik kaldırılır. Açılan kart gövdesinde ise yeşil <code>✓ Toplama Tamamlandı</code> onay rozeti gösterilir. İptal edilen siparişlerde kart kırmızı çerçeve (<code>#fca5a5</code>), %100 kırmızı sol bar ve beyaz çarpı ikonuyla diğerlerinden anında ayırt edilir.
+          Toplaması henüz başlamamış siparişlerde <strong>"Siparişi Topla / Toplamayı Başlat"</strong> butonu; en az 1 ürün bile toplanmış kısmi siparişlerde (<code>pickedQty > 0 && pickedQty < qty</code>) dinamik olarak <strong>"Toplananı Gör"</strong> (göz ikonuyla) butonu gösterilir. Toplaması tamamen biten (<code>pickedQty >= qty</code>) veya iptal edilen siparişlerde ise buton başlıktan otomatik kaldırılır. Açılan kart gövdesinde ise yeşil <code>✓ Toplama Tamamlandı</code> onay rozeti gösterilir. İptal edilen siparişlerde kart kırmızı çerçeve (<code>#fca5a5</code>), %100 kırmızı sol bar ve beyaz çarpı ikonuyla diğerlerinden anında ayırt edilir.
         </div>
 
         <div class="table-responsive-wrap">
@@ -4135,10 +4135,10 @@
                 <td>Görünür (Mavi Buton)</td>
               </tr>
               <tr>
-                <td><strong>Toplanıyor</strong> (Kısmi)</td>
+                <td><strong>Toplanıyor</strong> (Kısmi • <code>pickedQty > 0</code>)</td>
                 <td>Mavi Dolgulu Bar + Dönen İkon</td>
                 <td><code>10 / 29 Toplanıyor</code> (Mavi)</td>
-                <td>Görünür (Mavi Buton)</td>
+                <td><strong>"Toplananı Gör"</strong> (Göz İkonlu Açık Mavi Buton <code>#0284c7</code>)</td>
               </tr>
               <tr>
                 <td><strong>Toplandı</strong> (Tamamlandı)</td>

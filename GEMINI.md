@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme, Tasarım ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 24 / 08 / 2026 23:00  
+> **Son Sistem Güncellemesi:** 24 / 08 / 2026 23:55  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme, UI/UX tasarımı veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -181,7 +181,7 @@ Her kartın işlemler menüsünde şu 7 aksiyon eksiksiz yer alır:
    * **Erişim & Yerleşim:** Sol sidebar **Depo İşlemleri ➔ Alınan Siparişler** altından erişilir. Masaüstünde sabit header/sidebar ve bağımsız kayan liste; mobilde 4 satırlı hiyerarşik yapı uygulanır.
    * **Zebra Striping:** Tekil satırlar `#ffffff` (Saf Beyaz), çift satırlar `#f0f6fe` (Pastel Soft Mavi) ve aktif `#bfdbfe` çerçeve deseniyle listelenir.
    * **Kapalı Kartta Açıklama & Aksiyonlar:** Masaüstünde 4. satırda (`.row-desc`) açıklama metni ile `[Siparişi Topla]`, `[İşlemler ▾]`, `[ ▾ Aç/Kapat]` butonları aynı satırda yan yana konumlandırılır. Kart açıldığında açıklama satırı gizlenir ve gövde 2. sütununa geçer.
-   * **Toplanan Siparişlerde Buton Gizleme:** Toplaması tamamlanan (`pickedQty >= qty`) siparişlerde "Siparişi Topla" butonu başlıktan otomatik kaldırılır, yalnızca İşlemler ve Aç/Kapat kalır; gövde 4. sütunda `✓ Toplama Tamamlandı` yeşil rozeti gösterilir.
+   * **Dinamik Toplama Aksiyon Butonları:** Henüz toplanmaya başlanmamış (`pickedQty === 0`) siparişlerde "Siparişi Topla" (başlıkta) / "Toplamayı Başlat" (gövdede); en az 1 ürün bile toplanmış (`pickedQty > 0 && pickedQty < qty`) siparişlerde dinamik olarak "Toplananı Gör" (göz ikonu ve `#0284c7` mavi tonu); toplaması tamamlanan (`pickedQty >= qty`) siparişlerde ise buton başlıktan otomatik kaldırılır ve gövdede `✓ Toplama Tamamlandı` yeşil rozeti gösterilir.
    * **Duyarlı Kullanıcı Rozeti:** Kullanıcı (`order.user` / collector) bilgisi mobilde 1. satırda kargo teslimat ikonunun solunda; masaüstünde 3. satırda toplanan sayısı rozetinin solunda konumlandırılır.
    * **1s Veritabanı Loader & WeakSet Cache:** İlk tıklamada 1000ms `.card-loading-overlay` spinner animasyonu çalışır, sonraki tıklamalarda `WeakSet` oturum önbelleğinden 0ms gecikmesiz açılır.
    * **Tek Tıkla Kopyalanabilir Alanlar:** Cari Kodu, VKN, Telefon, Sipariş Ref No, Teslimat, Fatura Ref vb. verilerin yanında `.copy-inline-icon` yer alır.

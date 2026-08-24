@@ -6392,7 +6392,16 @@
     list.forEach((order, idx) => {
       const isCompleted = order.pickedQty >= order.qty;
       const isPartial = order.pickedQty > 0 && order.pickedQty < order.qty;
+      const hasStartedPicking = isPartial;
       const orderShortNo = order.id.slice(-3);
+      const headerPickBtnText = hasStartedPicking ? 'Toplananı Gör' : 'Siparişi Topla';
+      const headerPickBtnIcon = hasStartedPicking
+        ? `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye" class="lucide lucide-eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`
+        : `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="scan-barcode" class="lucide lucide-scan-barcode"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 7v10"/><path d="M12 7v10"/><path d="M17 7v10"/></svg>`;
+      const bodyPickBtnText = hasStartedPicking ? 'Toplananı Gör' : 'Toplamayı Başlat';
+      const bodyPickBtnIcon = hasStartedPicking
+        ? `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="eye"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`
+        : `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
       const isEven = (idx % 2 === 1);
       const zebraClass = isEven ? 'card-zebra-blue' : 'card-zebra-white';
 
@@ -6473,8 +6482,8 @@
               <!-- Mobilde Görünen Aksiyonlar -->
               <div class="row-right mobile-actions">
                 ${!isCompleted ? `
-                <a href="siparis-toplama.html?orderId=${order.id}" class="btn-actions" style="background:#2563eb; border-color:#1d4ed8; text-decoration:none; gap:5px; height:24px; font-size:11px; padding:0 8px;" onclick="event.stopPropagation()" title="Raftan Toplama Ekranını Başlat">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="scan-barcode" class="lucide lucide-scan-barcode"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 7v10"/><path d="M12 7v10"/><path d="M17 7v10"/></svg> Siparişi Topla
+                <a href="siparis-toplama.html?orderId=${order.id}" class="btn-actions" style="background:${hasStartedPicking ? '#0284c7' : '#2563eb'}; border-color:${hasStartedPicking ? '#0369a1' : '#1d4ed8'}; text-decoration:none; gap:5px; height:24px; font-size:11px; padding:0 8px;" onclick="event.stopPropagation()" title="${hasStartedPicking ? 'Toplanan Ürünleri ve Kalanları Gör' : 'Raftan Toplama Ekranını Başlat'}">
+                  ${headerPickBtnIcon} ${headerPickBtnText}
                 </a>` : ''}
 
                 <div class="actions-dropdown" onclick="event.stopPropagation()">
@@ -6517,8 +6526,8 @@
               </div>
               <div class="row-desc-right desktop-actions">
                 ${!isCompleted ? `
-                <a href="siparis-toplama.html?orderId=${order.id}" class="btn-actions" style="background:#2563eb; border-color:#1d4ed8; text-decoration:none; gap:5px; height:24px; font-size:11px; padding:0 8px;" onclick="event.stopPropagation()" title="Raftan Toplama Ekranını Başlat">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="scan-barcode" class="lucide lucide-scan-barcode"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 7v10"/><path d="M12 7v10"/><path d="M17 7v10"/></svg> Siparişi Topla
+                <a href="siparis-toplama.html?orderId=${order.id}" class="btn-actions" style="background:${hasStartedPicking ? '#0284c7' : '#2563eb'}; border-color:${hasStartedPicking ? '#0369a1' : '#1d4ed8'}; text-decoration:none; gap:5px; height:24px; font-size:11px; padding:0 8px;" onclick="event.stopPropagation()" title="${hasStartedPicking ? 'Toplanan Ürünleri ve Kalanları Gör' : 'Raftan Toplama Ekranını Başlat'}">
+                  ${headerPickBtnIcon} ${headerPickBtnText}
                 </a>` : ''}
 
                 <div class="actions-dropdown" onclick="event.stopPropagation()">
@@ -6647,8 +6656,8 @@
               <div class="data-row"><span class="data-label">Vade Tarihi:</span> <span class="data-value" style="font-family:'JetBrains Mono', monospace;">${order.vade}</span></div>
               <div style="margin-top:8px;">
                 ${!isCompleted ? `
-                <a href="siparis-toplama.html?orderId=${order.id}" class="btn-adv-primary" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; font-size:11.5px; height:28px; padding:0 10px;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg> Toplamayı Başlat
+                <a href="siparis-toplama.html?orderId=${order.id}" class="btn-adv-primary" style="background:${hasStartedPicking ? '#0284c7' : '#2563eb'}; border-color:${hasStartedPicking ? '#0369a1' : '#1d4ed8'}; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; font-size:11.5px; height:28px; padding:0 10px;">
+                  ${bodyPickBtnIcon} ${bodyPickBtnText}
                 </a>` : `
                 <div style="display:flex; align-items:center; justify-content:center; gap:5px; color:#059669; font-weight:700; font-size:11px; background:#ecfdf5; border:1px solid #a7f3d0; border-radius:6px; height:28px;">
                   <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" style="color:#059669;"></svg> Toplama Tamamlandı
