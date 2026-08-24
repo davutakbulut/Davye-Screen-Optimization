@@ -5296,7 +5296,7 @@
 <div id="toast" class="toast-msg">Panoya kopyalandı!</div>
 
 <script>
-  const warehouseDatabase = [
+    const warehouseDatabase = [
     {
       id: "68174",
       orderRef: "1-WS-2-68174",
@@ -5315,7 +5315,7 @@
       cariCode: "1-S-68181",
       taxId: "2800811820",
       salesRep: "DENTAL PİYASA",
-      desc: "DP-46109",
+      desc: "DP-46109 Acil sevkıyat",
       vade: "31 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -5334,19 +5334,19 @@
       isPayed: true,
       totalPrice: "1.830,00 ₺",
       qty: 2,
-      pickedQty: 0,
-      remainingQty: 2,
+      pickedQty: 2,
+      remainingQty: 0,
       delivery: "KARGO",
       phone: "-",
       cariCode: "1-S-73443",
       taxId: "1007360080",
       salesRep: "DENTAL PİYASA",
-      desc: "DP-46219",
+      desc: "DP-46219 Raf toplama tamamlandı",
       vade: "31 / 08 / 2026",
       depo: "MD",
       isPickable: true,
       items: [
-        { code: "KMP019", name: "Kompozit Dolgu Rezin Tüpü", raf: "04A2", qty: 2, counted: 0, barcode: "8681992019481" }
+        { code: "KMP019", name: "Kompozit Dolgu Rezin Tüpü", raf: "04A2", qty: 2, counted: 2, barcode: "8681992019481" }
       ]
     },
     {
@@ -5360,19 +5360,19 @@
       isPayed: true,
       totalPrice: "116.346,00 ₺",
       qty: 273,
-      pickedQty: 0,
-      remainingQty: 273,
+      pickedQty: 120,
+      remainingQty: 153,
       delivery: "KARGO",
       phone: "05375999655",
       cariCode: "000",
       taxId: "2222222222",
       salesRep: "CÜNEYT KILIÇ",
-      desc: "1-WS-2-69106 nolu sipariş sevkıyatı",
+      desc: "1-WS-2-69106 nolu toptan sipariş sevkıyatı (Kısmi toplandı)",
       vade: "31 / 08 / 2026",
       depo: "MD",
       isPickable: true,
       items: [
-        { code: "ELV902", name: "Elevatör ve Lüksatör Seti", raf: "08B1", qty: 150, counted: 0, barcode: "8681883920194" },
+        { code: "ELV902", name: "Elevatör ve Lüksatör Seti", raf: "08B1", qty: 150, counted: 120, barcode: "8681883920194" },
         { code: "FRZ104", name: "Elmas Frez Standı", raf: "02C3", qty: 123, counted: 0, barcode: "8681774829103" }
       ]
     },
@@ -5394,12 +5394,170 @@
       cariCode: "1-S-73436",
       taxId: "1111111111",
       salesRep: "HEPSİBURADA",
-      desc: "HB-HBV000004LJ3R/2608102199",
+      desc: "HB-HBV000004LJ3R (Stok Yetersiz - Toplanamaz)",
       vade: "24 / 08 / 2025",
       depo: "MD",
       isPickable: false,
       items: [
         { code: "AGZ001", name: "Ağız Aynası ve Sapı", raf: "01A1", qty: 2, counted: 0, barcode: "8681552910482" }
+      ]
+    },
+    {
+      id: "68205",
+      orderRef: "1-WS-2-68205",
+      date: "24 / 08 / 2026",
+      time: "11:15:30",
+      user: "Ümit Velioğlu",
+      cariName: "DR. AHMET YILMAZ DENTAL KLİNİK",
+      paymentAmount: "14.250,00 ₺",
+      isPayed: true,
+      totalPrice: "14.250,00 ₺",
+      qty: 10,
+      pickedQty: 10,
+      remainingQty: 0,
+      delivery: "DHL Kargo (KA)",
+      phone: "05321112233",
+      cariCode: "1-S-68205",
+      taxId: "3344556677",
+      salesRep: "ÜMİT VELİOĞLU",
+      desc: "Klinik sarf malzeme paketi (Eksiksiz toplandı)",
+      vade: "15 / 09 / 2026",
+      depo: "MD",
+      isPickable: true,
+      items: [
+        { code: "IMPL88", name: "Titanyum İmplant Seti", raf: "07D1", qty: 10, counted: 10, barcode: "8681223948571" }
+      ]
+    },
+    {
+      id: "68212",
+      orderRef: "1-WS-2-68212",
+      date: "23 / 08 / 2026",
+      time: "16:40:12",
+      user: "Erdi Ekiz",
+      cariName: "GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ",
+      paymentAmount: "28.900,00 ₺",
+      isPayed: true,
+      totalPrice: "28.900,00 ₺",
+      qty: 45,
+      pickedQty: 15,
+      remainingQty: 30,
+      delivery: "Trendyol Express (KA)",
+      phone: "02123334455",
+      cariCode: "1-S-68212",
+      taxId: "8877665544",
+      salesRep: "ERDİ EKİZ",
+      desc: "Sterilizasyon ve cerrahi sarf ürünleri (1. Parti Toplandı)",
+      vade: "30 / 09 / 2026",
+      depo: "MD",
+      isPickable: true,
+      items: [
+        { code: "STR012", name: "Otoklav Sterilizasyon Rulosu", raf: "03B2", qty: 25, counted: 15, barcode: "8681665492810" },
+        { code: "DNT404", name: "Endodontik Kanal Eğesi", raf: "09C1", qty: 20, counted: 0, barcode: "8681774819203" }
+      ]
+    },
+    {
+      id: "68220",
+      orderRef: "1-WS-2-68220",
+      date: "23 / 08 / 2026",
+      time: "14:20:00",
+      user: "Davut Akbulut",
+      cariName: "ÖZEL DENTİSTANBUL DİŞ HASTANESİ",
+      paymentAmount: "52.400,00 ₺",
+      isPayed: true,
+      totalPrice: "52.400,00 ₺",
+      qty: 18,
+      pickedQty: 0,
+      remainingQty: 18,
+      delivery: "HepsiJet (GÖ)",
+      phone: "02164445566",
+      cariCode: "1-S-68220",
+      taxId: "9988776655",
+      salesRep: "MERKEZ DEPO",
+      desc: "Hastaneye acil koli teslimatı",
+      vade: "25 / 09 / 2026",
+      depo: "MD",
+      isPickable: true,
+      items: [
+        { code: "ORT991", name: "Ortodontik Braket Seti", raf: "06A3", qty: 18, counted: 0, barcode: "8681334928174" }
+      ]
+    },
+    {
+      id: "68234",
+      orderRef: "1-WS-2-68234",
+      date: "22 / 08 / 2026",
+      time: "10:05:45",
+      user: "Davut Akbulut",
+      cariName: "MEDİCAL PARK SAĞLIK GRUBU",
+      paymentAmount: "84.150,00 ₺",
+      isPayed: true,
+      totalPrice: "84.150,00 ₺",
+      qty: 80,
+      pickedQty: 80,
+      remainingQty: 0,
+      delivery: "DHL Kargo (KA)",
+      phone: "08502223344",
+      cariCode: "1-S-68234",
+      taxId: "4433221100",
+      salesRep: "DAVUT AKBULUT",
+      desc: "Toplama ve paketleme kontrolleri onaylandı",
+      vade: "10 / 10 / 2026",
+      depo: "MD",
+      isPickable: true,
+      items: [
+        { code: "ANST01", name: "Lokal Anestezi Kartuşu 50'li", raf: "01D2", qty: 50, counted: 50, barcode: "8681112233445" },
+        { code: "ENG900", name: "Tek Kullanımlık Dental Enjektör", raf: "02B1", qty: 30, counted: 30, barcode: "8681556677889" }
+      ]
+    },
+    {
+      id: "68241",
+      orderRef: "1-WS-2-68241",
+      date: "22 / 08 / 2026",
+      time: "09:30:18",
+      user: "Erdi Ekiz",
+      cariName: "DR. SELİN AKSOY ORTODONTİ",
+      paymentAmount: "9.800,00 ₺",
+      isPayed: true,
+      totalPrice: "9.800,00 ₺",
+      qty: 12,
+      pickedQty: 4,
+      remainingQty: 8,
+      delivery: "Elden Teslim",
+      phone: "05334445566",
+      cariCode: "1-S-68241",
+      taxId: "5566778899",
+      salesRep: "ERDİ EKİZ",
+      desc: "Elden teslim edilecek - 4 adet toplandı",
+      vade: "20 / 09 / 2026",
+      depo: "MD",
+      isPickable: true,
+      items: [
+        { code: "TEL008", name: "NiTi Ark Teli Çeşitleri", raf: "05C2", qty: 12, counted: 4, barcode: "8681998877665" }
+      ]
+    },
+    {
+      id: "68255",
+      orderRef: "1-WS-2-68255",
+      date: "21 / 08 / 2026",
+      time: "15:10:00",
+      user: "Ümit Velioğlu",
+      cariName: "ESTETİK DİŞ POLİKLİNİĞİ LTD. ŞTİ.",
+      paymentAmount: "6.750,00 ₺",
+      isPayed: true,
+      totalPrice: "6.750,00 ₺",
+      qty: 8,
+      pickedQty: 0,
+      remainingQty: 8,
+      delivery: "KARGO",
+      phone: "02128889900",
+      cariCode: "1-S-68255",
+      taxId: "7766554433",
+      salesRep: "ÜMİT VELİOĞLU",
+      desc: "Beyazlatma ve cila seti siparişi",
+      vade: "18 / 09 / 2026",
+      depo: "MD",
+      isPickable: true,
+      items: [
+        { code: "BYZ101", name: "Ofis Tipi Diş Beyazlatma Kiti", raf: "04C1", qty: 8, counted: 0, barcode: "8681443322110" }
       ]
     }
   ];
@@ -5684,7 +5842,28 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    renderPagination();
+    
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
+  renderPagination();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -5739,6 +5918,27 @@
     window.print();
   }
 
+  
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
   renderPagination();
     closeFilterDrawer();
   }
@@ -5774,7 +5974,28 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    renderPagination();
+    
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
+  renderPagination();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -5829,6 +6050,27 @@
     window.print();
   }
 
+  
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
   renderPagination();
     closeFilterDrawer();
   }
@@ -5858,7 +6100,28 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    renderPagination();
+    
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
+  renderPagination();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -5913,6 +6176,27 @@
     window.print();
   }
 
+  
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
   renderPagination();
     const badge = document.getElementById('totalCountBadge');
     if (badge) badge.innerText = `${currentFilteredList.length} Sipariş`;
@@ -6073,7 +6357,28 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    renderPagination();
+    
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
+  renderPagination();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -6128,6 +6433,27 @@
     window.print();
   }
 
+  
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
   renderPagination();
     closeFilterDrawer();
   }
@@ -6163,7 +6489,28 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    renderPagination();
+    
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
+  renderPagination();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -6218,6 +6565,27 @@
     window.print();
   }
 
+  
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
   renderPagination();
     closeFilterDrawer();
   }
@@ -6247,7 +6615,28 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    renderPagination();
+    
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
+  renderPagination();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -6302,6 +6691,27 @@
     window.print();
   }
 
+  
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
   renderPagination();
   }
 
@@ -6377,7 +6787,28 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    renderPagination();
+    
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
+  renderPagination();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -6432,6 +6863,27 @@
     window.print();
   }
 
+  
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
   renderPagination();
     closeFilterDrawer();
   }
@@ -6467,7 +6919,28 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    renderPagination();
+    
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
+  renderPagination();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -6522,6 +6995,27 @@
     window.print();
   }
 
+  
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
   renderPagination();
     closeFilterDrawer();
   }
@@ -6551,7 +7045,28 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    renderPagination();
+    
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
+  renderPagination();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -6606,6 +7121,27 @@
     window.print();
   }
 
+  
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
   renderPagination();
   }
 
@@ -6741,7 +7277,28 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    renderPagination();
+    
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
+  renderPagination();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -6796,6 +7353,27 @@
     window.print();
   }
 
+  
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
   renderPagination();
     closeFilterDrawer();
   }
@@ -6831,7 +7409,28 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    renderPagination();
+    
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
+  renderPagination();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -6886,6 +7485,27 @@
     window.print();
   }
 
+  
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
   renderPagination();
     closeFilterDrawer();
   }
@@ -6915,7 +7535,28 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    renderPagination();
+    
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
+  renderPagination();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -6970,6 +7611,27 @@
     window.print();
   }
 
+  
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
+    const completed = warehouseDatabase.filter(o => o.pickedQty >= o.qty).length;
+    const md = warehouseDatabase.filter(o => o.depo === 'MD').length;
+
+    const countAllEl = document.getElementById('countAll');
+    const countPendingEl = document.getElementById('countPending');
+    const countCompletedEl = document.getElementById('countCompleted');
+    const countMDEl = document.getElementById('countMD');
+    const totalBadgeEl = document.getElementById('totalCountBadge');
+
+    if (countAllEl) countAllEl.innerText = total;
+    if (countPendingEl) countPendingEl.innerText = pending;
+    if (countCompletedEl) countCompletedEl.innerText = completed;
+    if (countMDEl) countMDEl.innerText = md;
+    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+  }
+
+  updateFilterCounters();
   renderPagination();
 </script>
 
