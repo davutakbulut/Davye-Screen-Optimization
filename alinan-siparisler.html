@@ -5156,13 +5156,19 @@
         </div>
       </div>
 
-      <!-- 1. Arama Çubuğu -->
+      <!-- 1. Arama ve Detaylı Filtre Çubuğu -->
       <div class="top-toolbar">
-        <div class="toolbar-left" style="width:100%;">
-          <div class="search-input-wrapper" style="flex:1; max-width:100%;">
+        <div class="toolbar-left" style="width:100%; display:flex; align-items:center; gap:8px;">
+          <div class="search-input-wrapper" style="flex:1;">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" class="lucide lucide-search"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
             <input type="text" id="orderSearch" class="search-input" placeholder="Sipariş Ref, Cari Ünvan, VKN, Telefon veya Depo ara..." oninput="filterWarehouseCards()">
           </div>
+
+          <!-- Kapsamlı / Detaylı Filtreleme Butonu -->
+          <button type="button" class="btn-adv-toggle" id="btnAdvToggle" onclick="openFilterDrawer()" title="Kapsamlı Filtreleme Paneli">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders-horizontal" aria-hidden="true" class="lucide lucide-sliders-horizontal"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></svg>
+            <span class="filter-active-dot" id="filterActiveDot"></span>
+          </button>
         </div>
       </div>
 
@@ -5540,7 +5546,63 @@
     });
 
     currentPage = 1;
+    
+  function openFilterDrawer() {
+    const backdrop = document.getElementById('filterDrawerBackdrop');
+    const drawer = document.getElementById('filterDrawer');
+    const toggleBtn = document.getElementById('btnAdvToggle');
+    if (backdrop) backdrop.classList.add('show');
+    if (drawer) drawer.classList.add('show');
+    if (toggleBtn) toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeFilterDrawer() {
+    const backdrop = document.getElementById('filterDrawerBackdrop');
+    const drawer = document.getElementById('filterDrawer');
+    const toggleBtn = document.getElementById('btnAdvToggle');
+    if (backdrop) backdrop.classList.remove('show');
+    if (drawer) drawer.classList.remove('show');
+    if (toggleBtn) toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function applyAdvancedWarehouseFilter() {
+    const cariAciklama = (document.getElementById('advCariAciklama')?.value || '').toLowerCase().trim();
+    const cariKod = (document.getElementById('advCariKod')?.value || '').toLowerCase().trim();
+    const islemNo = (document.getElementById('advIslemNo')?.value || '').toLowerCase().trim();
+    const satisTemsilcisi = (document.getElementById('advSatisTemsilcisi')?.value || '').toLowerCase().trim();
+    const depoKodu = (document.getElementById('advDepoKodu')?.value || '').toLowerCase().trim();
+
+    currentFilteredList = warehouseDatabase.filter(order => {
+      if (cariAciklama && !order.cariName.toLowerCase().includes(cariAciklama)) return false;
+      if (cariKod && !order.cariCode.toLowerCase().includes(cariKod)) return false;
+      if (islemNo && !order.orderRef.toLowerCase().includes(islemNo)) return false;
+      if (satisTemsilcisi && !order.salesRep.toLowerCase().includes(satisTemsilcisi)) return false;
+      if (depoKodu && !order.depo.toLowerCase().includes(depoKodu)) return false;
+      return true;
+    });
+
+    const activeDot = document.getElementById('filterActiveDot');
+    const hasFilter = cariAciklama || cariKod || islemNo || satisTemsilcisi || depoKodu;
+    if (activeDot) activeDot.style.display = hasFilter ? 'block' : 'none';
+
+    currentPage = 1;
     renderPagination();
+    closeFilterDrawer();
+  }
+
+  function resetAdvancedWarehouseFilter() {
+    document.getElementById('advFilterForm')?.reset();
+    const activeDot = document.getElementById('filterActiveDot');
+    if (activeDot) activeDot.style.display = 'none';
+    currentFilteredList = [...warehouseDatabase];
+    currentPage = 1;
+    renderPagination();
+    closeFilterDrawer();
+  }
+
+  renderPagination();
     const badge = document.getElementById('totalCountBadge');
     if (badge) badge.innerText = `${currentFilteredList.length} Sipariş`;
   }
@@ -5633,7 +5695,63 @@
   function changePageSize(val) {
     pageSize = parseInt(val, 10) || 10;
     currentPage = 1;
+    
+  function openFilterDrawer() {
+    const backdrop = document.getElementById('filterDrawerBackdrop');
+    const drawer = document.getElementById('filterDrawer');
+    const toggleBtn = document.getElementById('btnAdvToggle');
+    if (backdrop) backdrop.classList.add('show');
+    if (drawer) drawer.classList.add('show');
+    if (toggleBtn) toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeFilterDrawer() {
+    const backdrop = document.getElementById('filterDrawerBackdrop');
+    const drawer = document.getElementById('filterDrawer');
+    const toggleBtn = document.getElementById('btnAdvToggle');
+    if (backdrop) backdrop.classList.remove('show');
+    if (drawer) drawer.classList.remove('show');
+    if (toggleBtn) toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function applyAdvancedWarehouseFilter() {
+    const cariAciklama = (document.getElementById('advCariAciklama')?.value || '').toLowerCase().trim();
+    const cariKod = (document.getElementById('advCariKod')?.value || '').toLowerCase().trim();
+    const islemNo = (document.getElementById('advIslemNo')?.value || '').toLowerCase().trim();
+    const satisTemsilcisi = (document.getElementById('advSatisTemsilcisi')?.value || '').toLowerCase().trim();
+    const depoKodu = (document.getElementById('advDepoKodu')?.value || '').toLowerCase().trim();
+
+    currentFilteredList = warehouseDatabase.filter(order => {
+      if (cariAciklama && !order.cariName.toLowerCase().includes(cariAciklama)) return false;
+      if (cariKod && !order.cariCode.toLowerCase().includes(cariKod)) return false;
+      if (islemNo && !order.orderRef.toLowerCase().includes(islemNo)) return false;
+      if (satisTemsilcisi && !order.salesRep.toLowerCase().includes(satisTemsilcisi)) return false;
+      if (depoKodu && !order.depo.toLowerCase().includes(depoKodu)) return false;
+      return true;
+    });
+
+    const activeDot = document.getElementById('filterActiveDot');
+    const hasFilter = cariAciklama || cariKod || islemNo || satisTemsilcisi || depoKodu;
+    if (activeDot) activeDot.style.display = hasFilter ? 'block' : 'none';
+
+    currentPage = 1;
     renderPagination();
+    closeFilterDrawer();
+  }
+
+  function resetAdvancedWarehouseFilter() {
+    document.getElementById('advFilterForm')?.reset();
+    const activeDot = document.getElementById('filterActiveDot');
+    if (activeDot) activeDot.style.display = 'none';
+    currentFilteredList = [...warehouseDatabase];
+    currentPage = 1;
+    renderPagination();
+    closeFilterDrawer();
+  }
+
+  renderPagination();
   }
 
   function goToPage(pageNum) {
@@ -5641,7 +5759,63 @@
     if (pageNum < 1) pageNum = 1;
     if (pageNum > totalPages) pageNum = totalPages;
     currentPage = pageNum;
+    
+  function openFilterDrawer() {
+    const backdrop = document.getElementById('filterDrawerBackdrop');
+    const drawer = document.getElementById('filterDrawer');
+    const toggleBtn = document.getElementById('btnAdvToggle');
+    if (backdrop) backdrop.classList.add('show');
+    if (drawer) drawer.classList.add('show');
+    if (toggleBtn) toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeFilterDrawer() {
+    const backdrop = document.getElementById('filterDrawerBackdrop');
+    const drawer = document.getElementById('filterDrawer');
+    const toggleBtn = document.getElementById('btnAdvToggle');
+    if (backdrop) backdrop.classList.remove('show');
+    if (drawer) drawer.classList.remove('show');
+    if (toggleBtn) toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function applyAdvancedWarehouseFilter() {
+    const cariAciklama = (document.getElementById('advCariAciklama')?.value || '').toLowerCase().trim();
+    const cariKod = (document.getElementById('advCariKod')?.value || '').toLowerCase().trim();
+    const islemNo = (document.getElementById('advIslemNo')?.value || '').toLowerCase().trim();
+    const satisTemsilcisi = (document.getElementById('advSatisTemsilcisi')?.value || '').toLowerCase().trim();
+    const depoKodu = (document.getElementById('advDepoKodu')?.value || '').toLowerCase().trim();
+
+    currentFilteredList = warehouseDatabase.filter(order => {
+      if (cariAciklama && !order.cariName.toLowerCase().includes(cariAciklama)) return false;
+      if (cariKod && !order.cariCode.toLowerCase().includes(cariKod)) return false;
+      if (islemNo && !order.orderRef.toLowerCase().includes(islemNo)) return false;
+      if (satisTemsilcisi && !order.salesRep.toLowerCase().includes(satisTemsilcisi)) return false;
+      if (depoKodu && !order.depo.toLowerCase().includes(depoKodu)) return false;
+      return true;
+    });
+
+    const activeDot = document.getElementById('filterActiveDot');
+    const hasFilter = cariAciklama || cariKod || islemNo || satisTemsilcisi || depoKodu;
+    if (activeDot) activeDot.style.display = hasFilter ? 'block' : 'none';
+
+    currentPage = 1;
     renderPagination();
+    closeFilterDrawer();
+  }
+
+  function resetAdvancedWarehouseFilter() {
+    document.getElementById('advFilterForm')?.reset();
+    const activeDot = document.getElementById('filterActiveDot');
+    if (activeDot) activeDot.style.display = 'none';
+    currentFilteredList = [...warehouseDatabase];
+    currentPage = 1;
+    renderPagination();
+    closeFilterDrawer();
+  }
+
+  renderPagination();
   }
 
   function renderPagination() {
@@ -5709,7 +5883,133 @@
     });
   }
 
+  
+  function openFilterDrawer() {
+    const backdrop = document.getElementById('filterDrawerBackdrop');
+    const drawer = document.getElementById('filterDrawer');
+    const toggleBtn = document.getElementById('btnAdvToggle');
+    if (backdrop) backdrop.classList.add('show');
+    if (drawer) drawer.classList.add('show');
+    if (toggleBtn) toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeFilterDrawer() {
+    const backdrop = document.getElementById('filterDrawerBackdrop');
+    const drawer = document.getElementById('filterDrawer');
+    const toggleBtn = document.getElementById('btnAdvToggle');
+    if (backdrop) backdrop.classList.remove('show');
+    if (drawer) drawer.classList.remove('show');
+    if (toggleBtn) toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function applyAdvancedWarehouseFilter() {
+    const cariAciklama = (document.getElementById('advCariAciklama')?.value || '').toLowerCase().trim();
+    const cariKod = (document.getElementById('advCariKod')?.value || '').toLowerCase().trim();
+    const islemNo = (document.getElementById('advIslemNo')?.value || '').toLowerCase().trim();
+    const satisTemsilcisi = (document.getElementById('advSatisTemsilcisi')?.value || '').toLowerCase().trim();
+    const depoKodu = (document.getElementById('advDepoKodu')?.value || '').toLowerCase().trim();
+
+    currentFilteredList = warehouseDatabase.filter(order => {
+      if (cariAciklama && !order.cariName.toLowerCase().includes(cariAciklama)) return false;
+      if (cariKod && !order.cariCode.toLowerCase().includes(cariKod)) return false;
+      if (islemNo && !order.orderRef.toLowerCase().includes(islemNo)) return false;
+      if (satisTemsilcisi && !order.salesRep.toLowerCase().includes(satisTemsilcisi)) return false;
+      if (depoKodu && !order.depo.toLowerCase().includes(depoKodu)) return false;
+      return true;
+    });
+
+    const activeDot = document.getElementById('filterActiveDot');
+    const hasFilter = cariAciklama || cariKod || islemNo || satisTemsilcisi || depoKodu;
+    if (activeDot) activeDot.style.display = hasFilter ? 'block' : 'none';
+
+    currentPage = 1;
+    renderPagination();
+    closeFilterDrawer();
+  }
+
+  function resetAdvancedWarehouseFilter() {
+    document.getElementById('advFilterForm')?.reset();
+    const activeDot = document.getElementById('filterActiveDot');
+    if (activeDot) activeDot.style.display = 'none';
+    currentFilteredList = [...warehouseDatabase];
+    currentPage = 1;
+    renderPagination();
+    closeFilterDrawer();
+  }
+
   renderPagination();
 </script>
+
+  <!-- ========================================================================= -->
+  <!-- KAPSAMLI / DETAYLI FİLTRELEME ÇEKMECESİ (SAĞDAN AÇILIR)                    -->
+  <!-- ========================================================================= -->
+  <div class="filter-drawer-backdrop" id="filterDrawerBackdrop" onclick="closeFilterDrawer()"></div>
+  <div class="filter-drawer" id="filterDrawer">
+    <div class="filter-drawer-header">
+      <div class="filter-drawer-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders-horizontal" class="lucide lucide-sliders-horizontal"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></svg>
+        <span>Detaylı Sipariş Filtreleme</span>
+      </div>
+      <button type="button" class="filter-drawer-close" onclick="closeFilterDrawer()" title="Kapat">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+      </button>
+    </div>
+
+    <form id="advFilterForm" class="filter-drawer-form" onsubmit="event.preventDefault(); applyAdvancedWarehouseFilter();">
+      <div class="filter-drawer-body">
+        <div class="adv-form-group">
+          <label class="adv-label">Cari Hesap Açıklaması</label>
+          <input type="text" id="advCariAciklama" class="adv-input" placeholder="Örn: TUĞÇE DEMİRCAN...">
+        </div>
+
+        <div class="adv-form-group">
+          <label class="adv-label">Cari Hesap Kodu</label>
+          <input type="text" id="advCariKod" class="adv-input" placeholder="Örn: 1-S-68181">
+        </div>
+
+        <div class="adv-form-group">
+          <label class="adv-label">Sipariş Ref. Numarası</label>
+          <input type="text" id="advIslemNo" class="adv-input" placeholder="Örn: 1-WS-2-68174">
+        </div>
+
+        <div class="adv-form-group">
+          <label class="adv-label">Satış Sorumlusu</label>
+          <input type="text" id="advSatisTemsilcisi" class="adv-input" placeholder="Örn: DENTAL PİYASA">
+        </div>
+
+        <div class="adv-form-group">
+          <label class="adv-label">Depo Kodu</label>
+          <input type="text" id="advDepoKodu" class="adv-input" placeholder="Örn: MD">
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="adv-form-group">
+            <label class="adv-label">Başlangıç Tarihi</label>
+            <input type="date" id="advBaslangicTarih" class="adv-input">
+          </div>
+
+          <div class="adv-form-group">
+            <label class="adv-label">Bitiş Tarihi</label>
+            <input type="date" id="advBitisTarih" class="adv-input">
+          </div>
+        </div>
+      </div>
+
+      <!-- Sabit Alt Butonlar -->
+      <div class="filter-drawer-footer">
+        <button type="submit" class="btn-adv-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" class="lucide lucide-search"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg> Filtreleri Uygula
+        </button>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-adv-secondary" style="flex:1;" onclick="resetAdvancedWarehouseFilter()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="rotate-ccw" class="lucide lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg> Temizle
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
 </body>
 </html>
