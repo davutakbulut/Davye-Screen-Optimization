@@ -5164,6 +5164,48 @@
       color: #713f12;
     }
 
+  
+    /* Dropdown Menüsü Z-Index ve Kart Hiyerarşisi */
+    .order-card {
+      position: relative;
+      z-index: 1;
+    }
+    .order-card.has-open-dropdown,
+    .order-card:has(.dropdown-menu.show) {
+      z-index: 99999 !important;
+    }
+    .order-card.has-open-dropdown .card-header-bar,
+    .order-card:has(.dropdown-menu.show) .card-header-bar {
+      z-index: 99999 !important;
+      position: relative;
+    }
+    .order-card.has-open-dropdown .actions-dropdown,
+    .order-card:has(.dropdown-menu.show) .actions-dropdown {
+      z-index: 100000 !important;
+      position: relative;
+    }
+    .dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 4px);
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.25), 0 4px 10px rgba(0,0,0,0.08);
+      width: 170px;
+      z-index: 100000 !important;
+      display: none;
+      flex-direction: column;
+      padding: 4px;
+    }
+    .dropdown-menu.show {
+      display: flex !important;
+    }
+    .card-note-bar {
+      position: relative;
+      z-index: 2;
+    }
+
   </style>
 </head>
 <body>
@@ -5900,7 +5942,6 @@
       taxId: "4448888888",
       salesRep: "ERDİ EKİZ",
       desc: "zehra sever gerçek",
-      note: "Klinikte ameliyat var, saat 12:00'den önce kuryeye teslim edilmeli.",
       vade: "22 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -5930,7 +5971,6 @@
       taxId: "5490309762",
       salesRep: "ÜMİT VELİOĞLU",
       desc: "ZEYNEP BORLUSOY",
-      note: "Lütfen faturayı kurumsal e-posta adresine (muhasebe@gulumse.com) iletiniz. Ürünler orijinal kutusunda olsun.",
       vade: "22 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -5988,7 +6028,6 @@
       taxId: "2010423245",
       salesRep: "ERDİ EKİZ",
       desc: "Sevkıyat hazırlandı",
-      note: "Toplama sonrası kalite kontrol masasına sevk edilecek.",
       vade: "22 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6019,7 +6058,6 @@
       salesRep: "HEPSİBURADA",
       isMarketplace: true,
       desc: "HB-HBV00000213192",
-      note: "Müşteri teslimat öncesi aranmak istiyor.",
       vade: "17 / 09 / 2026",
       depo: "MD",
       isPickable: false,
@@ -6049,7 +6087,6 @@
       salesRep: "HEPSİBURADA",
       isMarketplace: true,
       desc: "HB-HBV00000341829",
-      note: "Pazaryeri hızlı teslimat kolisine dahil edilsin.",
       vade: "17 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6081,7 +6118,6 @@
       salesRep: "HEPSİBURADA",
       isMarketplace: true,
       desc: "HB-HBV0000010991",
-      note: "Eksik kalan 35 adet için tedarikçi siparişi açıldı.",
       vade: "17 / 09 / 2026",
       depo: "MD",
       isPickable: false,
@@ -6110,7 +6146,6 @@
       taxId: "0090586950",
       salesRep: "MERKEZ DEPO",
       desc: "Klinik ameliyathane seti tamamlandı",
-      note: "Kutu içerisine garanti belgesi ve UTS karekod listesi eklensin.",
       vade: "24 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6140,7 +6175,6 @@
       salesRep: "HEPSİBURADA",
       isMarketplace: true,
       desc: "HB-HBV00000300188",
-      note: "Özel fatura bilgisi pakete iliştirilsin.",
       vade: "17 / 09 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6170,7 +6204,6 @@
       taxId: "307146233",
       salesRep: "MERKEZ DEPO",
       desc: "10 adet motor toplandı, kalan 19 adet için tedarik bekleniyor",
-      note: "Eksik parça tedariği bekleniyor.",
       vade: "24 / 08 / 2026",
       depo: "MD",
       isPickable: false,
@@ -6199,7 +6232,6 @@
       taxId: "8710153090",
       salesRep: "MERKEZ DEPO",
       desc: "Klinik sevkıyatı tamamlandı",
-      note: "Depodan özel korumalı ambalajla paketlenip kargolanacak.",
       vade: "24 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6228,7 +6260,6 @@
       taxId: "5378847120",
       salesRep: "MERKEZ DEPO",
       desc: "Toplama bekliyor",
-      note: "Saat 15:00'e kadar kargoya verilmesi rica olunur.",
       vade: "24 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6257,7 +6288,6 @@
       taxId: "6120565661",
       salesRep: "MERKEZ DEPO",
       desc: "Toplama onaylandı",
-      note: "Merkez depodan acil transfer, koli üstüne kırılabilir etiketi yapıştırılsın.",
       vade: "24 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6937,7 +6967,7 @@
   }
 
   document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
+    document.querySelectorAll('.dropdown-menu.show').forEach(m => { m.classList.remove('show'); m.closest('.order-card')?.classList.remove('has-open-dropdown'); });
   });
 
   function createCargoOrder(orderId) {
