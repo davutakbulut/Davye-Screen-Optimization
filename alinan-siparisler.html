@@ -5342,8 +5342,109 @@
 
 <div id="toast" class="toast-msg">Panoya kopyalandı!</div>
 
+  <!-- ========================================================================= -->
+  <!-- KAPSAMLI / DETAYLI FİLTRELEME ÇEKMECESİ (SAĞDAN AÇILIR)                    -->
+  <!-- ========================================================================= -->
+  <div class="filter-drawer-backdrop" id="filterDrawerBackdrop" onclick="closeFilterDrawer()"></div>
+  <div class="filter-drawer" id="filterDrawer">
+    <div class="filter-drawer-header">
+      <div class="filter-drawer-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders-horizontal" class="lucide lucide-sliders-horizontal"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></svg>
+        <span>Detaylı Sipariş Filtreleme</span>
+      </div>
+      <button type="button" class="filter-drawer-close" onclick="closeFilterDrawer()" title="Kapat">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+      </button>
+    </div>
+
+    <form id="advFilterForm" class="filter-drawer-form" onsubmit="event.preventDefault(); applyAdvancedWarehouseFilter();">
+      <div class="filter-drawer-body">
+        <div class="adv-form-group">
+          <label class="adv-label">Cari Hesap Açıklaması</label>
+          <input type="text" id="advCariAciklama" class="adv-input" placeholder="Örn: TUĞÇE DEMİRCAN...">
+        </div>
+
+        <div class="adv-form-group">
+          <label class="adv-label">Cari Hesap Kodu</label>
+          <input type="text" id="advCariKod" class="adv-input" placeholder="Örn: 1-S-68181">
+        </div>
+
+        <div class="adv-form-group">
+          <label class="adv-label">Sipariş Ref. Numarası</label>
+          <input type="text" id="advIslemNo" class="adv-input" placeholder="Örn: 1-WS-2-68174">
+        </div>
+
+        <div class="adv-form-group">
+          <label class="adv-label">Satış Sorumlusu</label>
+          <input type="text" id="advSatisTemsilcisi" class="adv-input" placeholder="Örn: DENTAL PİYASA">
+        </div>
+
+        <div class="adv-form-group">
+          <label class="adv-label">Depo Kodu</label>
+          <input type="text" id="advDepoKodu" class="adv-input" placeholder="Örn: MD">
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="adv-form-group">
+            <label class="adv-label">Başlangıç Tarihi</label>
+            <input type="date" id="advBaslangicTarih" class="adv-input">
+          </div>
+
+          <div class="adv-form-group">
+            <label class="adv-label">Bitiş Tarihi</label>
+            <input type="date" id="advBitisTarih" class="adv-input">
+          </div>
+        </div>
+      </div>
+
+      <!-- Sabit Alt Butonlar -->
+      <div class="filter-drawer-footer">
+        <button type="submit" class="btn-adv-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" class="lucide lucide-search"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg> Filtreleri Uygula
+        </button>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-adv-secondary" style="flex:1;" onclick="resetAdvancedWarehouseFilter()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="rotate-ccw" class="lucide lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg> Temizle
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 9. SİPARİŞ & TERMİNAL BİLGİ FİŞİ (80mm) MODAL POPUP                       -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="orderReceiptModal" onclick="if(event.target===this) closeReceiptModal()">
+    <div class="modal-card" style="max-width: 440px;">
+      <div class="modal-header" style="background:#f8fafc;">
+        <span class="modal-title">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="receipt" aria-hidden="true" class="lucide lucide-receipt"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg>
+          Sipariş Bilgi &amp; Teslim Fişi
+        </span>
+        <button class="modal-close-btn" onclick="closeReceiptModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+      </div>
+      
+      <div class="modal-body" style="padding: 16px 20px; background:#f1f5f9;">
+        <!-- Termal Fiş Önizleme Kağıdı (80mm POS Görünümü) -->
+        <div id="receiptPaper" class="thermal-receipt-paper" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:6px; padding:18px 16px; font-family:'Plus Jakarta Sans', -apple-system, sans-serif; color:#0f172a; box-shadow: 0 4px 12px rgba(0,0,0,0.06); font-size:12px; line-height:1.4;">
+          <!-- Dinamik Fiş İçeriği JavaScript ile doldurulur -->
+        </div>
+      </div>
+
+      <div class="modal-footer" style="background:#f8fafc; justify-content: space-between;">
+        <button type="button" class="btn-modal-action btn-modal-secondary" onclick="closeReceiptModal()">Kapat</button>
+        <button type="button" class="btn-modal-action btn-modal-primary" onclick="printReceiptPaper()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="printer" aria-hidden="true" class="lucide lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg> Fişi Yazdır (80mm)
+        </button>
+      </div>
+    </div>
+  </div>
+
 <script>
-        const warehouseDatabase = [
+  // 13 Adet Doğrulanmış ERP Alınan Sipariş Veritabanı
+  const warehouseDatabase = [
     {
       id: "67659",
       orderRef: "1-WS-2-67659",
@@ -5448,13 +5549,13 @@
       cariCode: "2010423245",
       taxId: "2010423245",
       salesRep: "ERDİ EKİZ",
-      desc: "Uzmanlar Orto sevkıyat tamamlandı",
-      vade: "24 / 08 / 2026",
+      desc: "Sevkıyat hazırlandı",
+      vade: "22 / 08 / 2026",
       depo: "MD",
       isPickable: true,
       collector: "İBRAHİM CEYLAN",
       items: [
-        { code: "ELV902", name: "Elevatör ve Lüksatör Seti", raf: "08B1", qty: 120, counted: 120, barcode: "8681883920194" }
+        { code: "BRK04", name: "Ortodontik Braket 0.22", raf: "05B1", qty: 120, counted: 120, barcode: "8681883920194" }
       ]
     },
     {
@@ -5466,9 +5567,9 @@
       time: "00:37:26",
       user: "",
       cariName: "sadan mete",
-      paymentAmount: "561,00 ₺",
-      isPayed: false,
-      totalPrice: "561,00 ₺",
+      paymentAmount: "65,00 ₺",
+      isPayed: true,
+      totalPrice: "65,00 ₺",
       qty: 20,
       pickedQty: 0,
       remainingQty: 20,
@@ -5477,7 +5578,7 @@
       cariCode: "1-S-73447",
       taxId: "1111111111",
       salesRep: "HEPSİBURADA",
-      desc: "HB-HBV00000213192 (Raf stoğu tükendi - Hiç toplanamadı)",
+      desc: "HB-HBV00000213192 (Raf stoğu tükendi - İptal Edildi)",
       vade: "17 / 09 / 2026",
       depo: "MD",
       isPickable: false,
@@ -5535,41 +5636,41 @@
       cariCode: "1-S-73443",
       taxId: "1111111111",
       salesRep: "HEPSİBURADA",
-      desc: "HB-HBV000004LJ3R (15 adet toplandı, kalan parti hasarlı - Toplama Durduruldu)",
-      vade: "17 / 08 / 2026",
+      desc: "HB-HBV0000010991 (15 adet toplandı, kalan parti hasarlı - Toplanamaz)",
+      vade: "17 / 09 / 2026",
       depo: "MD",
       isPickable: false,
       collector: "BERAT SEVDA",
       items: [
-        { code: "STR012", name: "Otoklav Sterilizasyon Rulosu", raf: "03B2", qty: 50, counted: 15, barcode: "8681665492810" }
+        { code: "NDL002", name: "Dental Enjektör İğnesi 30G", raf: "03A4", qty: 50, counted: 15, barcode: "8681442910583" }
       ]
     },
     {
       id: "67584",
       orderRef: "1-WS-2-67584",
-      faturaRef: "1-WS-7-124135",
+      faturaRef: "1-WS-7-124089",
       date: "17 / 08 / 2026",
-      time: "18:17:16",
+      time: "18:03:19",
       user: "Berat Sevda",
-      cariName: "AFŞAR AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ",
-      paymentAmount: "4.620,00 ₺",
+      cariName: "AFŞAR AĞIZ VE DİŞ SAĞLIĞI",
+      paymentAmount: "8.650,00 ₺",
       isPayed: true,
-      totalPrice: "4.620,00 ₺",
+      totalPrice: "8.650,00 ₺",
       qty: 4,
       pickedQty: 4,
       remainingQty: 0,
       delivery: "KARGO",
-      phone: "905052659019",
-      cariCode: "1-S-73439",
-      taxId: "0021922332",
-      salesRep: "DAVYE.COM",
-      desc: "DV-12349182390",
-      vade: "15 / 09 / 2026",
+      phone: "-",
+      cariCode: "1-S-2287",
+      taxId: "0090586950",
+      salesRep: "MERKEZ DEPO",
+      desc: "Klinik ameliyathane seti tamamlandı",
+      vade: "24 / 08 / 2026",
       depo: "MD",
       isPickable: true,
       collector: "BERAT SEVDA",
       items: [
-        { code: "DNT404", name: "Endodontik Kanal Eğesi", raf: "09C1", qty: 4, counted: 4, barcode: "8681774819203" }
+        { code: "KTR01", name: "Cerrahi Koter Cihazı Uçları", raf: "09A2", qty: 4, counted: 4, barcode: "8681773910482" }
       ]
     },
     {
@@ -5580,33 +5681,33 @@
       time: "17:57:22",
       user: "",
       cariName: "Abdullah Özdemir",
-      paymentAmount: "88,00 ₺",
+      paymentAmount: "1.250,00 ₺",
       isPayed: true,
-      totalPrice: "88,00 ₺",
+      totalPrice: "1.250,00 ₺",
       qty: 10,
       pickedQty: 0,
       remainingQty: 10,
       delivery: "KARGO",
       phone: "-",
-      cariCode: "1-S-73437",
+      cariCode: "1-S-73446",
       taxId: "1111111111",
       salesRep: "HEPSİBURADA",
-      desc: "HB-HBV0000049102",
-      vade: "17 / 08 / 2026",
+      desc: "HB-HBV00000300188 (Toplama bekliyor)",
+      vade: "17 / 09 / 2026",
       depo: "MD",
       isPickable: true,
       collector: "BERAT SEVDA",
       items: [
-        { code: "BYZ101", name: "Diş Beyazlatma Jeli", raf: "04C1", qty: 10, counted: 0, barcode: "8681443322110" }
+        { code: "BND09", name: "Bonding Ajanı 5ml", raf: "04C1", qty: 10, counted: 0, barcode: "8681664910283" }
       ]
     },
     {
       id: "67573",
       orderRef: "1-WS-2-67573",
       hasShortage: true,
-      faturaRef: "1-WS-7-124071",
+      faturaRef: "1-WS-7-124076",
       date: "17 / 08 / 2026",
-      time: "16:42:18",
+      time: "17:34:58",
       user: "Furkan Karakuş",
       cariName: "DIRECT ACADEMY DENTAL SAĞLIK",
       paymentAmount: "130.369,00 ₺",
@@ -5688,14 +5789,14 @@
     {
       id: "67570",
       orderRef: "1-WS-2-67570",
-      faturaRef: "1-WS-7-124062",
+      faturaRef: "1-WS-7-124068",
       date: "17 / 08 / 2026",
-      time: "16:22:33",
+      time: "15:42:09",
       user: "Yusuf Özgür",
-      cariName: "MARAN MEDİKAL TIBBİ MALZEME",
-      paymentAmount: "20.645,00 ₺",
+      cariName: "MARAN MEDİKAL DENTAL",
+      paymentAmount: "4.896,00 ₺",
       isPayed: true,
-      totalPrice: "20.645,00 ₺",
+      totalPrice: "4.896,00 ₺",
       qty: 72,
       pickedQty: 72,
       remainingQty: 0,
@@ -5716,6 +5817,9 @@
   ];
 
   let activeFilter = 'pickable';
+  let currentPage = 1;
+  let pageSize = 10;
+  let currentFilteredList = [];
 
   function renderWarehouseCards(list) {
     const container = document.getElementById('warehouseCardsContainer');
@@ -5858,7 +5962,7 @@
             <div class="grid-col">
               <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Sipariş &amp; Sorumlu</div>
               <div class="data-row"><span class="data-label">Sipariş Ref. No:</span> <span class="data-value" style="font-family:'JetBrains Mono', monospace; font-weight:700; color:#0f172a;">${order.orderRef}</span></div>
-              <div class="data-row"><span class="data-label">Kullanıcı:</span> <span class="data-value">${order.user}</span></div>
+              <div class="data-row"><span class="data-label">Kullanıcı:</span> <span class="data-value">${order.user || '<span style="color:#94a3b8; font-style:italic;">Toplama Bekliyor (Henüz Atanmadı)</span>'}</span></div>
               <div class="data-row"><span class="data-label">Satış Sorumlusu:</span> <span class="data-value" style="font-weight:700;">${order.salesRep}</span></div>
               <div class="data-row"><span class="data-label">Teslimat:</span> <span class="data-value">${order.delivery}</span></div>
               <div class="note-box" onclick="copyToClipboard('${order.desc}')" title="Açıklama">
@@ -5869,31 +5973,25 @@
 
             <!-- 3. SÜTUN: Depo & Miktar Özeti -->
             <div class="grid-col">
-              <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="layers" class="lucide lucide-layers"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg> Depo &amp; Miktar Özeti</div>
-              <div class="data-row"><span class="data-label">Depo Kodu:</span> <span class="data-value" style="font-weight:800; color:#0f172a;">${order.depo}</span></div>
-              <div class="data-row"><span class="data-label">Toplam Miktar:</span> <span class="data-value" style="font-weight:700;">${order.qty} Adet</span></div>
-              <div class="data-row"><span class="data-label">Toplanan Miktar:</span> <span class="data-value" style="color:#16a34a; font-weight:700;">${order.pickedQty} Adet</span></div>
-              <div class="data-row"><span class="data-label">Kalan Miktar:</span> <span class="data-value" style="color:#dc2626; font-weight:700;">${order.remainingQty} Adet</span></div>
-              <div class="data-row"><span class="data-label">Ortalama Vade:</span> <span class="data-value" style="font-family:'JetBrains Mono', monospace; font-weight:700;">${order.vade}</span></div>
-              <div style="margin-top:4px;">
-                <a href="siparis-toplama.html?orderId=${order.id}" class="btn-actions" style="background:#2563eb; border-color:#1d4ed8; text-decoration:none; width:100%; justify-content:center; padding:5px 0;" title="Toplama Ekranı">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="scan" class="lucide lucide-scan"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/></svg> Raftan Toplama Ekranına Git ➔
-                </a>
-              </div>
+              <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="boxes" class="lucide lucide-boxes"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg> Depo &amp; Miktar</div>
+              <div class="data-row"><span class="data-label">Depo Kodu:</span> <span class="data-value" style="font-weight:700; color:#2563eb;">${order.depo} - Merkez Depo</span></div>
+              <div class="data-row"><span class="data-label">Toplam Sipariş Adedi:</span> <span class="data-value" style="font-family:'JetBrains Mono', monospace; font-weight:700;">${order.qty} Adet</span></div>
+              <div class="data-row"><span class="data-label">Toplanan Miktar:</span> <span class="data-value" style="color:#16a34a; font-family:'JetBrains Mono', monospace; font-weight:700;">${order.pickedQty} Adet</span></div>
+              <div class="data-row"><span class="data-label">Kalan Miktar:</span> <span class="data-value" style="color:#ea580c; font-family:'JetBrains Mono', monospace; font-weight:700;">${order.remainingQty} Adet</span></div>
+              <div class="data-row"><span class="data-label">Toplayıcı (Collector):</span> <span class="data-value" style="font-weight:600;">${order.collector}</span></div>
             </div>
 
             <!-- 4. SÜTUN: Finansal Özet -->
-            <div class="grid-col finance-col">
-              <div class="price-group">
-                <span class="price-title">Toplam Tutar</span>
-                <span class="price-amount">${order.totalPrice}</span>
-              </div>
-              <div class="price-group" style="margin-top:2px;">
-                <div class="price-paid-row"><span>Ödenen Tutar:</span> <span class="price-paid-val">${order.paymentAmount}</span></div>
-              </div>
-              <div class="customer-balance-row">
-                <span class="customer-balance-title">Cari Bakiye:</span>
-                <span class="customer-balance-val clean">0,00 ₺</span>
+            <div class="grid-col">
+              <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="wallet" class="lucide lucide-wallet"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg> Finansal Durum</div>
+              <div class="data-row"><span class="data-label">Toplam Tutar:</span> <span class="data-value" style="font-family:'JetBrains Mono', monospace; font-weight:700; color:#0f172a; font-size:13px;">${order.totalPrice}</span></div>
+              <div class="data-row"><span class="data-label">Ödeme Durumu:</span> <span class="data-value" style="color:#16a34a; font-weight:700;">Ödendi (Havale / Kredi Kartı)</span></div>
+              <div class="data-row"><span class="data-label">Fatura Ref:</span> <span class="data-value" style="font-family:'JetBrains Mono', monospace; font-size:11px;">${order.faturaRef}</span></div>
+              <div class="data-row"><span class="data-label">Vade Tarihi:</span> <span class="data-value" style="font-family:'JetBrains Mono', monospace;">${order.vade}</span></div>
+              <div style="margin-top:8px;">
+                <a href="siparis-toplama.html?orderId=${order.id}" class="btn-adv-primary" style="text-decoration:none; display:flex; align-items:center; justify-content:center; gap:6px; font-size:11.5px; height:28px; padding:0 10px;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg> Toplamayı Başlat
+                </a>
               </div>
             </div>
           </div>
@@ -5946,1470 +6044,99 @@
     });
 
     currentPage = 1;
-    
-  function openFilterDrawer() {
-    const backdrop = document.getElementById('filterDrawerBackdrop');
-    const drawer = document.getElementById('filterDrawer');
-    const toggleBtn = document.getElementById('btnAdvToggle');
-    if (backdrop) backdrop.classList.add('show');
-    if (drawer) drawer.classList.add('show');
-    if (toggleBtn) toggleBtn.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    updateFilterCounters();
+    renderPagination();
   }
 
-  function closeFilterDrawer() {
-    const backdrop = document.getElementById('filterDrawerBackdrop');
-    const drawer = document.getElementById('filterDrawer');
-    const toggleBtn = document.getElementById('btnAdvToggle');
-    if (backdrop) backdrop.classList.remove('show');
-    if (drawer) drawer.classList.remove('show');
-    if (toggleBtn) toggleBtn.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function applyAdvancedWarehouseFilter() {
-    const cariAciklama = (document.getElementById('advCariAciklama')?.value || '').toLowerCase().trim();
-    const cariKod = (document.getElementById('advCariKod')?.value || '').toLowerCase().trim();
-    const islemNo = (document.getElementById('advIslemNo')?.value || '').toLowerCase().trim();
-    const satisTemsilcisi = (document.getElementById('advSatisTemsilcisi')?.value || '').toLowerCase().trim();
-    const depoKodu = (document.getElementById('advDepoKodu')?.value || '').toLowerCase().trim();
-
-    currentFilteredList = warehouseDatabase.filter(order => {
-      if (cariAciklama && !order.cariName.toLowerCase().includes(cariAciklama)) return false;
-      if (cariKod && !order.cariCode.toLowerCase().includes(cariKod)) return false;
-      if (islemNo && !order.orderRef.toLowerCase().includes(islemNo)) return false;
-      if (satisTemsilcisi && !order.salesRep.toLowerCase().includes(satisTemsilcisi)) return false;
-      if (depoKodu && !order.depo.toLowerCase().includes(depoKodu)) return false;
-      return true;
-    });
-
-    const activeDot = document.getElementById('filterActiveDot');
-    const hasFilter = cariAciklama || cariKod || islemNo || satisTemsilcisi || depoKodu;
-    if (activeDot) activeDot.style.display = hasFilter ? 'block' : 'none';
-
-    currentPage = 1;
-    
-  function toggleDropdown(btn) {
-    const dropdown = btn.closest('.actions-dropdown');
-    const menu = dropdown?.querySelector('.dropdown-menu');
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => {
-      if (m !== menu) m.classList.remove('show');
-    });
-    if (menu) menu.classList.toggle('show');
-  }
-
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-  });
-
-  function createCargoOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const trackingCode = `DHL-${Math.floor(100000000 + Math.random() * 900000000)}`;
-    copyToClipboard(`Kargo Takip Kodu Oluşturuldu: ${trackingCode} (${order.orderRef})`);
-  }
-
-  function toggleCancelOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    order.isCancelled = !order.isCancelled;
-    
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
-  }
-
-  function openReceiptModal(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const paper = document.getElementById('receiptPaper');
-    if (paper) {
-      paper.innerHTML = `
-        <div style="text-align:center; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:8px;">
-          <div style="font-weight:800; font-size:14px; color:#0f172a;">DAVYE DENTAL TOPTAN</div>
-          <div style="font-size:10.5px; color:#64748b;">Merkez Depo (MD) Sevk Fişi</div>
-          <div style="font-size:11px; font-family:'JetBrains Mono', monospace; font-weight:700; margin-top:3px; color:#2563eb;">${order.orderRef}</div>
-        </div>
-        <div style="font-size:11px; line-height:1.4; margin-bottom:8px;">
-          <div><strong>Cari:</strong> ${order.cariName}</div>
-          <div><strong>VKN:</strong> ${order.taxId} • <strong>Tel:</strong> ${order.phone}</div>
-          <div><strong>Tarih:</strong> ${order.date} ${order.time}</div>
-          <div><strong>Teslimat:</strong> ${order.delivery}</div>
-        </div>
-        <div style="border-top:1px dashed #cbd5e1; border-bottom:1px dashed #cbd5e1; padding:6px 0; margin-bottom:8px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; font-weight:700; color:#64748b; font-size:10px; margin-bottom:4px;">
-            <span>ÜRÜN / KALEM</span>
-            <span>MİKTAR</span>
-          </div>
-          ${order.items.map(it => `
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-              <span>${it.name} (Raf: ${it.raf})</span>
-              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${it.qty} Adet</span>
-            </div>
-          `).join('')}
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:#0f172a; margin-bottom:8px;">
-          <span>TOPLAM TUTAR:</span>
-          <span style="font-family:'JetBrains Mono', monospace;">${order.totalPrice}</span>
-        </div>
-        <div style="text-align:center; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:10px; color:#64748b; font-family:'JetBrains Mono', monospace;">
-          * * * TEŞEKKÜR EDERİZ * * *
-        </div>
-      `;
-    }
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.add('show');
-  }
-
-  function closeReceiptModal() {
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.remove('show');
-  }
-
-  function printReceiptPaper() {
-    window.print();
-  }
-
-  
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    closeFilterDrawer();
-  }
-
-  function resetAdvancedWarehouseFilter() {
-    document.getElementById('advFilterForm')?.reset();
-    const activeDot = document.getElementById('filterActiveDot');
-    if (activeDot) activeDot.style.display = 'none';
-    currentFilteredList = [...warehouseDatabase];
-    currentPage = 1;
-    
-  function toggleDropdown(btn) {
-    const dropdown = btn.closest('.actions-dropdown');
-    const menu = dropdown?.querySelector('.dropdown-menu');
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => {
-      if (m !== menu) m.classList.remove('show');
-    });
-    if (menu) menu.classList.toggle('show');
-  }
-
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-  });
-
-  function createCargoOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const trackingCode = `DHL-${Math.floor(100000000 + Math.random() * 900000000)}`;
-    copyToClipboard(`Kargo Takip Kodu Oluşturuldu: ${trackingCode} (${order.orderRef})`);
-  }
-
-  function toggleCancelOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    order.isCancelled = !order.isCancelled;
-    
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
-  }
-
-  function openReceiptModal(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const paper = document.getElementById('receiptPaper');
-    if (paper) {
-      paper.innerHTML = `
-        <div style="text-align:center; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:8px;">
-          <div style="font-weight:800; font-size:14px; color:#0f172a;">DAVYE DENTAL TOPTAN</div>
-          <div style="font-size:10.5px; color:#64748b;">Merkez Depo (MD) Sevk Fişi</div>
-          <div style="font-size:11px; font-family:'JetBrains Mono', monospace; font-weight:700; margin-top:3px; color:#2563eb;">${order.orderRef}</div>
-        </div>
-        <div style="font-size:11px; line-height:1.4; margin-bottom:8px;">
-          <div><strong>Cari:</strong> ${order.cariName}</div>
-          <div><strong>VKN:</strong> ${order.taxId} • <strong>Tel:</strong> ${order.phone}</div>
-          <div><strong>Tarih:</strong> ${order.date} ${order.time}</div>
-          <div><strong>Teslimat:</strong> ${order.delivery}</div>
-        </div>
-        <div style="border-top:1px dashed #cbd5e1; border-bottom:1px dashed #cbd5e1; padding:6px 0; margin-bottom:8px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; font-weight:700; color:#64748b; font-size:10px; margin-bottom:4px;">
-            <span>ÜRÜN / KALEM</span>
-            <span>MİKTAR</span>
-          </div>
-          ${order.items.map(it => `
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-              <span>${it.name} (Raf: ${it.raf})</span>
-              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${it.qty} Adet</span>
-            </div>
-          `).join('')}
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:#0f172a; margin-bottom:8px;">
-          <span>TOPLAM TUTAR:</span>
-          <span style="font-family:'JetBrains Mono', monospace;">${order.totalPrice}</span>
-        </div>
-        <div style="text-align:center; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:10px; color:#64748b; font-family:'JetBrains Mono', monospace;">
-          * * * TEŞEKKÜR EDERİZ * * *
-        </div>
-      `;
-    }
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.add('show');
-  }
-
-  function closeReceiptModal() {
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.remove('show');
-  }
-
-  function printReceiptPaper() {
-    window.print();
-  }
-
-  
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    closeFilterDrawer();
-  }
-
-  
-  function toggleDropdown(btn) {
-    const dropdown = btn.closest('.actions-dropdown');
-    const menu = dropdown?.querySelector('.dropdown-menu');
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => {
-      if (m !== menu) m.classList.remove('show');
-    });
-    if (menu) menu.classList.toggle('show');
-  }
-
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-  });
-
-  function createCargoOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const trackingCode = `DHL-${Math.floor(100000000 + Math.random() * 900000000)}`;
-    copyToClipboard(`Kargo Takip Kodu Oluşturuldu: ${trackingCode} (${order.orderRef})`);
-  }
-
-  function toggleCancelOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    order.isCancelled = !order.isCancelled;
-    
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
-  }
-
-  function openReceiptModal(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const paper = document.getElementById('receiptPaper');
-    if (paper) {
-      paper.innerHTML = `
-        <div style="text-align:center; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:8px;">
-          <div style="font-weight:800; font-size:14px; color:#0f172a;">DAVYE DENTAL TOPTAN</div>
-          <div style="font-size:10.5px; color:#64748b;">Merkez Depo (MD) Sevk Fişi</div>
-          <div style="font-size:11px; font-family:'JetBrains Mono', monospace; font-weight:700; margin-top:3px; color:#2563eb;">${order.orderRef}</div>
-        </div>
-        <div style="font-size:11px; line-height:1.4; margin-bottom:8px;">
-          <div><strong>Cari:</strong> ${order.cariName}</div>
-          <div><strong>VKN:</strong> ${order.taxId} • <strong>Tel:</strong> ${order.phone}</div>
-          <div><strong>Tarih:</strong> ${order.date} ${order.time}</div>
-          <div><strong>Teslimat:</strong> ${order.delivery}</div>
-        </div>
-        <div style="border-top:1px dashed #cbd5e1; border-bottom:1px dashed #cbd5e1; padding:6px 0; margin-bottom:8px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; font-weight:700; color:#64748b; font-size:10px; margin-bottom:4px;">
-            <span>ÜRÜN / KALEM</span>
-            <span>MİKTAR</span>
-          </div>
-          ${order.items.map(it => `
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-              <span>${it.name} (Raf: ${it.raf})</span>
-              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${it.qty} Adet</span>
-            </div>
-          `).join('')}
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:#0f172a; margin-bottom:8px;">
-          <span>TOPLAM TUTAR:</span>
-          <span style="font-family:'JetBrains Mono', monospace;">${order.totalPrice}</span>
-        </div>
-        <div style="text-align:center; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:10px; color:#64748b; font-family:'JetBrains Mono', monospace;">
-          * * * TEŞEKKÜR EDERİZ * * *
-        </div>
-      `;
-    }
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.add('show');
-  }
-
-  function closeReceiptModal() {
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.remove('show');
-  }
-
-  function printReceiptPaper() {
-    window.print();
-  }
-
-  
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    const badge = document.getElementById('totalCountBadge');
-    if (badge) badge.innerText = `${currentFilteredList.length} Sipariş`;
-  }
-
-  function setWarehouseFilter(filter, btn) {
-    activeFilter = filter;
-    document.querySelectorAll('.status-filters .filter-tab').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
+  function setWarehouseFilter(filterType, tabEl) {
+    activeFilter = filterType;
+    document.querySelectorAll('.status-filters .filter-tab').forEach(t => t.classList.remove('active'));
+    if (tabEl) tabEl.classList.add('active');
     filterWarehouseCards();
+  }
+
+  function updateFilterCounters() {
+    const total = warehouseDatabase.length;
+    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
+
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
+
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   function sortWarehouseOrders(key, btn) {
-    document.querySelectorAll('.sort-chip').forEach(b => {
-      b.classList.remove('active-desc', 'active-asc');
-      const ind = b.querySelector('.sort-indicator');
-      if (ind) ind.innerText = '⇄';
+    document.querySelectorAll('.inline-sort-bar-wrapper .sort-chip').forEach(b => {
+      if (b !== btn) {
+        b.classList.remove('active-desc', 'active-asc');
+        const ind = b.querySelector('.sort-indicator');
+        if (ind) ind.innerText = '⇄';
+      }
     });
 
-    if (btn) {
+    let state = 0; // 0: none, 1: desc, 2: asc
+    if (btn.classList.contains('active-desc')) state = 1;
+    else if (btn.classList.contains('active-asc')) state = 2;
+
+    const ind = btn.querySelector('.sort-indicator');
+    if (state === 0) {
       btn.classList.add('active-desc');
-      const ind = btn.querySelector('.sort-indicator');
       if (ind) ind.innerText = '↓';
-    }
-
-    warehouseDatabase.sort((a, b) => {
-      if (key === 'price') return parseFloat(b.totalPrice) - parseFloat(a.totalPrice);
-      if (key === 'qty') return b.qty - a.qty;
-      if (key === 'remaining') return b.remainingQty - a.remainingQty;
-      if (key === 'cari') return a.cariName.localeCompare(b.cariName);
-      if (key === 'ref') return b.orderRef.localeCompare(a.orderRef);
-      if (key === 'salesRep') return a.salesRep.localeCompare(b.salesRep);
-      return b.id.localeCompare(a.id);
-    });
-
-    filterWarehouseCards();
-  }
-
-  function toggleSidebar(forceState) {
-    const sidebar = document.getElementById('appSidebar');
-    const backdrop = document.getElementById('sidebarMobileBackdrop');
-    if (sidebar) {
-      if (typeof forceState === 'boolean') {
-        sidebar.classList.toggle('open', forceState);
-      } else {
-        sidebar.classList.toggle('open');
-      }
-      if (backdrop) backdrop.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
+      sortList(key, 'desc');
+    } else if (state === 1) {
+      btn.classList.remove('active-desc');
+      btn.classList.add('active-asc');
+      if (ind) ind.innerText = '↑';
+      sortList(key, 'asc');
+    } else {
+      btn.classList.remove('active-asc');
+      if (ind) ind.innerText = '⇄';
+      filterWarehouseCards();
     }
   }
 
-  function toggleSidebarMenu(item) {
-    const subMenu = item.nextElementSibling;
-    if (subMenu && subMenu.classList.contains('sidebar-sub-menu')) {
-      subMenu.classList.toggle('show');
-      item.classList.toggle('expanded');
-    }
-  }
+  function sortList(key, dir) {
+    currentFilteredList.sort((a, b) => {
+      let valA = a[key];
+      let valB = b[key];
+      if (key === 'ref') { valA = a.orderRef; valB = b.orderRef; }
+      if (key === 'cari') { valA = a.cariName; valB = b.cariName; }
+      if (key === 'qty') { valA = a.qty; valB = b.qty; }
+      if (key === 'picked') { valA = a.pickedQty; valB = b.pickedQty; }
 
-  function selectSubMenuItem(item, event) {
-    document.querySelectorAll('.sidebar-sub-item').forEach(i => i.classList.remove('active'));
-    item.classList.add('active');
-  }
-
-  function filterSidebarMenu(query) {
-    const q = query.toLowerCase().trim();
-    document.querySelectorAll('.sidebar-menu-group').forEach(group => {
-      const text = group.innerText.toLowerCase();
-      group.style.display = (!q || text.includes(q)) ? 'flex' : 'none';
+      if (valA < valB) return dir === 'asc' ? -1 : 1;
+      if (valA > valB) return dir === 'asc' ? 1 : -1;
+      return 0;
     });
+    currentPage = 1;
+    renderPagination();
   }
-
-  function copyToClipboard(text) {
-    if (!text) return;
-    navigator.clipboard.writeText(text).then(() => {
-      const toast = document.getElementById('toast');
-      if (toast) {
-        toast.innerText = `Panoya kopyalandı: ${text}`;
-        toast.style.display = 'block';
-        setTimeout(() => { toast.style.display = 'none'; }, 2000);
-      }
-    });
-  }
-
-  // İlk Yükleme
-  
-  let currentPage = 1;
-  let pageSize = 10;
-  let currentFilteredList = [...warehouseDatabase];
 
   function changePageSize(val) {
     pageSize = parseInt(val, 10) || 10;
     currentPage = 1;
-    
-  function openFilterDrawer() {
-    const backdrop = document.getElementById('filterDrawerBackdrop');
-    const drawer = document.getElementById('filterDrawer');
-    const toggleBtn = document.getElementById('btnAdvToggle');
-    if (backdrop) backdrop.classList.add('show');
-    if (drawer) drawer.classList.add('show');
-    if (toggleBtn) toggleBtn.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeFilterDrawer() {
-    const backdrop = document.getElementById('filterDrawerBackdrop');
-    const drawer = document.getElementById('filterDrawer');
-    const toggleBtn = document.getElementById('btnAdvToggle');
-    if (backdrop) backdrop.classList.remove('show');
-    if (drawer) drawer.classList.remove('show');
-    if (toggleBtn) toggleBtn.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function applyAdvancedWarehouseFilter() {
-    const cariAciklama = (document.getElementById('advCariAciklama')?.value || '').toLowerCase().trim();
-    const cariKod = (document.getElementById('advCariKod')?.value || '').toLowerCase().trim();
-    const islemNo = (document.getElementById('advIslemNo')?.value || '').toLowerCase().trim();
-    const satisTemsilcisi = (document.getElementById('advSatisTemsilcisi')?.value || '').toLowerCase().trim();
-    const depoKodu = (document.getElementById('advDepoKodu')?.value || '').toLowerCase().trim();
-
-    currentFilteredList = warehouseDatabase.filter(order => {
-      if (cariAciklama && !order.cariName.toLowerCase().includes(cariAciklama)) return false;
-      if (cariKod && !order.cariCode.toLowerCase().includes(cariKod)) return false;
-      if (islemNo && !order.orderRef.toLowerCase().includes(islemNo)) return false;
-      if (satisTemsilcisi && !order.salesRep.toLowerCase().includes(satisTemsilcisi)) return false;
-      if (depoKodu && !order.depo.toLowerCase().includes(depoKodu)) return false;
-      return true;
-    });
-
-    const activeDot = document.getElementById('filterActiveDot');
-    const hasFilter = cariAciklama || cariKod || islemNo || satisTemsilcisi || depoKodu;
-    if (activeDot) activeDot.style.display = hasFilter ? 'block' : 'none';
-
-    currentPage = 1;
-    
-  function toggleDropdown(btn) {
-    const dropdown = btn.closest('.actions-dropdown');
-    const menu = dropdown?.querySelector('.dropdown-menu');
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => {
-      if (m !== menu) m.classList.remove('show');
-    });
-    if (menu) menu.classList.toggle('show');
-  }
-
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-  });
-
-  function createCargoOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const trackingCode = `DHL-${Math.floor(100000000 + Math.random() * 900000000)}`;
-    copyToClipboard(`Kargo Takip Kodu Oluşturuldu: ${trackingCode} (${order.orderRef})`);
-  }
-
-  function toggleCancelOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    order.isCancelled = !order.isCancelled;
-    
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
-  }
-
-  function openReceiptModal(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const paper = document.getElementById('receiptPaper');
-    if (paper) {
-      paper.innerHTML = `
-        <div style="text-align:center; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:8px;">
-          <div style="font-weight:800; font-size:14px; color:#0f172a;">DAVYE DENTAL TOPTAN</div>
-          <div style="font-size:10.5px; color:#64748b;">Merkez Depo (MD) Sevk Fişi</div>
-          <div style="font-size:11px; font-family:'JetBrains Mono', monospace; font-weight:700; margin-top:3px; color:#2563eb;">${order.orderRef}</div>
-        </div>
-        <div style="font-size:11px; line-height:1.4; margin-bottom:8px;">
-          <div><strong>Cari:</strong> ${order.cariName}</div>
-          <div><strong>VKN:</strong> ${order.taxId} • <strong>Tel:</strong> ${order.phone}</div>
-          <div><strong>Tarih:</strong> ${order.date} ${order.time}</div>
-          <div><strong>Teslimat:</strong> ${order.delivery}</div>
-        </div>
-        <div style="border-top:1px dashed #cbd5e1; border-bottom:1px dashed #cbd5e1; padding:6px 0; margin-bottom:8px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; font-weight:700; color:#64748b; font-size:10px; margin-bottom:4px;">
-            <span>ÜRÜN / KALEM</span>
-            <span>MİKTAR</span>
-          </div>
-          ${order.items.map(it => `
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-              <span>${it.name} (Raf: ${it.raf})</span>
-              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${it.qty} Adet</span>
-            </div>
-          `).join('')}
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:#0f172a; margin-bottom:8px;">
-          <span>TOPLAM TUTAR:</span>
-          <span style="font-family:'JetBrains Mono', monospace;">${order.totalPrice}</span>
-        </div>
-        <div style="text-align:center; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:10px; color:#64748b; font-family:'JetBrains Mono', monospace;">
-          * * * TEŞEKKÜR EDERİZ * * *
-        </div>
-      `;
-    }
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.add('show');
-  }
-
-  function closeReceiptModal() {
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.remove('show');
-  }
-
-  function printReceiptPaper() {
-    window.print();
-  }
-
-  
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    closeFilterDrawer();
-  }
-
-  function resetAdvancedWarehouseFilter() {
-    document.getElementById('advFilterForm')?.reset();
-    const activeDot = document.getElementById('filterActiveDot');
-    if (activeDot) activeDot.style.display = 'none';
-    currentFilteredList = [...warehouseDatabase];
-    currentPage = 1;
-    
-  function toggleDropdown(btn) {
-    const dropdown = btn.closest('.actions-dropdown');
-    const menu = dropdown?.querySelector('.dropdown-menu');
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => {
-      if (m !== menu) m.classList.remove('show');
-    });
-    if (menu) menu.classList.toggle('show');
-  }
-
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-  });
-
-  function createCargoOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const trackingCode = `DHL-${Math.floor(100000000 + Math.random() * 900000000)}`;
-    copyToClipboard(`Kargo Takip Kodu Oluşturuldu: ${trackingCode} (${order.orderRef})`);
-  }
-
-  function toggleCancelOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    order.isCancelled = !order.isCancelled;
-    
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
-  }
-
-  function openReceiptModal(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const paper = document.getElementById('receiptPaper');
-    if (paper) {
-      paper.innerHTML = `
-        <div style="text-align:center; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:8px;">
-          <div style="font-weight:800; font-size:14px; color:#0f172a;">DAVYE DENTAL TOPTAN</div>
-          <div style="font-size:10.5px; color:#64748b;">Merkez Depo (MD) Sevk Fişi</div>
-          <div style="font-size:11px; font-family:'JetBrains Mono', monospace; font-weight:700; margin-top:3px; color:#2563eb;">${order.orderRef}</div>
-        </div>
-        <div style="font-size:11px; line-height:1.4; margin-bottom:8px;">
-          <div><strong>Cari:</strong> ${order.cariName}</div>
-          <div><strong>VKN:</strong> ${order.taxId} • <strong>Tel:</strong> ${order.phone}</div>
-          <div><strong>Tarih:</strong> ${order.date} ${order.time}</div>
-          <div><strong>Teslimat:</strong> ${order.delivery}</div>
-        </div>
-        <div style="border-top:1px dashed #cbd5e1; border-bottom:1px dashed #cbd5e1; padding:6px 0; margin-bottom:8px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; font-weight:700; color:#64748b; font-size:10px; margin-bottom:4px;">
-            <span>ÜRÜN / KALEM</span>
-            <span>MİKTAR</span>
-          </div>
-          ${order.items.map(it => `
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-              <span>${it.name} (Raf: ${it.raf})</span>
-              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${it.qty} Adet</span>
-            </div>
-          `).join('')}
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:#0f172a; margin-bottom:8px;">
-          <span>TOPLAM TUTAR:</span>
-          <span style="font-family:'JetBrains Mono', monospace;">${order.totalPrice}</span>
-        </div>
-        <div style="text-align:center; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:10px; color:#64748b; font-family:'JetBrains Mono', monospace;">
-          * * * TEŞEKKÜR EDERİZ * * *
-        </div>
-      `;
-    }
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.add('show');
-  }
-
-  function closeReceiptModal() {
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.remove('show');
-  }
-
-  function printReceiptPaper() {
-    window.print();
-  }
-
-  
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    closeFilterDrawer();
-  }
-
-  
-  function toggleDropdown(btn) {
-    const dropdown = btn.closest('.actions-dropdown');
-    const menu = dropdown?.querySelector('.dropdown-menu');
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => {
-      if (m !== menu) m.classList.remove('show');
-    });
-    if (menu) menu.classList.toggle('show');
-  }
-
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-  });
-
-  function createCargoOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const trackingCode = `DHL-${Math.floor(100000000 + Math.random() * 900000000)}`;
-    copyToClipboard(`Kargo Takip Kodu Oluşturuldu: ${trackingCode} (${order.orderRef})`);
-  }
-
-  function toggleCancelOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    order.isCancelled = !order.isCancelled;
-    
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
-  }
-
-  function openReceiptModal(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const paper = document.getElementById('receiptPaper');
-    if (paper) {
-      paper.innerHTML = `
-        <div style="text-align:center; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:8px;">
-          <div style="font-weight:800; font-size:14px; color:#0f172a;">DAVYE DENTAL TOPTAN</div>
-          <div style="font-size:10.5px; color:#64748b;">Merkez Depo (MD) Sevk Fişi</div>
-          <div style="font-size:11px; font-family:'JetBrains Mono', monospace; font-weight:700; margin-top:3px; color:#2563eb;">${order.orderRef}</div>
-        </div>
-        <div style="font-size:11px; line-height:1.4; margin-bottom:8px;">
-          <div><strong>Cari:</strong> ${order.cariName}</div>
-          <div><strong>VKN:</strong> ${order.taxId} • <strong>Tel:</strong> ${order.phone}</div>
-          <div><strong>Tarih:</strong> ${order.date} ${order.time}</div>
-          <div><strong>Teslimat:</strong> ${order.delivery}</div>
-        </div>
-        <div style="border-top:1px dashed #cbd5e1; border-bottom:1px dashed #cbd5e1; padding:6px 0; margin-bottom:8px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; font-weight:700; color:#64748b; font-size:10px; margin-bottom:4px;">
-            <span>ÜRÜN / KALEM</span>
-            <span>MİKTAR</span>
-          </div>
-          ${order.items.map(it => `
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-              <span>${it.name} (Raf: ${it.raf})</span>
-              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${it.qty} Adet</span>
-            </div>
-          `).join('')}
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:#0f172a; margin-bottom:8px;">
-          <span>TOPLAM TUTAR:</span>
-          <span style="font-family:'JetBrains Mono', monospace;">${order.totalPrice}</span>
-        </div>
-        <div style="text-align:center; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:10px; color:#64748b; font-family:'JetBrains Mono', monospace;">
-          * * * TEŞEKKÜR EDERİZ * * *
-        </div>
-      `;
-    }
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.add('show');
-  }
-
-  function closeReceiptModal() {
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.remove('show');
-  }
-
-  function printReceiptPaper() {
-    window.print();
-  }
-
-  
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-  }
-
-  function goToPage(pageNum) {
-    const totalPages = Math.ceil(currentFilteredList.length / pageSize) || 1;
-    if (pageNum < 1) pageNum = 1;
-    if (pageNum > totalPages) pageNum = totalPages;
-    currentPage = pageNum;
-    
-  function openFilterDrawer() {
-    const backdrop = document.getElementById('filterDrawerBackdrop');
-    const drawer = document.getElementById('filterDrawer');
-    const toggleBtn = document.getElementById('btnAdvToggle');
-    if (backdrop) backdrop.classList.add('show');
-    if (drawer) drawer.classList.add('show');
-    if (toggleBtn) toggleBtn.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeFilterDrawer() {
-    const backdrop = document.getElementById('filterDrawerBackdrop');
-    const drawer = document.getElementById('filterDrawer');
-    const toggleBtn = document.getElementById('btnAdvToggle');
-    if (backdrop) backdrop.classList.remove('show');
-    if (drawer) drawer.classList.remove('show');
-    if (toggleBtn) toggleBtn.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function applyAdvancedWarehouseFilter() {
-    const cariAciklama = (document.getElementById('advCariAciklama')?.value || '').toLowerCase().trim();
-    const cariKod = (document.getElementById('advCariKod')?.value || '').toLowerCase().trim();
-    const islemNo = (document.getElementById('advIslemNo')?.value || '').toLowerCase().trim();
-    const satisTemsilcisi = (document.getElementById('advSatisTemsilcisi')?.value || '').toLowerCase().trim();
-    const depoKodu = (document.getElementById('advDepoKodu')?.value || '').toLowerCase().trim();
-
-    currentFilteredList = warehouseDatabase.filter(order => {
-      if (cariAciklama && !order.cariName.toLowerCase().includes(cariAciklama)) return false;
-      if (cariKod && !order.cariCode.toLowerCase().includes(cariKod)) return false;
-      if (islemNo && !order.orderRef.toLowerCase().includes(islemNo)) return false;
-      if (satisTemsilcisi && !order.salesRep.toLowerCase().includes(satisTemsilcisi)) return false;
-      if (depoKodu && !order.depo.toLowerCase().includes(depoKodu)) return false;
-      return true;
-    });
-
-    const activeDot = document.getElementById('filterActiveDot');
-    const hasFilter = cariAciklama || cariKod || islemNo || satisTemsilcisi || depoKodu;
-    if (activeDot) activeDot.style.display = hasFilter ? 'block' : 'none';
-
-    currentPage = 1;
-    
-  function toggleDropdown(btn) {
-    const dropdown = btn.closest('.actions-dropdown');
-    const menu = dropdown?.querySelector('.dropdown-menu');
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => {
-      if (m !== menu) m.classList.remove('show');
-    });
-    if (menu) menu.classList.toggle('show');
-  }
-
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-  });
-
-  function createCargoOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const trackingCode = `DHL-${Math.floor(100000000 + Math.random() * 900000000)}`;
-    copyToClipboard(`Kargo Takip Kodu Oluşturuldu: ${trackingCode} (${order.orderRef})`);
-  }
-
-  function toggleCancelOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    order.isCancelled = !order.isCancelled;
-    
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
-  }
-
-  function openReceiptModal(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const paper = document.getElementById('receiptPaper');
-    if (paper) {
-      paper.innerHTML = `
-        <div style="text-align:center; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:8px;">
-          <div style="font-weight:800; font-size:14px; color:#0f172a;">DAVYE DENTAL TOPTAN</div>
-          <div style="font-size:10.5px; color:#64748b;">Merkez Depo (MD) Sevk Fişi</div>
-          <div style="font-size:11px; font-family:'JetBrains Mono', monospace; font-weight:700; margin-top:3px; color:#2563eb;">${order.orderRef}</div>
-        </div>
-        <div style="font-size:11px; line-height:1.4; margin-bottom:8px;">
-          <div><strong>Cari:</strong> ${order.cariName}</div>
-          <div><strong>VKN:</strong> ${order.taxId} • <strong>Tel:</strong> ${order.phone}</div>
-          <div><strong>Tarih:</strong> ${order.date} ${order.time}</div>
-          <div><strong>Teslimat:</strong> ${order.delivery}</div>
-        </div>
-        <div style="border-top:1px dashed #cbd5e1; border-bottom:1px dashed #cbd5e1; padding:6px 0; margin-bottom:8px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; font-weight:700; color:#64748b; font-size:10px; margin-bottom:4px;">
-            <span>ÜRÜN / KALEM</span>
-            <span>MİKTAR</span>
-          </div>
-          ${order.items.map(it => `
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-              <span>${it.name} (Raf: ${it.raf})</span>
-              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${it.qty} Adet</span>
-            </div>
-          `).join('')}
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:#0f172a; margin-bottom:8px;">
-          <span>TOPLAM TUTAR:</span>
-          <span style="font-family:'JetBrains Mono', monospace;">${order.totalPrice}</span>
-        </div>
-        <div style="text-align:center; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:10px; color:#64748b; font-family:'JetBrains Mono', monospace;">
-          * * * TEŞEKKÜR EDERİZ * * *
-        </div>
-      `;
-    }
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.add('show');
-  }
-
-  function closeReceiptModal() {
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.remove('show');
-  }
-
-  function printReceiptPaper() {
-    window.print();
-  }
-
-  
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    closeFilterDrawer();
-  }
-
-  function resetAdvancedWarehouseFilter() {
-    document.getElementById('advFilterForm')?.reset();
-    const activeDot = document.getElementById('filterActiveDot');
-    if (activeDot) activeDot.style.display = 'none';
-    currentFilteredList = [...warehouseDatabase];
-    currentPage = 1;
-    
-  function toggleDropdown(btn) {
-    const dropdown = btn.closest('.actions-dropdown');
-    const menu = dropdown?.querySelector('.dropdown-menu');
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => {
-      if (m !== menu) m.classList.remove('show');
-    });
-    if (menu) menu.classList.toggle('show');
-  }
-
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-  });
-
-  function createCargoOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const trackingCode = `DHL-${Math.floor(100000000 + Math.random() * 900000000)}`;
-    copyToClipboard(`Kargo Takip Kodu Oluşturuldu: ${trackingCode} (${order.orderRef})`);
-  }
-
-  function toggleCancelOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    order.isCancelled = !order.isCancelled;
-    
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
-  }
-
-  function openReceiptModal(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const paper = document.getElementById('receiptPaper');
-    if (paper) {
-      paper.innerHTML = `
-        <div style="text-align:center; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:8px;">
-          <div style="font-weight:800; font-size:14px; color:#0f172a;">DAVYE DENTAL TOPTAN</div>
-          <div style="font-size:10.5px; color:#64748b;">Merkez Depo (MD) Sevk Fişi</div>
-          <div style="font-size:11px; font-family:'JetBrains Mono', monospace; font-weight:700; margin-top:3px; color:#2563eb;">${order.orderRef}</div>
-        </div>
-        <div style="font-size:11px; line-height:1.4; margin-bottom:8px;">
-          <div><strong>Cari:</strong> ${order.cariName}</div>
-          <div><strong>VKN:</strong> ${order.taxId} • <strong>Tel:</strong> ${order.phone}</div>
-          <div><strong>Tarih:</strong> ${order.date} ${order.time}</div>
-          <div><strong>Teslimat:</strong> ${order.delivery}</div>
-        </div>
-        <div style="border-top:1px dashed #cbd5e1; border-bottom:1px dashed #cbd5e1; padding:6px 0; margin-bottom:8px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; font-weight:700; color:#64748b; font-size:10px; margin-bottom:4px;">
-            <span>ÜRÜN / KALEM</span>
-            <span>MİKTAR</span>
-          </div>
-          ${order.items.map(it => `
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-              <span>${it.name} (Raf: ${it.raf})</span>
-              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${it.qty} Adet</span>
-            </div>
-          `).join('')}
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:#0f172a; margin-bottom:8px;">
-          <span>TOPLAM TUTAR:</span>
-          <span style="font-family:'JetBrains Mono', monospace;">${order.totalPrice}</span>
-        </div>
-        <div style="text-align:center; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:10px; color:#64748b; font-family:'JetBrains Mono', monospace;">
-          * * * TEŞEKKÜR EDERİZ * * *
-        </div>
-      `;
-    }
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.add('show');
-  }
-
-  function closeReceiptModal() {
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.remove('show');
-  }
-
-  function printReceiptPaper() {
-    window.print();
-  }
-
-  
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    closeFilterDrawer();
-  }
-
-  
-  function toggleDropdown(btn) {
-    const dropdown = btn.closest('.actions-dropdown');
-    const menu = dropdown?.querySelector('.dropdown-menu');
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => {
-      if (m !== menu) m.classList.remove('show');
-    });
-    if (menu) menu.classList.toggle('show');
-  }
-
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-  });
-
-  function createCargoOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const trackingCode = `DHL-${Math.floor(100000000 + Math.random() * 900000000)}`;
-    copyToClipboard(`Kargo Takip Kodu Oluşturuldu: ${trackingCode} (${order.orderRef})`);
-  }
-
-  function toggleCancelOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    order.isCancelled = !order.isCancelled;
-    
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
-  }
-
-  function openReceiptModal(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const paper = document.getElementById('receiptPaper');
-    if (paper) {
-      paper.innerHTML = `
-        <div style="text-align:center; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:8px;">
-          <div style="font-weight:800; font-size:14px; color:#0f172a;">DAVYE DENTAL TOPTAN</div>
-          <div style="font-size:10.5px; color:#64748b;">Merkez Depo (MD) Sevk Fişi</div>
-          <div style="font-size:11px; font-family:'JetBrains Mono', monospace; font-weight:700; margin-top:3px; color:#2563eb;">${order.orderRef}</div>
-        </div>
-        <div style="font-size:11px; line-height:1.4; margin-bottom:8px;">
-          <div><strong>Cari:</strong> ${order.cariName}</div>
-          <div><strong>VKN:</strong> ${order.taxId} • <strong>Tel:</strong> ${order.phone}</div>
-          <div><strong>Tarih:</strong> ${order.date} ${order.time}</div>
-          <div><strong>Teslimat:</strong> ${order.delivery}</div>
-        </div>
-        <div style="border-top:1px dashed #cbd5e1; border-bottom:1px dashed #cbd5e1; padding:6px 0; margin-bottom:8px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; font-weight:700; color:#64748b; font-size:10px; margin-bottom:4px;">
-            <span>ÜRÜN / KALEM</span>
-            <span>MİKTAR</span>
-          </div>
-          ${order.items.map(it => `
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-              <span>${it.name} (Raf: ${it.raf})</span>
-              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${it.qty} Adet</span>
-            </div>
-          `).join('')}
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:#0f172a; margin-bottom:8px;">
-          <span>TOPLAM TUTAR:</span>
-          <span style="font-family:'JetBrains Mono', monospace;">${order.totalPrice}</span>
-        </div>
-        <div style="text-align:center; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:10px; color:#64748b; font-family:'JetBrains Mono', monospace;">
-          * * * TEŞEKKÜR EDERİZ * * *
-        </div>
-      `;
-    }
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.add('show');
-  }
-
-  function closeReceiptModal() {
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.remove('show');
-  }
-
-  function printReceiptPaper() {
-    window.print();
-  }
-
-  
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
+    renderPagination();
   }
 
   function renderPagination() {
     const totalItems = currentFilteredList.length;
     const totalPages = Math.ceil(totalItems / pageSize) || 1;
     if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
 
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = Math.min(startIndex + pageSize, totalItems);
@@ -7419,59 +6146,56 @@
 
     const infoEl = document.getElementById('paginationInfo');
     if (infoEl) {
-      if (totalItems === 0) {
-        infoEl.innerHTML = `<strong>0</strong> Sipariş`;
-      } else {
-        infoEl.innerHTML = `<strong>${startIndex + 1}-${endIndex}</strong> / ${totalItems} Sipariş`;
-      }
+      infoEl.innerHTML = totalItems > 0 
+        ? `<strong>${startIndex + 1}-${endIndex}</strong> / ${totalItems} Sipariş`
+        : `<strong>0-0</strong> / 0 Sipariş`;
     }
 
     const navEl = document.getElementById('paginationNav');
-    if (navEl) {
-      let navHtml = '';
+    if (!navEl) return;
 
-      navHtml += `<button type="button" class="btn-page" onclick="goToPage(1)" ${currentPage === 1 ? 'disabled' : ''} title="İlk Sayfa">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
-      </button>`;
+    let navHtml = `
+      <button type="button" class="btn-page ${currentPage === 1 ? 'disabled' : ''}" onclick="prevPage()" title="Önceki Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-left"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+    `;
 
-      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} title="Önceki Sayfa">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-      </button>`;
-
-      for (let p = 1; p <= totalPages; p++) {
-        if (totalPages <= 7 || p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) {
-          navHtml += `<button type="button" class="btn-page ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
-        } else if (p === currentPage - 2 || p === currentPage + 2) {
-          navHtml += `<span style="padding: 0 4px; color:#94a3b8;">...</span>`;
-        }
-      }
-
-      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} title="Sonraki Sayfa">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-      </button>`;
-
-      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''} title="Son Sayfa">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
-      </button>`;
-
-      navEl.innerHTML = navHtml;
+    for (let i = 1; i <= totalPages; i++) {
+      navHtml += `
+        <button type="button" class="btn-page ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>
+      `;
     }
 
-    refreshZebraStripes();
+    navHtml += `
+      <button type="button" class="btn-page ${currentPage === totalPages ? 'disabled' : ''}" onclick="nextPage()" title="Sonraki Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    `;
+
+    navEl.innerHTML = navHtml;
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
   }
 
-  function refreshZebraStripes() {
-    const visibleCards = Array.from(document.querySelectorAll('.order-card'));
-    visibleCards.forEach((card, idx) => {
-      const isOdd = (idx % 2 === 0);
-      const bg = isOdd ? '#ffffff' : '#f0f6fe';
-      card.style.backgroundColor = bg;
-      const header = card.querySelector('.card-header-bar');
-      if (header) header.style.backgroundColor = bg;
-    });
+  function goToPage(page) {
+    currentPage = page;
+    renderPagination();
   }
 
-  
+  function prevPage() {
+    if (currentPage > 1) {
+      currentPage--;
+      renderPagination();
+    }
+  }
+
+  function nextPage() {
+    const totalPages = Math.ceil(currentFilteredList.length / pageSize) || 1;
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderPagination();
+    }
+  }
+
   function openFilterDrawer() {
     const backdrop = document.getElementById('filterDrawerBackdrop');
     const drawer = document.getElementById('filterDrawer');
@@ -7513,285 +6237,19 @@
     if (activeDot) activeDot.style.display = hasFilter ? 'block' : 'none';
 
     currentPage = 1;
-    
-  function toggleDropdown(btn) {
-    const dropdown = btn.closest('.actions-dropdown');
-    const menu = dropdown?.querySelector('.dropdown-menu');
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => {
-      if (m !== menu) m.classList.remove('show');
-    });
-    if (menu) menu.classList.toggle('show');
-  }
-
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-  });
-
-  function createCargoOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const trackingCode = `DHL-${Math.floor(100000000 + Math.random() * 900000000)}`;
-    copyToClipboard(`Kargo Takip Kodu Oluşturuldu: ${trackingCode} (${order.orderRef})`);
-  }
-
-  function toggleCancelOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    order.isCancelled = !order.isCancelled;
-    
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
-  }
-
-  function openReceiptModal(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const paper = document.getElementById('receiptPaper');
-    if (paper) {
-      paper.innerHTML = `
-        <div style="text-align:center; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:8px;">
-          <div style="font-weight:800; font-size:14px; color:#0f172a;">DAVYE DENTAL TOPTAN</div>
-          <div style="font-size:10.5px; color:#64748b;">Merkez Depo (MD) Sevk Fişi</div>
-          <div style="font-size:11px; font-family:'JetBrains Mono', monospace; font-weight:700; margin-top:3px; color:#2563eb;">${order.orderRef}</div>
-        </div>
-        <div style="font-size:11px; line-height:1.4; margin-bottom:8px;">
-          <div><strong>Cari:</strong> ${order.cariName}</div>
-          <div><strong>VKN:</strong> ${order.taxId} • <strong>Tel:</strong> ${order.phone}</div>
-          <div><strong>Tarih:</strong> ${order.date} ${order.time}</div>
-          <div><strong>Teslimat:</strong> ${order.delivery}</div>
-        </div>
-        <div style="border-top:1px dashed #cbd5e1; border-bottom:1px dashed #cbd5e1; padding:6px 0; margin-bottom:8px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; font-weight:700; color:#64748b; font-size:10px; margin-bottom:4px;">
-            <span>ÜRÜN / KALEM</span>
-            <span>MİKTAR</span>
-          </div>
-          ${order.items.map(it => `
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-              <span>${it.name} (Raf: ${it.raf})</span>
-              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${it.qty} Adet</span>
-            </div>
-          `).join('')}
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:#0f172a; margin-bottom:8px;">
-          <span>TOPLAM TUTAR:</span>
-          <span style="font-family:'JetBrains Mono', monospace;">${order.totalPrice}</span>
-        </div>
-        <div style="text-align:center; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:10px; color:#64748b; font-family:'JetBrains Mono', monospace;">
-          * * * TEŞEKKÜR EDERİZ * * *
-        </div>
-      `;
-    }
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.add('show');
-  }
-
-  function closeReceiptModal() {
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.remove('show');
-  }
-
-  function printReceiptPaper() {
-    window.print();
-  }
-
-  
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
     closeFilterDrawer();
+    renderPagination();
   }
 
   function resetAdvancedWarehouseFilter() {
-    document.getElementById('advFilterForm')?.reset();
+    const form = document.getElementById('advFilterForm');
+    if (form) form.reset();
     const activeDot = document.getElementById('filterActiveDot');
     if (activeDot) activeDot.style.display = 'none';
-    currentFilteredList = [...warehouseDatabase];
-    currentPage = 1;
-    
-  function toggleDropdown(btn) {
-    const dropdown = btn.closest('.actions-dropdown');
-    const menu = dropdown?.querySelector('.dropdown-menu');
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => {
-      if (m !== menu) m.classList.remove('show');
-    });
-    if (menu) menu.classList.toggle('show');
-  }
-
-  document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
-  });
-
-  function createCargoOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const trackingCode = `DHL-${Math.floor(100000000 + Math.random() * 900000000)}`;
-    copyToClipboard(`Kargo Takip Kodu Oluşturuldu: ${trackingCode} (${order.orderRef})`);
-  }
-
-  function toggleCancelOrder(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    order.isCancelled = !order.isCancelled;
-    
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
-    copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
-  }
-
-  function openReceiptModal(orderId) {
-    const order = warehouseDatabase.find(o => o.id === orderId);
-    if (!order) return;
-    const paper = document.getElementById('receiptPaper');
-    if (paper) {
-      paper.innerHTML = `
-        <div style="text-align:center; border-bottom:1px dashed #cbd5e1; padding-bottom:8px; margin-bottom:8px;">
-          <div style="font-weight:800; font-size:14px; color:#0f172a;">DAVYE DENTAL TOPTAN</div>
-          <div style="font-size:10.5px; color:#64748b;">Merkez Depo (MD) Sevk Fişi</div>
-          <div style="font-size:11px; font-family:'JetBrains Mono', monospace; font-weight:700; margin-top:3px; color:#2563eb;">${order.orderRef}</div>
-        </div>
-        <div style="font-size:11px; line-height:1.4; margin-bottom:8px;">
-          <div><strong>Cari:</strong> ${order.cariName}</div>
-          <div><strong>VKN:</strong> ${order.taxId} • <strong>Tel:</strong> ${order.phone}</div>
-          <div><strong>Tarih:</strong> ${order.date} ${order.time}</div>
-          <div><strong>Teslimat:</strong> ${order.delivery}</div>
-        </div>
-        <div style="border-top:1px dashed #cbd5e1; border-bottom:1px dashed #cbd5e1; padding:6px 0; margin-bottom:8px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; font-weight:700; color:#64748b; font-size:10px; margin-bottom:4px;">
-            <span>ÜRÜN / KALEM</span>
-            <span>MİKTAR</span>
-          </div>
-          ${order.items.map(it => `
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-              <span>${it.name} (Raf: ${it.raf})</span>
-              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${it.qty} Adet</span>
-            </div>
-          `).join('')}
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:#0f172a; margin-bottom:8px;">
-          <span>TOPLAM TUTAR:</span>
-          <span style="font-family:'JetBrains Mono', monospace;">${order.totalPrice}</span>
-        </div>
-        <div style="text-align:center; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:10px; color:#64748b; font-family:'JetBrains Mono', monospace;">
-          * * * TEŞEKKÜR EDERİZ * * *
-        </div>
-      `;
-    }
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.add('show');
-  }
-
-  function closeReceiptModal() {
-    const modal = document.getElementById('orderReceiptModal');
-    if (modal) modal.classList.remove('show');
-  }
-
-  function printReceiptPaper() {
-    window.print();
-  }
-
-  
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
+    filterWarehouseCards();
     closeFilterDrawer();
   }
 
-  
   function toggleDropdown(btn) {
     const dropdown = btn.closest('.actions-dropdown');
     const menu = dropdown?.querySelector('.dropdown-menu');
@@ -7816,33 +6274,7 @@
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
     order.isCancelled = !order.isCancelled;
-    
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
-  }
-
-  updateFilterCounters();
-  renderPagination();
+    filterWarehouseCards();
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
@@ -7868,164 +6300,76 @@
             <span>ÜRÜN / KALEM</span>
             <span>MİKTAR</span>
           </div>
-          ${order.items.map(it => `
-            <div style="display:flex; justify-content:space-between; margin-bottom:2px;">
-              <span>${it.name} (Raf: ${it.raf})</span>
-              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${it.qty} Adet</span>
+          ${order.items.map(item => `
+            <div style="display:flex; justify-content:space-between; margin-bottom:3px;">
+              <span>${item.name} (${item.raf})</span>
+              <span style="font-family:'JetBrains Mono', monospace; font-weight:700;">${item.qty} Ad.</span>
             </div>
           `).join('')}
         </div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800; color:#0f172a; margin-bottom:8px;">
+        <div style="display:flex; justify-content:space-between; font-weight:800; font-size:12px; margin-top:6px;">
           <span>TOPLAM TUTAR:</span>
-          <span style="font-family:'JetBrains Mono', monospace;">${order.totalPrice}</span>
-        </div>
-        <div style="text-align:center; padding-top:6px; border-top:1px dashed #cbd5e1; font-size:10px; color:#64748b; font-family:'JetBrains Mono', monospace;">
-          * * * TEŞEKKÜR EDERİZ * * *
+          <span style="font-family:'JetBrains Mono', monospace; color:#2563eb;">${order.totalPrice}</span>
         </div>
       `;
     }
     const modal = document.getElementById('orderReceiptModal');
     if (modal) modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
   }
 
   function closeReceiptModal() {
     const modal = document.getElementById('orderReceiptModal');
     if (modal) modal.classList.remove('show');
+    document.body.style.overflow = '';
   }
 
   function printReceiptPaper() {
     window.print();
   }
 
-  
-  function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
-
-    const setVal = (id, val) => {
-      const el = document.getElementById(id);
-      if (el) el.innerText = val;
-    };
-
-    setVal('countAll', total);
-    setVal('countPickable', pickable);
-    setVal('countUnpickable', unpickable);
-    setVal('countCollected', collected);
-    setVal('countPartialInvoiced', partialInvoiced);
-    setVal('countMissingItems', missingItems);
-    setVal('countCancelled', cancelled);
-    setVal('totalCountBadge', `${total} Sipariş`);
+  function copyToClipboard(text) {
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      const toast = document.getElementById('toast');
+      if (toast) {
+        toast.innerText = `"${text}" panoya kopyalandı!`;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2000);
+      }
+    });
   }
 
-  updateFilterCounters();
-  renderPagination();
+  // Sayfa İlk Yüklenişinde Toplanabilir Sekmesine Göre Doğrudan Filtreli Başlat
+  document.addEventListener('DOMContentLoaded', () => {
+    filterWarehouseCards();
+  });
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    filterWarehouseCards();
+  }
+
+  // Global Kapsama Fonksiyonları Export Et
+  window.filterWarehouseCards = filterWarehouseCards;
+  window.setWarehouseFilter = setWarehouseFilter;
+  window.sortWarehouseOrders = sortWarehouseOrders;
+  window.changePageSize = changePageSize;
+  window.goToPage = goToPage;
+  window.prevPage = prevPage;
+  window.nextPage = nextPage;
+  window.toggleCardDirect = toggleCardDirect;
+  window.handleCardClick = handleCardClick;
+  window.openFilterDrawer = openFilterDrawer;
+  window.closeFilterDrawer = closeFilterDrawer;
+  window.applyAdvancedWarehouseFilter = applyAdvancedWarehouseFilter;
+  window.resetAdvancedWarehouseFilter = resetAdvancedWarehouseFilter;
+  window.toggleDropdown = toggleDropdown;
+  window.createCargoOrder = createCargoOrder;
+  window.toggleCancelOrder = toggleCancelOrder;
+  window.openReceiptModal = openReceiptModal;
+  window.closeReceiptModal = closeReceiptModal;
+  window.printReceiptPaper = printReceiptPaper;
+  window.copyToClipboard = copyToClipboard;
 </script>
-
-  <!-- ========================================================================= -->
-  <!-- KAPSAMLI / DETAYLI FİLTRELEME ÇEKMECESİ (SAĞDAN AÇILIR)                    -->
-  <!-- ========================================================================= -->
-  <div class="filter-drawer-backdrop" id="filterDrawerBackdrop" onclick="closeFilterDrawer()"></div>
-  <div class="filter-drawer" id="filterDrawer">
-    <div class="filter-drawer-header">
-      <div class="filter-drawer-title">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders-horizontal" class="lucide lucide-sliders-horizontal"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></svg>
-        <span>Detaylı Sipariş Filtreleme</span>
-      </div>
-      <button type="button" class="filter-drawer-close" onclick="closeFilterDrawer()" title="Kapat">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-      </button>
-    </div>
-
-    <form id="advFilterForm" class="filter-drawer-form" onsubmit="event.preventDefault(); applyAdvancedWarehouseFilter();">
-      <div class="filter-drawer-body">
-        <div class="adv-form-group">
-          <label class="adv-label">Cari Hesap Açıklaması</label>
-          <input type="text" id="advCariAciklama" class="adv-input" placeholder="Örn: TUĞÇE DEMİRCAN...">
-        </div>
-
-        <div class="adv-form-group">
-          <label class="adv-label">Cari Hesap Kodu</label>
-          <input type="text" id="advCariKod" class="adv-input" placeholder="Örn: 1-S-68181">
-        </div>
-
-        <div class="adv-form-group">
-          <label class="adv-label">Sipariş Ref. Numarası</label>
-          <input type="text" id="advIslemNo" class="adv-input" placeholder="Örn: 1-WS-2-68174">
-        </div>
-
-        <div class="adv-form-group">
-          <label class="adv-label">Satış Sorumlusu</label>
-          <input type="text" id="advSatisTemsilcisi" class="adv-input" placeholder="Örn: DENTAL PİYASA">
-        </div>
-
-        <div class="adv-form-group">
-          <label class="adv-label">Depo Kodu</label>
-          <input type="text" id="advDepoKodu" class="adv-input" placeholder="Örn: MD">
-        </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-          <div class="adv-form-group">
-            <label class="adv-label">Başlangıç Tarihi</label>
-            <input type="date" id="advBaslangicTarih" class="adv-input">
-          </div>
-
-          <div class="adv-form-group">
-            <label class="adv-label">Bitiş Tarihi</label>
-            <input type="date" id="advBitisTarih" class="adv-input">
-          </div>
-        </div>
-      </div>
-
-      <!-- Sabit Alt Butonlar -->
-      <div class="filter-drawer-footer">
-        <button type="submit" class="btn-adv-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="search" class="lucide lucide-search"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg> Filtreleri Uygula
-        </button>
-        <div style="display:flex; gap:6px;">
-          <button type="button" class="btn-adv-secondary" style="flex:1;" onclick="resetAdvancedWarehouseFilter()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="rotate-ccw" class="lucide lucide-rotate-ccw"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg> Temizle
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-
-
-<!-- ========================================================================= -->
-<!-- 9. SİPARİŞ & TERMİNAL BİLGİ FİŞİ (80mm) MODAL POPUP                       -->
-<!-- ========================================================================= -->
-<div class="modal-backdrop" id="orderReceiptModal" onclick="if(event.target===this) closeReceiptModal()">
-  <div class="modal-card" style="max-width: 440px;">
-    <div class="modal-header" style="background:#f8fafc;">
-      <span class="modal-title">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="receipt" aria-hidden="true" class="lucide lucide-receipt"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg>
-        Sipariş Bilgi &amp; Teslim Fişi
-      </span>
-      <button class="modal-close-btn" onclick="closeReceiptModal()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" aria-hidden="true" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-      </button>
-    </div>
-    
-    <div class="modal-body" style="padding: 16px 20px; background:#f1f5f9;">
-      <!-- Termal Fiş Önizleme Kağıdı (80mm POS Görünümü) -->
-      <div id="receiptPaper" class="thermal-receipt-paper" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:6px; padding:18px 16px; font-family:'Plus Jakarta Sans', -apple-system, sans-serif; color:#0f172a; box-shadow: 0 4px 12px rgba(0,0,0,0.06); font-size:12px; line-height:1.4;">
-        <!-- Dinamik Fiş İçeriği JavaScript ile doldurulur -->
-      </div>
-    </div>
-
-    <div class="modal-footer" style="background:#f8fafc; justify-content: space-between;">
-      <button type="button" class="btn-modal-action btn-modal-secondary" onclick="closeReceiptModal()">Kapat</button>
-      <button type="button" class="btn-modal-action btn-modal-primary" onclick="printReceiptPaper()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="printer" aria-hidden="true" class="lucide lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg> Fişi Yazdır (80mm)
-      </button>
-    </div>
-  </div>
-</div>
 
 </body>
 </html>
