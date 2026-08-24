@@ -1617,46 +1617,63 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 17px;
-      height: 17px;
-      border-radius: 3px;
-      background: #f8fafc;
-      color: #64748b;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      background: #f1f5f9;
+      color: #475569;
       border: 1px solid #cbd5e1;
       cursor: help;
       flex-shrink: 0;
+      box-sizing: border-box;
       transition: all 0.15s ease;
     }
 
     .delivery-type-icon:hover {
-      background: #f1f5f9;
+      background: #e2e8f0;
       color: #0f172a;
+      border-color: #94a3b8;
     }
 
     .delivery-type-icon svg,
-    .delivery-type-icon i {
+    .delivery-type-icon i,
+    .delivery-type-icon .lucide {
       width: 11px;
       height: 11px;
+      stroke-width: 2;
     }
 
-        .depo-badge {
+    .depo-badge {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 2px;
-      padding: 1px 5px;
+      height: 18px;
+      padding: 0 5px;
       background: #f1f5f9;
-      border: 1px solid #e2e8f0;
+      border: 1px solid #cbd5e1;
       border-radius: 4px;
       font-size: 9.5px;
       font-weight: 700;
-      color: #334155;
+      color: #475569;
       letter-spacing: 0.2px;
       white-space: nowrap;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      line-height: 1;
+      transition: all 0.15s ease;
     }
-    .depo-badge svg {
+    .depo-badge:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+      border-color: #94a3b8;
+    }
+    .depo-badge svg,
+    .depo-badge i,
+    .depo-badge .lucide {
       flex-shrink: 0;
       color: #475569;
+      width: 11px;
+      height: 11px;
     }
 
 
@@ -2798,33 +2815,43 @@
         height: 10px;
       }
       .delivery-type-icon {
-        width: 16px;
-        height: 16px;
+        width: 17px;
+        height: 17px;
+        border-radius: 4px;
+        background: #f1f5f9;
+        color: #475569;
+        border: 1px solid #cbd5e1;
       }
       .delivery-type-icon svg,
-      .delivery-type-icon i {
-        width: 10px;
-        height: 10px;
+      .delivery-type-icon i,
+      .delivery-type-icon .lucide {
+        width: 10.5px;
+        height: 10.5px;
       }
-          .depo-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
-      padding: 1px 5px;
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
-      border-radius: 4px;
-      font-size: 9.5px;
-      font-weight: 700;
-      color: #334155;
-      letter-spacing: 0.2px;
-      white-space: nowrap;
-    }
-    .depo-badge svg {
-      flex-shrink: 0;
-      color: #475569;
-    }
+      .depo-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 17px;
+        padding: 0 4.5px;
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        font-size: 9px;
+        font-weight: 700;
+        color: #475569;
+        letter-spacing: 0.2px;
+        white-space: nowrap;
+        line-height: 1;
+      }
+      .depo-badge svg,
+      .depo-badge i,
+      .depo-badge .lucide {
+        width: 10.5px;
+        height: 10.5px;
+        flex-shrink: 0;
+        color: #475569;
+      }
 
       .order-datetime {
         font-size: 9.5px;
