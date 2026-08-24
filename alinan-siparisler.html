@@ -5415,6 +5415,12 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders-horizontal" aria-hidden="true" class="lucide lucide-sliders-horizontal"><path d="M10 5H3"></path><path d="M12 19H3"></path><path d="M14 3v4"></path><path d="M16 17v4"></path><path d="M21 12h-9"></path><path d="M21 19h-5"></path><path d="M21 5h-7"></path><path d="M8 10v4"></path><path d="M8 12H3"></path></svg>
             <span class="filter-active-dot" id="filterActiveDot"></span>
           </button>
+
+          <!-- Pazaryerleri Gizli Checkbox Toggle -->
+          <label class="marketplace-toggle-label" title="Trendyol ve Hepsiburada siparişlerini listede gizle/göster">
+            <input type="checkbox" id="hideMarketplaceCheck" checked onchange="toggleMarketplaceFilter(this.checked)">
+            <span class="marketplace-toggle-text">Pazaryerleri Gizli</span>
+          </label>
         </div>
       </div>
 
@@ -5754,6 +5760,7 @@
       cariCode: "1-S-73447",
       taxId: "1111111111",
       salesRep: "HEPSİBURADA",
+      isMarketplace: true,
       desc: "HB-HBV00000213192",
       vade: "17 / 09 / 2026",
       depo: "MD",
@@ -5782,6 +5789,7 @@
       cariCode: "1-S-73444",
       taxId: "1111111111",
       salesRep: "HEPSİBURADA",
+      isMarketplace: true,
       desc: "HB-HBV00000341829",
       vade: "17 / 08 / 2026",
       depo: "MD",
@@ -5812,6 +5820,7 @@
       cariCode: "1-S-73443",
       taxId: "1111111111",
       salesRep: "HEPSİBURADA",
+      isMarketplace: true,
       desc: "HB-HBV0000010991",
       vade: "17 / 09 / 2026",
       depo: "MD",
@@ -5868,6 +5877,7 @@
       cariCode: "1-S-73446",
       taxId: "1111111111",
       salesRep: "HEPSİBURADA",
+      isMarketplace: true,
       desc: "HB-HBV00000300188",
       vade: "17 / 09 / 2026",
       depo: "MD",
@@ -6335,9 +6345,26 @@
     if (card) toggleCard(card);
   }
 
+  function toggleMarketplaceFilter(isChecked) {
+    filterWarehouseCards();
+  }
+
+  function isOrderMarketplace(o) {
+    if (o.isMarketplace) return true;
+    if (o.salesRep) {
+      const sr = o.salesRep.toUpperCase();
+      if (sr.includes('TRENDYOL') || sr.includes('HEPSİBURADA') || sr.includes('HEPSIBURADA')) return true;
+    }
+    return false;
+  }
+
   function filterWarehouseCards() {
     const query = (document.getElementById('orderSearch')?.value || '').toLowerCase().trim();
+    const hideMarketplace = document.getElementById('hideMarketplaceCheck')?.checked ?? true;
+
     currentFilteredList = warehouseDatabase.filter(o => {
+      if (hideMarketplace && isOrderMarketplace(o)) return false;
+
       const matchQuery = !query || 
         o.orderRef.toLowerCase().includes(query) ||
         o.cariName.toLowerCase().includes(query) ||
@@ -6371,13 +6398,19 @@
   }
 
   function updateFilterCounters() {
-    const total = warehouseDatabase.length;
-    const pickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
-    const unpickable = warehouseDatabase.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
-    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
-    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
-    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
-    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
+    const hideMarketplace = document.getElementById('hideMarketplaceCheck')?.checked ?? true;
+    const baseList = warehouseDatabase.filter(o => {
+      if (hideMarketplace && isOrderMarketplace(o)) return false;
+      return true;
+    });
+
+    const total = baseList.length;
+    const pickable = baseList.filter(o => o.pickedQty < o.qty && o.isPickable && !o.isCancelled).length;
+    const unpickable = baseList.filter(o => o.pickedQty < o.qty && (!o.isPickable || o.isCancelled)).length;
+    const collected = baseList.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = baseList.filter(o => o.isPartialInvoiced).length;
+    const missingItems = baseList.filter(o => o.hasShortage).length;
+    const cancelled = baseList.filter(o => o.isCancelled).length;
 
     const setVal = (id, val) => {
       const el = document.getElementById(id);
@@ -6664,6 +6697,7 @@
   }
 
   // Global Kapsama Fonksiyonları Export Et
+  window.toggleMarketplaceFilter = toggleMarketplaceFilter;
   window.filterWarehouseCards = filterWarehouseCards;
   window.setWarehouseFilter = setWarehouseFilter;
   window.sortWarehouseOrders = sortWarehouseOrders;
