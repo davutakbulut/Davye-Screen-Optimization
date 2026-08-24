@@ -4912,6 +4912,39 @@
       z-index: 2;
     }
 
+  
+    /* İptal Edilen Sipariş Kartı Stili (Kırmızı Çerçeve ve Sol Kırmızı İlerleme Çubuğu) */
+    .order-card.status-iptal {
+      border: 1.5px solid #fca5a5 !important;
+      box-shadow: 0 0 0 1px #fecaca inset, 0 1px 4px rgba(239, 68, 68, 0.08) !important;
+      background-color: #fffafb !important;
+    }
+    .order-card.status-iptal .card-header-bar {
+      background-color: #fef2f2 !important;
+      border-bottom: 1px solid #fee2e2 !important;
+    }
+    .order-card.status-iptal:hover {
+      border-color: #ef4444 !important;
+    }
+    .order-card.status-iptal .card-v-progress {
+      background: #fecaca !important;
+    }
+    .order-card.status-iptal .card-v-fill {
+      height: 100% !important;
+      background: #ef4444 !important;
+      border-top-left-radius: 9px;
+      border-bottom-left-radius: 9px;
+    }
+    .order-card.status-iptal .card-v-check {
+      background: #ef4444 !important;
+      box-shadow: 0 1px 4px rgba(239, 68, 68, 0.5) !important;
+      color: #ffffff !important;
+    }
+    .order-card.status-iptal .card-v-check svg,
+    .order-card.status-iptal .card-v-check i {
+      stroke-width: 3.5 !important;
+    }
+
   </style>
 </head>
 <body>
@@ -5983,7 +6016,10 @@
 
       let cardStatusClass = 'status-bekliyor';
       let checkIcon = 'package';
-      if (isCompleted) {
+      if (order.isCancelled) {
+        cardStatusClass = 'status-iptal';
+        checkIcon = 'x';
+      } else if (isCompleted) {
         cardStatusClass = 'status-tamamlandi';
         checkIcon = 'check';
       } else if (isPartial) {
@@ -6036,14 +6072,16 @@
                 <span class="header-price-amount">${order.totalPrice}</span>
                 <div class="status-pills-wrap" style="display:inline-flex; align-items:center; gap:4px;">
                   ${order.user ? `<span class="sales-rep-badge" style="background:#f8fafc; color:#475569; font-weight:600;" title="Kullanıcı: ${order.user}"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="user" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${order.user}</span>` : ''}
-                  ${order.pickedQty === 0 
-                    ? `<span class="badge-qty" style="background:#fffbeb; color:#b45309; border-color:#fde68a; font-family:'JetBrains Mono', monospace; font-size:10px;">${order.pickedQty} / ${order.qty} Toplandı</span>`
-                    : (order.pickedQty >= order.qty 
-                      ? `<span class="badge-qty" style="background:#ecfdf5; color:#059669; border-color:#a7f3d0; font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:700; display:inline-flex; align-items:center; gap:3px;"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" style="color:#059669;"></svg> ${order.pickedQty} / ${order.qty} Toplandı</span>`
-                      : `<span class="badge-qty" style="background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe; font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:600; display:inline-flex; align-items:center; gap:3px;"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" style="color:#1d4ed8;"></svg> ${order.pickedQty} / ${order.qty} Toplanıyor</span>`)
+                  ${order.isCancelled 
+                    ? `<span class="badge-qty" style="background:#fef2f2; color:#dc2626; border-color:#fecaca; font-weight:700; font-size:10px; display:inline-flex; align-items:center; gap:3px;"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" style="color:#dc2626;"></svg> İptal Edildi</span>`
+                    : (order.pickedQty === 0 
+                      ? `<span class="badge-qty" style="background:#fffbeb; color:#b45309; border-color:#fde68a; font-family:'JetBrains Mono', monospace; font-size:10px;">${order.pickedQty} / ${order.qty} Toplandı</span>`
+                      : (order.pickedQty >= order.qty 
+                        ? `<span class="badge-qty" style="background:#ecfdf5; color:#059669; border-color:#a7f3d0; font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:700; display:inline-flex; align-items:center; gap:3px;"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" style="color:#059669;"></svg> ${order.pickedQty} / ${order.qty} Toplandı</span>`
+                        : `<span class="badge-qty" style="background:#eff6ff; color:#1d4ed8; border-color:#bfdbfe; font-family:'JetBrains Mono', monospace; font-size:10px; font-weight:600; display:inline-flex; align-items:center; gap:3px;"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" style="color:#1d4ed8;"></svg> ${order.pickedQty} / ${order.qty} Toplanıyor</span>`))
                   }
-                  ${order.pickedQty < order.qty ? (
-                    (order.isPickable && !order.isCancelled)
+                  ${(!order.isCancelled && order.pickedQty < order.qty) ? (
+                    order.isPickable
                       ? `<span class="badge-qty" style="background:#ecfdf5; color:#059669; border-color:#a7f3d0; font-size:10px; font-weight:700; display:inline-flex; align-items:center; gap:3px;"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Toplanabilir</span>`
                       : `<span class="badge-qty" style="background:#fef2f2; color:#dc2626; border-color:#fecaca; font-size:10px; font-weight:700; display:inline-flex; align-items:center; gap:3px;"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="ban"><circle cx="12" cy="12" r="10"/><line x1="4.93" x2="19.07" y1="4.93" y2="19.07"/></svg> Toplanamaz</span>`
                   ) : ''}
