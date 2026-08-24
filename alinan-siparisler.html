@@ -5296,7 +5296,7 @@
 <div id="toast" class="toast-msg">Panoya kopyalandı!</div>
 
 <script>
-      const warehouseDatabase = [
+        const warehouseDatabase = [
     {
       id: "67659",
       orderRef: "1-WS-2-67659",
@@ -5316,7 +5316,7 @@
       cariCode: "EEE",
       taxId: "4448888888",
       salesRep: "ERDİ EKİZ",
-      desc: "zehra sever gerçek",
+      desc: "zehra sever gerçek (Toplama ve kontrol tamamlandı)",
       vade: "22 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -5344,7 +5344,7 @@
       cariCode: "000",
       taxId: "5490309762",
       salesRep: "ÜMİT VELİOĞLU",
-      desc: "ZEYNEP BORLUSOY",
+      desc: "ZEYNEP BORLUSOY (40 adet toplandı, devam ediyor)",
       vade: "22 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -5372,7 +5372,7 @@
       cariCode: "000",
       taxId: "5490309762",
       salesRep: "ÜMİT VELİOĞLU",
-      desc: "Klinik sarf takviyesi",
+      desc: "Klinik sarf takviyesi (Toplama bekliyor)",
       vade: "22 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -5400,7 +5400,7 @@
       cariCode: "2010423245",
       taxId: "2010423245",
       salesRep: "ERDİ EKİZ",
-      desc: "Uzmanlar Orto sevkıyat",
+      desc: "Uzmanlar Orto sevkıyat tamamlandı",
       vade: "24 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -5428,7 +5428,7 @@
       cariCode: "1-S-73447",
       taxId: "1111111111",
       salesRep: "HEPSİBURADA",
-      desc: "HB-HBV00000213192 (Toplanamaz)",
+      desc: "HB-HBV00000213192 (Raf stoğu tükendi - Hiç toplanamadı)",
       vade: "17 / 09 / 2026",
       depo: "MD",
       isPickable: false,
@@ -5477,20 +5477,20 @@
       isPayed: true,
       totalPrice: "450,00 ₺",
       qty: 50,
-      pickedQty: 25,
-      remainingQty: 25,
+      pickedQty: 15,
+      remainingQty: 35,
       delivery: "KARGO",
       phone: "-",
       cariCode: "1-S-73443",
       taxId: "1111111111",
       salesRep: "HEPSİBURADA",
-      desc: "HB-HBV000004LJ3R (Kısmi Toplandı)",
+      desc: "HB-HBV000004LJ3R (15 adet toplandı, kalan parti hasarlı - Toplama Durduruldu)",
       vade: "17 / 08 / 2026",
       depo: "MD",
-      isPickable: true,
+      isPickable: false,
       collector: "BERAT SEVDA",
       items: [
-        { code: "STR012", name: "Otoklav Sterilizasyon Rulosu", raf: "03B2", qty: 50, counted: 25, barcode: "8681665492810" }
+        { code: "STR012", name: "Otoklav Sterilizasyon Rulosu", raf: "03B2", qty: 50, counted: 15, barcode: "8681665492810" }
       ]
     },
     {
@@ -5561,20 +5561,20 @@
       isPayed: true,
       totalPrice: "130.369,00 ₺",
       qty: 29,
-      pickedQty: 28,
-      remainingQty: 1,
+      pickedQty: 10,
+      remainingQty: 19,
       delivery: "KARGO",
       phone: "905321734735",
       cariCode: "DACT",
       taxId: "307146233",
       salesRep: "MERKEZ DEPO",
-      desc: "Kalan 1 adet koli için tedarik bekleniyor",
+      desc: "10 adet motor toplandı, kalan 19 adet için tedarik bekleniyor (Toplanamaz)",
       vade: "24 / 08 / 2026",
       depo: "MD",
-      isPickable: true,
+      isPickable: false,
       collector: "FURKAN KARAKUŞ",
       items: [
-        { code: "IMPL90", name: "İmplant Cerrahi Motoru", raf: "07A1", qty: 29, counted: 28, barcode: "8681992918274" }
+        { code: "IMPL90", name: "İmplant Cerrahi Motoru", raf: "07A1", qty: 29, counted: 10, barcode: "8681992918274" }
       ]
     },
     {
@@ -5624,10 +5624,10 @@
       cariCode: "5378847120",
       taxId: "2781452410",
       salesRep: "MERKEZ DEPO",
-      desc: "Yeni sipariş toplama bekliyor",
+      desc: "Cari risk limit aşımı nedeniyle blokeli (Hiç toplanamaz)",
       vade: "24 / 08 / 2026",
       depo: "MD",
-      isPickable: true,
+      isPickable: false,
       collector: "YUSUF ÖZGÜR",
       items: [
         { code: "ORT991", name: "Ortodontik Braket Seti", raf: "06A3", qty: 12, counted: 0, barcode: "8681334928174" }
