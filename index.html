@@ -18014,6 +18014,24 @@
 
 
 
+  // =========================================================================
+  // 12'Lİ HIZLI VERİ SIRALAMA & FİLTRELEME & SAYFALAMA MOTORU
+  // =========================================================================
+  const currentSortStates = {};
+  let defaultOrderCardsCache = [];
+
+  function initDefaultOrderCards() {
+    if (defaultOrderCardsCache.length === 0) {
+      defaultOrderCardsCache = Array.from(document.querySelectorAll('.order-card'));
+    }
+  }
+
+  const SORT_SVG_ICONS = {
+    neutral: '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>',
+    down: '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>',
+    up: '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>'
+  };
+
   function updateChipIcon(chip, state) {
     const indicator = chip.querySelector('.sort-indicator');
     if (!indicator) return;
@@ -18195,6 +18213,388 @@
     }
   }
 
+  // =========================================================================
+  // FİLTRELEME & ARAMA & PAZARYERİ KONTROLÜ
+  // =========================================================================
+  function updateStatusTabCounts() {
+    const hideMarketplace = document.getElementById('hideMarketplaceCheck')?.checked ?? true;
+    const allCards = Array.from(document.querySelectorAll('.order-card')).filter(card => {
+      if (!hideMarketplace) return true;
+      const orderId = (card.querySelector('.order-number-badge')?.dataset?.orderId || card.dataset.orderId || '').trim();
+      const orderData = ordersDatabase[orderId] || {};
+      const isMarketplace = card.dataset.isMarketplace === 'true' || 
+                            card.getAttribute('data-order-group') === 'Pazaryeri Siparişleri' || 
+                            orderData.isMarketplace === true ||
+                            (orderData.salesRep && (orderData.salesRep.includes('TRENDYOL') || orderData.salesRep.includes('HEPSİBURADA')));
+      return !isMarketplace;
+    });
+    const totalCount = allCards.length;
+
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+      const countEl = tab.querySelector('.tab-count');
+      if (!countEl) return;
+
+      const onclickAttr = tab.getAttribute('onclick') || '';
+      const match = onclickAttr.match(/filterCards\('([^']+)'/);
+      if (!match) return;
+
+      const statusKey = match[1];
+      if (statusKey === 'all') {
+        countEl.textContent = totalCount;
+      } else {
+        const count = allCards.filter(card => {
+          const statuses = (card.dataset.status || '').split(' ');
+          return statuses.includes(statusKey) || card.classList.contains(statusKey);
+        }).length;
+        countEl.textContent = count;
+      }
+    });
+  }
+
+  function filterCards(statusClass, button) {
+    document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+    if (button) button.classList.add('active');
+
+    applyGlobalFilters();
+  }
+
+  function toggleMarketplaceFilter(checked) {
+    applyGlobalFilters();
+  }
+
+  function applyGlobalFilters() {
+    const searchInput = document.getElementById('orderSearch');
+    const query = (searchInput?.value || '').toLocaleLowerCase('tr-TR').trim();
+    
+    // Aktif durum sekmesini tespit et
+    const activeTab = document.querySelector('.filter-tab.active');
+    let activeStatus = 'all';
+    if (activeTab) {
+      const onclickAttr = activeTab.getAttribute('onclick') || '';
+      const match = onclickAttr.match(/filterCards\('([^']+)'/);
+      if (match) activeStatus = match[1];
+    }
+
+    // Pazaryerleri Gizli onay kutusu (Rule 2.N)
+    const hideMarketplace = document.getElementById('hideMarketplaceCheck')?.checked ?? true;
+
+    const allCards = Array.from(document.querySelectorAll('.order-card'));
+
+    currentlyMatchedCards = allCards.filter(card => {
+      const orderId = (card.querySelector('.order-number-badge')?.dataset?.orderId || card.dataset.orderId || '').trim();
+      const orderData = ordersDatabase[orderId] || {};
+
+      // 0. Pazaryeri Gizleme Kontrolü
+      if (hideMarketplace) {
+        const isMarketplace = card.dataset.isMarketplace === 'true' || 
+                              card.getAttribute('data-order-group') === 'Pazaryeri Siparişleri' || 
+                              orderData.isMarketplace === true ||
+                              (orderData.salesRep && (orderData.salesRep.includes('TRENDYOL') || orderData.salesRep.includes('HEPSİBURADA')));
+        if (isMarketplace) return false;
+      }
+
+      // 1. Durum Sekmesi Kontrolü
+      if (activeStatus !== 'all') {
+        const statuses = (card.dataset.status || '').split(' ');
+        const matchesStatus = statuses.includes(activeStatus) || card.classList.contains(activeStatus);
+        if (!matchesStatus) return false;
+      }
+
+      // 2. Arama Metni Kontrolü (Sipariş No, 3 haneli kod, Cari Adı, Açıklama, Ürün vb.)
+      if (query) {
+        const badgeSpan = (card.querySelector('.order-number-badge span')?.innerText || '').toLocaleLowerCase('tr-TR').trim();
+        const cardText = (card.innerText + ' ' + orderId + ' ' + badgeSpan).toLocaleLowerCase('tr-TR');
+        if (!cardText.includes(query)) return false;
+      }
+
+      return true;
+    });
+
+    currentPage = 1;
+    if (typeof renderPagination === 'function') {
+      renderPagination();
+    }
+    if (typeof updateStatusTabCounts === 'function') {
+      updateStatusTabCounts();
+    }
+  }
+
+  // Gelişmiş Filtre Çekmecesi (Drawer)
+  function openFilterDrawer() {
+    const backdrop = document.getElementById('filterDrawerBackdrop');
+    const drawer = document.getElementById('filterDrawer');
+    const toggleBtn = document.getElementById('btnAdvToggle');
+    if (backdrop) backdrop.classList.add('show');
+    if (drawer) drawer.classList.add('show');
+    if (toggleBtn) toggleBtn.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeFilterDrawer() {
+    const backdrop = document.getElementById('filterDrawerBackdrop');
+    const drawer = document.getElementById('filterDrawer');
+    const toggleBtn = document.getElementById('btnAdvToggle');
+    if (backdrop) backdrop.classList.remove('show');
+    if (drawer) drawer.classList.remove('show');
+    if (toggleBtn) toggleBtn.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function toggleAdvancedFilter() {
+    const drawer = document.getElementById('filterDrawer');
+    if (drawer && drawer.classList.contains('show')) {
+      closeFilterDrawer();
+    } else {
+      openFilterDrawer();
+    }
+  }
+
+  function applyAdvancedFilter() {
+    const cariAciklama = (document.getElementById('advCariAciklama')?.value || '').toLocaleLowerCase('tr-TR').trim();
+    const cariKod = (document.getElementById('advCariKod')?.value || '').toLocaleLowerCase('tr-TR').trim();
+    const saticiKodu = (document.getElementById('advSaticiKodu')?.value || '').toLocaleLowerCase('tr-TR').trim();
+    const satisTemsilcisi = (document.getElementById('advSatisTemsilcisi')?.value || '').toLocaleLowerCase('tr-TR').trim();
+    const islemNo = (document.getElementById('advIslemNo')?.value || '').toLocaleLowerCase('tr-TR').trim();
+    const urunKodu = (document.getElementById('advUrunKodu')?.value || '').toLocaleLowerCase('tr-TR').trim();
+    
+    const baslangicTarihVal = document.getElementById('advBaslangicTarih')?.value || '';
+    const bitisTarihVal = document.getElementById('advBitisTarih')?.value || '';
+    
+    const startDate = baslangicTarihVal ? new Date(baslangicTarihVal + 'T00:00:00').getTime() : null;
+    const endDate = bitisTarihVal ? new Date(bitisTarihVal + 'T23:59:59').getTime() : null;
+
+    const checkIade = document.getElementById('advCheckIade')?.checked || false;
+    const checkTamamlandi = document.getElementById('advCheckTamamlandi')?.checked || false;
+    const checkOnaylandi = document.getElementById('advCheckOnaylandi')?.checked || false;
+
+    const allCards = Array.from(document.querySelectorAll('.order-card'));
+
+    const filteredCards = allCards.filter(card => {
+      const orderId = card.querySelector('.order-number-badge')?.dataset?.orderId || card.dataset.orderId || '';
+      const orderData = ordersDatabase[orderId] || {};
+      const cardText = (card.innerText + ' ' + orderId).toLocaleLowerCase('tr-TR');
+
+      if (cariAciklama) {
+        const cariName = (orderData.cariName || '').toLocaleLowerCase('tr-TR');
+        if (!cardText.includes(cariAciklama) && !cariName.includes(cariAciklama)) return false;
+      }
+      if (cariKod) {
+        const taxId = (orderData.taxId || '').toLocaleLowerCase('tr-TR');
+        const gln = (orderData.gln || '').toLocaleLowerCase('tr-TR');
+        const uts = (orderData.uts || '').toLocaleLowerCase('tr-TR');
+        if (!cardText.includes(cariKod) && !taxId.includes(cariKod) && !gln.includes(cariKod) && !uts.includes(cariKod)) return false;
+      }
+      if (saticiKodu) {
+        const depo = (orderData.depo || '').toLocaleLowerCase('tr-TR');
+        if (!cardText.includes(saticiKodu) && !depo.includes(saticiKodu)) return false;
+      }
+      if (satisTemsilcisi) {
+        const rep = (orderData.salesRep || '').toLocaleLowerCase('tr-TR');
+        if (!cardText.includes(satisTemsilcisi) && !rep.includes(satisTemsilcisi)) return false;
+      }
+      if (islemNo) {
+        const badgeSpan = card.querySelector('.order-number-badge span')?.innerText.trim().toLocaleLowerCase('tr-TR') || '';
+        if (!orderId.toLocaleLowerCase('tr-TR').includes(islemNo) && !badgeSpan.includes(islemNo) && !cardText.includes(islemNo)) return false;
+      }
+      if (urunKodu) {
+        const items = orderData.items || [];
+        const hasItemMatch = items.some(it => (it.code || '').toLocaleLowerCase('tr-TR').includes(urunKodu) || (it.name || '').toLocaleLowerCase('tr-TR').includes(urunKodu));
+        if (!hasItemMatch && !cardText.includes(urunKodu)) return false;
+      }
+      if (startDate || endDate) {
+        const dateStr = card.querySelector('.order-datetime')?.innerText || orderData.date || '';
+        const orderTime = parseDateTime(dateStr);
+        if (orderTime > 0) {
+          if (startDate && orderTime < startDate) return false;
+          if (endDate && orderTime > endDate) return false;
+        }
+      }
+      if (checkIade) {
+        const isReturn = card.classList.contains('status-iade-bekliyor') || card.classList.contains('status-iade-onaylandi') || card.classList.contains('status-iade-edildi');
+        if (!isReturn) return false;
+      }
+      if (checkTamamlandi) {
+        const isCompleted = card.classList.contains('status-teslim-edildi') || card.classList.contains('status-faturalandi');
+        if (!isCompleted) return false;
+      }
+      if (checkOnaylandi) {
+        const isCancelledOrDraft = card.classList.contains('status-taslak') || card.classList.contains('status-iptal');
+        if (isCancelledOrDraft) return false;
+      }
+
+      return true;
+    });
+
+    currentlyMatchedCards = filteredCards;
+    currentPage = 1;
+    if (typeof renderPagination === 'function') {
+      renderPagination();
+    }
+    if (typeof updateStatusTabCounts === 'function') {
+      updateStatusTabCounts();
+    }
+
+    closeFilterDrawer();
+
+    const hasFilter = !!(cariAciklama || cariKod || saticiKodu || satisTemsilcisi || islemNo || urunKodu || baslangicTarihVal || bitisTarihVal || checkIade || checkTamamlandi || checkOnaylandi);
+    const dot = document.getElementById('filterActiveDot');
+    if (dot) dot.style.display = hasFilter ? 'block' : 'none';
+
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.innerText = `Filtreleme uygulandı: ${filteredCards.length} sipariş bulundu.`;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    }
+  }
+
+  function fetchAllOrders() {
+    resetAdvancedFilter();
+    closeFilterDrawer();
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.innerText = 'Tüm siparişler listelendi.';
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
+  }
+
+  function resetAdvancedFilter() {
+    document.getElementById('advFilterForm')?.reset();
+    const searchInput = document.getElementById('orderSearch');
+    if (searchInput) searchInput.value = '';
+    
+    const dot = document.getElementById('filterActiveDot');
+    if (dot) dot.style.display = 'none';
+
+    document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+    const firstTab = document.querySelector('.filter-tab');
+    if (firstTab) firstTab.classList.add('active');
+
+    currentlyMatchedCards = Array.from(document.querySelectorAll('.order-card'));
+    currentPage = 1;
+    if (typeof renderPagination === 'function') {
+      renderPagination();
+    }
+    if (typeof updateStatusTabCounts === 'function') {
+      updateStatusTabCounts();
+    }
+  }
+
+  // =========================================================================
+  // SAYFALAMA (PAGINATION) MOTORU
+  // =========================================================================
+  let currentPage = 1;
+  let pageSize = 10;
+  let currentlyMatchedCards = [];
+
+  function initPagination() {
+    const allCards = Array.from(document.querySelectorAll('.order-card'));
+    currentlyMatchedCards = allCards;
+    applyGlobalFilters();
+  }
+
+  function changePageSize(size) {
+    pageSize = parseInt(size, 10) || 10;
+    currentPage = 1;
+    renderPagination();
+  }
+
+  function goToPage(page) {
+    const totalPages = Math.max(1, Math.ceil(currentlyMatchedCards.length / pageSize));
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+    currentPage = page;
+    renderPagination();
+    
+    const toolbar = document.querySelector('.top-toolbar');
+    if (toolbar) {
+      toolbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function renderPagination() {
+    const totalItems = currentlyMatchedCards.length;
+    const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, totalItems);
+
+    const allCards = Array.from(document.querySelectorAll('.order-card'));
+    allCards.forEach(card => {
+      const matchIndex = currentlyMatchedCards.indexOf(card);
+      if (matchIndex !== -1 && matchIndex >= startIndex && matchIndex < endIndex) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    const infoEl = document.getElementById('paginationInfo');
+    if (infoEl) {
+      if (totalItems === 0) {
+        infoEl.innerHTML = `<strong>0</strong> Sipariş`;
+      } else {
+        infoEl.innerHTML = `<strong>${startIndex + 1}-${endIndex}</strong> / ${totalItems} Sipariş`;
+      }
+    }
+
+    const navEl = document.getElementById('paginationNav');
+    if (navEl) {
+      let navHtml = '';
+
+      navHtml += `<button type="button" class="btn-page" onclick="goToPage(1)" ${currentPage === 1 ? 'disabled' : ''} title="İlk Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
+      </button>`;
+
+      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} title="Önceki Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>`;
+
+      for (let p = 1; p <= totalPages; p++) {
+        if (totalPages <= 7 || p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) {
+          navHtml += `<button type="button" class="btn-page ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
+        } else if (p === currentPage - 2 || p === currentPage + 2) {
+          navHtml += `<span style="padding: 0 4px; color:#94a3b8;">...</span>`;
+        }
+      }
+
+      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} title="Sonraki Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>`;
+
+      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''} title="Son Sayfa">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
+      </button>`;
+
+      navEl.innerHTML = navHtml;
+    }
+
+    refreshZebraStripes();
+
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  }
+
+  function refreshZebraStripes() {
+    const visibleCards = Array.from(document.querySelectorAll('.order-card')).filter(card => card.style.display !== 'none');
+    visibleCards.forEach((card, idx) => {
+      const isOdd = (idx % 2 === 0);
+      const bg = isOdd ? '#ffffff' : '#f0f6fe';
+      card.style.backgroundColor = bg;
+      const header = card.querySelector('.card-header-bar');
+      if (header) header.style.backgroundColor = bg;
+    });
+  }
+
+  function updatePaginationWithMatchedCards(matchedCards) {
+    currentlyMatchedCards = matchedCards;
+    currentPage = 1;
+    renderPagination();
+  }
+
   // Yardımcı parse fonksiyonları
   function parseDateTime(str) {
     const match = str.match(/(\d{2})\s*[\/\-]\s*(\d{2})\s*[\/\-]\s*(\d{4})(?:\s+(\d{2}):(\d{2}))?/);
@@ -18210,7 +18610,28 @@
     return new Date(`${match[3]}-${match[2]}-${match[1]}`).getTime();
   }
 
-  
+  function parsePrice(str) {
+    const clean = str.replace(/[^\d,]/g, '').replace(',', '.');
+    return parseFloat(clean) || 0;
+  }
+
+  // Event Listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    initPagination();
+    const searchInput = document.getElementById('orderSearch');
+    if (searchInput) {
+      searchInput.addEventListener('input', applyGlobalFilters);
+    }
+  });
+
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initPagination();
+    const searchInput = document.getElementById('orderSearch');
+    if (searchInput) {
+      searchInput.addEventListener('input', applyGlobalFilters);
+    }
+  }
+
   // =========================================================================
   // 1 Saniyelik Veritabanı Loader & WeakSet Client-Side Cache Mekanizması
   // =========================================================================
@@ -19150,146 +19571,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   </script>
 
-<script>
 
-  
-  // =========================================================================
-  // SAYFALAMA (PAGINATION) MOTORU
-  // =========================================================================
-  var currentPage = 1;
-  var pageSize = 10;
-  var currentlyMatchedCards = [];
-
-  function initPagination() {
-    if (typeof applyGlobalFilters === 'function') {
-      applyGlobalFilters();
-    } else {
-      const hideMarketplace = document.getElementById('hideMarketplaceCheck')?.checked ?? true;
-      const allCards = Array.from(document.querySelectorAll('.order-card'));
-      currentlyMatchedCards = allCards.filter(card => {
-        if (hideMarketplace && card.dataset.isMarketplace === 'true') return false;
-        return true;
-      });
-      renderPagination();
-      if (typeof updateStatusTabCounts === 'function') updateStatusTabCounts();
-    }
-  }
-
-  function changePageSize(size) {
-    pageSize = parseInt(size, 10) || 25;
-    currentPage = 1;
-    renderPagination();
-  }
-
-  function goToPage(page) {
-    const totalPages = Math.max(1, Math.ceil(currentlyMatchedCards.length / pageSize));
-    if (page < 1) page = 1;
-    if (page > totalPages) page = totalPages;
-    currentPage = page;
-    renderPagination();
-    
-    // Sayfanın başına yumuşak kaydır
-    const toolbar = document.querySelector('.top-toolbar');
-    if (toolbar) {
-      toolbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-
-  function renderPagination() {
-    const totalItems = currentlyMatchedCards.length;
-    const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
-    if (currentPage > totalPages) currentPage = totalPages;
-
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = Math.min(startIndex + pageSize, totalItems);
-
-    // 0. DOM Sırasını currentlyMatchedCards ile tam senkronize et
-    const paginationBar = document.getElementById('paginationBar');
-    if (paginationBar && paginationBar.parentNode) {
-      currentlyMatchedCards.forEach(card => {
-        paginationBar.parentNode.insertBefore(card, paginationBar);
-      });
-    }
-
-    // 1. Tüm kartların görünürlüğünü güncelle
-    const allCards = Array.from(document.querySelectorAll('.order-card'));
-    allCards.forEach(card => {
-      const matchIndex = currentlyMatchedCards.indexOf(card);
-      if (matchIndex !== -1 && matchIndex >= startIndex && matchIndex < endIndex) {
-        card.style.display = 'flex';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-
-    // 2. Bilgi Metnini Güncelle
-    const infoEl = document.getElementById('paginationInfo');
-    if (infoEl) {
-      if (totalItems === 0) {
-        infoEl.innerHTML = `<strong>0</strong> Sipariş`;
-      } else {
-        infoEl.innerHTML = `<strong>${startIndex + 1}-${endIndex}</strong> / ${totalItems} Sipariş`;
-      }
-    }
-
-    // 3. Navigasyon Butonlarını Oluştur
-    const navEl = document.getElementById('paginationNav');
-    if (navEl) {
-      let navHtml = '';
-
-      // « İlk Sayfa Butonu
-      navHtml += `<button type="button" class="btn-page" onclick="goToPage(1)" ${currentPage === 1 ? 'disabled' : ''} title="İlk Sayfa">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
-      </button>`;
-
-      // ‹ Önceki Sayfa Butonu
-      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} title="Önceki Sayfa">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-      </button>`;
-
-      // Sayfa Numaraları
-      for (let p = 1; p <= totalPages; p++) {
-        if (totalPages <= 7 || p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) {
-          navHtml += `<button type="button" class="btn-page ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})">${p}</button>`;
-        } else if (p === currentPage - 2 || p === currentPage + 2) {
-          navHtml += `<span style="padding: 0 4px; color:#94a3b8;">...</span>`;
-        }
-      }
-
-      // Sonraki Sayfa › Butonu
-      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} title="Sonraki Sayfa">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-      </button>`;
-
-      // Son Sayfa » Butonu
-      navHtml += `<button type="button" class="btn-page" onclick="goToPage(${totalPages})" ${currentPage === totalPages ? 'disabled' : ''} title="Son Sayfa">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></svg>
-      </button>`;
-
-      navEl.innerHTML = navHtml;
-    }
-
-    if (window.refreshZebraStripes) {
-      refreshZebraStripes();
-    }
-
-    if (window.lucide) {
-      lucide.createIcons();
-    }
-  }
-
-  function updatePaginationWithMatchedCards(matchedCards) {
-    currentlyMatchedCards = matchedCards;
-    currentPage = 1;
-    renderPagination();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener("DOMContentLoaded", initPagination);
-  } else {
-    initPagination();
-  }
-</script>
 
 <!-- Müşteri Detay Modalı -->
 <div class="modal-backdrop" id="customerDetailModal" onclick="if(event.target===this) closeModal()">
