@@ -5359,7 +5359,7 @@
       faturaRef: "1-WS-7-124136",
       date: "19 / 08 / 2026",
       time: "12:35:16",
-      user: "Berat Sevda",
+      user: "",
       cariName: "ÜMİT VELİOĞLU",
       paymentAmount: "34,00 ₺",
       isPayed: true,
@@ -5415,7 +5415,7 @@
       faturaRef: "1-WS-7-124104",
       date: "18 / 08 / 2026",
       time: "00:37:26",
-      user: "Berat Sevda",
+      user: "",
       cariName: "sadan mete",
       paymentAmount: "561,00 ₺",
       isPayed: false,
@@ -5527,7 +5527,7 @@
       faturaRef: "1-WS-7-124103",
       date: "17 / 08 / 2026",
       time: "17:57:22",
-      user: "Berat Sevda",
+      user: "",
       cariName: "Abdullah Özdemir",
       paymentAmount: "88,00 ₺",
       isPayed: true,
@@ -5611,7 +5611,7 @@
       faturaRef: "1-WS-7-124074",
       date: "17 / 08 / 2026",
       time: "17:05:34",
-      user: "Yusuf Özgür",
+      user: "",
       cariName: "SERKAN DEMİR - DEMİR DENTAL",
       paymentAmount: "1.650,00 ₺",
       isPayed: true,
@@ -5698,7 +5698,7 @@
                 </div>
               </div>
               <div class="row-right">
-                <span class="sales-rep-badge" style="background:#f8fafc; color:#64748b;" title="Kullanıcı"><i data-lucide="user" style="width:10px;height:10px;"></i> ${order.user}</span>
+                ${order.user ? `<span class="sales-rep-badge" style="background:#f8fafc; color:#64748b;" title="Kullanıcı: ${order.user}"><i data-lucide="user" style="width:10px;height:10px;"></i> ${order.user}</span>` : ''}
                 <span class="delivery-type-icon" title="Teslimat: ${order.delivery}">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
                 </span>
