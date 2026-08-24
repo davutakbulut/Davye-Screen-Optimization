@@ -5896,7 +5896,6 @@
                 </div>
               </div>
               <div class="row-right">
-                ${order.user ? `<span class="sales-rep-badge" style="background:#f8fafc; color:#64748b;" title="Kullanıcı: ${order.user}"><i data-lucide="user" style="width:10px;height:10px;"></i> ${order.user}</span>` : ''}
                 <span class="delivery-type-icon" title="Teslimat: ${order.delivery}">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
                 </span>
@@ -5922,6 +5921,7 @@
               <div class="row-left">
                 <span class="header-price-amount">${order.totalPrice}</span>
                 <div class="status-pills-wrap" style="display:inline-flex; align-items:center; gap:4px;">
+                  ${order.user ? `<span class="sales-rep-badge" style="background:#f8fafc; color:#475569; font-weight:600;" title="Kullanıcı: ${order.user}"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="user" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${order.user}</span>` : ''}
                   ${order.pickedQty === 0 
                     ? `<span class="badge-qty" style="background:#fffbeb; color:#b45309; border-color:#fde68a; font-family:'JetBrains Mono', monospace; font-size:10px;">${order.pickedQty} / ${order.qty} Toplandı</span>`
                     : (order.pickedQty >= order.qty 
