@@ -6137,6 +6137,10 @@
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="receipt" class="lucide lucide-receipt"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg>
                       <span>Fiş Yazdır</span>
                     </button>
+                    <button type="button" class="dropdown-item" onclick="openNoteModal('${order.id}')">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-square" class="lucide lucide-message-square"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg>
+                      <span>Not Ekle</span>
+                    </button>
                     <div class="dropdown-divider"></div>
                     <button type="button" class="dropdown-item" onclick="toggleCancelOrder('${order.id}')">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${order.isCancelled ? '#059669' : '#dc2626'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="${order.isCancelled ? 'check-circle' : 'x-circle'}" class="lucide"><circle cx="12" cy="12" r="10"/><path d="${order.isCancelled ? 'm9 12 2 2 4-4' : 'm15 9-6 6M9 9l6 6'}"/></svg>
@@ -6176,6 +6180,10 @@
                     <button type="button" class="dropdown-item" onclick="openReceiptModal('${order.id}')">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="receipt" class="lucide lucide-receipt"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg>
                       <span>Fiş Yazdır</span>
+                    </button>
+                    <button type="button" class="dropdown-item" onclick="openNoteModal('${order.id}')">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-square" class="lucide lucide-message-square"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg>
+                      <span>Not Ekle</span>
                     </button>
                     <div class="dropdown-divider"></div>
                     <button type="button" class="dropdown-item" onclick="toggleCancelOrder('${order.id}')">
@@ -6646,6 +6654,41 @@
     copyToClipboard(order.isCancelled ? `${order.orderRef} siparişi iptal edildi.` : `${order.orderRef} siparişinin iptali kaldırıldı.`);
   }
 
+    let currentNoteOrderId = null;
+
+  function openNoteModal(orderId) {
+    currentNoteOrderId = orderId;
+    const order = warehouseDatabase.find(o => o.id === orderId);
+    const modal = document.getElementById('orderNoteModal');
+    const input = document.getElementById('modalNoteInput');
+    const title = document.getElementById('modalNoteTitle');
+
+    if (title && order) {
+      title.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-square"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg> Siparişe Not Ekle (#${order.orderRef})`;
+    }
+    if (input) {
+      input.value = (order && order.note) ? order.note : '';
+    }
+    if (modal) {
+      modal.classList.add('active');
+      setTimeout(() => { if (input) input.focus(); }, 100);
+    }
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function saveOrderNote() {
+    if (!currentNoteOrderId) return;
+    const order = warehouseDatabase.find(o => o.id === currentNoteOrderId);
+    const input = document.getElementById('modalNoteInput');
+    if (order && input) {
+      const noteVal = input.value.trim();
+      order.note = noteVal ? noteVal : null;
+      renderPagination();
+      closeModal();
+      showToast(noteVal ? 'Sipariş notu başarıyla kaydedildi.' : 'Sipariş notu silindi.');
+    }
+  }
+
   function openReceiptModal(orderId) {
     const order = warehouseDatabase.find(o => o.id === orderId);
     if (!order) return;
@@ -6735,6 +6778,8 @@
   window.toggleDropdown = toggleDropdown;
   window.createCargoOrder = createCargoOrder;
   window.toggleCancelOrder = toggleCancelOrder;
+  window.openNoteModal = openNoteModal;
+  window.saveOrderNote = saveOrderNote;
   window.openReceiptModal = openReceiptModal;
   window.closeReceiptModal = closeReceiptModal;
   window.printReceiptPaper = printReceiptPaper;
