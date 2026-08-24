@@ -4800,6 +4800,79 @@
       }
     }
 
+  
+    /* ========================================================================= */
+    /* 1 SANİYELİK VERİTABANI YÜKLEME SİMÜLASYONU & LOADER                       */
+    /* ========================================================================= */
+    .card-loading-overlay {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      padding: 32px 20px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      border-radius: 0 0 9px 9px;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    .order-card.expanded.loading .card-loading-overlay {
+      display: flex !important;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .order-card.expanded.loading .card-body-grid {
+      display: none !important;
+    }
+
+    .card-loading-spinner-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 36px;
+      height: 36px;
+    }
+
+    .card-loading-spinner {
+      width: 30px;
+      height: 30px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #2563eb;
+      border-right-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .card-loading-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      text-align: center;
+    }
+
+    .card-loading-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-loading-subtitle {
+      font-size: 11px;
+      font-weight: 500;
+      color: #64748b;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
   </style>
 </head>
 <body>
@@ -6109,13 +6182,72 @@
     if (window.lucide && lucide.createIcons) lucide.createIcons();
   }
 
+  const loadedCardsCache = new WeakSet();
+  const cardLoaderTimers = new WeakMap();
+
+  function toggleCard(card) {
+    if (!card) return;
+
+    // Eğer zaten açıksa: Kapat (loading varsa iptal et)
+    if (card.classList.contains('expanded')) {
+      if (card.classList.contains('loading')) {
+        const timer = cardLoaderTimers.get(card);
+        if (timer) clearTimeout(timer);
+        card.classList.remove('loading');
+      }
+      card.classList.remove('expanded');
+      return;
+    }
+
+    // Eğer daha önce bu oturumda yüklendiyse (önbellekte varsa): 0ms anında aç
+    if (loadedCardsCache.has(card)) {
+      card.classList.add('expanded');
+      return;
+    }
+
+    // İlk defa açılıyorsa: Loader overlay ekle ve 1 saniye (1000ms) simülasyon çalıştır
+    let overlay = card.querySelector('.card-loading-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'card-loading-overlay';
+      overlay.innerHTML = `
+        <div class="card-loading-spinner-wrap">
+          <div class="card-loading-spinner"></div>
+        </div>
+        <div class="card-loading-meta">
+          <span class="card-loading-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="database"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg> Canlı WMS & ERP Veritabanı Sorgulanıyor...
+          </span>
+          <span class="card-loading-subtitle">Cari detayları, raf stokları ve kalem durumları çekiliyor (1 sn)</span>
+        </div>
+      `;
+      const grid = card.querySelector('.card-body-grid');
+      if (grid) {
+        card.insertBefore(overlay, grid);
+      } else {
+        card.appendChild(overlay);
+      }
+      if (window.lucide && lucide.createIcons) lucide.createIcons();
+    }
+
+    card.classList.add('expanded', 'loading');
+
+    const timer = setTimeout(() => {
+      card.classList.remove('loading');
+      loadedCardsCache.add(card);
+      cardLoaderTimers.delete(card);
+    }, 1000); // 1 Saniye (1000ms)
+
+    cardLoaderTimers.set(card, timer);
+  }
+
   function toggleCardDirect(btn, e) {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
     const card = btn.closest('.order-card');
-    if (card) card.classList.toggle('expanded');
+    if (card) toggleCard(card);
   }
 
   function handleCardClick(e, headerEl) {
@@ -6123,7 +6255,7 @@
       return;
     }
     const card = headerEl.closest('.order-card');
-    if (card) card.classList.toggle('expanded');
+    if (card) toggleCard(card);
   }
 
   function filterWarehouseCards() {
@@ -6462,6 +6594,7 @@
   window.goToPage = goToPage;
   window.prevPage = prevPage;
   window.nextPage = nextPage;
+  window.toggleCard = toggleCard;
   window.toggleCardDirect = toggleCardDirect;
   window.handleCardClick = handleCardClick;
   window.openFilterDrawer = openFilterDrawer;
