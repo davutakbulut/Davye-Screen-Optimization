@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 24 / 08 / 2026 03:38  
+> **Son Sistem Güncellemesi:** 24 / 08 / 2026 03:40  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -11,7 +11,7 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
 1. **Daha Önce Yapıldı mı / Nasıl Tasarlandı?**
    * `documantations/index.html` ve hafıza/kurallar taranır.
    * Eğer o alanla ilgili mevcut bir kural, tasarım kararı veya bileşen varsa:
-     - **Mevcut Yapıyı Koru:** Daha önce alınmış kararları (örn: flat tasarım, `#ffffff / #f0f6fe` zebra striping, mobilde 3 satır, 3 haneli sipariş no, 4s cache, 33ch cari limiti vb.) bozmadan geliştirme yapılır.
+     - **Mevcut Yapıyı Koru:** Daha önce alınmış kararları (örn: flat tasarım, `#ffffff / #f0f6fe` zebra striping, mobilde 4 satır, 3 haneli sipariş no, 4s cache, 33ch cari limiti vb.) bozmadan geliştirme yapılır.
      - **Dökümantasyonu Güncelle:** İlgili alan `documantations/index.html` içinde bulunarak yeni mantık ve güncel kod ile revize edilir.
    * Eğer yepyeni bir özellikse:
      - **Yeni Başlık Aç:** `documantations/index.html` sayfasına uygun kategori altında yeni bir bölüm (Section) eklenir.
@@ -23,16 +23,23 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
 
 ## 🏛️ 2. MİMARİ VE TASARIM PRENSİPLERİ (CORE DESIGN PRINCIPLES)
 
-### A. Masaüstü & Mobil Bütünlüğü
+### A. Masaüstü & Mobil Bütünlüğü ve Kapalı Kart Açıklama Satırı
 1. **Masaüstü (Desktop):**
    * Üst header (`.davye-top-header`) ve sol sidebar menü (`.app-sidebar`) ekran kaydırıldığında **daima sabit (fixed)** kalır; sağdaki sipariş listesi (`.app-main-content`) bağımsız olarak kayar.
-   * Kapalı kartlar tek satırlık başlıkla gelir ve Cari Adı görünür.
-   * Tıklandığında başlıktaki Cari Adı gizlenir ve 4 sütunlu `card-body-grid` açılır (`1.3fr 1.1fr 1.3fr 0.9fr`).
-   * Başlıktaki ok 180° döner.
+   * Kapalı kartlarda üst satırda Sipariş No, Cari Adı, Satış Kanalı, Tarih ve Durum Pill'leri yer alırken; **kart kapalıyken altında 2. bir satır olarak sipariş açıklaması (`.card-header-row.row-desc`)** gösterilir.
+   * Kart tıklandığında/açıldığında (`.order-card.expanded`):
+     - Başlıktaki Cari Adı ve **açıklama satırı kaybolur / gizlenir** (`display: none !important;`).
+     - Açıklama kendi alanında (Gövde 3. sütun Açıklama & Entegrasyon kutusunda) görünür.
+     - 4 sütunlu `card-body-grid` açılır (`1.3fr 1.1fr 1.3fr 0.9fr`).
+     - Başlıktaki ok 180° döner.
 2. **Mobil (Mobile `@media (max-width: 640px)`):**
    * Üst header (`.davye-top-header`) mobilde de sayfa kaydırıldığında **en üstte sabit (fixed)** kalır.
-   * 3 satırlı başlık yapısı (`.row-1`, `.row-2`, `.row-3`) ve buton hiyerarşisi **asla bozulamaz**.
-   * Dokunulduğunda dikey tek sütunlu gövde açılır.
+   * Kart kapalıyken **4 satırlı hiyerarşik yapı** uygulanır:
+     - **1. Satır (`.row-1`):** Checkbox + Sipariş No + Teslimat Türü + Depo + Tarih
+     - **2. Satır (`.row-2`):** Cari / Müşteri Ünvanı + Satış Kanalı
+     - **3. Satır (`.row-desc`):** Sipariş Açıklaması (`Açıklama: ...`)
+     - **4. Satır (`.row-3`):** Tutar + Durum Rozetleri + [Fotoğraf + İşlemler + Aç/Kapat Oku]
+   * Kart açıldığında mobilde de 3. satırdaki açıklama gizlenir (`display: none !important;`) ve dikey tek sütunlu gövde içinde kendi alanında görünür.
    * Sayfa genelinde yatay taşma (`overflow-x`) kesinlikle engellenmelidir (`overflow-x: clip`).
 
 ### B. Kart İçi Yükleme (Database Loader) & Cache
