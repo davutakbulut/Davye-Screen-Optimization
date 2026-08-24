@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme, Tasarım ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 24 / 08 / 2026 21:00  
+> **Son Sistem Güncellemesi:** 24 / 08 / 2026 23:00  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme, UI/UX tasarımı veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -178,9 +178,18 @@ Her kartın işlemler menüsünde şu 7 aksiyon eksiksiz yer alır:
 
 ### U. Depo Alınan Siparişler & WMS Akıllı Raf Toplama Sistemi (`alinan-siparisler.html` & `siparis-toplama.html`)
 1. **Alınan Siparişler Sayfası (`alinan-siparisler.html`):**
-   * Sol sidebar **Depo İşlemleri ➔ Alınan Siparişler** altından erişilir.
-   * Gelen toptan siparişleri Ref No (`1-WS-2-68174`), Cari Ünvan, Ödeme Durumu (`IsPayed`), Toplanan/Kalan Adet, Vade ve Depo (`MD`) bilgileriyle zebra striping kart yapısında listeler.
-   * Kart üstündeki **"Siparişi Topla ➔"** butonu ile sipariş detayları doğrudan Akıllı Toplama Ekranına (`siparis-toplama.html?orderId=...`) aktarılır.
+   * **Erişim & Yerleşim:** Sol sidebar **Depo İşlemleri ➔ Alınan Siparişler** altından erişilir. Masaüstünde sabit header/sidebar ve bağımsız kayan liste; mobilde 4 satırlı hiyerarşik yapı uygulanır.
+   * **Zebra Striping:** Tekil satırlar `#ffffff` (Saf Beyaz), çift satırlar `#f0f6fe` (Pastel Soft Mavi) ve aktif `#bfdbfe` çerçeve deseniyle listelenir.
+   * **Kapalı Kartta Açıklama & Aksiyonlar:** Masaüstünde 4. satırda (`.row-desc`) açıklama metni ile `[Siparişi Topla]`, `[İşlemler ▾]`, `[ ▾ Aç/Kapat]` butonları aynı satırda yan yana konumlandırılır. Kart açıldığında açıklama satırı gizlenir ve gövde 2. sütununa geçer.
+   * **Toplanan Siparişlerde Buton Gizleme:** Toplaması tamamlanan (`pickedQty >= qty`) siparişlerde "Siparişi Topla" butonu başlıktan otomatik kaldırılır, yalnızca İşlemler ve Aç/Kapat kalır; gövde 4. sütunda `✓ Toplama Tamamlandı` yeşil rozeti gösterilir.
+   * **Duyarlı Kullanıcı Rozeti:** Kullanıcı (`order.user` / collector) bilgisi mobilde 1. satırda kargo teslimat ikonunun solunda; masaüstünde 3. satırda toplanan sayısı rozetinin solunda konumlandırılır.
+   * **1s Veritabanı Loader & WeakSet Cache:** İlk tıklamada 1000ms `.card-loading-overlay` spinner animasyonu çalışır, sonraki tıklamalarda `WeakSet` oturum önbelleğinden 0ms gecikmesiz açılır.
+   * **Tek Tıkla Kopyalanabilir Alanlar:** Cari Kodu, VKN, Telefon, Sipariş Ref No, Teslimat, Fatura Ref vb. verilerin yanında `.copy-inline-icon` yer alır.
+   * **İptal Edilen Sipariş Kırmızı Kartı:** İptal edilen siparişlerde sol dikey bar `%100` kırmızı (`#ef4444`), tepe ikonu beyaz çarpı (`x`), kart çerçevesi `1.5px solid #fca5a5` ve zemin `#fffafb` olarak vurgulanır.
+   * **Pazaryerleri Gizli Filtresi:** `#hideMarketplaceCheck` onay kutusu varsayılan olarak **seçili (`checked: true`)** gelir; Trendyol ve Hepsiburada siparişlerini gizler, sayaçları filtreler; tik kaldırıldığında geri getirir.
+   * **3-Kademeli Ödeme Durumu Sıralaması:** `inline-sort-bar-wrapper` üzerinde cüzdan ikonlu chip ile (Nötr ➔ Ödendi `↓` ➔ Ödenmedi `↑` ➔ Nötr) döngüsü uygulanır.
+   * **Sarı Acil Müşteri Notu Şeridi:** Notu olan siparişlerin altında `#fefce8` sarı zeminli `.card-note-bar` ve "Kopyala" butonu gösterilir; İşlemler menüsünden "Not Ekle" ile `#orderNoteModal` üzerinden düzenlenebilir.
+   * **Sade Saat Formatı:** Saat gösterimlerinde saniyeler kaldırılarak `DD / MM / YYYY HH:mm` formatı standartlaştırılmıştır.
 2. **Akıllı Raf Toplama Ekranı (`siparis-toplama.html`):**
    * Üstte 9'lu WMS aksiyon araç çubuğu (Kaydet, Bilgi, Fotoğraf, Etiket, Arama, Koli, Geçmiş, Yenile, Paket).
    * Aktif kalem tablosu (Raf `11Z1`, Stok Kodu `SITS064`, Barkod `8681444292187`, Toplam Sipariş, Sayılan Miktar).
