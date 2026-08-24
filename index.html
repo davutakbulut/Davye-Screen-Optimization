@@ -10,6 +10,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;600&amp;display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
+  <script>
+    // Early Global UI Handler Stubs (Prevents ReferenceError on fast clicks)
+    window.cycleSort = function(k, el) { if (window._cycleSort) return window._cycleSort(k, el); };
+    window.filterCards = function(s, b) { if (window._filterCards) return window._filterCards(s, b); };
+    window.toggleMarketplaceFilter = function(c) { if (window._toggleMarketplaceFilter) return window._toggleMarketplaceFilter(c); };
+    window.toggleAdvancedFilter = function() { if (window._toggleAdvancedFilter) return window._toggleAdvancedFilter(); };
+    window.openFilterDrawer = function() { if (window._openFilterDrawer) return window._openFilterDrawer(); };
+    window.closeFilterDrawer = function() { if (window._closeFilterDrawer) return window._closeFilterDrawer(); };
+    window.applyAdvancedFilter = function() { if (window._applyAdvancedFilter) return window._applyAdvancedFilter(); };
+    window.resetAdvancedFilter = function() { if (window._resetAdvancedFilter) return window._resetAdvancedFilter(); };
+    window.fetchAllOrders = function() { if (window._fetchAllOrders) return window._fetchAllOrders(); };
+    window.goToPage = function(p) { if (window._goToPage) return window._goToPage(p); };
+    window.changePageSize = function(s) { if (window._changePageSize) return window._changePageSize(s); };
+    window.openReceiptModal = function(id) { if (window._openReceiptModal) return window._openReceiptModal(id); };
+    window.openDetailModal = function(id) { if (window._openDetailModal) return window._openDetailModal(id); };
+    window.openCustomerModal = function(id) { if (window._openCustomerModal) return window._openCustomerModal(id); };
+    window.openCargoModal = function(id) { if (window._openCargoModal) return window._openCargoModal(id); };
+    window.openPackingPhotoModal = function(id) { if (window._openPackingPhotoModal) return window._openPackingPhotoModal(id); };
+    window.handleCardHeaderClick = function(e, h) { if (window._handleCardHeaderClick) return window._handleCardHeaderClick(e, h); };
+    window.startOnboardingTour = function(f) { if (window._startOnboardingTour) return window._startOnboardingTour(f); };
+  </script>
+
+
   <style>
     :root {
       --bg-body: #f1f5f9;
@@ -18623,6 +18646,42 @@
       searchInput.addEventListener('input', applyGlobalFilters);
     }
   });
+
+
+  // Explicit Window Scope Export for Global HTML Event Handlers
+  window.cycleSort = window._cycleSort = cycleSort;
+  window.executeSort = executeSort;
+  window.applyDomOrder = applyDomOrder;
+  window.filterCards = window._filterCards = filterCards;
+  window.toggleMarketplaceFilter = window._toggleMarketplaceFilter = toggleMarketplaceFilter;
+  window.applyGlobalFilters = applyGlobalFilters;
+  window.toggleAdvancedFilter = window._toggleAdvancedFilter = toggleAdvancedFilter;
+  window.openFilterDrawer = window._openFilterDrawer = openFilterDrawer;
+  window.closeFilterDrawer = window._closeFilterDrawer = closeFilterDrawer;
+  window.applyAdvancedFilter = window._applyAdvancedFilter = applyAdvancedFilter;
+  window.resetAdvancedFilter = window._resetAdvancedFilter = resetAdvancedFilter;
+  window.fetchAllOrders = window._fetchAllOrders = fetchAllOrders;
+  window.goToPage = window._goToPage = goToPage;
+  window.changePageSize = window._changePageSize = changePageSize;
+  window.initPagination = initPagination;
+  window.renderPagination = renderPagination;
+  window.openReceiptModal = window._openReceiptModal = openReceiptModal;
+  window.printReceipt = printReceipt;
+  window.openDetailModal = window._openDetailModal = openDetailModal;
+  window.openCustomerModal = window._openCustomerModal = openCustomerModal;
+  window.openCargoModal = window._openCargoModal = openCargoModal;
+  window.openPackingPhotoModal = window._openPackingPhotoModal = openPackingPhotoModal;
+  window.openNoteModal = openNoteModal;
+  window.openCancelModal = openCancelModal;
+  window.openBarcodeModal = openBarcodeModal;
+  window.duplicateOrder = duplicateOrder;
+  window.deleteOrder = deleteOrder;
+  window.closeModal = closeModal;
+  window.handleCardHeaderClick = window._handleCardHeaderClick = handleCardHeaderClick;
+  window.startOnboardingTour = window._startOnboardingTour = startOnboardingTour;
+  window.closeOnboardingTour = closeOnboardingTour;
+  window.nextOnboardingStep = nextOnboardingStep;
+  window.prevOnboardingStep = prevOnboardingStep;
 
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     initPagination();
