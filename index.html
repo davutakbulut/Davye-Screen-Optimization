@@ -17366,6 +17366,87 @@
     return new Date(`${match[3]}-${match[2]}-${match[1]}`).getTime();
   }
 
+  
+  // =========================================================================
+  // 1 Saniyelik Veritabanı Loader & WeakSet Client-Side Cache Mekanizması
+  // =========================================================================
+  const loadedCardsCache = new WeakSet();
+  const cardLoaderTimers = new WeakMap();
+
+  function handleCardHeaderClick(event, headerEl) {
+    const isExpandBtn = event.target.closest('.btn-card-expand');
+    if (!isExpandBtn) {
+      if (event.target.closest('.card-checkbox') ||
+          event.target.closest('.order-number-badge') ||
+          event.target.closest('.btn-actions') ||
+          event.target.closest('.dropdown-menu') ||
+          event.target.closest('.cargo-tracking-btn') ||
+          event.target.closest('.btn-copy-cargo') ||
+          event.target.closest('.btn-packing-photo') ||
+          event.target.closest('.btn-note-copy') ||
+          event.target.closest('button') ||
+          event.target.closest('a') ||
+          event.target.closest('input')) {
+        return;
+      }
+    }
+
+    const card = headerEl ? headerEl.closest('.order-card') : (event.target.closest('.order-card'));
+    if (!card) return;
+
+    // Eğer kart zaten açıksa kapat
+    if (card.classList.contains('expanded')) {
+      if (card.classList.contains('loading')) {
+        const timer = cardLoaderTimers.get(card);
+        if (timer) clearTimeout(timer);
+        card.classList.remove('loading');
+      }
+      card.classList.remove('expanded');
+      return;
+    }
+
+    // Eğer daha önce bu oturumda yüklendiyse (önbellekte varsa): 0ms anında aç
+    if (loadedCardsCache.has(card)) {
+      card.classList.add('expanded');
+      return;
+    }
+
+    // İlk defa açılıyorsa: Loader overlay ekle (yoksa oluştur) ve 1 saniye (1000ms) simülasyon çalıştır
+    let overlay = card.querySelector('.card-loading-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'card-loading-overlay';
+      overlay.innerHTML = `
+        <div class="card-loading-spinner-wrap">
+          <div class="card-loading-spinner"></div>
+        </div>
+        <div class="card-loading-meta">
+          <span class="card-loading-title">
+            <i data-lucide="database" style="width:13px; height:13px; color:#2563eb;"></i> Canlı ERP Veritabanı Sorgulanıyor...
+          </span>
+          <span class="card-loading-subtitle">Cari detayları, e-fatura kayıtları ve koli durumları çekiliyor (1 sn)</span>
+        </div>
+      `;
+      const grid = card.querySelector('.card-body-grid');
+      if (grid) {
+        card.insertBefore(overlay, grid);
+      } else {
+        card.appendChild(overlay);
+      }
+      if (window.lucide && lucide.createIcons) lucide.createIcons();
+    }
+
+    card.classList.add('expanded', 'loading');
+
+    const timer = setTimeout(() => {
+      card.classList.remove('loading');
+      loadedCardsCache.add(card);
+      cardLoaderTimers.delete(card);
+    }, 1000); // 1 Saniye (1000ms)
+
+    cardLoaderTimers.set(card, timer);
+  }
+
   function parsePrice(str) {
     const clean = str.replace(/[^\d,]/g, '').replace(',', '.');
     return parseFloat(clean) || 0;

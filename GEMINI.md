@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 24 / 08 / 2026 13:52  
+> **Son Sistem Güncellemesi:** 24 / 08 / 2026 13:55  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -11,7 +11,7 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
 1. **Daha Önce Yapıldı mı / Nasıl Tasarlandı?**
    * `documantations/index.html` ve hafıza/kurallar taranır.
    * Eğer o alanla ilgili mevcut bir kural, tasarım kararı veya bileşen varsa:
-     - **Mevcut Yapıyı Koru:** Daha önce alınmış kararları (örn: flat tasarım, `#ffffff / #f0f6fe` zebra striping, mobilde 4 satır, 3 haneli sipariş no, 4s cache, 33ch cari limiti vb.) bozmadan geliştirme yapılır.
+     - **Mevcut Yapıyı Koru:** Daha önce alınmış kararları (örn: flat tasarım, `#ffffff / #f0f6fe` zebra striping, mobilde 4 satır, 3 haneli sipariş no, 1s cache, 33ch cari limiti vb.) bozmadan geliştirme yapılır.
      - **Dökümantasyonu Güncelle:** İlgili alan `documantations/index.html` içinde bulunarak yeni mantık ve güncel kod ile revize edilir.
    * Eğer yepyeni bir özellikse:
      - **Yeni Başlık Aç:** `documantations/index.html` sayfasına uygun kategori altında yeni bir bölüm (Section) eklenir.
@@ -43,7 +43,7 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
    * Sayfa genelinde yatay taşma (`overflow-x`) kesinlikle engellenmelidir (`overflow-x: clip`).
 
 ### B. Kart İçi Yükleme (Database Loader) & Cache
-1. Bir kart ilk kez tıklandığında 4 saniyelik veritabanı simülasyon loader'ı çalışır (`.order-card.expanded.loading`).
+1. Bir kart ilk kez tıklandığında 1 saniyelik veritabanı simülasyon loader'ı çalışır (`.order-card.expanded.loading`).
 2. Aynı oturumda (sayfa yenilenene kadar) karta tekrar tıklandığında veri önbellekten (`loadedCardsCache = new WeakSet()`) **0ms gecikmeyle anında gelir**.
 3. Sayfa yenilendiğinde (F5) önbellek sıfırlanır.
 
