@@ -1386,6 +1386,8 @@
     .card-header-row.row-desc {
       display: flex;
       align-items: center;
+      justify-content: flex-start;
+      text-align: left;
       gap: 4px;
       width: 100%;
       font-size: 10.5px;
@@ -1416,10 +1418,12 @@
       overflow: hidden;
       text-overflow: ellipsis;
       min-width: 0;
+      text-align: left;
     }
     .order-card.expanded .card-header-row.row-desc {
       display: none !important;
     }
+
 
     .header-district {
         font-weight: 500;
@@ -1608,10 +1612,12 @@
         width: 100%;
         display: flex;
         align-items: center;
+        justify-content: flex-start;
+        text-align: left;
         gap: 5px;
         font-size: 11px;
         color: #475569;
-        padding: 3px 0 1px 22px;
+        padding: 3px 0 1px 0;
         border-top: 1px dashed #e2e8f0;
         margin-top: 2px;
         box-sizing: border-box;
@@ -1619,6 +1625,7 @@
       .order-card.expanded .card-header-row.row-desc {
         display: none !important;
       }
+
 
       .card-body-grid {
         grid-template-columns: 1.3fr 1.1fr 1.3fr 0.9fr;
@@ -5338,15 +5345,14 @@
         </span>
         <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Müşteri sevk öncesi steril ambalaj kontrolü ve UTS lot numarası eşleştirmesi talep etti.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Müşteri sevk öncesi steril ambalaj kontrolü ve UTS lot numarası eşleştirmesi talep etti.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip=\"Sipariş Tutarı\">8.420,00 ₺</span>
@@ -5538,22 +5544,14 @@
         </span>
         <span class="sales-rep-badge umit" data-tip="Satış Kanalı">ÜMİT VELİOĞLU</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: zeynep söylemez adresine sevk edilecek">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">zeynep söylemez adresine sevk edilecek</span>
       </div>
 
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Lütfen faturayı kurumsal e-posta adresine (muhasebe@serapbozteke.com) PDF olarak iletiniz.">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
-        <span class="header-desc-label">Açıklama:</span>
-        <span class="header-desc-content">Lütfen faturayı kurumsal e-posta adresine (muhasebe@serapbozteke.com) PDF olarak iletiniz.</span>
-      </div>
-
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">3.647,90 ₺</span>
@@ -5754,22 +5752,14 @@
         </span>
         <span class="sales-rep-badge davut" data-tip="Satış Kanalı">DAVUT AKBULUT</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Whatsapp - Kurye ile Teslim Edilecek">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Whatsapp - Kurye ile Teslim Edilecek</span>
       </div>
 
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: ZEYNEP SOYLEMEZ">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
-        <span class="header-desc-label">Açıklama:</span>
-        <span class="header-desc-content">ZEYNEP SOYLEMEZ</span>
-      </div>
-
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">3.365,00 ₺</span>
@@ -5970,15 +5960,14 @@
         </span>
         <span class="sales-rep-badge davut" data-tip="Satış Kanalı">DAVUT AKBULUT</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Whatsapp Siparişi">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Whatsapp Siparişi</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">3.943,38 ₺</span>
@@ -6181,15 +6170,14 @@
         </span>
         <span class="sales-rep-badge davut" data-tip="Satış Kanalı">DAVUT AKBULUT</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Whatsapp Siparişi">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Whatsapp Siparişi</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">3.600,00 ₺</span>
@@ -6390,15 +6378,14 @@
         </span>
         <span class="sales-rep-badge umit" data-tip="Satış Kanalı">ÜMİT VELİOĞLU</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Whatsapp Siparişi">
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: ZEYNEP SOYLEMEZ">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
-        <span class="header-desc-content">Whatsapp Siparişi</span>
+        <span class="header-desc-content">ZEYNEP SOYLEMEZ</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">7.049,70 ₺</span>
@@ -6599,22 +6586,14 @@
         </span>
         <span class="sales-rep-badge merkez-depo" data-tip="Satış Kanalı">MERKEZ DEPO</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: zenit dental ağız ve diş sağlığı anlaşmalı sevkıyat">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">zenit dental ağız ve diş sağlığı anlaşmalı sevkıyat</span>
       </div>
 
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: ZEYNEP SOYLEMEZ">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
-        <span class="header-desc-label">Açıklama:</span>
-        <span class="header-desc-content">ZEYNEP SOYLEMEZ</span>
-      </div>
-
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">16.500,00 ₺</span>
@@ -6815,22 +6794,14 @@
         </span>
         <span class="sales-rep-badge erdi" data-tip="Satış Kanalı">ERDİ EKİZ</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Yiğit dental">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Yiğit dental</span>
       </div>
 
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Zehra ebrar Şimşek">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
-        <span class="header-desc-label">Açıklama:</span>
-        <span class="header-desc-content">Zehra ebrar Şimşek</span>
-      </div>
-
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">17.715,89 ₺</span>
@@ -7031,15 +7002,14 @@
         </span>
         <span class="sales-rep-badge erdi" data-tip="Satış Kanalı">ERDİ EKİZ</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: yeşil dentale bırakılacak">
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Zehra ebrar Şimşek">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
-        <span class="header-desc-content">yeşil dentale bırakılacak</span>
+        <span class="header-desc-content">Zehra ebrar Şimşek</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">57.815,19 ₺</span>
@@ -7240,22 +7210,14 @@
         </span>
         <span class="sales-rep-badge merkez-depo" data-tip="Satış Kanalı">MERKEZ DEPO</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Yarın elden teslim alacak">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Yarın elden teslim alacak</span>
       </div>
 
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Zafer diş kliniği">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
-        <span class="header-desc-label">Açıklama:</span>
-        <span class="header-desc-content">Zafer diş kliniği</span>
-      </div>
-
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">31.671,00 ₺</span>
@@ -7456,15 +7418,14 @@
         </span>
         <span class="sales-rep-badge davut" data-tip="Satış Kanalı">DAVUT AKBULUT</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Yaren Hemşire - Araçla Teslim Edildi">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Yaren Hemşire - Araçla Teslim Edildi</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">28.000,00 ₺</span>
@@ -7667,15 +7628,14 @@
         </span>
         <span class="sales-rep-badge davut" data-tip="Satış Kanalı">DAVUT AKBULUT</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: YAMAÇ DENTAL KORUPARK">
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Whatsapp Siparişi">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
-        <span class="header-desc-content">YAMAÇ DENTAL KORUPARK</span>
+        <span class="header-desc-content">Whatsapp Siparişi</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">1.800,00 ₺</span>
@@ -7878,15 +7838,14 @@
         </span>
         <span class="sales-rep-badge erdi" data-tip="Satış Kanalı">ERDİ EKİZ</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Whatsapp Numune Siparişi">
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Zafer diş kliniği">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
-        <span class="header-desc-content">Whatsapp Numune Siparişi</span>
+        <span class="header-desc-content">Zafer diş kliniği</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">2.161,80 ₺</span>
@@ -8087,22 +8046,14 @@
         </span>
         <span class="sales-rep-badge umit" data-tip="Satış Kanalı">ÜMİT VELİOĞLU</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: zeynep söylemez">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">zeynep söylemez</span>
       </div>
 
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Zafer dental diş kliniği ek teslimat">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
-        <span class="header-desc-label">Açıklama:</span>
-        <span class="header-desc-content">Zafer dental diş kliniği ek teslimat</span>
-      </div>
-
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">10.795,20 ₺</span>
@@ -8305,8 +8256,14 @@
         </span>
         <span class="sales-rep-badge umit" data-tip="Satış Kanalı">ÜMİT VELİOĞLU</span>
       </div>
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: ZEYNEP SOYLEMEZ">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+        <span class="header-desc-label">Açıklama:</span>
+        <span class="header-desc-content">ZEYNEP SOYLEMEZ</span>
+      </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">8.935,61 ₺</span>
@@ -8509,15 +8466,14 @@
         </span>
         <span class="sales-rep-badge merkez-depo" data-tip="Satış Kanalı">MERKEZ DEPO</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: yusuf bey teslim aldı">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">yusuf bey teslim aldı</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">1.880,20 ₺</span>
@@ -8720,15 +8676,14 @@
         </span>
         <span class="sales-rep-badge merkez-depo" data-tip="Satış Kanalı">MERKEZ DEPO</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: yusuf bey teslim aldı">
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: yeşil dentale bırakılacak">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
-        <span class="header-desc-content">yusuf bey teslim aldı</span>
+        <span class="header-desc-content">yeşil dentale bırakılacak</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">7.680,50 ₺</span>
@@ -8931,15 +8886,14 @@
         </span>
         <span class="sales-rep-badge umit" data-tip="Satış Kanalı">ÜMİT VELİOĞLU</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: YAMAÇ DENTAL">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">YAMAÇ DENTAL</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">1.913,68 ₺</span>
@@ -9142,15 +9096,14 @@
         </span>
         <span class="sales-rep-badge davut" data-tip="Satış Kanalı">DAVUT AKBULUT</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
-      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Whatsapp Marketing - Yusuf">
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Whatsapp Numune Siparişi">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
-        <span class="header-desc-content">Whatsapp Marketing - Yusuf</span>
+        <span class="header-desc-content">Whatsapp Numune Siparişi</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">0,10 ₺</span>
@@ -9349,8 +9302,14 @@
         </span>
         <span class="sales-rep-badge merkez-depo" data-tip="Satış Kanalı">MERKEZ DEPO</span>
       </div>
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: yusuf bey teslim aldı">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+        <span class="header-desc-label">Açıklama:</span>
+        <span class="header-desc-content">yusuf bey teslim aldı</span>
+      </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">937,89 ₺</span>
@@ -9553,15 +9512,14 @@
         </span>
         <span class="sales-rep-badge erdi" data-tip="Satış Kanalı">ERDİ EKİZ</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Zafer dental diş kliniği ana sevkiyat">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Zafer dental diş kliniği ana sevkiyat</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">304.334,66 ₺</span>
@@ -9764,8 +9722,14 @@
         </span>
         <span class="sales-rep-badge erdi" data-tip="Satış Kanalı">ERDİ EKİZ</span>
       </div>
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Zafer dental diş kliniği ek teslimat">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+        <span class="header-desc-label">Açıklama:</span>
+        <span class="header-desc-content">Zafer dental diş kliniği ek teslimat</span>
+      </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">128,80 ₺</span>
@@ -9968,8 +9932,14 @@
         </span>
         <span class="sales-rep-badge umit" data-tip="Satış Kanalı">ÜMİT VELİOĞLU</span>
       </div>
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: YAMAÇ DENTAL KORUPARK">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+        <span class="header-desc-label">Açıklama:</span>
+        <span class="header-desc-content">YAMAÇ DENTAL KORUPARK</span>
+      </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">1.890,51 ₺</span>
@@ -10172,15 +10142,14 @@
         </span>
         <span class="sales-rep-badge davut" data-tip="Satış Kanalı">DAVUT AKBULUT</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Whatsapp - PAYTR Ödeme Onaylandı">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Whatsapp - PAYTR Ödeme Onaylandı</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">1.540,00 ₺</span>
@@ -10381,8 +10350,14 @@
         </span>
         <span class="sales-rep-badge davut" data-tip="Satış Kanalı">DAVUT AKBULUT</span>
       </div>
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Whatsapp Marketing - Yusuf">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+        <span class="header-desc-label">Açıklama:</span>
+        <span class="header-desc-content">Whatsapp Marketing - Yusuf</span>
+      </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">700,00 ₺</span>
@@ -10585,8 +10560,14 @@
         </span>
         <span class="sales-rep-badge trendyol" data-tip=\"Satış Kanalı\">TRENDYOL AŞ. ŞTİ.</span>
       </div>
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Lütfen faturayı kurumsal e-posta adresine (muhasebe@serapbozteke.com) PDF olarak iletiniz.">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
+        <span class="header-desc-label">Açıklama:</span>
+        <span class="header-desc-content">Lütfen faturayı kurumsal e-posta adresine (muhasebe@serapbozteke.com) PDF olarak iletiniz.</span>
+      </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip=\"Sipariş Tutarı\">684,00 ₺</span>
@@ -10790,15 +10771,14 @@
         </span>
         <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Kliniğe teslim edilmesi rica olunur.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Kliniğe teslim edilmesi rica olunur.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">1.450,00 ₺</span>
@@ -11002,15 +10982,14 @@
         </span>
         <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Kargo kolisi üzerine dikkat kırılabilir tıbbi malzeme etiketi yapıştırılsın.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Kargo kolisi üzerine dikkat kırılabilir tıbbi malzeme etiketi yapıştırılsın.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">3.150,00 ₺</span>
@@ -11202,15 +11181,14 @@
         </span>
         <span class="sales-rep-badge davut" data-tip="Satış Temsilcisi">DAVUT AKBULUT</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Müşteri kliniğe bizzat gelerek elden teslim alacaktır, 5.000 ₺ kapora elden tahsil edildi.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Müşteri kliniğe bizzat gelerek elden teslim alacaktır, 5.000 ₺ kapora elden tahsil edildi.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount" data-tip="Sipariş Tutarı (Toplam / Kalan Tutar)"><span class="price-total">12.500,00 ₺</span> <span class="price-divider">/</span> <span class="price-remaining">7.500,00 ₺</span></span>
@@ -11406,15 +11384,14 @@
         </span>
         <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Toplama işlemi tamamlandı, koli içerisine firma promosyon broşürü eklendi.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Toplama işlemi tamamlandı, koli içerisine firma promosyon broşürü eklendi.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip=\"Sipariş Tutarı\">2.190,00 ₺</span>
@@ -11609,15 +11586,14 @@
         </span>
         <span class="sales-rep-badge trendyol" data-tip=\"Satış Kanalı\">TRENDYOL AŞ. ŞTİ.</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: GİB e-fatura sisteminden onay beklenmektedir, muhasebe mutabakatı yapıldı.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">GİB e-fatura sisteminden onay beklenmektedir, muhasebe mutabakatı yapıldı.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">4.920,00 ₺</span>
@@ -11812,15 +11788,14 @@
         </span>
         <span class="sales-rep-badge trendyol" data-tip=\"Satış Kanalı\">TRENDYOL AŞ. ŞTİ.</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Laboratuvar girişi arka kapıdan yapılacaktır, teslimat fişi imzalatılsın.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Laboratuvar girişi arka kapıdan yapılacaktır, teslimat fişi imzalatılsın.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">2.750,00 ₺</span>
@@ -12015,15 +11990,14 @@
         </span>
         <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Ödeme havale ile tamamlandı, dekont kontrol masasına iletildi.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Ödeme havale ile tamamlandı, dekont kontrol masasına iletildi.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">9.750,00 ₺</span>
@@ -12218,15 +12192,14 @@
         </span>
         <span class="sales-rep-badge hepsiburada" data-tip=\"Satış Kanalı\">HEPSİBURADA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Kargo kurye barkodu oluşturuldu, akşam transfer aracına yüklenecek.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Kargo kurye barkodu oluşturuldu, akşam transfer aracına yüklenecek.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">320,50 ₺</span>
@@ -12421,15 +12394,14 @@
         </span>
         <span class="sales-rep-badge trendyol" data-tip=\"Satış Kanalı\">TRENDYOL AŞ. ŞTİ.</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Müşteri kargoyu şubeden kendisi teslim alacaktır, şube teslim notu düşüldü.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Müşteri kargoyu şubeden kendisi teslim alacaktır, şube teslim notu düşüldü.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">6.480,00 ₺</span>
@@ -12624,15 +12596,14 @@
         </span>
         <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Doktor teslimatı bizzat kendisi kontrol edip teslim alma tutanağını imzalayacak.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Doktor teslimatı bizzat kendisi kontrol edip teslim alma tutanağını imzalayacak.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">1.850,00 ₺</span>
@@ -12827,15 +12798,14 @@
         </span>
         <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Faturası ve sevk belgeleri koli dışındaki şeffaf cebe yerleştirildi.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Faturası ve sevk belgeleri koli dışındaki şeffaf cebe yerleştirildi.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">8.120,00 ₺</span>
@@ -13030,15 +13000,14 @@
         </span>
         <span class="sales-rep-badge hepsiburada" data-tip=\"Satış Kanalı\">HEPSİBURADA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Hepsiburada siparişi, kargo takip numarası pazar yerine otomatik senkronize edildi.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Hepsiburada siparişi, kargo takip numarası pazar yerine otomatik senkronize edildi.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">5.340,00 ₺</span>
@@ -13233,15 +13202,14 @@
         </span>
         <span class="sales-rep-badge trendyol" data-tip=\"Satış Kanalı\">TRENDYOL AŞ. ŞTİ.</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Trendyol Express dağıtım kuryesi paketi zimmetine aldı, tahmini varış bugün.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Trendyol Express dağıtım kuryesi paketi zimmetine aldı, tahmini varış bugün.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">3.850,00 ₺</span>
@@ -13436,15 +13404,14 @@
         </span>
         <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Faturasız numune teslimatı, klinik yetkilisi kaşe imza karşılığı teslim aldı.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Faturasız numune teslimatı, klinik yetkilisi kaşe imza karşılığı teslim aldı.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">3.900,00 ₺</span>
@@ -13639,15 +13606,14 @@
         </span>
         <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Sipariş başarıyla müşteriye teslim edildi, dijital irsaliye arşive kaldırıldı.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Sipariş başarıyla müşteriye teslim edildi, dijital irsaliye arşive kaldırıldı.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">12.450,00 ₺</span>
@@ -13842,15 +13808,14 @@
         </span>
         <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Müşteri yanlış ürün seçtiğini belirtti, iade kargo kodu oluşturuldu kurye bekleniyor.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Müşteri yanlış ürün seçtiğini belirtti, iade kargo kodu oluşturuldu kurye bekleniyor.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip=\"Sipariş Tutarı\">3.450,00 ₺</span>
@@ -14042,15 +14007,14 @@
         </span>
         <span class="sales-rep-badge dental" data-tip=\"Satış Kanalı\">DENTAL PİYASA</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: İade koli depoya ulaştı, ürün kalite kontrolü yapıldı ödeme iadesi muhasebeye iletildi.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">İade koli depoya ulaştı, ürün kalite kontrolü yapıldı ödeme iadesi muhasebeye iletildi.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip=\"Sipariş Tutarı\">5.200,00 ₺</span>
@@ -14242,15 +14206,14 @@
         </span>
         <span class="sales-rep-badge trendyol" data-tip=\"Satış Kanalı\">TRENDYOL AŞ. ŞTİ.</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Ücret iadesi müşterinin kredi kartına başarıyla yapıldı, süreç tamamlandı.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Ücret iadesi müşterinin kredi kartına başarıyla yapıldı, süreç tamamlandı.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip=\"Sipariş Tutarı\">2.640,00 ₺</span>
@@ -14442,15 +14405,14 @@
         </span>
         <span class="sales-rep-badge trendyol" data-tip=\"Satış Kanalı\">TRENDYOL AŞ. ŞTİ.</span>
       </div>
-
-            <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+      <!-- Açıklama Satırı (Kapalıyken Görünür, Açıldığında Gizlenir) -->
       <div class="card-header-row row-desc" data-tip="Sipariş Açıklaması: Müşteri talebiyle sipariş onay öncesi iptal edildi, herhangi bir tahsilat yapılmadı.">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-text" aria-hidden="true" class="lucide lucide-file-text"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg>
         <span class="header-desc-label">Açıklama:</span>
         <span class="header-desc-content">Müşteri talebiyle sipariş onay öncesi iptal edildi, herhangi bir tahsilat yapılmadı.</span>
       </div>
 
-      <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
+      <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-cancelled" data-tip=\"Sipariş Tutarı\">450,00 ₺</span>
