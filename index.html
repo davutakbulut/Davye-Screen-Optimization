@@ -17143,6 +17143,9 @@
   }
 
   // Canlı Arama ve Sekme Filtrelerini Merkezi Uygula (Sayfalama ile Tam Uyumlu)
+  var currentlyMatchedCards = [];
+  var currentPage = 1;
+  var pageSize = 10;
   
   function toggleMarketplaceFilter(checked) {
     applyGlobalFilters();
@@ -18488,15 +18491,23 @@ window.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   // SAYFALAMA (PAGINATION) MOTORU
   // =========================================================================
-  let currentPage = 1;
-  let pageSize = 10;
-  let currentlyMatchedCards = [];
+  var currentPage = 1;
+  var pageSize = 10;
+  var currentlyMatchedCards = [];
 
   function initPagination() {
-    const allCards = Array.from(document.querySelectorAll('.order-card'));
-    currentlyMatchedCards = allCards;
-    renderPagination();
-    if (typeof updateStatusTabCounts === 'function') updateStatusTabCounts();
+    if (typeof applyGlobalFilters === 'function') {
+      applyGlobalFilters();
+    } else {
+      const hideMarketplace = document.getElementById('hideMarketplaceCheck')?.checked ?? true;
+      const allCards = Array.from(document.querySelectorAll('.order-card'));
+      currentlyMatchedCards = allCards.filter(card => {
+        if (hideMarketplace && card.dataset.isMarketplace === 'true') return false;
+        return true;
+      });
+      renderPagination();
+      if (typeof updateStatusTabCounts === 'function') updateStatusTabCounts();
+    }
   }
 
   function changePageSize(size) {
