@@ -3231,9 +3231,14 @@
       font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
     }
 
-    .modal-backdrop.show {
+    .modal-backdrop.show,
+    .modal-backdrop.active {
       opacity: 1;
       pointer-events: auto;
+    }
+    .modal-backdrop.show .modal-card,
+    .modal-backdrop.active .modal-card {
+      transform: scale(1) translateY(0);
     }
 
     .modal-card {
@@ -6715,10 +6720,22 @@
       input.value = (order && order.note) ? order.note : '';
     }
     if (modal) {
-      modal.classList.add('active');
-      setTimeout(() => { if (input) input.focus(); }, 100);
+      modal.classList.add('show', 'active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => { if (input) input.focus(); }, 80);
     }
     if (window.lucide) lucide.createIcons();
+  }
+
+  function closeNoteModal() {
+    const modal = document.getElementById('orderNoteModal');
+    if (modal) modal.classList.remove('show', 'active');
+    document.body.style.overflow = '';
+  }
+
+  function closeModal() {
+    closeNoteModal();
+    closeReceiptModal();
   }
 
   function saveOrderNote() {
@@ -6728,9 +6745,18 @@
     if (order && input) {
       const noteVal = input.value.trim();
       order.note = noteVal ? noteVal : null;
-      renderPagination();
+      filterWarehouseCards();
       closeModal();
       showToast(noteVal ? 'Sipariş notu başarıyla kaydedildi.' : 'Sipariş notu silindi.');
+    }
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2200);
     }
   }
 
@@ -6824,7 +6850,10 @@
   window.createCargoOrder = createCargoOrder;
   window.toggleCancelOrder = toggleCancelOrder;
   window.openNoteModal = openNoteModal;
+  window.closeNoteModal = closeNoteModal;
+  window.closeModal = closeModal;
   window.saveOrderNote = saveOrderNote;
+  window.showToast = showToast;
   window.openReceiptModal = openReceiptModal;
   window.closeReceiptModal = closeReceiptModal;
   window.printReceiptPaper = printReceiptPaper;
