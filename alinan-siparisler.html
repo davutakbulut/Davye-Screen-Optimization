@@ -5500,6 +5500,11 @@
           <span class="sort-chip-label">Tutar</span>
           <span class="sort-indicator">⇄</span>
         </button>
+        <button type="button" class="sort-chip" onclick="sortWarehouseOrders('payment', this)" title="Ödeme Durumuna Göre Sırala">
+          <span class="sort-chip-icon"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="wallet"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/><path d="M16 14h.01"/></svg></span>
+          <span class="sort-chip-label">Ödeme Durumu</span>
+          <span class="sort-indicator">⇄</span>
+        </button>
         <button type="button" class="sort-chip" onclick="sortWarehouseOrders('vade', this)">
           <span class="sort-chip-icon"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
           <span class="sort-chip-label">Vade Tarihi</span>
@@ -6485,14 +6490,54 @@
     }
   }
 
+  function parseDateToTs(dStr, tStr) {
+    if (!dStr) return 0;
+    const parts = dStr.split('/').map(s => s.trim());
+    if (parts.length === 3) {
+      const timeParts = (tStr || '00:00').split(':').map(s => s.trim());
+      const d = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10), parseInt(timeParts[0] || 0, 10), parseInt(timeParts[1] || 0, 10));
+      return d.getTime();
+    }
+    return 0;
+  }
+
+  function parsePriceToNum(pStr) {
+    if (!pStr) return 0;
+    return parseFloat(pStr.replace(/[^0-9,]/g, '').replace(',', '.')) || 0;
+  }
+
   function sortList(key, dir) {
     currentFilteredList.sort((a, b) => {
       let valA = a[key];
       let valB = b[key];
-      if (key === 'ref') { valA = a.orderRef; valB = b.orderRef; }
-      if (key === 'cari') { valA = a.cariName; valB = b.cariName; }
-      if (key === 'qty') { valA = a.qty; valB = b.qty; }
-      if (key === 'picked') { valA = a.pickedQty; valB = b.pickedQty; }
+      if (key === 'date') {
+        valA = parseDateToTs(a.date, a.time);
+        valB = parseDateToTs(b.date, b.time);
+      } else if (key === 'ref') {
+        valA = a.orderRef;
+        valB = b.orderRef;
+      } else if (key === 'cari') {
+        valA = a.cariName.toLowerCase();
+        valB = b.cariName.toLowerCase();
+      } else if (key === 'qty') {
+        valA = a.qty;
+        valB = b.qty;
+      } else if (key === 'remaining') {
+        valA = a.remainingQty;
+        valB = b.remainingQty;
+      } else if (key === 'price') {
+        valA = parsePriceToNum(a.totalPrice);
+        valB = parsePriceToNum(b.totalPrice);
+      } else if (key === 'payment') {
+        valA = a.isPayed ? 1 : 0;
+        valB = b.isPayed ? 1 : 0;
+      } else if (key === 'vade') {
+        valA = parseDateToTs(a.vade);
+        valB = parseDateToTs(b.vade);
+      } else if (key === 'salesRep') {
+        valA = (a.salesRep || '').toLowerCase();
+        valB = (b.salesRep || '').toLowerCase();
+      }
 
       if (valA < valB) return dir === 'asc' ? -1 : 1;
       if (valA > valB) return dir === 'asc' ? 1 : -1;
