@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Davye ERP - Akıllı Sipariş Toplama Sistemi (WMS)</title>
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg-app: #f8fafc;
+      --bg-card: #ffffff;
+      --border-color: #e2e8f0;
+      --border-hover: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #1e3a8a;
+      --primary-blue: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --warning: #d97706;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-app);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ÜST HEADER */
+    .davye-top-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: #0f172a;
+      color: #ffffff;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      border-bottom: 1px solid #1e293b;
+    }
+    .davye-header-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .davye-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .davye-logo-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .davye-logo-badge:hover {
+      background: #1e293b;
+    }
+    .davye-brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .davye-brand-title {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+    .davye-brand-subtitle {
+      font-size: 9px;
+      color: #94a3b8;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .header-order-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #1e293b;
+      color: #38bdf8;
+      border: 1px solid #334155;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ANA YERLEŞİM */
+    .picking-layout-wrapper {
+      margin-top: 52px;
+      padding: 16px 24px;
+      max-width: 1300px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* 1. ÜST AKSİYON BUTONLARI (9 İKON GRUBU) */
+    .top-action-icons-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .action-circle-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 3px rgba(37, 99, 235, 0.2);
+    }
+    .action-circle-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+    .action-circle-btn.btn-warning-orange {
+      background: #f59e0b;
+      box-shadow: 0 1px 3px rgba(245, 158, 11, 0.2);
+    }
+    .action-circle-btn.btn-warning-orange:hover {
+      background: #d97706;
+    }
+    .action-circle-btn svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .btn-back-to-orders {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      background: #ffffff;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .btn-back-to-orders:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    /* 2. AKTİF TOPLAMA SİSTEMİ KARTI */
+    .system-active-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .system-active-card strong {
+      color: #2563eb;
+      font-weight: 800;
+    }
+
+    /* 3. AKTİF KALEM TABLOSU */
+    .active-item-table-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    .picking-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+      text-align: left;
+    }
+    .picking-table th {
+      background: #f8fafc;
+      padding: 8px 12px;
+      font-weight: 700;
+      color: #475569;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .picking-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #0f172a;
+      vertical-align: middle;
+      font-weight: 600;
+    }
+    .btn-item-action-group {
+      display: inline-flex;
+      align-items: center;
+      background: #1e3a8a;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .btn-item-action {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      padding: 4px 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .btn-item-action:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .btn-item-action svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* 4. TOPLAMA FORMU (BARKOD & RAF GİRİŞ ALANI) */
+    .picking-form-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .form-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #475569;
+    }
+    .form-input-wrap {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    .form-input {
+      width: 100%;
+      height: 34px;
+      padding: 0 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 12px;
+      color: #0f172a;
+      outline: none;
+      transition: all 0.15s;
+      background: #ffffff;
+    }
+    .form-input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+    .btn-input-clear {
+      position: absolute;
+      right: 4px;
+      top: 4px;
+      bottom: 4px;
+      width: 26px;
+      background: #ef4444;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-input-clear:hover {
+      background: #dc2626;
+    }
+    .btn-input-clear svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 640px) {
+      .form-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .btn-submit-picking {
+      height: 38px;
+      background: #1e3a8a;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.15s;
+      margin-top: 4px;
+    }
+    .btn-submit-picking:hover {
+      background: #172554;
+    }
+
+    .toggle-settings-btn {
+      align-self: flex-start;
+      background: transparent;
+      border: none;
+      color: #2563eb;
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 2px;
+    }
+
+    /* 5. TOPLANACAK ÜRÜNLER LİSTESİ */
+    .items-list-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .items-list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .items-list-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .btn-excel-export {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-excel-export:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .table-search-input {
+      width: 100%;
+      height: 32px;
+      padding: 0 10px 0 30px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 11.5px;
+      color: #0f172a;
+      outline: none;
+    }
+
+    .product-img-thumb {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      object-fit: cover;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+    }
+
+    /* BİLDİRİM TOAST */
+    .picking-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      z-index: 99999;
+      animation: popIn 0.2s ease-out;
+    }
+    @keyframes popIn {
+      from { transform: translateY(10px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* BAŞARI MODALI */
+    .success-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999;
+      padding: 16px;
+    }
+    .success-modal-card {
+      background: #ffffff;
+      border-radius: 12px;
+      max-width: 440px;
+      width: 100%;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .success-icon-badge {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: #ecfdf5;
+      color: #059669;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #a7f3d0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ÜST HEADER -->
+<header class="davye-top-header">
+  <div class="davye-header-container">
+    <div class="davye-header-left">
+      <a href="alinan-siparisler.html" class="davye-logo-badge" title="Alınan Siparişlere Dön">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="9.75" y="3" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="16.5" y="3" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="3" y="9.75" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="9.75" y="9.75" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="16.5" y="9.75" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="3" y="16.5" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="9.75" y="16.5" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="16.5" y="16.5" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+        </svg>
+      </a>
+      <div class="davye-brand-info">
+        <span class="davye-brand-title">Davye</span>
+        <span class="davye-brand-subtitle">WMS SİPARİŞ TOPLAMA SİSTEMİ</span>
+      </div>
+    </div>
+    <div class="davye-header-right">
+      <div class="header-order-badge" id="headerOrderBadge">
+        <i data-lucide="package" style="width:13px;height:13px;"></i>
+        <span id="orderRefDisplay">Sipariş: #1-WS-2-68174</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="picking-layout-wrapper">
+  <!-- 1. ÜST AKSİYON BUTONLARI (9 İKONLU WMS TOOLBAR) -->
+  <div class="top-action-icons-bar">
+    <button class="action-circle-btn" title="Siparişi Kaydet"><i data-lucide="save"></i></button>
+    <button class="action-circle-btn" title="Sipariş Bilgisi"><i data-lucide="info"></i></button>
+    <button class="action-circle-btn" title="Ürün Görselleri"><i data-lucide="image"></i></button>
+    <button class="action-circle-btn" title="Fiyat &amp; Etiket"><i data-lucide="tag"></i></button>
+    <button class="action-circle-btn" title="Depoda Ara"><i data-lucide="search"></i></button>
+    <button class="action-circle-btn" title="Koliye Ata"><i data-lucide="archive"></i></button>
+    <button class="action-circle-btn" title="Toplama Geçmişi"><i data-lucide="history"></i></button>
+    <button class="action-circle-btn" title="Yenile" onclick="location.reload()"><i data-lucide="refresh-cw"></i></button>
+    <button class="action-circle-btn btn-warning-orange" title="Paketleme &amp; Palet"><i data-lucide="box"></i></button>
+
+    <a href="alinan-siparisler.html" class="btn-back-to-orders">
+      <i data-lucide="arrow-left" style="width:13px;height:13px;"></i> Alınan Siparişler Listesi
+    </a>
+  </div>
+
+  <!-- 2. AKTİF TOPLAMA SİSTEMİ -->
+  <div class="system-active-card">
+    <span>Aktif Toplama Sistemi: <strong>Akıllı Toplama Sistemi</strong></span>
+    <span id="pickingProgressText" style="font-size:11.5px; font-weight:700; color:#16a34a;">0 / 6 Adet Toplandı (%0)</span>
+  </div>
+
+  <!-- 3. AKTİF KALEM ÖZETİ TABLOSU -->
+  <div class="active-item-table-card">
+    <table class="picking-table">
+      <thead>
+        <tr>
+          <th>Raf</th>
+          <th>Koli</th>
+          <th>Stok Kodu</th>
+          <th>Barkod</th>
+          <th>Parti</th>
+          <th>Sipariş</th>
+          <th>Sayılan</th>
+          <th>İşlemler</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span style="font-family:'JetBrains Mono', monospace; font-weight:800; color:#2563eb;" id="activeRaf">11Z1</span></td>
+          <td>-</td>
+          <td><strong id="activeStokKodu">SITS064</strong></td>
+          <td><span style="font-family:'JetBrains Mono', monospace;" id="activeBarkod">8681444292187</span></td>
+          <td>-</td>
+          <td><strong id="activeTotalQty">6</strong></td>
+          <td><strong style="color:#2563eb; font-size:13px;" id="activeCountedQty">0</strong></td>
+          <td>
+            <div class="btn-item-action-group">
+              <button class="btn-item-action" title="Detay"><i data-lucide="chevron-down"></i></button>
+              <button class="btn-item-action" title="Menü"><i data-lucide="menu"></i></button>
+              <button class="btn-item-action" title="Temizle" onclick="resetActiveItem()"><i data-lucide="x"></i></button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4. TOPLAMA FORMU (BARKOD VE RAF OKUTMA) -->
+  <div class="picking-form-card">
+    <div class="form-group">
+      <label class="form-label">Raf Numarası</label>
+      <div class="form-input-wrap">
+        <input type="text" id="inputRaf" class="form-input" value="11Z1" placeholder="Raf Numarası">
+        <button class="btn-input-clear" onclick="document.getElementById('inputRaf').value=''" title="Rafı Temizle">
+          <i data-lucide="trash-2"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Barkod</label>
+      <div class="form-input-wrap">
+        <input type="text" id="inputBarcode" class="form-input" placeholder="Barkod okutunuz..." autofocus onkeydown="if(event.key==='Enter') submitPickingItem()">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Paket Numarası</label>
+      <div class="form-input-wrap">
+        <input type="text" id="inputPackageNo" class="form-input" placeholder="Paket Numarası">
+      </div>
+    </div>
+
+    <div class="form-grid-2">
+      <div class="form-group">
+        <label class="form-label">Miktar</label>
+        <input type="number" id="inputQty" class="form-input" value="1" min="1">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Parti</label>
+        <input type="text" id="inputParti" class="form-input" placeholder="Parti No">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Seri No</label>
+      <input type="text" id="inputSerial" class="form-input" placeholder="Seri No">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Son Kullanma Tarihi</label>
+      <input type="date" id="inputExpiry" class="form-input">
+    </div>
+
+    <button type="button" class="btn-submit-picking" onclick="submitPickingItem()">
+      <i data-lucide="plus-circle" style="width:16px;height:16px;"></i> Ekle
+    </button>
+
+    <button type="button" class="toggle-settings-btn" onclick="toggleSettingsPanel()">
+      <i data-lucide="chevron-down" id="settingsChevron" style="width:13px;height:13px;"></i> Ayarları Göster/Gizle
+    </button>
+
+    <div id="settingsPanel" style="display:none; padding:10px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; font-size:11.5px; color:#475569;">
+      <label style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+        <input type="checkbox" id="autoSubmitCheck" checked> Barkod okutulduğunda otomatik 1 adet ekle ve onayla
+      </label>
+      <label style="display:flex; align-items:center; gap:6px; cursor:pointer; margin-top:6px;">
+        <input type="checkbox" id="soundCheck" checked> Sesli onay bildirimi çal
+      </label>
+    </div>
+  </div>
+
+  <!-- 5. TOPLANACAK ÜRÜNLER LİSTESİ -->
+  <div class="items-list-card">
+    <div class="items-list-header">
+      <h2 class="items-list-title">Toplanacak Ürünler</h2>
+      <button class="btn-excel-export" onclick="showToast('Excel formatında dışa aktarıldı.')">
+        <i data-lucide="file-spreadsheet" style="width:13px;height:13px;color:#16a34a;"></i> Excel Aktar
+      </button>
+    </div>
+
+    <div style="position:relative; margin-bottom:4px;">
+      <i data-lucide="search" style="position:absolute; left:9px; top:50%; transform:translateY(-50%); width:13px; height:13px; color:#94a3b8;"></i>
+      <input type="text" class="table-search-input" placeholder="Ürünler içinde ara..." oninput="filterItemsTable(this.value)">
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table class="picking-table" id="itemsTable">
+        <thead>
+          <tr>
+            <th style="width:70px;">İşlemler</th>
+            <th style="width:50px;">Resim</th>
+            <th>Madde Kodu</th>
+            <th>Miktar</th>
+            <th>Raf</th>
+            <th>CountedQty</th>
+            <th>Barkod</th>
+          </tr>
+        </thead>
+        <tbody id="itemsTableBody">
+          <!-- JS ile render edilir -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ALT SAYFALAMA VE TOPLAM ADET -->
+    <div style="display:flex; align-items:center; justify-content:space-between; padding-top:10px; border-top:1px solid #f1f5f9; font-size:11.5px; color:#64748b; flex-wrap:wrap; gap:8px;">
+      <span style="font-weight:700; color:#0f172a;" id="totalItemsSummaryText">Toplam 1 Kalem • 6 Adet</span>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span>Toplam 1 kayıt</span>
+        <button style="padding:2px 6px; background:#fff; border:1px solid #cbd5e1; border-radius:4px; font-weight:700;">1</button>
+        <select style="height:24px; padding:0 4px; border:1px solid #cbd5e1; border-radius:4px; font-size:11px;">
+          <option>25 ▾</option>
+          <option>50 ▾</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BİLDİRİM TOAST -->
+<div id="pickingToast" class="picking-toast">
+  <i data-lucide="check-circle" style="width:16px;height:16px;color:#4ade80;"></i>
+  <span id="toastMsgText">1 Adet ürün başarıyla toplandı.</span>
+</div>
+
+<!-- BAŞARI MODAL POPUP -->
+<div id="pickingSuccessModal" class="success-modal-backdrop">
+  <div class="success-modal-card">
+    <div class="success-icon-badge">
+      <i data-lucide="check-check" style="width:32px;height:32px;"></i>
+    </div>
+    <h3 style="font-size:16px; font-weight:800; color:#0f172a;">Sipariş Toplama Tamamlandı!</h3>
+    <p style="font-size:12px; color:#64748b; line-height:1.4;">Tüm ürünler raflarından eksiksiz şekilde toplandı ve doğrulandı. Sipariş paketleme masasına aktarılmaya hazır.</p>
+    
+    <div style="display:flex; gap:8px; width:100%; margin-top:8px;">
+      <a href="alinan-siparisler.html" class="btn-submit-picking" style="flex:1; background:#0f172a; text-decoration:none; height:34px;">
+        Sipariş Listesine Dön
+      </a>
+      <button class="btn-submit-picking" style="flex:1; background:#16a34a; height:34px;" onclick="closeSuccessModal()">
+        Paketlemeye Gönder
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // URL'den sipariş ID'sini al
+  const urlParams = new URLSearchParams(window.location.search);
+  const orderId = urlParams.get('orderId') || '68174';
+
+  const orderDataMock = {
+    "68174": {
+      ref: "1-WS-2-68174",
+      cari: "TUĞÇE DEMİRCAN İŞÖGÖREN",
+      items: [
+        { code: "SITS064", name: "Dental Cerrahi Alet Seti", raf: "11Z1", qty: 6, counted: 0, barcode: "8681444292187", img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=100&auto=format&fit=crop&q=80" }
+      ]
+    },
+    "69168": {
+      ref: "1-WS-2-69168",
+      cari: "NİKO KARAYANİDİ / MUAYENEHANE",
+      items: [
+        { code: "KMP019", name: "Kompozit Dolgu Rezin Tüpü", raf: "04A2", qty: 2, counted: 0, barcode: "8681992019481", img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=100&auto=format&fit=crop&q=80" }
+      ]
+    },
+    "69106": {
+      ref: "1-WS-2-69106",
+      cari: "BDO CÜNEYT KILIÇ",
+      items: [
+        { code: "ELV902", name: "Elevatör ve Lüksatör Seti", raf: "08B1", qty: 150, counted: 0, barcode: "8681883920194", img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=100&auto=format&fit=crop&q=80" },
+        { code: "FRZ104", name: "Elmas Frez Standı", raf: "02C3", qty: 123, counted: 0, barcode: "8681774829103", img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=100&auto=format&fit=crop&q=80" }
+      ]
+    },
+    "67521": {
+      ref: "1-WS-2-67521",
+      cari: "EMİRHAN ATICI",
+      items: [
+        { code: "AGZ001", name: "Ağız Aynası ve Sapı", raf: "01A1", qty: 2, counted: 0, barcode: "8681552910482", img: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=100&auto=format&fit=crop&q=80" }
+      ]
+    }
+  };
+
+  const currentOrder = orderDataMock[orderId] || orderDataMock["68174"];
+
+  // Başlık Bilgilerini Doldur
+  document.getElementById('orderRefDisplay').innerText = `Sipariş: #${currentOrder.ref} • ${currentOrder.cari}`;
+  
+  function renderItemsTable() {
+    const tbody = document.getElementById('itemsTableBody');
+    if (!tbody) return;
+
+    let totalQty = 0;
+    let totalCounted = 0;
+    let html = '';
+
+    currentOrder.items.forEach((item, index) => {
+      totalQty += item.qty;
+      totalCounted += item.counted;
+      const isComplete = item.counted >= item.qty;
+
+      html += `
+        <tr style="${isComplete ? 'background:#f0fdf4;' : ''}">
+          <td>
+            <div style="display:flex; align-items:center; gap:3px;">
+              <button class="btn-item-action" style="background:#2563eb; border-radius:3px;" title="Öncelikli"><i data-lucide="arrow-up" style="width:11px;height:11px;"></i></button>
+              <button class="btn-item-action" style="background:#dc2626; border-radius:3px;" title="İptal"><i data-lucide="x" style="width:11px;height:11px;"></i></button>
+            </div>
+          </td>
+          <td>
+            <img src="${item.img}" class="product-img-thumb" alt="${item.name}" onerror="this.src='https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=100&auto=format&fit=crop&q=80'">
+          </td>
+          <td>
+            <div style="font-weight:700; color:#2563eb; cursor:pointer;" onclick="selectActiveItem(${index})">${item.code}</div>
+            <div style="font-size:10px; color:#64748b;">${item.name}</div>
+          </td>
+          <td><strong style="font-size:12.5px;">${item.qty}</strong></td>
+          <td><span style="font-family:'JetBrains Mono', monospace; font-weight:800; background:#eff6ff; color:#1e40af; padding:1px 5px; border-radius:3px; border:1px solid #bfdbfe;">${item.raf}</span></td>
+          <td>
+            <span style="font-family:'JetBrains Mono', monospace; font-weight:800; color:${isComplete ? '#16a34a' : '#2563eb'}; font-size:13px;">
+              ${item.counted}
+            </span>
+          </td>
+          <td><span style="font-family:'JetBrains Mono', monospace; font-size:11px;">${item.barcode}</span></td>
+        </tr>
+      `;
+    });
+
+    tbody.innerHTML = html;
+
+    // Progress ve Üst Tabloyu Güncelle
+    const percent = Math.round((totalCounted / (totalQty || 1)) * 100);
+    document.getElementById('pickingProgressText').innerText = `${totalCounted} / ${totalQty} Adet Toplandı (%${percent})`;
+    document.getElementById('totalItemsSummaryText').innerText = `Toplam ${currentOrder.items.length} Kalem • ${totalQty} Adet (Kalan: ${totalQty - totalCounted})`;
+
+    const firstItem = currentOrder.items[0];
+    if (firstItem) {
+      document.getElementById('activeRaf').innerText = firstItem.raf;
+      document.getElementById('activeStokKodu').innerText = firstItem.code;
+      document.getElementById('activeBarkod').innerText = firstItem.barcode;
+      document.getElementById('activeTotalQty').innerText = firstItem.qty;
+      document.getElementById('activeCountedQty').innerText = firstItem.counted;
+      document.getElementById('inputRaf').value = firstItem.raf;
+    }
+
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+
+    // Eğer hepsi toplandıysa başarı modalını aç
+    if (totalCounted >= totalQty && totalQty > 0) {
+      document.getElementById('pickingSuccessModal').style.display = 'flex';
+    }
+  }
+
+  function submitPickingItem() {
+    const inputBarcode = (document.getElementById('inputBarcode')?.value || '').trim();
+    const qtyToAdd = parseInt(document.getElementById('inputQty')?.value || '1', 10) || 1;
+
+    let targetItem = null;
+    if (inputBarcode) {
+      targetItem = currentOrder.items.find(it => it.barcode === inputBarcode || it.code.toLowerCase() === inputBarcode.toLowerCase());
+    }
+    if (!targetItem) {
+      targetItem = currentOrder.items[0];
+    }
+
+    if (targetItem) {
+      targetItem.counted = Math.min(targetItem.qty, targetItem.counted + qtyToAdd);
+      showToast(`${targetItem.code} ürününden ${qtyToAdd} adet okutuldu ve eklendi.`);
+      document.getElementById('inputBarcode').value = '';
+      renderItemsTable();
+    }
+  }
+
+  function resetActiveItem() {
+    if (currentOrder.items[0]) {
+      currentOrder.items[0].counted = 0;
+      renderItemsTable();
+      showToast('Aktif kalem sıfırlandı.');
+    }
+  }
+
+  function toggleSettingsPanel() {
+    const panel = document.getElementById('settingsPanel');
+    const chevron = document.getElementById('settingsChevron');
+    if (panel) {
+      const isShown = panel.style.display === 'block';
+      panel.style.display = isShown ? 'none' : 'block';
+      if (chevron) chevron.style.transform = isShown ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('pickingToast');
+    const text = document.getElementById('toastMsgText');
+    if (toast && text) {
+      text.innerText = msg;
+      toast.style.display = 'flex';
+      setTimeout(() => { toast.style.display = 'none'; }, 2200);
+    }
+  }
+
+  function closeSuccessModal() {
+    document.getElementById('pickingSuccessModal').style.display = 'none';
+  }
+
+  // İlk Yükleme
+  renderItemsTable();
+</script>
+</body>
+</html>

@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Davye ERP - Alınan Siparişler (Depo İşlemleri)</title>
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg-app: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-zebra: #f0f6fe;
+      --border-color: #e2e8f0;
+      --border-hover: #cbd5e1;
+      --border-active: #bfdbfe;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --warning: #d97706;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-app);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: clip;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ÜST HEADER */
+    .davye-top-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 52px;
+      background: #0f172a;
+      color: #ffffff;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      border-bottom: 1px solid #1e293b;
+    }
+    .davye-header-container {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .davye-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .davye-logo-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .davye-logo-badge:hover {
+      background: #1e293b;
+    }
+    .davye-brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .davye-brand-title {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+    .davye-brand-subtitle {
+      font-size: 9px;
+      color: #94a3b8;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .davye-header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-badge-page {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #1e293b;
+      color: #93c5fd;
+      border: 1px solid #334155;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* ANA YERLEŞİM (LAYOUT) */
+    .app-layout-wrapper {
+      display: flex;
+      margin-top: 52px;
+      min-height: calc(100vh - 52px);
+      position: relative;
+    }
+
+    /* SOL SİDEBAR MENÜ */
+    .app-sidebar {
+      width: 250px;
+      background: #ffffff;
+      border-right: 1px solid var(--border-color);
+      position: fixed;
+      top: 52px;
+      bottom: 0;
+      left: 0;
+      z-index: 900;
+      overflow-y: auto;
+      padding: 12px 10px;
+      transition: transform 0.25s ease;
+    }
+    .sidebar-menu-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sidebar-menu-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-radius: 6px;
+      color: #334155;
+      text-decoration: none;
+      font-size: 12.5px;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+    .sidebar-menu-item:hover, .sidebar-menu-item.active {
+      background: #f1f5f9;
+      color: var(--primary);
+    }
+    .sidebar-item-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sidebar-item-left svg, .sidebar-item-left i {
+      width: 16px;
+      height: 16px;
+    }
+    .sidebar-sub-menu {
+      list-style: none;
+      padding-left: 26px;
+      margin-top: 2px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .sidebar-sub-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 8px;
+      border-radius: 5px;
+      color: #64748b;
+      text-decoration: none;
+      font-size: 11.5px;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .sidebar-sub-item:hover {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    .sidebar-sub-item.active {
+      background: #eff6ff;
+      color: #2563eb;
+      font-weight: 700;
+    }
+    .sidebar-sub-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #cbd5e1;
+    }
+    .sidebar-sub-item.active .sidebar-sub-dot {
+      background: #2563eb;
+    }
+
+    /* SAĞ ANA İÇERİK */
+    .app-main-content {
+      margin-left: 250px;
+      flex: 1;
+      padding: 16px 20px;
+      min-width: 0;
+    }
+
+    @media (max-width: 900px) {
+      .app-sidebar {
+        transform: translateX(-100%);
+      }
+      .app-sidebar.open {
+        transform: translateX(0);
+      }
+      .app-main-content {
+        margin-left: 0;
+        padding: 12px 10px;
+      }
+    }
+
+    /* ÜST TOOLBAR & FİLTRELER */
+    .page-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .page-title-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .page-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.3px;
+    }
+    .page-count-badge {
+      background: #e2e8f0;
+      color: #475569;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .top-toolbar-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+      max-width: 420px;
+    }
+    .search-input-wrap svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      color: #94a3b8;
+    }
+    .search-input {
+      width: 100%;
+      height: 32px;
+      padding: 0 10px 0 32px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 11.5px;
+      color: #0f172a;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    }
+
+    .filter-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 10px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-pill-btn:hover {
+      background: #f8fafc;
+      color: #0f172a;
+      border-color: #94a3b8;
+    }
+    .filter-pill-btn.active {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #2563eb;
+      font-weight: 700;
+    }
+
+    /* 12'Lİ SIRALAMA ÇUBUĞU */
+    .sort-bar-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      scrollbar-width: none;
+    }
+    .sort-bar-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+    .sort-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 9px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .sort-chip:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    .sort-chip.active-desc {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #2563eb;
+      font-weight: 700;
+    }
+    .sort-chip.active-asc {
+      background: #fefce8;
+      border-color: #fef08a;
+      color: #854d0e;
+      font-weight: 700;
+    }
+
+    /* SİPARİŞ KART LİSTESİ (ZEBRA STRIPING & CARD HIERARCHY) */
+    .orders-card-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .order-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 9px;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+    .order-card:nth-child(even) {
+      background: var(--bg-card-zebra);
+    }
+    .order-card:hover {
+      border-color: var(--border-hover);
+    }
+
+    /* KART BAŞLIĞI */
+    .card-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      gap: 8px;
+      flex-wrap: wrap;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .header-left-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .order-no-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #0f172a;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .cari-header-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f172a;
+      max-width: 32ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .order-card.expanded .cari-header-title {
+      display: none !important;
+    }
+
+    .badge-sales-rep {
+      font-size: 9.5px;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 1px 5px;
+      border-radius: 3px;
+      border: 1px solid #cbd5e1;
+    }
+
+    .header-right-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-qty-picked {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .badge-qty-picked.pending {
+      color: #d97706;
+      border-color: #fde68a;
+      background: #fffbeb;
+    }
+    .badge-qty-picked.completed {
+      color: #16a34a;
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+    }
+
+    .badge-payment-status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .badge-payment-status.paid {
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+    }
+    .badge-payment-status.unpaid {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+
+    .btn-pick-order {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: #2563eb;
+      color: #ffffff;
+      border: 1px solid #1d4ed8;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .btn-pick-order:hover {
+      background: #1d4ed8;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+    }
+    .btn-pick-order svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .btn-expand-arrow {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+    .order-card.expanded .btn-expand-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* KAPALI KART AÇIKLAMA SATIRI */
+    .card-desc-line {
+      padding: 3px 12px 5px 12px;
+      font-size: 10.5px;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-top: 1px dashed #e2e8f0;
+    }
+    .order-card.expanded .card-desc-line {
+      display: none !important;
+    }
+
+    /* KART GÖVDESİ (4 SÜTUN) */
+    .card-body-grid {
+      display: none;
+      grid-template-columns: 1.15fr 1.15fr 1.05fr 0.85fr;
+      padding: 9px 12px 10px 12px;
+      gap: 14px;
+      background: #ffffff;
+      border-bottom-left-radius: 9px;
+      border-bottom-right-radius: 9px;
+      border-top: 1px solid #f1f5f9;
+    }
+    .order-card.expanded .card-body-grid {
+      display: grid;
+      animation: slideDown 0.2s ease-out;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .grid-col {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+    }
+    .grid-col:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: -7px;
+      top: 2px;
+      bottom: 2px;
+      width: 1px;
+      background: #f1f5f9;
+    }
+
+    .col-title {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 3px;
+      padding-bottom: 2px;
+    }
+    .col-title svg {
+      width: 11px;
+      height: 11px;
+      color: #94a3b8;
+    }
+
+    .data-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      font-size: 10.5px;
+      line-height: 1.35;
+      gap: 6px;
+    }
+    .data-label {
+      color: #64748b;
+      font-size: 10px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .data-value {
+      color: #0f172a;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .finance-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+      text-align: right;
+      background: #fafbfc;
+      padding: 4px 6px;
+      border-radius: 5px;
+      border: 1px solid #f1f5f9;
+    }
+    .price-amount {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #0f172a;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* SAYFALAMA */
+    .pagination-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 6px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pagination-select-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      color: #475569;
+    }
+    .pagination-select {
+      height: 28px;
+      padding: 0 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 5px;
+      background: #ffffff;
+      font-size: 11px;
+      color: #0f172a;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ÜST HEADER -->
+<header class="davye-top-header">
+  <div class="davye-header-container">
+    <div class="davye-header-left">
+      <div class="davye-logo-badge" onclick="toggleSidebar()" title="Menüyü Aç/Kapat">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="9.75" y="3" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="16.5" y="3" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="3" y="9.75" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="9.75" y="9.75" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="16.5" y="9.75" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="3" y="16.5" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="9.75" y="16.5" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+          <rect x="16.5" y="16.5" width="4.5" height="4.5" rx="1.2" fill="white"></rect>
+        </svg>
+      </div>
+      <div class="davye-brand-info">
+        <span class="davye-brand-title">Davye</span>
+        <span class="davye-brand-subtitle">DEPO &amp; WMS YÖNETİMİ</span>
+      </div>
+    </div>
+    <div class="davye-header-right">
+      <div class="header-badge-page">
+        <i data-lucide="warehouse" style="width:12px; height:12px;"></i>
+        <span>Depo: Alınan Siparişler</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="app-layout-wrapper">
+  <!-- SOL SİDEBAR MENÜ -->
+  <aside class="app-sidebar" id="appSidebar">
+    <ul class="sidebar-menu-list">
+      <!-- 1. Toptan Sipariş -->
+      <li class="sidebar-menu-group">
+        <a href="javascript:void(0)" class="sidebar-menu-item">
+          <div class="sidebar-item-left">
+            <i data-lucide="shopping-cart"></i>
+            <span>Toptan Sipariş</span>
+          </div>
+          <i data-lucide="chevron-down"></i>
+        </a>
+        <ul class="sidebar-sub-menu">
+          <li><a href="index.html" class="sidebar-sub-item"><span class="sidebar-sub-dot"></span><span>Toptan Satış Siparişleri</span></a></li>
+        </ul>
+      </li>
+
+      <!-- 2. Depo İşlemleri -->
+      <li class="sidebar-menu-group">
+        <a href="javascript:void(0)" class="sidebar-menu-item active">
+          <div class="sidebar-item-left">
+            <i data-lucide="warehouse"></i>
+            <span>Depo İşlemleri</span>
+          </div>
+          <i data-lucide="chevron-down"></i>
+        </a>
+        <ul class="sidebar-sub-menu">
+          <li><a href="alinan-siparisler.html" class="sidebar-sub-item active"><span class="sidebar-sub-dot"></span><span>Alınan Siparişler</span></a></li>
+          <li><a href="siparis-toplama.html" class="sidebar-sub-item"><span class="sidebar-sub-dot"></span><span>Sipariş Toplama (WMS)</span></a></li>
+          <li><a href="javascript:void(0)" class="sidebar-sub-item"><span class="sidebar-sub-dot"></span><span>Raf Sayımı (Komple)</span></a></li>
+          <li><a href="javascript:void(0)" class="sidebar-sub-item"><span class="sidebar-sub-dot"></span><span>Rafa Ürün Ekle</span></a></li>
+          <li><a href="javascript:void(0)" class="sidebar-sub-item"><span class="sidebar-sub-dot"></span><span>Raftan Ürün Çıkar</span></a></li>
+        </ul>
+      </li>
+
+      <!-- 3. Sistem Dökümantasyonu -->
+      <li class="sidebar-menu-group">
+        <a href="documantations/index.html" class="sidebar-menu-item">
+          <div class="sidebar-item-left">
+            <i data-lucide="book-open"></i>
+            <span>Dökümantasyon</span>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- ANA İÇERİK -->
+  <main class="app-main-content">
+    <div class="page-header-bar">
+      <div class="page-title-group">
+        <h1 class="page-title">Alınan Siparişler</h1>
+        <span class="page-count-badge" id="totalOrderBadge">4 Sipariş</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button class="filter-pill-btn" onclick="location.reload()"><i data-lucide="refresh-cw" style="width:12px;height:12px;"></i> Yenile</button>
+      </div>
+    </div>
+
+    <!-- ÜST TOOLBAR & ARAMA & FİLTRELER -->
+    <div class="top-toolbar-card">
+      <div class="search-input-wrap">
+        <i data-lucide="search"></i>
+        <input type="text" id="warehouseSearch" class="search-input" placeholder="Sipariş Ref, Cari Adı, Stok, VKN veya Telefon ara..." oninput="filterWarehouseOrders()">
+      </div>
+
+      <div class="filter-pills-row">
+        <button class="filter-pill-btn active" data-filter="all" onclick="setWarehouseFilter('all', this)">Tümü (4)</button>
+        <button class="filter-pill-btn" data-filter="pending" onclick="setWarehouseFilter('pending', this)">Toplama Bekliyor (4)</button>
+        <button class="filter-pill-btn" data-filter="MD" onclick="setWarehouseFilter('MD', this)">Merkez Depo (MD)</button>
+        <button class="filter-pill-btn" data-filter="paid" onclick="setWarehouseFilter('paid', this)">Ödenenler</button>
+      </div>
+    </div>
+
+    <!-- 12'Lİ SIRALAMA ÇUBUĞU -->
+    <div class="sort-bar-wrapper">
+      <button class="sort-chip active-desc" onclick="sortWarehouseOrders('date', this)">Tarih ↓</button>
+      <button class="sort-chip" onclick="sortWarehouseOrders('ref', this)">Sipariş Ref ⇄</button>
+      <button class="sort-chip" onclick="sortWarehouseOrders('cari', this)">Cari Ünvan ⇄</button>
+      <button class="sort-chip" onclick="sortWarehouseOrders('qty', this)">Miktar ⇄</button>
+      <button class="sort-chip" onclick="sortWarehouseOrders('remaining', this)">Kalan Miktar ⇄</button>
+      <button class="sort-chip" onclick="sortWarehouseOrders('price', this)">Tutar ⇄</button>
+      <button class="sort-chip" onclick="sortWarehouseOrders('vade', this)">Vade Tarihi ⇄</button>
+      <button class="sort-chip" onclick="sortWarehouseOrders('salesRep', this)">Satış Sorumlusu ⇄</button>
+    </div>
+
+    <!-- SİPARİŞ KARTLARI LİSTESİ -->
+    <div class="orders-card-list" id="warehouseOrderList">
+      <!-- JS ile dinamik render edilir -->
+    </div>
+
+    <!-- SAYFALAMA -->
+    <div class="pagination-bar">
+      <div class="pagination-select-wrap">
+        <span>Sayfa Başına:</span>
+        <select class="pagination-select">
+          <option>25 Kayıt</option>
+          <option>50 Kayıt</option>
+          <option>100 Kayıt</option>
+        </select>
+        <span style="font-weight:700; font-family:'JetBrains Mono', monospace;">1-4 / 4 Sipariş</span>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  const warehouseOrders = [
+    {
+      id: "68174",
+      orderRef: "1-WS-2-68174",
+      date: "24 / 08 / 2026 18:32",
+      user: "Davut Akbulut",
+      cariName: "TUĞÇE DEMİRCAN İŞÖGÖREN",
+      cariCode: "1-S-68181",
+      cariType: "Kurumsal Özel",
+      taxId: "2800811820",
+      phone: "905074563251",
+      salesRep: "DENTAL PİYASA",
+      desc: "DP-46109 • Acil cerrahi sevk",
+      paymentAmount: "581,00 ₺",
+      totalPrice: "581,00 ₺",
+      isPayed: true,
+      qty: 6,
+      pickedQty: 0,
+      remainingQty: 6,
+      delivery: "KARGO (DHL)",
+      depo: "MD",
+      vade: "31 / 08 / 2026",
+      items: [
+        { code: "SITS064", name: "Dental Cerrahi Alet Seti", raf: "11Z1", qty: 6, counted: 0, barcode: "8681444292187" }
+      ]
+    },
+    {
+      id: "69168",
+      orderRef: "1-WS-2-69168",
+      date: "24 / 08 / 2026 17:34",
+      user: "Davut Akbulut",
+      cariName: "NİKO KARAYANİDİ / MUAYENEHANE",
+      cariCode: "1-S-73443",
+      cariType: "Şahıs Özel",
+      taxId: "1007360080",
+      phone: "905321112233",
+      salesRep: "DENTAL PİYASA",
+      desc: "DP-46219",
+      paymentAmount: "1.830,00 ₺",
+      totalPrice: "1.830,00 ₺",
+      isPayed: true,
+      qty: 2,
+      pickedQty: 0,
+      remainingQty: 2,
+      delivery: "KARGO (TEX)",
+      depo: "MD",
+      vade: "31 / 08 / 2026",
+      items: [
+        { code: "KMP019", name: "Kompozit Dolgu Rezin Tüpü", raf: "04A2", qty: 2, counted: 0, barcode: "8681992019481" }
+      ]
+    },
+    {
+      id: "69106",
+      orderRef: "1-WS-2-69106",
+      date: "24 / 08 / 2026 12:51",
+      user: "CÜNEYT KILIÇ",
+      cariName: "BDO CÜNEYT KILIÇ",
+      cariCode: "000",
+      cariType: "Kurumsal Klinik",
+      taxId: "2222222222",
+      phone: "05375999655",
+      salesRep: "CÜNEYT KILIÇ",
+      desc: "1-WS-2-69106 nolu sipariş sevkıyatı",
+      paymentAmount: "116.346,00 ₺",
+      totalPrice: "116.346,00 ₺",
+      isPayed: true,
+      qty: 273,
+      pickedQty: 0,
+      remainingQty: 273,
+      delivery: "KARGO (DHL)",
+      depo: "MD",
+      vade: "31 / 08 / 2026",
+      items: [
+        { code: "ELV902", name: "Elevatör ve Lüksatör Seti", raf: "08B1", qty: 150, counted: 0, barcode: "8681883920194" },
+        { code: "FRZ104", name: "Elmas Frez Standı", raf: "02C3", qty: 123, counted: 0, barcode: "8681774829103" }
+      ]
+    },
+    {
+      id: "67521",
+      orderRef: "1-WS-2-67521",
+      date: "17 / 06 / 2026 13:25",
+      user: "Davut Akbulut",
+      cariName: "EMİRHAN ATICI",
+      cariCode: "1-S-73436",
+      cariType: "Pazaryeri Müşterisi",
+      taxId: "1111111111",
+      phone: "905554443322",
+      salesRep: "HEPSİ BURADA",
+      desc: "HB-HBV000004LJ3R/2608102199",
+      paymentAmount: "0,00 ₺",
+      totalPrice: "7,00 ₺",
+      isPayed: false,
+      qty: 2,
+      pickedQty: 0,
+      remainingQty: 2,
+      delivery: "KARGO (HepsiJet)",
+      depo: "MD",
+      vade: "24 / 08 / 2025",
+      items: [
+        { code: "AGZ001", name: "Ağız Aynası ve Sapı", raf: "01A1", qty: 2, counted: 0, barcode: "8681552910482" }
+      ]
+    }
+  ];
+
+  let currentFilter = 'all';
+
+  function renderWarehouseOrders(list) {
+    const container = document.getElementById('warehouseOrderList');
+    if (!container) return;
+
+    if (list.length === 0) {
+      container.innerHTML = `<div style="text-align:center; padding:30px; background:#fff; border-radius:8px; border:1px solid #e2e8f0; color:#64748b;">Eşleşen sipariş bulunamadı.</div>`;
+      return;
+    }
+
+    let html = '';
+    list.forEach(order => {
+      html += `
+        <div class="order-card" id="card-${order.id}">
+          <div class="card-header-bar" onclick="toggleOrderCard('${order.id}')">
+            <div class="header-left-group">
+              <span class="order-no-badge">#${order.orderRef.split('-').pop()}</span>
+              <span class="cari-header-title"><i data-lucide="building-2" style="width:13px;height:13px;color:#3b82f6;"></i> ${order.cariName}</span>
+              <span class="badge-sales-rep">${order.salesRep}</span>
+              <span style="font-size:10.5px; color:#64748b; font-family:'JetBrains Mono', monospace;">${order.date}</span>
+            </div>
+
+            <div class="header-right-group">
+              <span class="badge-qty-picked ${order.pickedQty === order.qty ? 'completed' : 'pending'}">
+                <i data-lucide="package-check" style="width:12px;height:12px;"></i>
+                ${order.pickedQty} / ${order.qty} Adet Toplandı
+              </span>
+              <span class="badge-payment-status ${order.isPayed ? 'paid' : 'unpaid'}" title="${order.isPayed ? 'Ödendi' : 'Ödenmedi'}">
+                ${order.isPayed ? '✔' : '✕'}
+              </span>
+              <a href="siparis-toplama.html?orderId=${order.id}" class="btn-pick-order" onclick="event.stopPropagation()">
+                <i data-lucide="scan-barcode"></i> Siparişi Topla
+              </a>
+              <button type="button" class="btn-expand-arrow">
+                <i data-lucide="chevron-down" style="width:16px;height:16px;"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="card-desc-line">
+            <i data-lucide="file-text" style="width:11px;height:11px;"></i>
+            <span>Açıklama: ${order.desc}</span>
+            <span style="margin-left:auto; font-family:'JetBrains Mono', monospace;">VKN: ${order.taxId} • Tel: ${order.phone}</span>
+          </div>
+
+          <!-- AÇILAN 4 SÜTUNLU GÖVDE -->
+          <div class="card-body-grid">
+            <!-- 1. SÜTUN: Cari & Müşteri -->
+            <div class="grid-col">
+              <div class="col-title"><i data-lucide="building-2"></i> Cari &amp; Müşteri Detayı</div>
+              <div class="data-row"><span class="data-label">Ünvan:</span> <span class="data-value" style="font-weight:700;">${order.cariName}</span></div>
+              <div class="data-row"><span class="data-label">Cari Kod:</span> <span class="data-value" style="color:#2563eb; font-family:'JetBrains Mono', monospace;">${order.cariCode}</span></div>
+              <div class="data-row"><span class="data-label">VKN/TCKN:</span> <span class="data-value" style="font-family:'JetBrains Mono', monospace;">${order.taxId}</span></div>
+              <div class="data-row"><span class="data-label">Telefon:</span> <span class="data-value" style="font-family:'JetBrains Mono', monospace;">${order.phone}</span></div>
+            </div>
+
+            <!-- 2. SÜTUN: Lojistik & Sipariş -->
+            <div class="grid-col">
+              <div class="col-title"><i data-lucide="truck"></i> Lojistik &amp; Sevkiyat</div>
+              <div class="data-row"><span class="data-label">Sipariş Ref:</span> <span class="data-value" style="font-family:'JetBrains Mono', monospace; font-weight:700;">${order.orderRef}</span></div>
+              <div class="data-row"><span class="data-label">Depo Kodu:</span> <span class="data-value" style="font-weight:700; color:#0f172a;">${order.depo}</span></div>
+              <div class="data-row"><span class="data-label">Teslimat:</span> <span class="data-value">${order.delivery}</span></div>
+              <div class="data-row"><span class="data-label">Kullanıcı:</span> <span class="data-value">${order.user}</span></div>
+            </div>
+
+            <!-- 3. SÜTUN: Toplama Durumu & Raf -->
+            <div class="grid-col">
+              <div class="col-title"><i data-lucide="layers"></i> Raf &amp; Kalem Bilgisi</div>
+              <div class="data-row"><span class="data-label">Toplam Miktar:</span> <span class="data-value" style="font-weight:700;">${order.qty} Adet</span></div>
+              <div class="data-row"><span class="data-label">Toplanan:</span> <span class="data-value" style="color:#16a34a; font-weight:700;">${order.pickedQty} Adet</span></div>
+              <div class="data-row"><span class="data-label">Kalan Miktar:</span> <span class="data-value" style="color:#dc2626; font-weight:700;">${order.remainingQty} Adet</span></div>
+              <div class="data-row"><span class="data-label">Ort. Vade:</span> <span class="data-value" style="font-family:'JetBrains Mono', monospace;">${order.vade}</span></div>
+            </div>
+
+            <!-- 4. SÜTUN: Finansal Özet -->
+            <div class="grid-col finance-col">
+              <div>
+                <div class="data-label" style="text-align:right;">Toplam Tutar</div>
+                <div class="price-amount">${order.totalPrice}</div>
+              </div>
+              <div style="margin-top:4px;">
+                <div class="data-label" style="text-align:right;">Ödeme: ${order.isPayed ? 'Ödendi' : 'Ödenmedi'}</div>
+                <a href="siparis-toplama.html?orderId=${order.id}" class="btn-pick-order" style="margin-top:4px; width:100%; justify-content:center;">
+                  <i data-lucide="scan"></i> Raftan Topla
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+  }
+
+  function toggleOrderCard(id) {
+    const card = document.getElementById(`card-${id}`);
+    if (card) {
+      card.classList.toggle('expanded');
+    }
+  }
+
+  function filterWarehouseOrders() {
+    const query = (document.getElementById('warehouseSearch')?.value || '').toLowerCase().trim();
+    let filtered = warehouseOrders.filter(o => {
+      const matchQuery = !query || 
+        o.orderRef.toLowerCase().includes(query) ||
+        o.cariName.toLowerCase().includes(query) ||
+        o.taxId.includes(query) ||
+        o.phone.includes(query) ||
+        o.salesRep.toLowerCase().includes(query);
+
+      let matchFilter = true;
+      if (currentFilter === 'pending') matchFilter = o.pickedQty < o.qty;
+      if (currentFilter === 'MD') matchFilter = o.depo === 'MD';
+      if (currentFilter === 'paid') matchFilter = o.isPayed;
+
+      return matchQuery && matchFilter;
+    });
+
+    renderWarehouseOrders(filtered);
+    const badge = document.getElementById('totalOrderBadge');
+    if (badge) badge.innerText = `${filtered.length} Sipariş`;
+  }
+
+  function setWarehouseFilter(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    filterWarehouseOrders();
+  }
+
+  function sortWarehouseOrders(key, btn) {
+    document.querySelectorAll('.sort-chip').forEach(b => {
+      b.classList.remove('active-desc', 'active-asc');
+      b.innerText = b.innerText.replace('↓', '⇄').replace('↑', '⇄');
+    });
+
+    if (btn) {
+      btn.classList.add('active-desc');
+      btn.innerText = btn.innerText.replace('⇄', '↓');
+    }
+
+    warehouseOrders.sort((a, b) => {
+      if (key === 'price') return parseFloat(b.totalPrice) - parseFloat(a.totalPrice);
+      if (key === 'qty') return b.qty - a.qty;
+      if (key === 'remaining') return b.remainingQty - a.remainingQty;
+      if (key === 'cari') return a.cariName.localeCompare(b.cariName);
+      return b.id.localeCompare(a.id);
+    });
+
+    filterWarehouseOrders();
+  }
+
+  function toggleSidebar() {
+    const sidebar = document.getElementById('appSidebar');
+    if (sidebar) sidebar.classList.toggle('open');
+  }
+
+  // İlk Yükleme
+  renderWarehouseOrders(warehouseOrders);
+</script>
+</body>
+</html>

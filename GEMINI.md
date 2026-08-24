@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme, Tasarım ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 24 / 08 / 2026 20:00  
+> **Son Sistem Güncellemesi:** 24 / 08 / 2026 21:00  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme, UI/UX tasarımı veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -173,6 +173,20 @@ Her kartın işlemler menüsünde şu 7 aksiyon eksiksiz yer alır:
 ### T. Tekil JavaScript Motoru ve Global Kapsam Mimarisi
 1. Sayfa altında ayrık `<script>` blokları yerine tüm veri modelleri (`ordersDatabase`, `cargoDatabase`), filtreleme motoru, 12'li sıralama, sayfalama ve modal yöneticisi **tek bir konsolide `<script>` bloğunda** toplanır.
 2. Tüm UI fonksiyonları (`cycleSort`, `filterCards`, `applyGlobalFilters`, `openReceiptModal`, `openDetailModal`, `startOnboardingTour` vb.) doğrudan `window.*` nesnesine açıkça export edilerek 0ms gecikmeli ve `ReferenceError` riskinden arındırılmış çalışması sağlanır.
+
+---
+
+### U. Depo Alınan Siparişler & WMS Akıllı Raf Toplama Sistemi (`alinan-siparisler.html` & `siparis-toplama.html`)
+1. **Alınan Siparişler Sayfası (`alinan-siparisler.html`):**
+   * Sol sidebar **Depo İşlemleri ➔ Alınan Siparişler** altından erişilir.
+   * Gelen toptan siparişleri Ref No (`1-WS-2-68174`), Cari Ünvan, Ödeme Durumu (`IsPayed`), Toplanan/Kalan Adet, Vade ve Depo (`MD`) bilgileriyle zebra striping kart yapısında listeler.
+   * Kart üstündeki **"Siparişi Topla ➔"** butonu ile sipariş detayları doğrudan Akıllı Toplama Ekranına (`siparis-toplama.html?orderId=...`) aktarılır.
+2. **Akıllı Raf Toplama Ekranı (`siparis-toplama.html`):**
+   * Üstte 9'lu WMS aksiyon araç çubuğu (Kaydet, Bilgi, Fotoğraf, Etiket, Arama, Koli, Geçmiş, Yenile, Paket).
+   * Aktif kalem tablosu (Raf `11Z1`, Stok Kodu `SITS064`, Barkod `8681444292187`, Toplam Sipariş, Sayılan Miktar).
+   * Barkod okutma ve hızlı raf giriş formu (Raf No, Barkod okutma alanı, Paket No, Miktar, Parti, SKT ve "Ekle" butonu).
+   * Toplanacak ürünler tablosu (Ürün resmi, Madde kodu, Miktar, Raf, `CountedQty`, Barkod).
+   * Barkod okutulduğunda `CountedQty` anlık artar; tüm ürünler toplandığında **"Toplama Tamamlandı! Paketlemeye Gönder"** modalı açılır.
 
 ---
 
