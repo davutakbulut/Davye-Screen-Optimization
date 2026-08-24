@@ -17180,11 +17180,15 @@
     currentActiveOrderId = orderId;
     const order = ordersDatabase[orderId] || {};
     
-    document.getElementById('modalOrderNo').innerText = `#${order.orderNo || orderId}`;
-    document.getElementById('modalStatusPills').innerHTML = order.statusPillsHtml || '<span class="status-pill pill-taslak">Taslak</span>';
-    document.getElementById('modalOrderDate').innerText = order.date || '21 / 08 / 2026';
-    document.getElementById('modalDepoBadge').innerText = order.depo || 'MD';
-    document.getElementById('modalSalesRep').innerText = order.salesRep || 'MERKEZ DEPO';
+    const titleEl = document.getElementById('modalOrderNo');
+    if (titleEl) {
+      titleEl.innerHTML = `<i data-lucide="package"></i> Sipariş #${order.orderNo || orderId}`;
+    }
+    
+    const badgeEl = document.getElementById('modalStatusBadge');
+    if (badgeEl) {
+      badgeEl.innerHTML = order.statusPillsHtml || '<span class="status-pill pill-taslak">Taslak</span>';
+    }
 
     // Ürün Kalemleri Tablosu
     let itemsHtml = '';
@@ -17192,11 +17196,11 @@
       order.items.forEach(item => {
         itemsHtml += `
           <tr>
-            <td style="font-family:'JetBrains Mono', monospace; font-weight:700; color:#2563eb;">${item.code}</td>
-            <td style="font-weight:600; color:#1e293b;">${item.name}</td>
-            <td style="text-align:center; font-weight:700; color:#0f172a;">${item.qty} Adet</td>
-            <td style="text-align:right; font-weight:600; color:#64748b;">${item.price}</td>
-            <td style="text-align:right; font-weight:700; color:#0f172a;">${item.total}</td>
+            <td style="font-family:'JetBrains Mono', monospace; font-weight:700; color:#2563eb;">${item.code || '-'}</td>
+            <td style="font-weight:600; color:#1e293b;">${item.name || '-'}</td>
+            <td style="text-align:center; font-weight:700; color:#0f172a;">${item.qty || 1} Adet</td>
+            <td style="text-align:right; font-weight:600; color:#64748b;">${item.price || '0,00 ₺'}</td>
+            <td style="text-align:right; font-weight:700; color:#0f172a;">${item.total || '0,00 ₺'}</td>
           </tr>
         `;
       });
@@ -17299,8 +17303,11 @@
       </div>
     `;
 
-    document.getElementById('modalBodyContent').innerHTML = bodyHtml;
-    document.getElementById('orderDetailModal').classList.add('show');
+    const bodyEl = document.getElementById('modalBodyContent');
+    if (bodyEl) bodyEl.innerHTML = bodyHtml;
+    
+    const modal = document.getElementById('orderDetailModal');
+    if (modal) modal.classList.add('show');
     if (window.lucide && lucide.createIcons) lucide.createIcons();
   }
 
@@ -17309,16 +17316,76 @@
     currentActiveOrderId = orderId;
     const order = ordersDatabase[orderId] || {};
     
-    const cariNameEl = document.getElementById('modalCustomerCariName');
-    if (cariNameEl) cariNameEl.innerText = order.cariName || 'Müşteri Detayı';
-    
-    const modal = document.getElementById('customerDetailModal') || document.getElementById('orderDetailModal');
-    if (modal) {
-      modal.classList.add('show');
-      if (window.lucide && lucide.createIcons) lucide.createIcons();
-    } else {
-      openDetailModal(orderId);
+    const cariNameEl = document.getElementById('modalCustomerName');
+    if (cariNameEl) {
+      cariNameEl.innerHTML = `<i data-lucide="building-2" style="color:#2563eb;"></i> ${order.cariName || 'Müşteri Detayı'}`;
     }
+    
+    const subtitleEl = document.getElementById('modalCustomerSubtitle');
+    if (subtitleEl) {
+      subtitleEl.innerText = `${order.cariType || 'Tüzel Kurumsal'} • ${order.idLabel || 'VKN'}: ${order.taxId || '-'}`;
+    }
+
+    const bodyEl = document.getElementById('modalCustomerBody');
+    if (bodyEl) {
+      bodyEl.innerHTML = `
+        <div class="modal-box" style="margin-bottom:0;">
+          <div class="modal-box-title">
+            <i data-lucide="user-check"></i> Cari Kimlik &amp; Resmi Bilgiler
+          </div>
+          <div class="modal-grid-2">
+            <div class="modal-field">
+              <span class="modal-field-label">Cari Ünvan</span>
+              <span class="modal-field-val" style="font-weight:700; color:#0f172a;">${order.cariName || '-'}</span>
+            </div>
+            <div class="modal-field">
+              <span class="modal-field-label">Müşteri Segmenti</span>
+              <span class="modal-field-val" style="color:#2563eb; font-weight:700;">${order.cariType || 'Kurumsal Diş Kliniği'}</span>
+            </div>
+            <div class="modal-field">
+              <span class="modal-field-label">Vergi Dairesi / No</span>
+              <span class="modal-field-val" style="font-family:'JetBrains Mono', monospace;">${order.taxOffice || 'Kadıköy V.D.'} • ${order.taxId || '-'}</span>
+            </div>
+            <div class="modal-field">
+              <span class="modal-field-label">GLN &amp; ÜTS</span>
+              <span class="modal-field-val" style="font-family:'JetBrains Mono', monospace;">${order.gln || '-'} / ${order.uts || '-'}</span>
+            </div>
+            <div class="modal-field" style="grid-column: 1 / -1;">
+              <span class="modal-field-label">Kayıtlı Sevkiyat / Fatura Adresi</span>
+              <span class="modal-field-val">${order.address || '-'}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-box" style="margin-bottom:0; background:#f8fafc;">
+          <div class="modal-box-title">
+            <i data-lucide="trending-up"></i> Müşteri ERP &amp; Ticari Özeti
+          </div>
+          <div class="modal-grid-2">
+            <div class="modal-field">
+              <span class="modal-field-label">İlgili Satış Temsilcisi</span>
+              <span class="modal-field-val" style="font-weight:700; color:#0f172a;">${order.salesRep || 'MERKEZ DEPO'}</span>
+            </div>
+            <div class="modal-field">
+              <span class="modal-field-label">Varsayılan Depo</span>
+              <span class="modal-field-val" style="font-weight:700;">${order.depo === 'ED' ? 'ED (Ecza Deposu)' : 'MD (Dental Merkez Depo)'}</span>
+            </div>
+            <div class="modal-field">
+              <span class="modal-field-label">Son Sipariş Kodu</span>
+              <span class="modal-field-val" style="font-family:'JetBrains Mono', monospace; font-weight:700; color:#2563eb;">#${orderId}</span>
+            </div>
+            <div class="modal-field">
+              <span class="modal-field-label">Son Sipariş Tutarı</span>
+              <span class="modal-field-val" style="font-weight:800; color:#0f172a;">${order.totalPrice || '0,00 ₺'}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    const modal = document.getElementById('customerDetailModal') || document.getElementById('orderDetailModal');
+    if (modal) modal.classList.add('show');
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
   }
 
   // 3. Not Ekle Modalını Aç
@@ -17484,7 +17551,7 @@
     ) && !order.statusClass.includes('status-kargoda') && !order.statusClass.includes('status-teslim-edildi') && !order.statusClass.includes('status-iade');
 
     if (isPreCargo) {
-      if (order.statusClass.includes('status-paketlendi') || order.statusClass.includes('status-kargo-bekliyor') || order.statusClass.includes('status-paketleme-bekliyor')) {
+      if (order.statusClass && (order.statusClass.includes('status-paketlendi') || order.statusClass.includes('status-kargo-bekliyor') || order.statusClass.includes('status-paketleme-bekliyor'))) {
         openBarcodeModal(orderId);
       } else {
         openDetailModal(orderId);
@@ -17699,6 +17766,8 @@
       if (typeof closeFilterDrawer === 'function') closeFilterDrawer();
     }
   });
+
+
 
   function updateChipIcon(chip, state) {
     const indicator = chip.querySelector('.sort-indicator');
