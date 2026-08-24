@@ -5244,17 +5244,26 @@
 
       <!-- 2. Durum Sekmeleri (Status Filters - Mobilde Yatay Kayan Tek Satır) -->
       <div class="status-filters">
-        <button type="button" class="filter-tab active" onclick="setWarehouseFilter('all', this)">
+        <button type="button" class="filter-tab" onclick="setWarehouseFilter('all', this)">
           Tümü <span class="tab-count" id="countAll">13</span>
         </button>
-        <button type="button" class="filter-tab" onclick="setWarehouseFilter('pending', this)">
-          Toplama Bekliyor <span class="tab-count" id="countPending">7</span>
-        </button>
-        <button type="button" class="filter-tab" onclick="setWarehouseFilter('pickable', this)">
+        <button type="button" class="filter-tab active" onclick="setWarehouseFilter('pickable', this)">
           Toplanabilir <span class="tab-count" id="countPickable">10</span>
         </button>
         <button type="button" class="filter-tab" onclick="setWarehouseFilter('unpickable', this)">
           Toplanamaz <span class="tab-count" id="countUnpickable">3</span>
+        </button>
+        <button type="button" class="filter-tab" onclick="setWarehouseFilter('collected', this)">
+          Toplanan <span class="tab-count" id="countCollected">6</span>
+        </button>
+        <button type="button" class="filter-tab" onclick="setWarehouseFilter('partial-invoiced', this)">
+          Kısmi Faturalandırılan <span class="tab-count" id="countPartialInvoiced">2</span>
+        </button>
+        <button type="button" class="filter-tab" onclick="setWarehouseFilter('missing-items', this)">
+          Eksik Ürünlü <span class="tab-count" id="countMissingItems">2</span>
+        </button>
+        <button type="button" class="filter-tab" onclick="setWarehouseFilter('cancelled', this)">
+          İptal Edilen <span class="tab-count" id="countCancelled">1</span>
         </button>
       </div>
 
@@ -5366,6 +5375,7 @@
     {
       id: "67647",
       orderRef: "1-WS-2-67647",
+      isPartialInvoiced: true,
       faturaRef: "1-WS-7-124142",
       date: "19 / 08 / 2026",
       time: "13:53:45",
@@ -5450,6 +5460,7 @@
     {
       id: "67593",
       orderRef: "1-WS-2-67593",
+      isCancelled: true,
       faturaRef: "1-WS-7-124104",
       date: "18 / 08 / 2026",
       time: "00:37:26",
@@ -5506,6 +5517,8 @@
     {
       id: "67585",
       orderRef: "1-WS-2-67585",
+      isPartialInvoiced: true,
+      hasShortage: true,
       faturaRef: "1-WS-7-124095",
       date: "17 / 08 / 2026",
       time: "20:37:30",
@@ -5590,6 +5603,7 @@
     {
       id: "67573",
       orderRef: "1-WS-2-67573",
+      hasShortage: true,
       faturaRef: "1-WS-7-124071",
       date: "17 / 08 / 2026",
       time: "16:42:18",
@@ -5701,7 +5715,7 @@
     }
   ];
 
-  let activeFilter = 'all';
+  let activeFilter = 'pickable';
 
   function renderWarehouseCards(list) {
     const container = document.getElementById('warehouseCardsContainer');
@@ -5915,9 +5929,12 @@
         (o.user && o.user.toLowerCase().includes(query));
 
       let matchFilter = true;
-      if (activeFilter === 'pending') matchFilter = o.pickedQty < o.qty;
       if (activeFilter === 'pickable') matchFilter = o.isPickable && !o.isCancelled;
-      if (activeFilter === 'unpickable') matchFilter = !o.isPickable || o.isCancelled;
+      else if (activeFilter === 'unpickable') matchFilter = !o.isPickable || o.isCancelled;
+      else if (activeFilter === 'collected') matchFilter = o.pickedQty >= o.qty && !o.isCancelled;
+      else if (activeFilter === 'partial-invoiced') matchFilter = !!o.isPartialInvoiced;
+      else if (activeFilter === 'missing-items') matchFilter = !!o.hasShortage;
+      else if (activeFilter === 'cancelled') matchFilter = !!o.isCancelled;
 
       return matchQuery && matchFilter;
     });
@@ -5993,21 +6010,26 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -6069,21 +6091,26 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -6125,21 +6152,26 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -6201,21 +6233,26 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -6251,21 +6288,26 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -6327,21 +6369,26 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -6508,21 +6555,26 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -6584,21 +6636,26 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -6640,21 +6697,26 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -6716,21 +6778,26 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -6766,21 +6833,26 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -6842,21 +6914,26 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -6938,21 +7015,26 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -7014,21 +7096,26 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -7070,21 +7157,26 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -7146,21 +7238,26 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -7196,21 +7293,26 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -7272,21 +7374,26 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -7428,21 +7535,26 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -7504,21 +7616,26 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -7560,21 +7677,26 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -7636,21 +7758,26 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -7686,21 +7813,26 @@
     
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
@@ -7762,21 +7894,26 @@
   
   function updateFilterCounters() {
     const total = warehouseDatabase.length;
-    const pending = warehouseDatabase.filter(o => o.pickedQty < o.qty).length;
     const pickable = warehouseDatabase.filter(o => o.isPickable && !o.isCancelled).length;
     const unpickable = warehouseDatabase.filter(o => !o.isPickable || o.isCancelled).length;
+    const collected = warehouseDatabase.filter(o => o.pickedQty >= o.qty && !o.isCancelled).length;
+    const partialInvoiced = warehouseDatabase.filter(o => o.isPartialInvoiced).length;
+    const missingItems = warehouseDatabase.filter(o => o.hasShortage).length;
+    const cancelled = warehouseDatabase.filter(o => o.isCancelled).length;
 
-    const countAllEl = document.getElementById('countAll');
-    const countPendingEl = document.getElementById('countPending');
-    const countPickableEl = document.getElementById('countPickable');
-    const countUnpickableEl = document.getElementById('countUnpickable');
-    const totalBadgeEl = document.getElementById('totalCountBadge');
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el) el.innerText = val;
+    };
 
-    if (countAllEl) countAllEl.innerText = total;
-    if (countPendingEl) countPendingEl.innerText = pending;
-    if (countPickableEl) countPickableEl.innerText = pickable;
-    if (countUnpickableEl) countUnpickableEl.innerText = unpickable;
-    if (totalBadgeEl) totalBadgeEl.innerText = `${total} Sipariş`;
+    setVal('countAll', total);
+    setVal('countPickable', pickable);
+    setVal('countUnpickable', unpickable);
+    setVal('countCollected', collected);
+    setVal('countPartialInvoiced', partialInvoiced);
+    setVal('countMissingItems', missingItems);
+    setVal('countCancelled', cancelled);
+    setVal('totalCountBadge', `${total} Sipariş`);
   }
 
   updateFilterCounters();
