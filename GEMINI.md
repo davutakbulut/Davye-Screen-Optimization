@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 24 / 08 / 2026 13:55  
+> **Son Sistem Güncellemesi:** 24 / 08 / 2026 17:25  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -136,6 +136,14 @@ Her kartın işlemler menüsünde şu 6 aksiyon eksiksiz yer alır:
    - **Kart Üzerindeki Buton:** `.cargo-tracking-btn.btn-warning` (Kehribar sarısı zemin, uyarı üçgen ikonu, örn: `⚠️ Hareketsiz (DHL: ...)`, `⚠️ Takıldı (TEX: ...)`).
    - **Canlı Kargo Takip Modalı:** En üstte dikkat çekici `cargo-inactivity-alert` uyarı paneli, hareketsiz geçen süre ve gerekçe metni yer alır.
    - **Zaman Çizelgesi (Timeline):** Takılan kargo adımının düğümü ve başlığı uyarı durumunda (`.cargo-step.warning`) kehribar renginde vurgulanır.
+
+---
+
+### P. 19-Adımlı Bütünsel İnteraktif Sayfa Tanıtım Turu (.onboarding-overlay & .onboarding-popover)
+1. **Kapsam:** Panelin tüm bileşenlerini sırasıyla gezen 19 adımlı tanıtım motoru uygulanır (1: Header, 2: Sol Menü, 3: Arama, 4: Pazaryeri Filtresi, 5: Gelişmiş Filtre, 6: 12'li Sıralama Çubuğu, 7: Yaşam Döngüsü Sekmeleri, 8: Dikey İlerleme Barı, 9: 1. Satır Meta, 10: 2. Satır Cari & Tutar, 11: Kapalı Kart Açıklaması, 12: Acil Müşteri Notu Şeridi, 13: Paketleme Fotoğrafı, 14: 6 Aksiyonlu İşlem Menüsü, 15: 1. Sütun Cari/VKN/Adres, 16: 2. Sütun Fatura/Vade, 17: 3. Sütun Kargo/SLA Uyarısı, 18: 4. Sütun Finans, 19: Sayfalama & Sayaç).
+2. **Akıllı Kart Hiyerarşisi:** Kart içi detay sütunları tanıtılırken ilgili sipariş kartı otomatik genişletilir (`.expanded`); kapalı kart alanları tanıtılırken kart otomatik daraltılır.
+3. **Çarpışma & Ekran Dışı Taşma Önleme:** Popover konumlandırma algoritması ekran kenarlarını ve hedef elemanın sınırlarını algılayarak hiçbir zaman hedef alanı kapatmayacak şekilde dinamik yön değiştirir.
+4. **Etkileşim:** Klavye yön tuşları (`ArrowLeft`, `ArrowRight`), `Esc` tuşu, alttaki ilerleme noktaları (*dots*) ve header'daki soru işareti butonu ile tam etkileşimli çalışır.
 
 ---
 

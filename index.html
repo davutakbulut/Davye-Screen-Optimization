@@ -18110,142 +18110,222 @@
  * =========================================================================
  * SAYFA TANITIM TURU (ONBOARDING) KONFİGÜRASYONU VE METİNLERİ
  * =========================================================================
- * Buradaki metinleri veya adımları düzenleyerek tanıtım turunu
- * dilediğiniz gibi güncelleyebilirsiniz. index.html içinde güncellendiğinde
- * doğrudan aktif olur.
  */
 const ONBOARDING_CONFIG = {
   // Sayfa ilk defa açıldığında otomatik başlasın mı?
-  autoStartOnFirstVisit: true,
+  autoStartOnFirstVisit: false,
   // localStorage anahtarı (Tur bir kez tamamlandığında tekrar otomatik açılmaz)
-  storageKey: 'siparis_sayfasi_onboarding_completed_v2',
-  // Tanıtılacak adımların listesi
+  storageKey: 'siparis_sayfasi_onboarding_completed_v3',
+  // Tanıtılacak 19 adımın eksiksiz listesi
   steps: [
+    {
+      target: '.davye-top-header',
+      title: 'Davye Sipariş Yönetim Paneli',
+      description: 'Toptan ve e-ticaret siparişlerinizi gerçek zamanlı takip edebileceğiniz, depo, fatura ve kargo süreçlerini yönetebileceğiniz merkezi kontrol paneline hoş geldiniz.',
+      icon: 'layout',
+      position: 'bottom',
+      collapseCard: true
+    },
+    {
+      target: '#appSidebar',
+      title: 'Navigasyon & Ana Modüller',
+      description: 'Siparişler, Müşteri CRM Yönetimi, Depo İşlemleri, E-Faturalar, Satış Raporları ve Sistem Ayarları arasında hızlıca geçiş yapabilirsiniz.',
+      icon: 'menu',
+      position: 'right',
+      collapseCard: true
+    },
     {
       target: '#orderSearch',
       title: 'Hızlı Arama & Filtreleme',
-      description: 'Sipariş numarası, müşteri/cari adı veya ürün açıklaması yazarak siparişleriniz arasında anında canlı arama yapabilirsiniz.',
+      description: 'Sipariş No (son 3 hane veya tam kod 1-WS...), Müşteri/Klinik adı, telefon veya ürün adı yazarak siparişleriniz arasında anında canlı arama yapabilirsiniz.',
       icon: 'search',
-      position: 'bottom'
+      position: 'bottom',
+      collapseCard: true
+    },
+    {
+      target: '.marketplace-toggle-label',
+      title: 'Pazaryeri Siparişleri Filtresi',
+      description: 'Trendyol ve Hepsiburada siparişlerini listede tek tıkla gizleyebilir veya açarak sadece doğrudan kurumsal satışları görüntüleyebilirsiniz.',
+      icon: 'store',
+      position: 'bottom',
+      collapseCard: true
     },
     {
       target: '#btnAdvToggle',
       title: 'Gelişmiş Filtre Çekmecesi',
-      description: 'Tarih aralığı, depo, kargo firması, fatura durumu ve ödeme tipi gibi detaylı kriterlerle kapsamlı filtreleme panelini açar.',
+      description: 'Tarih aralığı, Depo (MD/ED), Kargo Taşıyıcısı, Fatura Tipi ve Ödeme Durumu kriterlerine göre detaylı filtreleme panelini açar.',
       icon: 'sliders-horizontal',
-      position: 'bottom'
+      position: 'bottom',
+      collapseCard: true
     },
     {
-      target: '#btnSortToggle',
-      title: 'Hızlı Sıralama Menüsü',
-      description: 'Siparişleri sipariş tarihine, vade tarihine, toplam tutara, cari adına veya ürün adedine göre tek tıkla sıralayabilirsiniz.',
+      target: '.inline-sort-bar-wrapper',
+      title: '12 Kriterli Hızlı Sıralama Çubuğu',
+      description: 'Sipariş No, Tarih, Cari, Tutar, Kalan Tutar, Vade, Ürün Adedi vb. chiplere tıklayarak 3-kademeli döngüyle (⇄ Nötr, ↓ Büyükten Küçüğe, ↑ Küçükten Büyüğe) anında sıralayabilirsiniz.',
       icon: 'arrow-up-down',
-      position: 'bottom'
+      position: 'bottom',
+      collapseCard: true
     },
     {
       target: '.status-filters',
-      title: 'Sipariş Yaşam Döngüsü Sekmeleri',
-      description: 'Siparişlerinizi Tamamlanmamış Sipariş, Sipariş Alındı, Hazırlanıyor, Kargo Bekliyor, Kargoda, Fatura Bekliyor ve Fatura Kesildi aşamalarına göre tek tıkla filtreleyebilirsiniz.',
+      title: 'Yaşam Döngüsü & Durum Sekmeleri',
+      description: 'Onay Bekleyen, Sipariş Alındı, Hazırlanıyor, Hazırlandı, Kargo Bekliyor, Kargoda, Teslim Edildi, İade ve İptal aşamalarını anlık sayaçlarıyla filtreleyebilirsiniz.',
       icon: 'filter',
-      position: 'bottom'
+      position: 'bottom',
+      collapseCard: true
     },
     {
-      target: '.order-card .card-v-progress',
-      title: 'Aşamalı İlerleme Barı (Sol Dikey Bar)',
-      description: 'Siparişin 6 aşamalı tamamlanma sürecini gösterir. Süreç devam ettikçe gri bar aşağıdan yukarıya dolar, faturalandığında yeşil tik ile %100 tamamlanır.',
+      target: '.order-card:not([style*="display: none"]) .card-v-progress',
+      title: 'Süreç & İlerleme Göstergesi',
+      description: 'Siparişin depodan teslimata kadar olan 6 aşamalı tamamlanma sürecini gösterir. Süreç ilerledikçe dikey bar dolar, faturalandığında yeşil tik ile %100 tamamlanır.',
       icon: 'activity',
-      position: 'right'
+      position: 'right',
+      collapseCard: true
     },
     {
-      target: '.order-card .card-header-bar',
-      title: 'Sipariş Kartı & Hızlı Kopyalama',
-      description: 'Sipariş No (#1-WS...), depo kodu (MD/ED), teslimat ikonu, müşteri adı ve sipariş tutarını içerir. Sipariş numarasına tıklayarak anında kopyalayabilirsiniz.',
-      icon: 'credit-card',
-      position: 'bottom'
+      target: '.order-card:not([style*="display: none"]) .card-header-row.row-1',
+      title: '1. Satır: Sipariş No, Depo & Tarih',
+      description: 'Toplu seçim checkbox’ı, 3 haneli Sipariş No (#... - tıklandığında tam kod panoya kopyalanır), Taşıyıcı Kargo ikonu, Depo Kodu (MD/ED) ve Sipariş Oluşturma Tarihini içerir.',
+      icon: 'hash',
+      position: 'bottom',
+      collapseCard: true
     },
     {
-      target: '.order-card .btn-card-photo',
-      title: 'Paketleme Görseli & Canlı Fotoğraf',
-      description: 'Kamera butonuna tıklayarak depoda hazırlanmış ve paketlenmiş siparişin gerçek fotoğrafını modal pencerede anında inceleyebilirsiniz.',
-      icon: 'camera',
-      position: 'left'
+      target: '.order-card:not([style*="display: none"]) .card-header-row.row-2',
+      title: '2. Satır: Cari, Tutar & Durum Rozetleri',
+      description: 'Müşteri/Klinik ünvanı (33ch kuralı & yatay kaydırma), Satış Temsilcisi, Toplam/Kalan Tutar (Kısmi ödemede Siyah/Kırmızı) ve Durum Rozetlerini gösterir.',
+      icon: 'user',
+      position: 'bottom',
+      collapseCard: true
     },
     {
-      target: '.order-card .actions-dropdown',
-      title: 'Hızlı İşlemler Menüsü',
-      description: 'Detay görüntüleme, canlı kargo takibi, e-fatura indirme, irsaliye yazdırma, sipariş notu ekleme ve siparişi iptal etme işlemlerine buradan erişebilirsiniz.',
-      icon: 'more-vertical',
-      position: 'left'
+      target: '.order-card:not([style*="display: none"]) .card-header-row.row-desc',
+      title: 'Kapalı Kart Sipariş Açıklaması',
+      description: 'Kart kapalıyken sipariş açıklamasını sol alt satırda gösterir; tıklandığında tam açıklama modalını açar. Kart açıldığında gövdede kendi sütununa geçer.',
+      icon: 'align-left',
+      position: 'bottom',
+      collapseCard: true
     },
     {
-      target: '.order-card .card-note-bar',
-      title: 'Sipariş Notu & Tek Tıkla Kopyala',
-      description: 'Müşteri veya operasyon ekibinin girdiği özel notları gösterir. Not alanına veya kopyala butonuna tıklayarak tüm not metnini tek tıkla kopyalayabilirsiniz.',
+      target: '.card-note-bar',
+      title: 'Acil Müşteri & Operasyon Notu',
+      description: 'Müşterinin veya muhasebenin girdiği kritik notları sarı zeminli şerit olarak vurgular. Tıklayarak veya Kopyala butonuna basarak not metnini tek tıkla panoya alabilirsiniz.',
       icon: 'message-square',
-      position: 'bottom'
+      position: 'bottom',
+      collapseCard: true
     },
     {
-      target: '.order-card .card-body-grid .grid-col:nth-child(1)',
-      title: '1. Sütun: Cari & Müşteri Bilgileri',
-      description: 'Cari adı, Vergi No, GLN/UTS ve teslimat bilgilerini listeler. Sağlarındaki kopyalama ikonları ile her alanı tek tıkla panoya alabilirsiniz.',
-      icon: 'user-check',
+      target: '.btn-card-photo',
+      title: 'Fotoğraflı Paketleme Kontrolü',
+      description: 'Depoda toplanıp kolilenmiş siparişlerde kamera ikonu belirir; tıklayarak koli içeriği, güvenlik mührü ve depo barkod fotoğrafını popup olarak açabilirsiniz.',
+      icon: 'camera',
+      position: 'left',
+      collapseCard: true
+    },
+    {
+      target: '.order-card:not([style*="display: none"]) .actions-dropdown',
+      title: '6 Aksiyonlu İşlemler Menüsü',
+      description: 'Detaya Git, Müşteri Detay (CRM), İşlemi Kopyala, Not Ekle, Siparişi İptal Et ve Sil aksiyonlarına buradan tek tıkla ulaşabilirsiniz.',
+      icon: 'more-vertical',
+      position: 'left',
+      collapseCard: true
+    },
+    {
+      target: '.order-card:not([style*="display: none"]) .card-body-grid .grid-col:nth-child(1)',
+      title: '1. Sütun: Cari & Resmi Bilgiler',
+      description: 'Müşteri Ünvanı, Cari Türü, VKN/TCKN, GLN ve UTS Numaraları ile Açık Teslimat Adresini listeler. Sağlarındaki kopyalama ikonları ile her alan tek tıkla kopyalanır.',
+      icon: 'building-2',
       position: 'top',
       expandCard: true
     },
     {
-      target: '.order-card .card-body-grid .grid-col:nth-child(2)',
-      title: '2. Sütun: Fatura & Vade Bilgileri',
-      description: 'Fatura tipi (E-Fatura/E-Arşiv), fatura numarası, e-fatura serisi, ödeme vadesi ve toplam sipariş ürün miktarını gösterir.',
+      target: '.order-card:not([style*="display: none"]) .card-body-grid .grid-col:nth-child(2)',
+      title: '2. Sütun: Fatura, Vade & Açıklama',
+      description: 'Fatura Tipi (Faturasız / E-Fatura / E-Arşiv), GİB Fatura No, Seri No, Vade Tarihi ve Entegrasyon Açıklama alanını içerir.',
       icon: 'file-text',
       position: 'top',
       expandCard: true
     },
     {
-      target: '.order-card .card-body-grid .grid-col:nth-child(3)',
-      title: '3. Sütun: Lojistik & Kargo Takibi',
-      description: 'Kargonun anlık durumunu ve kurye hareketlerini gösterir. Canlı takip penceresine tıklayarak şube şube kargo geçmişini görebilirsiniz.',
+      target: '.order-card:not([style*="display: none"]) .card-body-grid .grid-col:nth-child(3)',
+      title: '3. Sütun: Lojistik, Kargo & SLA Uyarısı',
+      description: 'Kargo Taşıyıcısı, Ürün Sayısı / Toplanan Miktar, Canlı Kargo Takip Butonu ve Ertesi Gün 12:00 Hareketsizlik Uyarısını (⚠️ Hareketsiz) barındırır.',
       icon: 'truck',
       position: 'top',
       expandCard: true
     },
     {
-      target: '.order-card .card-body-grid .grid-col:nth-child(4)',
+      target: '.order-card:not([style*="display: none"]) .card-body-grid .grid-col:nth-child(4)',
       title: '4. Sütun: Finansal Özet & Tahsilat',
-      description: 'Toplam sipariş tutarını, tahsil edilen ödeme miktarını ve ödeme durum etiketini (Ödendi / Kısmi Ödeme / Bekliyor) özetler.',
+      description: 'Sipariş Toplam Tutarı, Tahsil Edilen Ödeme Miktarı / Kalan Tutar ve Mali Ödeme Durumu Etiketini (Ödendi / Kısmi Ödeme / Ödenmedi) özetler.',
       icon: 'wallet',
       position: 'top',
       expandCard: true
+    },
+    {
+      target: '#paginationBar',
+      title: 'Sayfalama & Toplam Sipariş Sayacı',
+      description: 'Sayfa başına gösterim adedini seçebilir (10/25/50/Tümü), anlık filtrelenen toplam sipariş sayısını görebilir ve sayfalar arasında geçiş yapabilirsiniz.',
+      icon: 'layers',
+      position: 'top',
+      collapseCard: true
     }
   ]
 };
 
 let currentOnboardingIndex = 0;
 let onboardingActive = false;
+let tourHighlightedCard = null;
 
 // Hedef Elemanı Hatasız Bulucu
 function findTourTarget(step) {
   if (!step || !step.target) return null;
 
-  // 1. Doğrudan seçici ile ara
+  // 1. Özel hedefler için akıllı eşleştirme
+  if (step.target === '.card-note-bar') {
+    let noteEl = document.querySelector('.card-note-bar');
+    if (noteEl) {
+      const card = noteEl.closest('.order-card');
+      if (card && card.style.display === 'none') {
+        card.style.display = 'block';
+      }
+      return noteEl;
+    }
+  }
+
+  if (step.target === '.btn-card-photo') {
+    let photoEl = document.querySelector('.btn-card-photo:not([style*="display: none"])');
+    if (!photoEl) photoEl = document.querySelector('.btn-card-photo');
+    if (photoEl) {
+      const card = photoEl.closest('.order-card');
+      if (card && card.style.display === 'none') {
+        card.style.display = 'block';
+      }
+      return photoEl;
+    }
+  }
+
+  // 2. Doğrudan seçici ile ara
   let el = document.querySelector(step.target);
   if (el) return el;
 
-  // 2. :first-child temizleyerek ara
-  const cleanSelector = step.target.replace(/:first-child/g, '');
+  // 3. :first-child veya :not temizleyerek ara
+  const cleanSelector = step.target.replace(/:not\([^)]*\)/g, '').trim();
   el = document.querySelector(cleanSelector);
   if (el) return el;
 
-  // 3. İlk görünür kartın içinde ara
-  const firstCard = document.querySelector('.order-card');
-  if (firstCard && step.target.includes('.order-card')) {
-    const sub = step.target.replace(/.*\.order-card\S*\s*/, '');
+  // 4. İlk görünür kartın içinde ara
+  const visibleCards = Array.from(document.querySelectorAll('.order-card')).filter(c => c.style.display !== 'none');
+  const targetCard = visibleCards[0] || document.querySelector('.order-card');
+  if (targetCard && step.target.includes('.order-card')) {
+    const sub = step.target.replace(/.*\.order-card\S*\s*/, '').trim();
     if (sub) {
-      el = firstCard.querySelector(sub);
+      el = targetCard.querySelector(sub);
       if (el) return el;
     }
   }
 
-  // 4. Son parça ile ara
+  // 5. Son parça ile ara
   const tokens = step.target.split(/\s+/);
   el = document.querySelector(tokens[tokens.length - 1]);
   return el;
@@ -18254,9 +18334,11 @@ function findTourTarget(step) {
 // Tanıtım Turunu Başlat
 function startOnboardingTour(forceStart = false) {
   if (!forceStart && ONBOARDING_CONFIG.storageKey) {
-    if (localStorage.getItem(ONBOARDING_CONFIG.storageKey)) {
-      return;
-    }
+    try {
+      if (localStorage.getItem(ONBOARDING_CONFIG.storageKey)) {
+        return;
+      }
+    } catch (e) {}
   }
 
   currentOnboardingIndex = 0;
@@ -18292,15 +18374,21 @@ function renderOnboardingStep(index) {
   // Hedef elemanı bul
   let targetEl = findTourTarget(step);
 
-  // Kart içi bir adımsa veya kartı açması gerekiyorsa kartı aç
-  if (step.expandCard || (targetEl && targetEl.closest('.order-card'))) {
-    const card = targetEl ? targetEl.closest('.order-card') : document.querySelector('.order-card');
-    if (card && !card.classList.contains('expanded')) {
-      card.classList.add('expanded');
+  // Kart açma/kapatma durumunu yönet
+  const visibleCards = Array.from(document.querySelectorAll('.order-card')).filter(c => c.style.display !== 'none');
+  const sampleCard = (targetEl && targetEl.closest('.order-card')) || visibleCards[0] || document.querySelector('.order-card');
+
+  if (sampleCard) {
+    tourHighlightedCard = sampleCard;
+    if (step.expandCard) {
+      sampleCard.classList.add('expanded');
+      sampleCard.classList.remove('loading');
+    } else if (step.collapseCard) {
+      sampleCard.classList.remove('expanded', 'loading');
     }
   }
 
-  // Elemanın açılması ve render olması için bekle
+  // Elemanın açılması ve DOM yerleşimi için bekle
   setTimeout(() => {
     targetEl = findTourTarget(step);
     if (!targetEl) {
@@ -18312,17 +18400,17 @@ function renderOnboardingStep(index) {
       return;
     }
 
-    // Scroll into view - hedefin üstünde ve altında rahat boşluk kalacak şekilde
+    // Smooth scroll into view
     targetEl.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
 
     // Pozisyonu güncelle
     setTimeout(() => {
       updateSpotlightAndPopover(targetEl, step, index);
-    }, 220);
-  }, 120);
+    }, 180);
+  }, 100);
 }
 
-// Spotlight ve Popover konumlandırmasını güncelle (Çarpışma / Üst Üste Gelme Önleme Motoru)
+// Spotlight ve Popover konumlandırmasını güncelle
 function updateSpotlightAndPopover(targetEl, step, index) {
   if (!targetEl) return;
 
@@ -18352,9 +18440,14 @@ function updateSpotlightAndPopover(targetEl, step, index) {
   }
 
   // Popover İçerik Güncelle
-  document.getElementById('onboardingStepBadge').innerText = `Adım ${index + 1} / ${ONBOARDING_CONFIG.steps.length}`;
-  document.getElementById('onboardingTitle').innerText = step.title;
-  document.getElementById('onboardingDesc').innerText = step.description;
+  const badgeEl = document.getElementById('onboardingStepBadge');
+  if (badgeEl) badgeEl.innerText = `Adım ${index + 1} / ${ONBOARDING_CONFIG.steps.length}`;
+  
+  const titleEl = document.getElementById('onboardingTitle');
+  if (titleEl) titleEl.innerText = step.title;
+  
+  const descEl = document.getElementById('onboardingDesc');
+  if (descEl) descEl.innerText = step.description;
   
   const iconWrap = document.getElementById('onboardingStepIcon');
   if (iconWrap) {
@@ -18389,7 +18482,6 @@ function updateSpotlightAndPopover(targetEl, step, index) {
   if (!popover) return;
 
   if (window.innerWidth <= 640) {
-    // Mobilde ekranın altına sabitlenir
     popover.style.top = '';
     popover.style.left = '10px';
     popover.style.bottom = '15px';
@@ -18408,15 +18500,11 @@ function updateSpotlightAndPopover(targetEl, step, index) {
     const spaceRight = window.innerWidth - (left + width);
     const spaceLeft = left;
 
-    // Dinamik ve akıllı yön belirleme (Asla hedefin üstüne binmez)
     let placement = step.position || 'bottom';
 
-    // Eğer 'top' istenmiş ama yukarıda sığacak yer yoksa -> 'bottom' yap
     if (placement === 'top' && spaceAbove < popHeight + margin + 15) {
       placement = 'bottom';
-    }
-    // Eğer 'bottom' istenmiş ama aşağıda sığacak yer yoksa ve yukarıda yer varsa -> 'top' yap
-    else if (placement === 'bottom' && spaceBelow < popHeight + margin + 15 && spaceAbove > spaceBelow) {
+    } else if (placement === 'bottom' && spaceBelow < popHeight + margin + 15 && spaceAbove > spaceBelow) {
       placement = 'top';
     }
 
@@ -18440,7 +18528,7 @@ function updateSpotlightAndPopover(targetEl, step, index) {
     // Yatay taşma önleme
     popLeft = Math.max(16, Math.min(popLeft, window.innerWidth - popWidth - 16));
 
-    // Kesin Çarpışma Kontrolü (Hedef ile popover örtüşüyorsa dışarı ötele)
+    // Kesin Çarpışma Kontrolü
     const targetBottom = top + height;
     const targetRight = left + width;
     const popBottom = popTop + popHeight;
@@ -18469,7 +18557,6 @@ function updateSpotlightAndPopover(targetEl, step, index) {
     popover.style.left = popLeft + 'px';
   }
 
-  // Lucide ikonlarını yeniden oluştur
   if (window.lucide && typeof lucide.createIcons === 'function') {
     lucide.createIcons();
   }
@@ -18483,6 +18570,7 @@ function renderOnboardingDots() {
   ONBOARDING_CONFIG.steps.forEach((_, idx) => {
     const dot = document.createElement('span');
     dot.className = 'onboarding-dot' + (idx === 0 ? ' active' : '');
+    dot.onclick = () => renderOnboardingStep(idx);
     container.appendChild(dot);
   });
 }
@@ -18527,7 +18615,6 @@ function closeOnboardingTour() {
   if (spotlight) spotlight.classList.remove('active');
   if (popover) popover.classList.remove('active');
 
-  // localStorage'a tamamlandı bilgisini kaydet
   if (ONBOARDING_CONFIG.storageKey) {
     try {
       localStorage.setItem(ONBOARDING_CONFIG.storageKey, 'true');
@@ -18542,7 +18629,7 @@ function closeOnboardingTour() {
 function handleOnboardingResize() {
   if (!onboardingActive) return;
   const step = ONBOARDING_CONFIG.steps[currentOnboardingIndex];
-  const targetEl = step ? document.querySelector(step.target) : null;
+  const targetEl = findTourTarget(step);
   if (targetEl) {
     updateSpotlightAndPopover(targetEl, step, currentOnboardingIndex);
   }
@@ -18551,7 +18638,7 @@ function handleOnboardingResize() {
 function handleOnboardingScroll() {
   if (!onboardingActive) return;
   const step = ONBOARDING_CONFIG.steps[currentOnboardingIndex];
-  const targetEl = step ? document.querySelector(step.target) : null;
+  const targetEl = findTourTarget(step);
   if (targetEl) {
     updateSpotlightAndPopover(targetEl, step, currentOnboardingIndex);
   }
@@ -18576,10 +18663,9 @@ window.addEventListener('DOMContentLoaded', () => {
     }, 600);
   }
 });
-</script>
 
 
-</div><script>
+
   // WebKit / iOS Safari tel: link engelleyici
   document.addEventListener('DOMContentLoaded', () => {
     function removeTelLinks() {
