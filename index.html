@@ -2468,16 +2468,26 @@
       height: 9px;
     }
 
-    .pay-unpaid {
+    .payment-status-tag.pay-unpaid {
       background: #fef2f2;
       color: #dc2626;
       border: 1px solid #fecaca;
     }
 
-    .pay-paid {
+    .payment-status-tag.pay-paid {
       background: #ecfdf5;
       color: #059669;
       border: 1px solid #a7f3d0;
+    }
+
+    .price-amount.price-unpaid {
+      color: #dc2626;
+      font-weight: 800;
+    }
+
+    .price-amount.price-paid {
+      color: #16a34a;
+      font-weight: 800;
     }
 
     /* Kopyalandı Toast Bildirimi */
@@ -5455,7 +5465,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">3.647,90 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">3.647,90 ₺</span>
           <span class="status-pill pill-alindi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="inbox" aria-hidden="true" class="lucide lucide-inbox"></svg> Sipariş Alındı</span>
         </div>
         <div class="row-right">
@@ -5592,7 +5602,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">3.647,90 ₺</span>
+          <span class="price-amount price-unpaid">3.647,90 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -5657,7 +5667,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">3.365,00 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">3.365,00 ₺</span>
           <span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"></svg> Hazırlandı</span>
         </div>
         <div class="row-right">
@@ -5794,7 +5804,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">3.365,00 ₺</span>
+          <span class="price-amount price-unpaid">3.365,00 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -5859,7 +5869,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">3.943,38 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">3.943,38 ₺</span>
           <span class="status-pill pill-kargo-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargo Bekliyor</span>
         </div>
         <div class="row-right">
@@ -5996,7 +6006,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">3.943,38 ₺</span>
+          <span class="price-amount price-unpaid">3.943,38 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -6061,7 +6071,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">3.600,00 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">3.600,00 ₺</span>
           <span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"></svg> Hazırlandı</span>
         </div>
         <div class="row-right">
@@ -6198,7 +6208,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">3.600,00 ₺</span>
+          <span class="price-amount price-unpaid">3.600,00 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -6263,7 +6273,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">7.049,70 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">7.049,70 ₺</span>
           <span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"></svg> Hazırlandı</span>
         </div>
         <div class="row-right">
@@ -6400,7 +6410,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">7.049,70 ₺</span>
+          <span class="price-amount price-unpaid">7.049,70 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -6465,7 +6475,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">16.500,00 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">16.500,00 ₺</span>
           <span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"></svg> Faturalandı</span>
         </div>
         <div class="row-right">
@@ -6602,7 +6612,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">16.500,00 ₺</span>
+          <span class="price-amount price-unpaid">16.500,00 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -6667,7 +6677,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">17.715,89 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">17.715,89 ₺</span>
           <span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"></svg> Faturalandı</span>
         </div>
         <div class="row-right">
@@ -6804,7 +6814,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">17.715,89 ₺</span>
+          <span class="price-amount price-unpaid">17.715,89 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -6869,7 +6879,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">57.815,19 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">57.815,19 ₺</span>
           <span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"></svg> Hazırlandı</span>
         </div>
         <div class="row-right">
@@ -7006,7 +7016,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">57.815,19 ₺</span>
+          <span class="price-amount price-unpaid">57.815,19 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -7071,7 +7081,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">31.671,00 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">31.671,00 ₺</span>
           <span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"></svg> Hazırlandı</span>
         </div>
         <div class="row-right">
@@ -7208,7 +7218,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">31.671,00 ₺</span>
+          <span class="price-amount price-unpaid">31.671,00 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -7273,7 +7283,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-paid" data-tip="Sipariş Tutarı">28.000,00 ₺</span>
+          <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">28.000,00 ₺</span>
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
@@ -7410,7 +7420,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-paid">28.000,00 ₺</span>
+          <span class="price-amount price-paid">28.000,00 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -7475,7 +7485,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">1.800,00 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">1.800,00 ₺</span>
           <span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargoda</span>
         </div>
         <div class="row-right">
@@ -7612,7 +7622,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">1.800,00 ₺</span>
+          <span class="price-amount price-unpaid">1.800,00 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -7677,7 +7687,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">2.161,80 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">2.161,80 ₺</span>
           <span class="status-pill pill-hazirlaniyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="layers" aria-hidden="true" class="lucide lucide-layers"></svg> Hazırlanıyor</span>
         </div>
         <div class="row-right">
@@ -7814,7 +7824,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">2.161,80 ₺</span>
+          <span class="price-amount price-unpaid">2.161,80 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -7879,7 +7889,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">10.795,20 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">10.795,20 ₺</span>
           <span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargoda</span>
         </div>
         <div class="row-right">
@@ -8016,7 +8026,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">10.795,20 ₺</span>
+          <span class="price-amount price-unpaid">10.795,20 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -8081,7 +8091,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-unpaid" data-tip="Sipariş Tutarı">8.935,61 ₺</span>
+          <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">8.935,61 ₺</span>
           <span class="status-pill pill-kargo-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargo Bekliyor</span>
         </div>
         <div class="row-right">
@@ -8218,7 +8228,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-unpaid">8.935,61 ₺</span>
+          <span class="price-amount price-unpaid">8.935,61 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -8283,7 +8293,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-paid" data-tip="Sipariş Tutarı">1.880,20 ₺</span>
+          <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">1.880,20 ₺</span>
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
@@ -8420,7 +8430,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-paid">1.880,20 ₺</span>
+          <span class="price-amount price-paid">1.880,20 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -8485,7 +8495,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-paid" data-tip="Sipariş Tutarı">7.680,50 ₺</span>
+          <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">7.680,50 ₺</span>
           <span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargoda</span>
         </div>
         <div class="row-right">
@@ -8622,7 +8632,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-paid">7.680,50 ₺</span>
+          <span class="price-amount price-paid">7.680,50 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -8687,7 +8697,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-paid" data-tip="Sipariş Tutarı">1.913,68 ₺</span>
+          <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">1.913,68 ₺</span>
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
@@ -8824,7 +8834,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-paid">1.913,68 ₺</span>
+          <span class="price-amount price-paid">1.913,68 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -8889,7 +8899,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-paid" data-tip="Sipariş Tutarı">0,10 ₺</span>
+          <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">0,10 ₺</span>
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
@@ -9026,7 +9036,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-paid">0,10 ₺</span>
+          <span class="price-amount price-paid">0,10 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -9087,7 +9097,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-paid" data-tip="Sipariş Tutarı">937,89 ₺</span>
+          <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">937,89 ₺</span>
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
@@ -9224,7 +9234,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-paid">937,89 ₺</span>
+          <span class="price-amount price-paid">937,89 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -9289,7 +9299,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-paid" data-tip="Sipariş Tutarı">304.334,66 ₺</span>
+          <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">304.334,66 ₺</span>
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
@@ -9426,7 +9436,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-paid">304.334,66 ₺</span>
+          <span class="price-amount price-paid">304.334,66 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -9491,7 +9501,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-paid" data-tip="Sipariş Tutarı">128,80 ₺</span>
+          <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">128,80 ₺</span>
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
@@ -9628,7 +9638,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-paid">128,80 ₺</span>
+          <span class="price-amount price-paid">128,80 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -9693,7 +9703,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-paid" data-tip="Sipariş Tutarı">1.890,51 ₺</span>
+          <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">1.890,51 ₺</span>
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
@@ -9830,7 +9840,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-paid">1.890,51 ₺</span>
+          <span class="price-amount price-paid">1.890,51 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -9895,7 +9905,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-paid" data-tip="Sipariş Tutarı">1.540,00 ₺</span>
+          <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">1.540,00 ₺</span>
           <span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"></svg> Faturalandı</span>
         </div>
         <div class="row-right">
@@ -10032,7 +10042,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-paid">1.540,00 ₺</span>
+          <span class="price-amount price-paid">1.540,00 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
@@ -10097,7 +10107,7 @@
       <!-- 3. Satır: Tutar, Sipariş Durumu ve [Sağda: Fotoğraf + İşlemler + Aç/Kapat Oku] -->
       <div class="card-header-row row-3">
         <div class="row-left">
-          <span class="header-price-amount pay-paid" data-tip="Sipariş Tutarı">700,00 ₺</span>
+          <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">700,00 ₺</span>
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
@@ -10234,7 +10244,7 @@
       <div class="grid-col finance-col">
         <div class="price-group">
           <span class="price-title" data-tip="Sipariş Brüt Toplam Tutarı • Sipariş Kalemleri + KDV toplamından gelir">Sipariş Tutarı</span>
-          <span class="price-amount pay-paid">700,00 ₺</span>
+          <span class="price-amount price-paid">700,00 ₺</span>
         </div>
         <div class="price-group" style="margin-top: 2px;">
           <div class="price-paid-row" data-tip="Tahsil Edilen Tutar / Ödeme Kaydı • Banka POS / Kasa / Cari Hareketlerinden gelir">
