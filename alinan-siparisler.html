@@ -5177,8 +5177,8 @@
         <div class="toolbar-actions">
           <button class="btn-adv-filter active" onclick="setWarehouseFilter('all', this)">Tümü (4)</button>
           <button class="btn-adv-filter" onclick="setWarehouseFilter('pending', this)">Toplama Bekliyor (4)</button>
+          <button class="btn-adv-filter" onclick="setWarehouseFilter('completed', this)">Toplananlar (0)</button>
           <button class="btn-adv-filter" onclick="setWarehouseFilter('MD', this)">Merkez Depo (MD)</button>
-          <button class="btn-adv-filter" onclick="setWarehouseFilter('paid', this)">Ödenenler</button>
         </div>
       </div>
 
@@ -5346,7 +5346,7 @@
     let html = '';
     list.forEach(order => {
       const isCompleted = order.pickedQty >= order.qty;
-      const orderShortNo = order.orderRef.split('-').pop();
+      const orderShortNo = order.id.slice(-3);
 
       html += `
         <div class="order-card ${isCompleted ? 'status-hazirlandi' : 'status-alindi'}" id="card-${order.id}" data-order-id="${order.id}">
@@ -5358,11 +5358,10 @@
 
           <!-- Üst Başlık (3 Satırlı Kusursuz Yapı) -->
           <div class="card-header-bar" onclick="handleCardClick(event, this)">
-            <!-- 1. Satır: Checkbox + Sipariş No + Teslimat + Depo + Tarih/Saat -->
+            <!-- 1. Satır: Sipariş No + Teslimat + Depo + Tarih/Saat -->
             <div class="card-header-row row-1">
               <div class="row-left">
-                <input type="checkbox" class="card-checkbox" onclick="event.stopPropagation()">
-                <div class="order-number-badge" onclick="event.stopPropagation(); copyToClipboard('${order.orderRef}')" title="Kopyala: ${order.orderRef}">
+                <div class="order-number-badge" onclick="event.stopPropagation(); copyToClipboard('${order.orderRef}')" title="Tamamını kopyala: ${order.orderRef}">
                   <span>${orderShortNo}</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
                 </div>
@@ -5396,13 +5395,12 @@
               <span class="header-desc-content">${order.desc}</span>
             </div>
 
-            <!-- 4. Satır: Tutar, Toplama Durumu, IsPayed ve Aksiyon Butonları -->
+            <!-- 4. Satır: Tutar, Toplama Durumu ve Aksiyon Butonları -->
             <div class="card-header-row row-3">
               <div class="row-left">
                 <span class="header-price-amount">${order.totalPrice}</span>
                 <div class="status-pills-wrap">
                   <span class="badge-qty" style="background:#fffbeb; color:#b45309; border-color:#fde68a; font-family:'JetBrains Mono', monospace; font-size:10px;">${order.pickedQty} / ${order.qty} Toplandı</span>
-                  <span class="status-pill ${order.isPayed ? 'pill-faturalandi' : 'pill-iptal'}" style="font-size:9.5px;">${order.isPayed ? '✔ IsPayed' : '✕ Ödenmedi'}</span>
                 </div>
               </div>
               <div class="row-right">
@@ -5465,11 +5463,7 @@
                 <span class="price-amount">${order.totalPrice}</span>
               </div>
               <div class="price-group" style="margin-top:2px;">
-                <div class="price-paid-row"><span>Ödeme:</span> <span class="price-paid-val">${order.paymentAmount}</span></div>
-                <span class="payment-status-tag ${order.isPayed ? 'pay-paid' : 'pay-unpaid'}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="${order.isPayed ? 'check-circle' : 'x-circle'}" style="width:9px;height:9px;" class="lucide lucide-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                  ${order.isPayed ? 'IsPayed (Ödendi)' : 'Ödenmedi'}
-                </span>
+                <div class="price-paid-row"><span>Ödenen Tutar:</span> <span class="price-paid-val">${order.paymentAmount}</span></div>
               </div>
               <div class="customer-balance-row">
                 <span class="customer-balance-title">Cari Bakiye:</span>
