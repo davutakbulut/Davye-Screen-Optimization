@@ -5318,6 +5318,7 @@
       desc: "DP-46109",
       vade: "31 / 08 / 2026",
       depo: "MD",
+      isPickable: true,
       items: [
         { code: "SITS064", name: "Dental Cerrahi Alet Seti", raf: "11Z1", qty: 6, counted: 0, barcode: "8681444292187" }
       ]
@@ -5343,6 +5344,7 @@
       desc: "DP-46219",
       vade: "31 / 08 / 2026",
       depo: "MD",
+      isPickable: true,
       items: [
         { code: "KMP019", name: "Kompozit Dolgu Rezin Tüpü", raf: "04A2", qty: 2, counted: 0, barcode: "8681992019481" }
       ]
@@ -5368,6 +5370,7 @@
       desc: "1-WS-2-69106 nolu sipariş sevkıyatı",
       vade: "31 / 08 / 2026",
       depo: "MD",
+      isPickable: true,
       items: [
         { code: "ELV902", name: "Elevatör ve Lüksatör Seti", raf: "08B1", qty: 150, counted: 0, barcode: "8681883920194" },
         { code: "FRZ104", name: "Elmas Frez Standı", raf: "02C3", qty: 123, counted: 0, barcode: "8681774829103" }
@@ -5394,6 +5397,7 @@
       desc: "HB-HBV000004LJ3R/2608102199",
       vade: "24 / 08 / 2025",
       depo: "MD",
+      isPickable: false,
       items: [
         { code: "AGZ001", name: "Ağız Aynası ve Sapı", raf: "01A1", qty: 2, counted: 0, barcode: "8681552910482" }
       ]
@@ -5467,8 +5471,12 @@
             <div class="card-header-row row-3">
               <div class="row-left">
                 <span class="header-price-amount">${order.totalPrice}</span>
-                <div class="status-pills-wrap">
+                <div class="status-pills-wrap" style="display:inline-flex; align-items:center; gap:4px;">
                   <span class="badge-qty" style="background:#fffbeb; color:#b45309; border-color:#fde68a; font-family:'JetBrains Mono', monospace; font-size:10px;">${order.pickedQty} / ${order.qty} Toplandı</span>
+                  ${(order.isPickable && !order.isCancelled)
+                    ? `<span class="badge-qty" style="background:#ecfdf5; color:#059669; border-color:#a7f3d0; font-size:10px; font-weight:700; display:inline-flex; align-items:center; gap:3px;"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Toplanabilir</span>`
+                    : `<span class="badge-qty" style="background:#fef2f2; color:#dc2626; border-color:#fecaca; font-size:10px; font-weight:700; display:inline-flex; align-items:center; gap:3px;"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-lucide="ban"><circle cx="12" cy="12" r="10"/><line x1="4.93" x2="19.07" y1="4.93" y2="19.07"/></svg> Toplanamaz</span>`
+                  }
                 </div>
               </div>
               <div class="row-right">
