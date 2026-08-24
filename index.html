@@ -17250,6 +17250,18 @@
       return true;
     });
 
+    // Varsayılan olarak Sipariş Numarasına göre Büyükten Küçüğe sırala (Aktif bir çip yoksa)
+    const activeChip = document.querySelector('.sort-chip.active-desc, .sort-chip.active-asc');
+    if (!activeChip) {
+      currentlyMatchedCards.sort((a, b) => {
+        const idA = a.querySelector('.order-number-badge')?.dataset?.orderId || a.dataset.orderId || '';
+        const idB = b.querySelector('.order-number-badge')?.dataset?.orderId || b.dataset.orderId || '';
+        const numA = parseInt(idA.replace(/[^0-9]/g, ''), 10) || 0;
+        const numB = parseInt(idB.replace(/[^0-9]/g, ''), 10) || 0;
+        return numB - numA;
+      });
+    }
+
     currentPage = 1;
     if (typeof renderPagination === 'function') {
       renderPagination();
@@ -18595,6 +18607,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = Math.min(startIndex + pageSize, totalItems);
+
+    // 0. DOM Sırasını currentlyMatchedCards ile tam senkronize et
+    const paginationBar = document.getElementById('paginationBar');
+    if (paginationBar && paginationBar.parentNode) {
+      currentlyMatchedCards.forEach(card => {
+        paginationBar.parentNode.insertBefore(card, paginationBar);
+      });
+    }
 
     // 1. Tüm kartların görünürlüğünü güncelle
     const allCards = Array.from(document.querySelectorAll('.order-card'));
