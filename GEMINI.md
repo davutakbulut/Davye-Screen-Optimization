@@ -1,6 +1,6 @@
 # Davye Sipariş Yönetim Paneli - Geliştirme ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 24 / 08 / 2026 03:43  
+> **Son Sistem Güncellemesi:** 24 / 08 / 2026 13:52  
 > Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
@@ -125,6 +125,17 @@ Her kartın işlemler menüsünde şu 6 aksiyon eksiksiz yer alır:
 2. Üst toolbar filtre alanında `#btnAdvToggle` butonunun yanında varsayılan olarak **seçili (`checked: true`)** gelen `Pazaryerleri Gizli` onay kutusu (`#hideMarketplaceCheck`) yer alır.
 3. Onay kutusu işaretliyken pazaryeri siparişleri gizlenir ve sayfalama ile durum sekmeleri yalnızca direkt siparişleri sayar/gösterir.
 4. Tik kaldırıldığında (`checked: false`), pazaryeri siparişleri listede orijinal kronolojik/sıralı yerlerine derhal geri döner ve sayaçlar güncellenir.
+
+---
+
+### O. Kargo Akış Durum Senaryoları & Ertesi Gün 12:00 Hareketsizlik Uyarısı (.cargo-inactivity-alert)
+1. **Zengin Kargo Akış Çizelgesi:** Kargoya verilmiş veya teslim edilmiş tüm siparişler için gerçekçi adım adım hareketler tanımlanır (*Çıkış Şubesi Kabul ➔ Transfer Merkezi Giriş ➔ Hat Sevkıyatı / Yolda ➔ Varış Dağıtım Şubesi ➔ Kurye Dağıtıma Çıktı ➔ Teslim Edildi*).
+2. **Ertesi Gün 12:00 Hareketsizlik & Takılma Kuralı:**
+   - Kargonun teslim edildiği günün **ertesi günü saat 12:00'ye kadar** yeni bir hareket kaydedilmemişse veya kargo aynı aktarma aşamasında takılmışsa sistem otomatik olarak alarm üretir (`hasInactivityWarning: true`).
+3. **Görsel ve İşlevsel Uyarı Göstergeleri:**
+   - **Kart Üzerindeki Buton:** `.cargo-tracking-btn.btn-warning` (Kehribar sarısı zemin, uyarı üçgen ikonu, örn: `⚠️ Hareketsiz (DHL: ...)`, `⚠️ Takıldı (TEX: ...)`).
+   - **Canlı Kargo Takip Modalı:** En üstte dikkat çekici `cargo-inactivity-alert` uyarı paneli, hareketsiz geçen süre ve gerekçe metni yer alır.
+   - **Zaman Çizelgesi (Timeline):** Takılan kargo adımının düğümü ve başlığı uyarı durumunda (`.cargo-step.warning`) kehribar renginde vurgulanır.
 
 ---
 

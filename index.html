@@ -3528,6 +3528,50 @@
       color: #065f46;
     }
 
+    
+    /* Kargo Hareketsizlik & Gecikme Uyarı Paneli */
+    .cargo-inactivity-alert {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 10px 12px;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-left: 4px solid #f59e0b;
+      border-radius: 6px;
+      font-size: 11px;
+      color: #92400e;
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }
+    .cargo-inactivity-alert svg,
+    .cargo-inactivity-alert .lucide {
+      width: 16px !important;
+      height: 16px !important;
+      color: #d97706 !important;
+      flex-shrink: 0 !important;
+      margin-top: 1px;
+    }
+    .cargo-inactivity-alert-title {
+      font-weight: 700;
+      color: #78350f;
+      display: block;
+      margin-bottom: 2px;
+      font-size: 11.5px;
+    }
+    .cargo-step.warning .cargo-step-node {
+      border-color: #f59e0b !important;
+      background: #f59e0b !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25) !important;
+    }
+    .cargo-step.warning .cargo-step-title {
+      color: #b45309 !important;
+    }
+    .cargo-step.warning .cargo-step-desc {
+      color: #92400e !important;
+    }
+
     .cargo-step.active .cargo-step-title {
       color: #1e40af;
     }
@@ -12530,7 +12574,7 @@
           <span class="data-label">Kargo Durumu:</span>
           <span class="data-value" data-tip="Anlık Kargo / Sevk Operasyon Aşaması • Kargo Entegrasyonu / Depo Takibinden gelir" style="color: #2563eb; font-weight:600;">Yolda (Trendyol Express)</span>
         </div>
-        <div class="cargo-tracking-row"><a href="javascript:void(0)" onclick="openCargoModal('1-WS-2-51888')" class="cargo-tracking-btn btn-shipping" style="flex:1;" data-tip="Canlı Kargo Takip & Sevk Barkodu Butonu • Kargo API & ZPL Servisinden gelir"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg> Yolda (TEX: 391827461)</a><button type="button" class="btn-copy-cargo" onclick="event.stopPropagation(); copyToClipboard('Trendyol Express - 391827461')" title="Kopyala: Trendyol Express - 391827461"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></div>
+        <div class="cargo-tracking-row"><a href="javascript:void(0)" onclick="openCargoModal('1-WS-2-51888')" class="cargo-tracking-btn btn-warning" style="flex:1;" data-tip="⚠️ Kargo Hareketsiz: Ertesi gün 12:00 süresi aşıldı, transfer hareketi girilmedi!"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg> ⚠️ Hareketsiz (TEX: 391827461)</a><button type="button" class="btn-copy-cargo" onclick="event.stopPropagation(); copyToClipboard('Trendyol Express - 391827461')" title="Kopyala: Trendyol Express - 391827461"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg></button></div>
       </div>
 
       <!-- 4. SÜTUN: Finansal Özet -->
@@ -14833,6 +14877,9 @@
     </div>
 
     <div class="modal-body" style="padding: 14px 16px; gap: 12px;">
+      <!-- Kargo Hareketsizlik & Takılma Uyarısı (Dinamik Render Edilir) -->
+      <div id="modalCargoWarningContainer"></div>
+
       <!-- Kargo Durum Özeti Banner -->
       <div class="cargo-status-banner status-delivered" id="modalCargoBanner">
         <div class="cargo-banner-top">
@@ -16800,228 +16847,47 @@
 
   // Mock Canlı Kargo Takip & Teslimat Bilgisi Veritabanı
   const cargoDatabase = {
-    "1-WS-2-67647": {
-      orderNo: "1-WS-2-67647",
-      cariName: "ÜMİT VELİOĞLU",
+    // 1. HAREKETSİZ / TAKILMIŞ KARGOLAR (ERTESİ GÜN 12:00'YE KADAR HAREKET GÖRMEMİŞ VEYA AYNI DURUMDA KALMIŞ)
+    "1-WS-2-67758": {
+      orderNo: "1-WS-2-67758",
+      cariName: "DR. ALTAN DEMİREL",
       carrier: "DHL Kargo (KA)",
-      trackingCode: "DHL-6764701",
-      status: "Kargo Bekliyor",
+      trackingCode: "DHL-67758019",
+      status: "Kargoda (Hareketsiz / Takıldı)",
       statusClass: "status-transit",
-      statusColor: "#2563eb",
-      recipient: "ÜMİT VELİOĞLU (Yetkili Alıcı)",
-      deliveryAddress: "Halaskargazi Cad. No: 112 D: 6, Şişli / İstanbul",
-      deliveryDate: "18 / 08 / 2026 13:55",
-      branch: "Şişli Hub",
+      statusColor: "#d97706",
+      recipient: "DR. ALTAN DEMİREL (Yetkili Alıcı)",
+      deliveryAddress: "Cemal Sahir Sok. No: 28 Kat: 4, Mecidiyeköy, Şişli / İstanbul",
+      deliveryDate: "19 / 08 / 2026",
+      branch: "Mecidiyeköy Dağıtım Şubesi",
+      hasInactivityWarning: true,
+      inactivityDuration: "42 Saat",
+      warningReason: "Kargonun verildiği günden ertesi gün saat 12:00'ye kadar kargoda yeni bir hareket kaydı oluşmamıştır (Tuzla Hub beklemede).",
       events: [
-        { title: "Kargo Bekliyor", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Şişli / İstanbul", time: "18 / 08 / 2026 13:55", status: "completed", icon: "check" }
+        { title: "Sipariş Çıkış Şubesi Teslim Aldı", desc: "Gönderi kargo şubesi tarafından kabul edildi ve barkodlandı.", location: "Kadıköy Çıkış Şubesi / İstanbul", time: "19 / 08 / 2026 16:30", status: "completed", icon: "check" },
+        { title: "Ana Transfer Merkezine Sevk Edildi", desc: "Paket transfer tırına yüklendi ve ana lojistik merkezine sevk edildi.", location: "Tuzla Lojistik Hub / İstanbul", time: "19 / 08 / 2026 21:15", status: "completed", icon: "truck" },
+        { title: "Transfer Merkezinde Bekliyor (Hareketsiz)", desc: "Gönderi transfer merkezinde 42 saattir işlem bekliyor. Ertesi gün 12:00 SLA süresi aşılmıştır.", location: "Tuzla Lojistik Hub / İstanbul", time: "20 / 08 / 2026 12:00+", status: "warning", icon: "alert-triangle" }
       ]
     },
     "1-WS-2-67674": {
       orderNo: "1-WS-2-67674",
       cariName: "ÜMİT VELİOĞLU",
-      carrier: "DHL Kargo",
+      carrier: "DHL Kargo (KA)",
       trackingCode: "DHL-67674019",
-      status: "Kargoda",
+      status: "Kargoda (Aynı Durumda Takıldı)",
       statusClass: "status-transit",
-      statusColor: "#2563eb",
+      statusColor: "#d97706",
       recipient: "ÜMİT VELİOĞLU (Yetkili Alıcı)",
       deliveryAddress: "Hakimiyeti Milliye Cad. No: 78, Üsküdar / İstanbul",
-      deliveryDate: "18 / 08 / 2026 16:44",
-      branch: "Üsküdar Hub",
+      deliveryDate: "18 / 08 / 2026",
+      branch: "Üsküdar Dağıtım Şubesi",
+      hasInactivityWarning: true,
+      inactivityDuration: "36 Saat",
+      warningReason: "Kargo aktarma merkezine ulaştıktan sonra ertesi gün 12:00'den beri aynı aktarma durumunda kalmış, varış şubesine sevk edilmemiştir.",
       events: [
-        { title: "Kargoda", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Üsküdar / İstanbul", time: "18 / 08 / 2026 16:44", status: "completed", icon: "check" }
-      ]
-    },
-    "1-WS-2-63902": {
-      orderNo: "1-WS-2-63902",
-      cariName: "ERDİ EKİZ",
-      carrier: "Trendyol Express",
-      trackingCode: "TEX-63902019",
-      status: "Teslim Edildi",
-      statusClass: "status-delivered",
-      statusColor: "#059669",
-      recipient: "ERDİ EKİZ (Yetkili Alıcı)",
-      deliveryAddress: "Batı Mah. Erol Kaya Cad. No: 64, Pendik / İstanbul",
-      deliveryDate: "29 / 07 / 2026 11:07",
-      branch: "Pendik Hub",
-      events: [
-        { title: "Teslim Edildi", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Pendik / İstanbul", time: "29 / 07 / 2026 11:07", status: "completed", icon: "check" }
-      ]
-    },
-    "1-WS-2-65813": {
-      orderNo: "1-WS-2-65813",
-      cariName: "ERDİ EKİZ",
-      carrier: "DHL Kargo",
-      trackingCode: "DHL-65813091",
-      status: "Teslim Edildi",
-      statusClass: "status-delivered",
-      statusColor: "#059669",
-      recipient: "ERDİ EKİZ (Yetkili Alıcı)",
-      deliveryAddress: "Büyükdere Cad. No: 180, Maslak / Sarıyer / İstanbul",
-      deliveryDate: "28 / 07 / 2026 02:23",
-      branch: "Sarıyer Hub",
-      events: [
-        { title: "Teslim Edildi", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Sarıyer / İstanbul", time: "28 / 07 / 2026 02:23", status: "completed", icon: "check" }
-      ]
-    },
-    "1-WS-2-67621": {
-      orderNo: "1-WS-2-67621",
-      cariName: "DEPO KADİR ÖZDEMİR",
-      carrier: "Elden Teslim",
-      trackingCode: "Elden Teslim",
-      status: "Teslim Edildi",
-      statusClass: "status-delivered",
-      statusColor: "#059669",
-      recipient: "DEPO KADİR ÖZDEMİR (Yetkili Alıcı)",
-      deliveryAddress: "Davye Merkez Depo Masası, Kadıköy / İstanbul",
-      deliveryDate: "18 / 08 / 2026 11:24",
-      branch: "Kadıköy Hub",
-      events: [
-        { title: "Teslim Edildi", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Kadıköy / İstanbul", time: "18 / 08 / 2026 11:24", status: "completed", icon: "check" }
-      ]
-    },
-    "1-WS-2-66902": {
-      orderNo: "1-WS-2-66902",
-      cariName: "SEMA DENTAL MEDİKAL TİC. LTD.",
-      carrier: "Elden Teslim",
-      trackingCode: "Elden Teslim",
-      status: "Teslim Edildi",
-      statusClass: "status-delivered",
-      statusColor: "#059669",
-      recipient: "SEMA DENTAL MEDİKAL TİC. LTD. (Yetkili Alıcı)",
-      deliveryAddress: "Bağlarbaşı Mah. İnönü Cad. No: 42, Maltepe / İstanbul",
-      deliveryDate: "08 / 08 / 2026 11:31",
-      branch: "Maltepe Hub",
-      events: [
-        { title: "Teslim Edildi", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Maltepe / İstanbul", time: "08 / 08 / 2026 11:31", status: "completed", icon: "check" }
-      ]
-    },
-    "1-WS-2-67576": {
-      orderNo: "1-WS-2-67576",
-      cariName: "ÜLKÜ TÜRKMEN",
-      carrier: "Trendyol Express",
-      trackingCode: "TEX-67576019",
-      status: "Kargoda",
-      statusClass: "status-transit",
-      statusColor: "#2563eb",
-      recipient: "ÜLKÜ TÜRKMEN (Yetkili Alıcı)",
-      deliveryAddress: "Cihangir Mah. Sıraselviler Cad. No: 91, Beyoğlu / İstanbul",
-      deliveryDate: "14 / 08 / 2026 15:11",
-      branch: "Beyoğlu Hub",
-      events: [
-        { title: "Kargoda", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Beyoğlu / İstanbul", time: "14 / 08 / 2026 15:11", status: "completed", icon: "check" }
-      ]
-    },
-    "1-WS-2-67782": {
-      orderNo: "1-WS-2-67782",
-      cariName: "DR. HAKAN ÖZKUL",
-      carrier: "Elden Teslim",
-      trackingCode: "Elden Teslim",
-      status: "Teslim Edildi",
-      statusClass: "status-delivered",
-      statusColor: "#059669",
-      recipient: "DR. HAKAN ÖZKUL (Yetkili Alıcı)",
-      deliveryAddress: "Valikonağı Cad. No: 88, Nişantaşı / Şişli / İstanbul",
-      deliveryDate: "19 / 08 / 2026 18:36",
-      branch: "Nişantaşı Hub",
-      events: [
-        { title: "Teslim Edildi", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Nişantaşı / İstanbul", time: "19 / 08 / 2026 18:36", status: "completed", icon: "check" }
-      ]
-    },
-    "1-WS-2-63758": {
-      orderNo: "1-WS-2-63758",
-      cariName: "ÜMİT VELİOĞLU",
-      carrier: "DHL Kargo",
-      trackingCode: "DHL-63758019",
-      status: "Teslim Edildi",
-      statusClass: "status-delivered",
-      statusColor: "#059669",
-      recipient: "ÜMİT VELİOĞLU (Yetkili Alıcı)",
-      deliveryAddress: "Barbaros Mah. Mor Sümbül Sok. No: 12, Ataşehir / İstanbul",
-      deliveryDate: "27 / 07 / 2026 13:02",
-      branch: "Ataşehir Hub",
-      events: [
-        { title: "Teslim Edildi", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Ataşehir / İstanbul", time: "27 / 07 / 2026 13:02", status: "completed", icon: "check" }
-      ]
-    },
-    "1-WS-2-67553": {
-      orderNo: "1-WS-2-67553",
-      cariName: "ÜMİT VELİOĞLU",
-      carrier: "DHL Kargo",
-      trackingCode: "DHL-67553019",
-      status: "Teslim Edildi",
-      statusClass: "status-delivered",
-      statusColor: "#059669",
-      recipient: "ÜMİT VELİOĞLU (Yetkili Alıcı)",
-      deliveryAddress: "Söğütlüçeşme Cad. No: 98, Kadıköy / İstanbul",
-      deliveryDate: "17 / 08 / 2026 15:15",
-      branch: "Kadıköy Hub",
-      events: [
-        { title: "Teslim Edildi", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Kadıköy / İstanbul", time: "17 / 08 / 2026 15:15", status: "completed", icon: "check" }
-      ]
-    },
-    "1-WS-2-60004": {
-      orderNo: "1-WS-2-60004",
-      cariName: "KUTAY HOCA",
-      carrier: "Elden Teslim",
-      trackingCode: "Elden Teslim",
-      status: "Teslim Edildi",
-      statusClass: "status-delivered",
-      statusColor: "#059669",
-      recipient: "KUTAY HOCA (Yetkili Alıcı)",
-      deliveryAddress: "Mimar Sinan Mah. Çavuşdere Cad. No: 28, Üsküdar / İstanbul",
-      deliveryDate: "30 / 07 / 2026 14:15",
-      branch: "Üsküdar Hub",
-      events: [
-        { title: "Teslim Edildi", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Üsküdar / İstanbul", time: "30 / 07 / 2026 14:15", status: "completed", icon: "check" }
-      ]
-    },
-    "1-WS-2-67986": {
-      orderNo: "1-WS-2-67986",
-      cariName: "MUHAMMET UĞUR DERE",
-      carrier: "HepsiJet (GÖ)",
-      trackingCode: "HJ-6798601",
-      status: "Kargo Bekliyor",
-      statusClass: "status-transit",
-      statusColor: "#2563eb",
-      recipient: "MUHAMMET UĞUR DERE (Yetkili Alıcı)",
-      deliveryAddress: "Moda Cad. No: 184 D: 2, Caferağa, Kadıköy / İstanbul",
-      deliveryDate: "21 / 08 / 2026 17:13",
-      branch: "Kadıköy Hub",
-      events: [
-        { title: "Kargo Bekliyor", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Kadıköy / İstanbul", time: "21 / 08 / 2026 17:13", status: "completed", icon: "check" }
-      ]
-    },
-    "1-WS-2-67758": {
-      orderNo: "1-WS-2-67758",
-      cariName: "DR. ALTAN DEMİREL",
-      carrier: "DHL Kargo",
-      trackingCode: "DHL-67758019",
-      status: "Kargoda",
-      statusClass: "status-transit",
-      statusColor: "#2563eb",
-      recipient: "DR. ALTAN DEMİREL (Yetkili Alıcı)",
-      deliveryAddress: "Yeşilköy Mah. İstasyon Cad. No: 48, Bakırköy / İstanbul",
-      deliveryDate: "19 / 08 / 2026 15:39",
-      branch: "Bakırköy Hub",
-      events: [
-        { title: "Kargoda", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Bakırköy / İstanbul", time: "19 / 08 / 2026 15:39", status: "completed", icon: "check" }
-      ]
-    },
-    "1-WS-2-67008": {
-      orderNo: "1-WS-2-67008",
-      cariName: "DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ",
-      carrier: "Trendyol Express",
-      trackingCode: "TEX-67008019",
-      status: "Teslim Edildi",
-      statusClass: "status-delivered",
-      statusColor: "#059669",
-      recipient: "DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ (Yetkili Alıcı)",
-      deliveryAddress: "Altayçeşme Mah. Çam Sok. No: 18, Maltepe / İstanbul",
-      deliveryDate: "10 / 08 / 2026 14:53",
-      branch: "Maltepe Hub",
-      events: [
-        { title: "Teslim Edildi", desc: "Sipariş sevkıyat operasyonu tamamlandı / işlemde.", location: "Maltepe / İstanbul", time: "10 / 08 / 2026 14:53", status: "completed", icon: "check" }
+        { title: "Sipariş Kargoya Teslim Edildi", desc: "Koli kurye tarafından teslim alındı.", location: "Şişli Hub / İstanbul", time: "18 / 08 / 2026 14:00", status: "completed", icon: "check" },
+        { title: "Bölge Aktarma Merkezine Ulaştı", desc: "Paket aktarma merkezine giriş yaptı ve ayrıştırmaya alındı.", location: "Hadımköy Aktarma Merkezi", time: "18 / 08 / 2026 18:45", status: "completed", icon: "package" },
+        { title: "Aktarma Merkezinde Beklemede (Takılma Uyarısı)", desc: "Gönderi aynı durumda 36 saattir beklemektedir. Dağıtım şubesine çıkış kaydı girilmedi.", location: "Hadımköy Aktarma Merkezi", time: "19 / 08 / 2026 12:00+", status: "warning", icon: "alert-triangle" }
       ]
     },
     "1-WS-2-51888": {
@@ -17029,15 +16895,159 @@
       cariName: "MARMARA İMPLANT VE DİŞ MERKEZİ",
       carrier: "Trendyol Express (KA)",
       trackingCode: "TEX-391827461",
-      status: "Kargoda / Yolda",
+      status: "Kargoda (Hareketsiz)",
+      statusClass: "status-transit",
+      statusColor: "#d97706",
+      recipient: "DR. SERKAN ŞAHİN (Yetkili Alıcı)",
+      deliveryAddress: "İnönü Cad. No: 88 D: 3, Kadıköy / İstanbul",
+      deliveryDate: "20 / 08 / 2026",
+      branch: "Kadıköy Dağıtım Şubesi",
+      hasInactivityWarning: true,
+      inactivityDuration: "28 Saat",
+      warningReason: "Kargonun verildiği günden ertesi gün saat 12:00'ye kadar kurye zimmet veya araç transfer hareketi girilmemiştir.",
+      events: [
+        { title: "Sipariş Teslim Alındı", desc: "Satıcı deposundan koli teslim alındı.", location: "Maltepe Transfer Merkezi / İstanbul", time: "20 / 08 / 2026 16:15", status: "completed", icon: "check" },
+        { title: "Araç Sevkıyat Bekliyor (Hareketsiz)", desc: "Ertesi gün 12:00'ye kadar sevkıyat kaydı oluşmadı.", location: "Maltepe Transfer Merkezi / İstanbul", time: "21 / 08 / 2026 12:00+", status: "warning", icon: "alert-triangle" }
+      ]
+    },
+    // 2. NORMAL AKIŞTAKİ KARGOLAR (ZAMANINDA İLERLEYEN - UYARI YOK)
+    "1-WS-2-67576": {
+      orderNo: "1-WS-2-67576",
+      cariName: "ÜLKÜ TÜRKMEN",
+      carrier: "Trendyol Express (KA)",
+      trackingCode: "TEX-67576019",
+      status: "Kargoda (Kurye Dağıtımda)",
       statusClass: "status-transit",
       statusColor: "#2563eb",
-      recipient: "Marmara İmplant (Danışma)",
-      deliveryAddress: "Alemdağ Cad. No: 154, Ümraniye / İstanbul",
-      deliveryDate: "Tahmini: Yarın 11:00",
-      branch: "Trendyol Express Ümraniye Hub",
+      recipient: "ÜLKÜ TÜRKMEN (Yetkili Alıcı)",
+      deliveryAddress: "Cihangir Mah. Sıraselviler Cad. No: 91, Beyoğlu / İstanbul",
+      deliveryDate: "22 / 08 / 2026",
+      branch: "Beyoğlu Dağıtım Şubesi",
+      hasInactivityWarning: false,
       events: [
-        { title: "Kargo Çıkışı Yapıldı", desc: "Davye Merkez Depodan TEX kuryesine teslim edildi (KA).", location: "Davye MD Hub", time: "20 / 08 / 2026 18:10", status: "active", icon: "truck" }
+        { title: "Sipariş Çıkış Şubesi Teslim Aldı", desc: "Gönderi kargo kabul noktasına ulaştı.", location: "Kadıköy Şube", time: "21 / 08 / 2026 17:15", status: "completed", icon: "check" },
+        { title: "Ana Transfer Merkezine Sevk Edildi", desc: "Paket transfer tırına yüklendi.", location: "Tuzla Transfer Merkezi", time: "21 / 08 / 2026 22:40", status: "completed", icon: "truck" },
+        { title: "Varış Dağıtım Şubesine İndi", desc: "Paket dağıtım şubesine ulaştı ve zimmetlendi.", location: "Beyoğlu Dağıtım Şubesi", time: "22 / 08 / 2026 07:30", status: "completed", icon: "package" },
+        { title: "Kurye Dağıtıma Çıktı", desc: "Kurye dağıtım rotasında teslimata ilerliyor.", location: "Beyoğlu / İstanbul", time: "22 / 08 / 2026 09:15", status: "active", icon: "bike" }
+      ]
+    },
+    "1-WS-2-51884": {
+      orderNo: "1-WS-2-51884",
+      cariName: "ÖZLEM DENTAL KLİNİĞİ A.Ş.",
+      carrier: "Trendyol Express (KA)",
+      trackingCode: "TEX-481920192",
+      status: "Kargoda (Dağıtımda)",
+      statusClass: "status-transit",
+      statusColor: "#2563eb",
+      recipient: "DR. ÖZLEM GÜNEŞ (Yetkili Alıcı)",
+      deliveryAddress: "Bağdat Cad. No: 210 D: 8, Suadiye, Kadıköy / İstanbul",
+      deliveryDate: "22 / 08 / 2026",
+      branch: "Kadıköy Dağıtım Şubesi",
+      hasInactivityWarning: false,
+      events: [
+        { title: "Kargo Kabul Yapıldı", desc: "Gönderi çıkış transfer merkezine ulaştı.", location: "Maltepe Transfer Merkezi", time: "21 / 08 / 2026 18:00", status: "completed", icon: "check" },
+        { title: "Dağıtım Merkezine Ulaştı", desc: "Paket kurye zimmet masasına aktarıldı.", location: "Kadıköy Hub", time: "22 / 08 / 2026 06:45", status: "completed", icon: "package" },
+        { title: "Kurye Dağıtımda", desc: "Tahmini teslimat bugün 15:00 - 18:00 saatleri arasındadır.", location: "Kadıköy / İstanbul", time: "22 / 08 / 2026 09:30", status: "active", icon: "bike" }
+      ]
+    },
+    // 3. TESLİM EDİLMİŞ SİPARİŞLER (TAMAMLANMIŞ TAM AKIŞ)
+    "1-WS-2-67553": {
+      orderNo: "1-WS-2-67553",
+      cariName: "ÜMİT VELİOĞLU",
+      carrier: "DHL Kargo (KA)",
+      trackingCode: "DHL-67553019",
+      status: "Teslim Edildi",
+      statusClass: "status-delivered",
+      statusColor: "#059669",
+      recipient: "ÜMİT VELİOĞLU (Kaşe & İmza)",
+      deliveryAddress: "Fahrettin Kerim Gökay Cad. No: 45, Göztepe, Kadıköy / İstanbul",
+      deliveryDate: "17 / 08 / 2026 14:18",
+      branch: "Göztepe Dağıtım Şubesi",
+      hasInactivityWarning: false,
+      events: [
+        { title: "Kargo Çıkışı Yapıldı", desc: "Gönderi şube kabulü yapıldı.", location: "Kadıköy Şube", time: "16 / 08 / 2026 15:20", status: "completed", icon: "check" },
+        { title: "Transfer Merkezine Ulaştı", desc: "Paket transfer tırına yüklendi.", location: "Tuzla Hub", time: "16 / 08 / 2026 20:45", status: "completed", icon: "truck" },
+        { title: "Dağıtım Şubesine Ulaştı", desc: "Paket Göztepe şubesine ulaştı.", location: "Göztepe Şube", time: "17 / 08 / 2026 08:30", status: "completed", icon: "package" },
+        { title: "Kurye Dağıtıma Çıktı", desc: "Kurye teslimat adresine hareket etti.", location: "Göztepe / İstanbul", time: "17 / 08 / 2026 10:15", status: "completed", icon: "bike" },
+        { title: "Teslim Edildi", desc: "Alıcıya bizzat kaşe imza karşılığı teslim edildi.", location: "Göztepe / İstanbul", time: "17 / 08 / 2026 14:18", status: "completed", icon: "check-circle" }
+      ]
+    },
+    "1-WS-2-67008": {
+      orderNo: "1-WS-2-67008",
+      cariName: "DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ",
+      carrier: "Trendyol Express (KA)",
+      trackingCode: "TEX-67008019",
+      status: "Teslim Edildi",
+      statusClass: "status-delivered",
+      statusColor: "#059669",
+      recipient: "Klinik Yetkilisi (Kaşe İmza)",
+      deliveryAddress: "Atatürk Cad. No: 128 D: 4, Maltepe / İstanbul",
+      deliveryDate: "10 / 08 / 2026 16:22",
+      branch: "Maltepe Dağıtım Şubesi",
+      hasInactivityWarning: false,
+      events: [
+        { title: "Kargo Kabul Edildi", desc: "Paket barkodu okutuldu.", location: "Maltepe Transfer", time: "09 / 08 / 2026 17:00", status: "completed", icon: "check" },
+        { title: "Dağıtım Şubesine Sevk", desc: "Paket dağıtım aracına aktarıldı.", location: "Maltepe Dağıtım Şubesi", time: "10 / 08 / 2026 07:45", status: "completed", icon: "truck" },
+        { title: "Kurye Dağıtımda", desc: "Teslimata çıkıldı.", location: "Maltepe / İstanbul", time: "10 / 08 / 2026 09:30", status: "completed", icon: "bike" },
+        { title: "Teslim Edildi", desc: "Yetkili personele teslim edildi.", location: "Maltepe / İstanbul", time: "10 / 08 / 2026 16:22", status: "completed", icon: "check-circle" }
+      ]
+    },
+    "1-WS-2-65813": {
+      orderNo: "1-WS-2-65813",
+      cariName: "ERDİ EKİZ",
+      carrier: "DHL Kargo (KA)",
+      trackingCode: "DHL-65813091",
+      status: "Teslim Edildi",
+      statusClass: "status-delivered",
+      statusColor: "#059669",
+      recipient: "ERDİ EKİZ (Yetkili Alıcı)",
+      deliveryAddress: "Büyükdere Cad. No: 180, Maslak / Sarıyer / İstanbul",
+      deliveryDate: "28 / 07 / 2026 15:40",
+      branch: "Sarıyer Dağıtım Şubesi",
+      hasInactivityWarning: false,
+      events: [
+        { title: "Kargo Kabul", desc: "Kargo şubesi gönderiyi teslim aldı.", location: "Şişli Hub", time: "27 / 07 / 2026 16:00", status: "completed", icon: "check" },
+        { title: "Transfer Merkezinde", desc: "Paket sevk edildi.", location: "Hadımköy Aktarma", time: "27 / 07 / 2026 21:30", status: "completed", icon: "truck" },
+        { title: "Dağıtıma Çıkarıldı", desc: "Kurye Maslak bölgesine çıktı.", location: "Sarıyer Şube", time: "28 / 07 / 2026 09:00", status: "completed", icon: "bike" },
+        { title: "Teslim Edildi", desc: "Paket alıcıya teslim edildi.", location: "Maslak / İstanbul", time: "28 / 07 / 2026 15:40", status: "completed", icon: "check-circle" }
+      ]
+    },
+    "1-WS-2-63902": {
+      orderNo: "1-WS-2-63902",
+      cariName: "ERDİ EKİZ",
+      carrier: "Trendyol Express (KA)",
+      trackingCode: "TEX-63902019",
+      status: "Teslim Edildi",
+      statusClass: "status-delivered",
+      statusColor: "#059669",
+      recipient: "ERDİ EKİZ (Yetkili Alıcı)",
+      deliveryAddress: "Batı Mah. Erol Kaya Cad. No: 64, Pendik / İstanbul",
+      deliveryDate: "29 / 07 / 2026 11:07",
+      branch: "Pendik Dağıtım Şubesi",
+      hasInactivityWarning: false,
+      events: [
+        { title: "Kargo Kabul", desc: "Paket teslim alındı.", location: "Tuzla Hub", time: "28 / 07 / 2026 17:30", status: "completed", icon: "check" },
+        { title: "Şubeye Sevk", desc: "Pendik şubesine ulaştı.", location: "Pendik Şube", time: "29 / 07 / 2026 08:00", status: "completed", icon: "truck" },
+        { title: "Teslim Edildi", desc: "Alıcıya teslim edildi.", location: "Pendik / İstanbul", time: "29 / 07 / 2026 11:07", status: "completed", icon: "check-circle" }
+      ]
+    },
+    "1-WS-2-63758": {
+      orderNo: "1-WS-2-63758",
+      cariName: "ÜMİT VELİOĞLU",
+      carrier: "DHL Kargo (KA)",
+      trackingCode: "DHL-63758019",
+      status: "Teslim Edildi",
+      statusClass: "status-delivered",
+      statusColor: "#059669",
+      recipient: "ÜMİT VELİOĞLU (Yetkili Alıcı)",
+      deliveryAddress: "Barbaros Mah. Mor Sümbül Sok. No: 12, Ataşehir / İstanbul",
+      deliveryDate: "27 / 07 / 2026 13:02",
+      branch: "Ataşehir Dağıtım Şubesi",
+      hasInactivityWarning: false,
+      events: [
+        { title: "Kargo Kabul", desc: "Şube kabulü yapıldı.", location: "Kadıköy Şube", time: "26 / 07 / 2026 16:30", status: "completed", icon: "check" },
+        { title: "Dağıtımda", desc: "Kurye dağıtıma çıktı.", location: "Ataşehir Şube", time: "27 / 07 / 2026 09:15", status: "completed", icon: "bike" },
+        { title: "Teslim Edildi", desc: "Teslimat tamamlandı.", location: "Ataşehir / İstanbul", time: "27 / 07 / 2026 13:02", status: "completed", icon: "check-circle" }
       ]
     },
     "1-WS-2-51887": {
@@ -17048,30 +17058,16 @@
       status: "Teslim Edildi",
       statusClass: "status-delivered",
       statusColor: "#059669",
-      recipient: "Dr. Selim Ergün (Bizzat Kendisine)",
-      deliveryAddress: "Cumhuriyet Cad. No: 22, Beylikdüzü / İstanbul",
-      deliveryDate: "20 / 08 / 2026 13:45",
-      branch: "DHL Kargo Beylikdüzü Hub",
+      recipient: "DR. SELİM ERGÜN (Yetkili Alıcı)",
+      deliveryAddress: "Nispetiye Cad. No: 34 D: 5, Beşiktaş / İstanbul",
+      deliveryDate: "20 / 08 / 2026 14:15",
+      branch: "Beşiktaş Dağıtım Şubesi",
+      hasInactivityWarning: false,
       events: [
-        { title: "Teslim Edildi", desc: "Paket muayenehanede bizzat hekime teslim edildi (DHL Kargo KA).", location: "Beylikdüzü / İstanbul", time: "20 / 08 / 2026 13:45", status: "completed", icon: "check" },
-        { title: "Kurye Dağıtımda", desc: "DHL Kargo aracı sevkıyat rotasında.", location: "Avcılar - Beylikdüzü", time: "20 / 08 / 2026 12:30", status: "completed", icon: "truck" }
-      ]
-    },
-    "1-WS-2-51884": {
-      orderNo: "1-WS-2-51884",
-      cariName: "ÖZLEM DENTAL KLİNİĞİ A.Ş.",
-      carrier: "Trendyol Express (KA)",
-      trackingCode: "TEX-481920192",
-      status: "Yolda (Trendyol Express)",
-      statusClass: "status-transit",
-      statusColor: "#2563eb",
-      recipient: "Özlem Dental (Klinik Kabul)",
-      deliveryAddress: "Barbaros Bulvarı No: 88, Beşiktaş / İstanbul",
-      deliveryDate: "Tahmini: Bugün 17:00",
-      branch: "Trendyol Express Beşiktaş Hub",
-      events: [
-        { title: "Dağıtıma Çıktı", desc: "Kurye aracı sevkıyat rotasında (Trendyol Express KA).", location: "Beşiktaş / İstanbul", time: "20 / 08 / 2026 15:30", status: "active", icon: "truck" },
-        { title: "Aktarma Merkezinde", desc: "Ana transfer merkezinden şubeye ulaştı.", location: "İstanbul İkitelli TEX Hub", time: "20 / 08 / 2026 11:20", status: "completed", icon: "building-2" }
+        { title: "Kargo Çıkışı Yapıldı", desc: "Şube kabulü yapıldı.", location: "Kadıköy Şube", time: "19 / 08 / 2026 16:00", status: "completed", icon: "check" },
+        { title: "Transfer Merkezinde", desc: "Paket transfer tırına yüklendi.", location: "Tuzla Hub", time: "19 / 08 / 2026 21:30", status: "completed", icon: "truck" },
+        { title: "Dağıtıma Çıkarıldı", desc: "Kurye Beşiktaş bölgesinde dağıtıma çıktı.", location: "Beşiktaş Şube", time: "20 / 08 / 2026 09:00", status: "completed", icon: "bike" },
+        { title: "Teslim Edildi", desc: "Alıcıya kaşe imza karşılığı teslim edildi.", location: "Beşiktaş / İstanbul", time: "20 / 08 / 2026 14:15", status: "completed", icon: "check-circle" }
       ]
     },
     "1-WS-2-51883": {
@@ -17079,15 +17075,18 @@
       cariName: "DR. TOLGA YILDIZ POLİKLİNİĞİ",
       carrier: "DHL Kargo (KA)",
       trackingCode: "DHL-491820491",
-      status: "Teslim Edildi (DHL Kargo)",
+      status: "Teslim Edildi",
       statusClass: "status-delivered",
       statusColor: "#059669",
-      recipient: "Klinik Görevlisi / Danışma",
-      deliveryAddress: "Tarabya / Sarıyer / İstanbul",
-      deliveryDate: "19 / 08 / 2026 16:30",
-      branch: "DHL Kargo Maslak Hub",
+      recipient: "DR. TOLGA YILDIZ (Yetkili Alıcı)",
+      deliveryAddress: "Atatürk Cad. No: 56 D: 3, Maltepe / İstanbul",
+      deliveryDate: "19 / 08 / 2026 17:10",
+      branch: "Maltepe Dağıtım Şubesi",
+      hasInactivityWarning: false,
       events: [
-        { title: "Teslim Edildi", desc: "Numune malzemeler teslim tutanağı ile hekime teslim edildi.", location: "Tarabya / Sarıyer", time: "19 / 08 / 2026 16:30", status: "completed", icon: "check" }
+        { title: "Kargo Kabul", desc: "Gönderi teslim alındı.", location: "Maltepe Hub", time: "18 / 08 / 2026 16:30", status: "completed", icon: "check" },
+        { title: "Dağıtıma Çıktı", desc: "Kurye dağıtımda.", location: "Maltepe Şube", time: "19 / 08 / 2026 10:00", status: "completed", icon: "bike" },
+        { title: "Teslim Edildi", desc: "Teslimat yapıldı.", location: "Maltepe / İstanbul", time: "19 / 08 / 2026 17:10", status: "completed", icon: "check-circle" }
       ]
     },
     "1-WS-2-51882": {
@@ -17098,30 +17097,37 @@
       status: "Teslim Edildi",
       statusClass: "status-delivered",
       statusColor: "#059669",
-      recipient: "Kemal Gülüş (Diş Hekimi / Bizzat)",
-      deliveryAddress: "Büyükdere Cad. No: 120, Maslak / İstanbul",
-      deliveryDate: "17 / 08 / 2026 16:40",
-      branch: "DHL Kargo Maslak Hub",
+      recipient: "Klinik Yetkilisi (Kaşe İmza)",
+      deliveryAddress: "Bağdat Cad. No: 350 D: 8, Maltepe / İstanbul",
+      deliveryDate: "18 / 08 / 2026 15:30",
+      branch: "Maltepe Dağıtım Şubesi",
+      hasInactivityWarning: false,
       events: [
-        { title: "Teslim Edildi", desc: "Gönderi alıcıya teslim edildi (DHL Kargo KA).", location: "Maslak / İstanbul", time: "17 / 08 / 2026 16:40", status: "completed", icon: "check" },
-        { title: "Dağıtımda", desc: "DHL kuryesi teslimat adresine hareket etti.", location: "DHL Maslak Şubesi", time: "17 / 08 / 2026 11:15", status: "completed", icon: "truck" }
+        { title: "Kargo Kabul", desc: "Şube kabulü yapıldı.", location: "Kadıköy Şube", time: "17 / 08 / 2026 17:00", status: "completed", icon: "check" },
+        { title: "Transfer Merkezinde", desc: "Ana merkezden şubeye sevk.", location: "Tuzla Hub", time: "17 / 08 / 2026 23:00", status: "completed", icon: "truck" },
+        { title: "Dağıtıma Çıktı", desc: "Kurye teslimat rotasında.", location: "Maltepe Şube", time: "18 / 08 / 2026 09:30", status: "completed", icon: "bike" },
+        { title: "Teslim Edildi", desc: "Teslim tutanağı imzalandı.", location: "Maltepe / İstanbul", time: "18 / 08 / 2026 15:30", status: "completed", icon: "check-circle" }
       ]
     },
+    // 4. İADE SÜREÇLERİ
     "1-WS-2-51881": {
       orderNo: "1-WS-2-51881",
       cariName: "MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.",
       carrier: "DHL Kargo (KA)",
       trackingCode: "DHL-819203918",
-      status: "İade Kargosu Yolda (Depoya Geliyor)",
-      statusClass: "status-transit",
-      statusColor: "#ea580c",
-      recipient: "Davye Merkez Depo (İade Kabul Bölümü)",
-      deliveryAddress: "Davye Lojistik & İade Merkezi, Kadıköy / İstanbul",
-      deliveryDate: "Tahmini: Yarın 14:00",
-      branch: "Levent Şubesinden Çıkış Yapıldı",
+      status: "İade Yolda (Hareketsiz / Takıldı)",
+      statusClass: "status-return",
+      statusColor: "#dc2626",
+      recipient: "Davye Depo İade Masası",
+      deliveryAddress: "Davye Dental Lojistik & Depo Merkezi, Kadıköy / İstanbul",
+      deliveryDate: "17 / 08 / 2026",
+      branch: "İade Masası",
+      hasInactivityWarning: true,
+      inactivityDuration: "48 Saat",
+      warningReason: "Müşteriden alınan iade koli ertesi gün 12:00'den beri şubede beklemekte, transfer aracına yüklenmemiştir.",
       events: [
-        { title: "İade Kargoya Verildi", desc: "Müşteri iade paketini DHL kuryesine teslim etti (DHL KA).", location: "Levent Şubesi / İstanbul", time: "18 / 08 / 2026 14:30", status: "completed", icon: "rotate-ccw" },
-        { title: "Transfer Merkezinde", desc: "İade kolisi ana aktarma merkezine ulaştı.", location: "İstanbul Anadolu Hub", time: "18 / 08 / 2026 19:10", status: "active", icon: "truck" }
+        { title: "İade Koli Müşteriden Alındı", desc: "Kurye iade paketini teslim aldı.", location: "Bakırköy Şube", time: "17 / 08 / 2026 14:00", status: "completed", icon: "check" },
+        { title: "İade Şubede Bekliyor (Hareketsiz)", desc: "İade gönderisi ertesi gün 12:00'ye kadar aktarma merkezine sevk edilmedi.", location: "Bakırköy Şube", time: "18 / 08 / 2026 12:00+", status: "warning", icon: "alert-triangle" }
       ]
     },
     "1-WS-2-51880": {
@@ -17129,17 +17135,18 @@
       cariName: "DR. BURAK ÖZKAN POLİKLİNİĞİ",
       carrier: "DHL Kargo (KA)",
       trackingCode: "DHL-738192019",
-      status: "İade Depoya Ulaştı & Kabul Edildi",
-      statusClass: "status-delivered",
-      statusColor: "#be185d",
-      recipient: "Davye Kalite Kontrol & İade Şefliği",
-      deliveryAddress: "Davye ED Depo, Esenyurt / İstanbul",
-      deliveryDate: "17 / 08 / 2026 11:20",
-      branch: "Esenyurt İade Kabul Masası",
+      status: "İade Kabul Edildi",
+      statusClass: "status-return",
+      statusColor: "#059669",
+      recipient: "Davye Depo İade Masası",
+      deliveryAddress: "Davye Dental Lojistik & Depo Merkezi, Kadıköy / İstanbul",
+      deliveryDate: "16 / 08 / 2026 11:30",
+      branch: "İade Masası",
+      hasInactivityWarning: false,
       events: [
-        { title: "Ücret İadesi Yapıldı", desc: "Gider pusulası kesildi ve cari hesaba iade tutarı aktarıldı.", location: "Davye Finans / Muhasebe", time: "17 / 08 / 2026 15:30", status: "completed", icon: "check" },
-        { title: "Kalite Kontrol Onaylandı", desc: "İade ürünler açılıp eksiksiz/hasarsız kontrol edildi.", location: "Davye ED Depo", time: "17 / 08 / 2026 13:00", status: "completed", icon: "check-circle-2" },
-        { title: "İade Teslim Alındı", desc: "DHL kuryesi depoya iade kolisini ulaştırdı.", location: "Davye ED Depo", time: "17 / 08 / 2026 11:20", status: "completed", icon: "package-check" }
+        { title: "İade Koli Teslim Alındı", desc: "Müşteriden koli alındı.", location: "Kadıköy Şube", time: "15 / 08 / 2026 15:00", status: "completed", icon: "check" },
+        { title: "Depoya Ulaştı", desc: "İade koli merkez depoya teslim edildi.", location: "Merkez Depo", time: "16 / 08 / 2026 09:30", status: "completed", icon: "package" },
+        { title: "İade Kabul Edildi", desc: "Ürün kalite kontrolü tamamlandı, iade onaylandı.", location: "Merkez Depo", time: "16 / 08 / 2026 11:30", status: "completed", icon: "check-circle" }
       ]
     },
     "1-WS-2-51879": {
@@ -17148,1050 +17155,19 @@
       carrier: "Trendyol Express (KA)",
       trackingCode: "TEX-918274019",
       status: "İade Tamamlandı",
-      statusClass: "status-delivered",
+      statusClass: "status-return",
       statusColor: "#059669",
-      recipient: "Davye İade & Değişim Departmanı",
-      deliveryAddress: "Davye MD Depo, Kadıköy / İstanbul",
-      deliveryDate: "16 / 08 / 2026 15:10",
-      branch: "Bakırköy TEX Şubesi",
+      recipient: "Davye Depo İade Masası",
+      deliveryAddress: "Davye Dental Lojistik & Depo Merkezi, Kadıköy / İstanbul",
+      deliveryDate: "15 / 08 / 2026 16:45",
+      branch: "İade Masası",
+      hasInactivityWarning: false,
       events: [
-        { title: "İade Süreci Tamamlandı", desc: "Ürün depoya geri alındı, fatura iptal kaydı yapıldı.", location: "Davye MD Depo", time: "16 / 08 / 2026 15:10", status: "completed", icon: "check" }
+        { title: "İade Teslim Alındı", desc: "Paket kuryeye verildi.", location: "Şişli Hub", time: "14 / 08 / 2026 16:00", status: "completed", icon: "check" },
+        { title: "Depo Girişi Yapıldı", desc: "Ürünler rafa iade edildi.", location: "Merkez Depo", time: "15 / 08 / 2026 10:30", status: "completed", icon: "package" },
+        { title: "İade Tamamlandı", desc: "Muhasebe para iadesini onayladı.", location: "Merkez Depo", time: "15 / 08 / 2026 16:45", status: "completed", icon: "check-circle" }
       ]
     }
-    };
-
-  let currentActiveOrderId = null;
-
-  function closeAllDropdowns() {
-    document.querySelectorAll('.dropdown-menu').forEach(menu => {
-      menu.classList.remove('show');
-    });
-  }
-
-  function toastMessage(msg) {
-    const toast = document.getElementById('toast');
-    if (toast) {
-      toast.innerText = msg;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 2000);
-    }
-  }
-
-  // 1. Detay Görüntüle Modalını Aç
-  
-  // Müşteri Detay Modalı Aç
-  function openCustomerModal(orderId) {
-    closeAllDropdowns();
-    const order = ordersDatabase[orderId];
-    if (!order) {
-      toastMessage('Müşteri kaydı bulunamadı.');
-      return;
-    }
-
-    document.getElementById('modalCustomerName').innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      ${order.cariName}
-    `;
-    document.getElementById('modalCustomerSubtitle').innerText = `${order.district || 'İstanbul'} • Sipariş No: ${order.orderNo}`;
-
-    const bodyEl = document.getElementById('modalCustomerBody');
-    bodyEl.innerHTML = `
-      <div style="background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:12px 14px; display:flex; flex-direction:column; gap:8px;">
-        <div style="display:flex; justify-content:space-between; border-bottom:1px solid #f1f5f9; padding-bottom:6px;">
-          <span style="font-size:11.5px; color:#64748b; font-weight:600;">Vergi Dairesi / VKN:</span>
-          <span style="font-size:12px; color:#0f172a; font-weight:700;">${order.taxOffice || 'Kadıköy V.D.'} - ${order.vkn || '8492019482'}</span>
-        </div>
-        <div style="display:flex; justify-content:space-between; border-bottom:1px solid #f1f5f9; padding-bottom:6px;">
-          <span style="font-size:11.5px; color:#64748b; font-weight:600;">GLN / UTS No:</span>
-          <span style="font-size:12px; color:#0f172a; font-weight:700;">${order.gln || '8680001234567'} / ${order.uts || 'UTS-92018'}</span>
-        </div>
-        <div style="display:flex; justify-content:space-between; border-bottom:1px solid #f1f5f9; padding-bottom:6px;">
-          <span style="font-size:11.5px; color:#64748b; font-weight:600;">İlçe / Şehir:</span>
-          <span style="font-size:12px; color:#0f172a; font-weight:700;">${order.district || 'Kadıköy'} / ${order.city || 'İstanbul'}</span>
-        </div>
-        <div style="display:flex; justify-content:space-between; border-bottom:1px solid #f1f5f9; padding-bottom:6px;">
-          <span style="font-size:11.5px; color:#64748b; font-weight:600;">Satış Temsilcisi:</span>
-          <span style="font-size:12px; color:#0f172a; font-weight:700;">${order.salesRep || 'Dental Piyasa Satış Ekibi'}</span>
-        </div>
-        <div style="display:flex; justify-content:space-between;">
-          <span style="font-size:11.5px; color:#64748b; font-weight:600;">Mevcut Bakiye / Limit:</span>
-          <span style="font-size:12px; color:#16a34a; font-weight:700;">0,00 ₺ (Risk Limiti: 50.000 ₺)</span>
-        </div>
-      </div>
-    `;
-
-    document.getElementById('customerDetailModal').classList.add('show');
-    if (window.lucide) lucide.createIcons();
-  }
-
-  // İşlemi Kopyala
-  function duplicateOrder(orderId) {
-    closeAllDropdowns();
-    const toast = document.getElementById('toast');
-    toast.innerText = `Sipariş #${orderId} işlemi kopyalandı ve yeni taslak hazırlandı!`;
-    toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 2500);
-  }
-
-  // Sipariş Sil
-  function deleteOrder(orderId) {
-    closeAllDropdowns();
-    if (confirm(`#${orderId} numaralı siparişi silmek istediğinize emin misiniz?`)) {
-      const cards = document.querySelectorAll('.order-card');
-      cards.forEach(card => {
-        const id = card.dataset.orderId || card.querySelector('.order-number-badge')?.dataset?.orderId;
-        if (id === orderId || (card.innerText && card.innerText.includes(orderId))) {
-          card.style.transition = 'all 0.3s ease';
-          card.style.opacity = '0';
-          card.style.transform = 'scale(0.95)';
-          setTimeout(() => {
-            card.remove();
-            if (typeof updateStatusTabCounts === 'function') updateStatusTabCounts();
-            if (typeof initPagination === 'function') initPagination();
-          }, 300);
-        }
-      });
-      const toast = document.getElementById('toast');
-      toast.innerText = `Sipariş #${orderId} başarıyla silindi.`;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 2500);
-    }
-  }
-
-  function openDetailModal(orderId) {
-    currentActiveOrderId = orderId;
-    const order = ordersDatabase[orderId];
-    if (!order) return;
-
-    document.getElementById('modalOrderNo').innerHTML = `<i data-lucide="package"></i> Sipariş #${order.orderNo}`;
-    if (order.statusPillsHtml) {
-      document.getElementById('modalStatusBadge').innerHTML = `<div class="status-pills-wrap">${order.statusPillsHtml}</div>`;
-    } else {
-      if (order.statusPillsHtml) {
-      document.getElementById('modalStatusBadge').innerHTML = `<div class="status-pills-wrap">${order.statusPillsHtml}</div>`;
-    } else {
-      document.getElementById('modalStatusBadge').innerHTML = `<span class="status-pill ${order.statusClass}"><i data-lucide="${order.statusIcon}"></i> ${order.statusText}</span>`;
-    }
-    }
-
-    let itemsHtml = '';
-    (order.items || []).forEach(item => {
-      itemsHtml += `
-        <tr>
-          <td><span style="font-family:'JetBrains Mono', monospace; font-weight:700; font-size:11px; background:#eff6ff; color:#2563eb; padding:2px 6px; border-radius:4px; border:1px solid #bfdbfe;">${item.code}</span></td>
-          <td><strong style="color:#0f172a; font-size:11.5px;">${item.name}</strong></td>
-          <td style="text-align:center;"><span class="badge-qty" style="font-size:10.5px; font-weight:700; background:#f1f5f9; color:#334155;">${item.qty} Adet</span></td>
-          <td style="text-align:right; font-family:'JetBrains Mono', monospace; font-size:11px; color:#475569;">${item.price}</td>
-          <td style="text-align:right; font-family:'JetBrains Mono', monospace; font-weight:800; font-size:11.5px; color:#0f172a;">${item.total}</td>
-        </tr>
-      `;
-    });
-
-    const isInvoicePending = order.invoiceNo === 'Kesilmedi' || order.invoiceNo === 'Taslak' || order.invoiceNo === 'Tamamlanmamış' || order.invoiceNo === '-';
-
-    const bodyHtml = `
-      <!-- Üst Hero Özet Kartı -->
-      <div class="modal-hero-bar">
-        <div class="modal-hero-top-row">
-          <div class="modal-hero-cari data-value-copyable" onclick="copyToClipboard('${order.cariName}')" title="Kopyala" style="cursor:pointer;">
-            <i data-lucide="building-2" style="width:16px; height:16px; color:#2563eb; flex-shrink:0;"></i> 
-            <span>${order.cariName}</span>
-            <i data-lucide="copy" class="copy-inline-icon"></i>
-          </div>
-          <div class="modal-hero-price-wrap">
-            <span class="modal-hero-price-label">Toplam Tutar</span>
-            <span class="modal-hero-price">${order.totalPrice}</span>
-          </div>
-        </div>
-        <div class="modal-hero-chips">
-          <span class="modal-chip"><i data-lucide="warehouse"></i> Depo: <strong>${order.depo}</strong></span>
-          <span class="modal-chip"><i data-lucide="store"></i> Kanal: <strong>${order.salesRep}</strong></span>
-          <span class="modal-chip"><i data-lucide="calendar"></i> <strong>${order.date}</strong></span>
-        </div>
-      </div>
-
-      <!-- 2 Sütunlu Bilgi Izgarası -->
-      <div class="modal-section-grid">
-        <!-- Sol Kutu: Cari Bilgileri -->
-        <div class="modal-box">
-          <div class="modal-box-title"><i data-lucide="user"></i> Cari Bilgileri | ${order.cariType || 'Kurumsal'}</div>
-          <div class="modal-data-row">
-            <span class="modal-data-label">${order.idLabel || 'VKN'}:</span>
-            <span class="modal-data-val data-value-copyable" onclick="copyToClipboard('${order.taxId || order.vergiNo || '-'}')" title="Kopyala" style="cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
-              <span style="font-family:'JetBrains Mono', monospace;">${order.taxId || order.vergiNo || '-'}</span>
-              <i data-lucide="copy" class="copy-inline-icon"></i>
-            </span>
-          </div>
-          <div class="modal-data-row">
-            <span class="modal-data-label">Vergi Dairesi:</span>
-            <span class="modal-data-val data-value-copyable" onclick="copyToClipboard('${order.taxOffice || '-'}')" title="Kopyala" style="cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
-              <span>${order.taxOffice || '-'}</span>
-              <i data-lucide="copy" class="copy-inline-icon"></i>
-            </span>
-          </div>
-          <div class="modal-data-row">
-            <span class="modal-data-label">GLN:</span>
-            <span class="modal-data-val data-value-copyable" onclick="copyToClipboard('${order.gln || order.glnUts || '-'}')" title="Kopyala" style="cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
-              <span style="font-family:'JetBrains Mono', monospace;">${order.gln || order.glnUts || '-'}</span>
-              <i data-lucide="copy" class="copy-inline-icon"></i>
-            </span>
-          </div>
-          <div class="modal-data-row">
-            <span class="modal-data-label">UTS:</span>
-            <span class="modal-data-val data-value-copyable" onclick="copyToClipboard('${order.uts || order.glnUts || '-'}')" title="Kopyala" style="cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
-              <span style="font-family:'JetBrains Mono', monospace;">${order.uts || order.glnUts || '-'}</span>
-              <i data-lucide="copy" class="copy-inline-icon"></i>
-            </span>
-          </div>
-          <div class="modal-data-row">
-            <span class="modal-data-label">Adres:</span>
-            <span class="modal-data-val data-value-copyable" onclick="copyToClipboard('${order.address || 'İstanbul'}')" title="Kopyala" style="cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
-              <span>${order.address || 'İstanbul'}</span>
-              <i data-lucide="copy" class="copy-inline-icon"></i>
-            </span>
-          </div>
-        </div>
-
-        <!-- Sağ Kutu: Fatura & Finansal Durum -->
-        <div class="modal-box">
-          <div class="modal-box-title"><i data-lucide="file-check"></i> Fatura & Vade Bilgisi</div>
-          <div class="modal-data-row">
-            <span class="modal-data-label">Fatura Tipi:</span>
-            <span class="modal-data-val">${order.invoiceType}</span>
-          </div>
-          <div class="modal-data-row">
-            <span class="modal-data-label">Fatura No:</span>
-            <span class="modal-data-val data-value-copyable" onclick="copyToClipboard('${order.invoiceNo}')" title="Kopyala: ${order.invoiceNo}" style="cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
-              <span style="${isInvoicePending ? 'color:#d97706; font-weight:700; background:#fef3c7; padding:1px 6px; border-radius:4px; border:1px solid #fde68a;' : 'color:#0f172a; font-family:monospace;'}">${order.invoiceNo}</span>
-              <i data-lucide="copy" class="copy-inline-icon"></i>
-            </span>
-          </div>
-          <div class="modal-data-row">
-            <span class="modal-data-label">E-Fatura Seri:</span>
-            <span class="modal-data-val data-value-copyable" onclick="copyToClipboard('${order.invoiceSerial || '-'}')" title="Kopyala: ${order.invoiceSerial || '-'}" style="cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
-              <span style="font-family:monospace;">${order.invoiceSerial || '-'}</span>
-              <i data-lucide="copy" class="copy-inline-icon"></i>
-            </span>
-          </div>
-          <div class="modal-data-row">
-            <span class="modal-data-label">Vade Tarihi:</span>
-            <span class="modal-data-val" style="font-weight:700; color:#0f172a;">${order.vade}</span>
-          </div>
-          <div class="modal-data-row">
-            <span class="modal-data-label">Ödeme Durumu:</span>
-            <span class="modal-data-val" style="color:#16a34a; font-weight:700;">${order.paymentStatus}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Kargo ve Açıklama / Entegrasyon Notu -->
-      <div class="modal-box">
-        <div class="modal-box-title"><i data-lucide="truck"></i> Lojistik & Durum</div>
-        <div class="modal-data-row">
-          <span class="modal-data-label">Teslimat Yöntemi:</span>
-          <span class="modal-data-val data-value-copyable" onclick="copyToClipboard('${order.delivery}')" title="Kopyala" style="cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
-            <span>${order.delivery}</span>
-            <i data-lucide="copy" class="copy-inline-icon"></i>
-          </span>
-        </div>
-        <div class="modal-data-row">
-          <span class="modal-data-label">Ürün Sayısı (Toplam / Toplanan):</span>
-          <span class="modal-data-val">
-            <span class="badge-qty" style="background:#f1f5f9; border-color:#cbd5e1;"><strong>${order.totalQty || 0} / ${order.pickedQty || 0}</strong> Adet</span>
-          </span>
-        </div>
-        <div class="modal-data-row">
-          <span class="modal-data-label">Kargo Durumu:</span>
-          <span class="modal-data-val" style="display:inline-flex; align-items:center; gap:6px;">
-            <span style="font-weight:700; color:#0f172a;">${order.cargoStatus} <span style="font-size:10.5px; color:#64748b; font-weight:500;">(${order.cargoTrack})</span></span>
-            ${order.cargoTrack && order.cargoTrack !== '-' && order.cargoTrack !== 'Beklemede' && order.cargoTrack !== 'Oluşturulmadı' && order.cargoTrack !== 'Gönderim İptal' ? `
-            <button type="button" class="btn-copy-cargo" onclick="event.stopPropagation(); copyToClipboard('${order.delivery} - ${order.cargoTrack.replace(/^Takip No:\s*|Barkod:\s*/, '').trim()}')" title="Kopyala: ${order.delivery} - ${order.cargoTrack.replace(/^Takip No:\s*|Barkod:\s*/, '').trim()}">
-              <i data-lucide="copy"></i>
-            </button>` : ''}
-          </span>
-        </div>
-        ${order.note ? `
-        <div class="modal-note-box">
-          <i data-lucide="message-square"></i>
-          <div>
-            <div style="font-weight:700; color:#1e3a8a; font-size:11px; margin-bottom:2px;">Entegrasyon / Muhasebe Notu:</div>
-            <div style="color:#1e40af; font-size:11.5px; font-weight:500;">${order.note.replace(/^💬\s*(Muhasebe Notu:\s*)?/, '')}</div>
-          </div>
-        </div>` : ''}
-      </div>
-
-      <!-- Sipariş Edilen Ürün Kalemleri Tablosu -->
-      <div class="modal-box" style="padding: 10px 12px;">
-        <div class="modal-box-title" style="border-bottom:none; margin-bottom:0; padding-bottom:6px;">
-          <i data-lucide="shopping-bag"></i> Sipariş Edilen Ürün Kalemleri
-        </div>
-        <div class="modal-table-wrap">
-          <table class="modal-table">
-            <thead>
-              <tr>
-                <th style="width: 16%;">Ürün Kodu</th>
-                <th style="width: 44%;">Ürün Açıklaması</th>
-                <th style="width: 14%; text-align:center;">Miktar</th>
-                <th style="width: 13%; text-align:right;">Birim Fiyat</th>
-                <th style="width: 13%; text-align:right;">Toplam</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${itemsHtml}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    `;
-
-    document.getElementById('modalBodyContent').innerHTML = bodyHtml;
-    document.getElementById('orderDetailModal').classList.add('show');
-    lucide.createIcons();
-  }
-
-  // 2. Not Ekle Modalını Aç
-  function openNoteModal(orderId) {
-    currentActiveOrderId = orderId;
-    const order = ordersDatabase[orderId] || {};
-    document.getElementById('modalNoteTitle').innerHTML = `<i data-lucide="message-square"></i> Siparişe Not Ekle (#${orderId})`;
-    document.getElementById('modalNoteInput').value = order.note || '';
-    document.getElementById('orderNoteModal').classList.add('show');
-    lucide.createIcons();
-  }
-
-  function saveOrderNote() {
-    const noteVal = document.getElementById('modalNoteInput').value.trim();
-    if (currentActiveOrderId && ordersDatabase[currentActiveOrderId]) {
-      ordersDatabase[currentActiveOrderId].note = noteVal;
-      
-      // İlgili sipariş kartı üzerindeki üst not barını canlı güncelle
-      const cards = document.querySelectorAll('.order-card');
-      cards.forEach(card => {
-        const orderNumEl = card.querySelector('.order-number-badge span');
-        const cardId = card.dataset.orderId || (card.querySelector('.order-number-badge')?.dataset?.orderId);
-        if (cardId === currentActiveOrderId || (orderNumEl && orderNumEl.innerText.includes(currentActiveOrderId))) {
-          let noteBar = card.querySelector('.card-note-bar');
-          if (noteVal) {
-            if (!noteBar) {
-              noteBar = document.createElement('div');
-              noteBar.className = 'card-note-bar';
-              const headerBar = card.querySelector('.card-header-bar');
-              headerBar.after(noteBar);
-            }
-            noteBar.title = 'Notu kopyalamak için tıkla';
-            noteBar.onclick = () => copyToClipboard(noteVal);
-            noteBar.innerHTML = `
-              <div class="card-note-left">
-                <span class="card-note-icon"><i data-lucide="message-square"></i></span>
-                <span class="card-note-text">${noteVal}</span>
-              </div>
-              <div class="card-note-right">
-                <button type="button" class="btn-copy-note" onclick="event.stopPropagation(); copyToClipboard('${noteVal.replace(/'/g, "\\'")}')" title="Notu Kopyala">
-                  <i data-lucide="copy"></i> Kopyala
-                </button>
-              </div>
-            `;
-            lucide.createIcons();
-          } else if (noteBar) {
-            noteBar.remove();
-          }
-        }
-      });
-    }
-    closeModal();
-    const toast = document.getElementById('toast');
-    if (toast) {
-      toast.innerText = 'Sipariş notu kaydedildi!';
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 2000);
-    }
-  }
-
-  // 3. Kargo Barkodu Modalını Aç
-  function openBarcodeModal(orderId, customBarcode) {
-    currentActiveOrderId = orderId;
-    const order = ordersDatabase[orderId] || {};
-    const barcodeVal = customBarcode || (order.cargoTrack && order.cargoTrack.includes('-') ? order.cargoTrack.split('-').slice(1).join('-').trim() : ('BAR-' + orderId.replace(/[^0-9]/g, '')));
-    
-    document.getElementById('modalBarcodeCarrier').innerText = order.delivery || 'DHL Kargo (KA)';
-    document.getElementById('modalBarcodeAgreement').innerText = (order.salesRep ? order.salesRep + ' ANLAŞMALI SEVKİYAT' : 'HIZLI SEVKİYAT');
-    document.getElementById('modalBarcodeDesi').innerText = (order.totalQty && order.totalQty > 100 ? '4 DESİ' : '2 DESİ');
-    document.getElementById('modalBarcodeDate').innerText = order.date ? order.date.split(' ')[0] : '21 / 08 / 2026';
-    document.getElementById('modalBarcodeReceiverName').innerText = order.cariName || 'MÜŞTERİ';
-    document.getElementById('modalBarcodeReceiverAddress').innerText = (order.address || 'İstanbul') + ' (Teslimat Bölgesi)';
-    document.getElementById('modalBarcodeReceiverContact').innerText = `Vergi No / VKN: ${order.taxId || '-'} • GLN: ${order.gln || '-'}`;
-    document.getElementById('modalBarcodeDepo').innerText = order.depo || 'MD';
-    document.getElementById('modalBarcodeOrderNo').innerText = `Sipariş: #${orderId}`;
-    document.getElementById('modalBarcodeCode').innerText = barcodeVal;
-    
-    document.getElementById('orderBarcodeModal').classList.add('show');
-    lucide.createIcons();
-  }
-
-  function printBarcode() {
-    window.print();
-  }
-
-  // 4. İptal Modalını Aç
-  function openCancelModal(orderId) {
-    currentActiveOrderId = orderId;
-    const order = ordersDatabase[orderId] || {};
-    document.getElementById('modalCancelDesc').innerText = `#${orderId} numaralı (${order.cariName || ''}) siparişi iptal etmek istediğinize emin misiniz?`;
-    document.getElementById('orderCancelModal').classList.add('show');
-    lucide.createIcons();
-  }
-
-  function confirmOrderCancel() {
-    const reason = document.getElementById('modalCancelReason').value;
-    closeModal();
-    const toast = document.getElementById('toast');
-    toast.innerText = `#${currentActiveOrderId} siparişi iptal edildi. (${reason})`;
-    toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 2500);
-  }
-
-  // 5. Paketleme Görseli Modalını Aç
-  function openPackingPhotoModal(orderId) {
-    currentActiveOrderId = orderId;
-    const order = ordersDatabase[orderId] || {
-      orderNo: orderId,
-      cariName: 'MÜŞTERİ',
-      depo: 'MD',
-      date: '21 / 08 / 2026'
-    };
-
-    document.getElementById('modalPackingPhotoTitle').innerHTML = `<i data-lucide="camera"></i> Paketleme Kontrol Görseli (#${order.orderNo || orderId})`;
-    document.getElementById('modalPhotoCari').innerText = order.cariName || 'MÜŞTERİ';
-    document.getElementById('modalPhotoMeta').innerText = `Paketleyen: Depo Ekibi (${order.depo || 'MD'}) • ${order.date || 'Bugün'}`;
-    document.getElementById('modalFallbackOrderText').innerText = `#${order.orderNo || orderId} Paketleme & Güvenlik Mührü Tamamlandı`;
-    document.getElementById('modalPhotoBarcodeText').innerText = `KOLİ-${orderId.replace(/[^0-9]/g, '') || '91827364'}`;
-    
-    // Görseli göster ve modalı aç
-    const imgEl = document.getElementById('modalPackingPhotoImage');
-    const fallbackEl = document.getElementById('modalPackingPhotoSvgFallback');
-    
-    // Örnek kaliteli paketleme / sevkiyat görselleri
-    const samplePhotos = {
-      '1-WS-2-51893': 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&auto=format&fit=crop&q=80',
-      '1-WS-2-51892': 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=700&auto=format&fit=crop&q=80',
-      '1-WS-2-51891': 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=700&auto=format&fit=crop&q=80',
-      '1-WS-2-51890': 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=700&auto=format&fit=crop&q=80',
-      '1-WS-2-51889': 'https://images.unsplash.com/photo-1586528116493-a029325540fa?w=700&auto=format&fit=crop&q=80',
-      '1-WS-2-51888': 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&auto=format&fit=crop&q=80',
-      '1-WS-2-51887': 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=700&auto=format&fit=crop&q=80',
-      '1-WS-2-51886': 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=700&auto=format&fit=crop&q=80',
-      '1-WS-2-51885': 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=700&auto=format&fit=crop&q=80'
-    };
-
-    imgEl.style.display = 'block';
-    fallbackEl.style.display = 'none';
-    imgEl.src = samplePhotos[orderId] || 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&auto=format&fit=crop&q=80';
-
-    document.getElementById('orderPackingPhotoModal').classList.add('show');
-    lucide.createIcons();
-  }
-
-  function downloadPackingPhoto() {
-    const toast = document.getElementById('toast');
-    toast.innerText = 'Paketleme kontrol görseli yüksek çözünürlükte indiriliyor...';
-    toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 2500);
-  }
-
-    // 6. Canlı Kargo Takip ve Teslimat Hareketleri Modalını Aç
-  function openCargoModal(orderId) {
-    currentActiveOrderId = orderId;
-    const order = ordersDatabase[orderId] || {};
-    
-    // Kargoya verilmemiş sipariş kontrolü
-    const isPreCargo = order.statusClass && (
-      order.statusClass.includes('status-taslak') ||
-      order.statusClass.includes('status-alindi') ||
-      order.statusClass.includes('status-hazirlaniyor') ||
-      order.statusClass.includes('status-hazirlandi') ||
-      order.statusClass.includes('status-fatura-bekliyor') ||
-      order.statusClass.includes('status-paketleme-bekliyor') ||
-      order.statusClass.includes('status-paketlendi') ||
-      order.statusClass.includes('status-kargo-bekliyor') ||
-      order.statusClass.includes('status-iptal')
-    ) && !order.statusClass.includes('status-kargoda') && !order.statusClass.includes('status-teslim-edildi') && !order.statusClass.includes('status-iade');
-
-    if (isPreCargo) {
-      if (order.statusClass.includes('status-paketlendi') || order.statusClass.includes('status-kargo-bekliyor') || order.statusClass.includes('status-paketleme-bekliyor')) {
-        openBarcodeModal(orderId);
-      } else {
-        openDetailModal(orderId);
-      }
-      return;
-    }
-    const cargo = cargoDatabase[orderId] || {
-      orderNo: orderId,
-      cariName: ordersDatabase[orderId]?.cariName || 'MÜŞTERİ',
-      carrier: 'Yurtiçi Kargo',
-      trackingCode: '91827364501',
-      status: 'Kargo Sürecinde',
-      statusClass: 'status-transit',
-      statusColor: '#0891b2',
-      recipient: 'Yetkili Alıcı',
-      deliveryAddress: 'Teslimat Adresi',
-      deliveryDate: '22 / 08 / 2026',
-      branch: 'Merkez Dağıtım Şubesi',
-      events: [
-        { title: 'Kargo İşlemde', desc: 'Gönderi transfer merkezinde işlem görmektedir.', location: 'Merkez Şube', time: 'Bugün', status: 'active', icon: 'truck' }
-      ]
-    };
-
-    document.getElementById('modalCargoTitle').innerHTML = `<i data-lucide="truck"></i> Canlı Kargo Takibi (#${cargo.orderNo || orderId})`;
-    document.getElementById('modalCargoCarrierBadge').innerText = cargo.carrier || 'Kargo';
-    
-    // Banner güncelle
-    const bannerEl = document.getElementById('modalCargoBanner');
-    bannerEl.className = `cargo-status-banner ${cargo.statusClass || 'status-delivered'}`;
-    
-    document.getElementById('modalCargoBranchText').innerText = cargo.branch || '';
-    document.getElementById('modalCargoTrackingCode').innerText = cargo.trackingCode || '000000000';
-    document.getElementById('modalCargoRecipient').innerText = cargo.recipient || '-';
-    document.getElementById('modalCargoDeliveryDate').innerText = cargo.deliveryDate || '-';
-    document.getElementById('modalCargoAddress').innerText = cargo.deliveryAddress || '-';
-
-    // Status Badge Icon
-    const badgeIcon = cargo.statusClass === 'status-delivered' ? 'check-circle' : (cargo.statusClass === 'status-delivery' ? 'bike' : 'truck');
-    document.getElementById('modalCargoStatusBadge').innerHTML = `
-      <i data-lucide="${badgeIcon}" style="color:${cargo.statusColor || '#059669'}; width:13px; height:13px;"></i>
-      <span id="modalCargoStatusText">${cargo.status || 'Teslim Edildi'}</span>
-    `;
-
-    // Timeline oluştur
-    const timelineEl = document.getElementById('modalCargoTimeline');
-    let timelineHtml = '';
-
-    (cargo.events || []).forEach(evt => {
-      timelineHtml += `
-        <div class="cargo-step ${evt.status}">
-          <div class="cargo-step-node">
-            <i data-lucide="${evt.icon || 'check'}"></i>
-          </div>
-          <div class="cargo-step-header">
-            <span class="cargo-step-title">${evt.title}</span>
-            <span class="cargo-step-time">${evt.time}</span>
-          </div>
-          <div class="cargo-step-desc">${evt.desc}</div>
-          <div class="cargo-step-location">
-            <i data-lucide="map-pin" style="width:10px; height:10px;"></i> ${evt.location}
-          </div>
-        </div>
-      `;
-    });
-
-    timelineEl.innerHTML = timelineHtml;
-    document.getElementById('orderCargoModal').classList.add('show');
-    lucide.createIcons();
-  }
-
-  function copyTrackingCode() {
-    const carrier = document.getElementById('modalCargoCarrierBadge')?.innerText?.trim() || '';
-    const code = document.getElementById('modalCargoTrackingCode')?.innerText?.trim() || '';
-    if (code) {
-      const fullText = carrier ? `${carrier} - ${code}` : code;
-      copyToClipboard(fullText);
-    }
-  }
-
-  function copyCargoLink() {
-    const code = document.getElementById('modalCargoTrackingCode')?.innerText || '591827361';
-    const link = `https://kargotakip.davye.com/track?code=${code}`;
-    copyToClipboard(link);
-  }
-
-  function openCarrierSite() {
-    const code = document.getElementById('modalCargoTrackingCode')?.innerText || '591827361';
-    const toast = document.getElementById('toast');
-    toast.innerText = `Kargo entegrasyon ekranı açılıyor (Takip No: ${code})...`;
-    toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 2000);
-  }
-
-  // Modalı Kapat
-  function closeModal() {
-    document.querySelectorAll('.modal-backdrop').forEach(modal => {
-      modal.classList.remove('show');
-    });
-  }
-
-  function printModalOrder() {
-    window.print();
-  }
-
-  // ESC Tuşu ile Modal & Drawer Kapatma
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeModal();
-      closeFilterDrawer();
-    }
-  });
-
-  // Lucide İkonlarını Başlat
-  lucide.createIcons();
-
-  // İşlemler Dropdown Menü Açma/Kapatma
-  function toggleDropdown(button) {
-    const currentMenu = button.nextElementSibling;
-    const allMenus = document.querySelectorAll('.dropdown-menu');
-    
-    allMenus.forEach(menu => {
-      if (menu !== currentMenu) {
-        menu.classList.remove('show');
-      }
-    });
-
-    currentMenu.classList.toggle('show');
-  }
-
-  // Dışarı tıklandığında menüleri kapat
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.actions-dropdown')) {
-      document.querySelectorAll('.dropdown-menu').forEach(menu => {
-        menu.classList.remove('show');
-      });
-    }
-  });
-
-  // Panoya Kopyalama Fonksiyonu
-  function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-      const toast = document.getElementById('toast');
-      toast.innerText = '"' + text + '" panoya kopyalandı!';
-      toast.style.display = 'block';
-      setTimeout(() => {
-        toast.style.display = 'none';
-      }, 2000);
-    });
-  }
-
-  // Durum Sekmelerindeki Sipariş Sayılarını Dinamik Hesapla
-  function updateStatusTabCounts() {
-    const hideMarketplace = document.getElementById('hideMarketplaceCheck')?.checked ?? true;
-    const allCards = Array.from(document.querySelectorAll('.order-card')).filter(card => {
-      if (hideMarketplace && card.dataset.isMarketplace === 'true') return false;
-      return true;
-    });
-    const totalCount = allCards.length;
-
-    document.querySelectorAll('.filter-tab').forEach(tab => {
-      const countEl = tab.querySelector('.tab-count');
-      if (!countEl) return;
-
-      const onclickAttr = tab.getAttribute('onclick') || '';
-      const match = onclickAttr.match(/filterCards\('([^']+)'/);
-      if (!match) return;
-
-      const statusKey = match[1];
-      if (statusKey === 'all') {
-        countEl.textContent = totalCount;
-      } else {
-        const count = Array.from(allCards).filter(card => {
-          const statuses = (card.dataset.status || '').split(' ');
-          return statuses.includes(statusKey) || card.classList.contains(statusKey);
-        }).length;
-        countEl.textContent = count;
-      }
-    });
-  }
-
-  // Durum Sekmesi Filtreleme
-  function filterCards(statusClass, button) {
-    document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
-    if (button) button.classList.add('active');
-
-    applyGlobalFilters();
-  }
-
-  // Canlı Arama ve Sekme Filtrelerini Merkezi Uygula (Sayfalama ile Tam Uyumlu)
-  var currentlyMatchedCards = [];
-  var currentPage = 1;
-  var pageSize = 10;
-  
-  function toggleMarketplaceFilter(checked) {
-    applyGlobalFilters();
-    showSortToast(checked ? 'Pazaryeri siparişleri gizlendi' : 'Pazaryeri siparişleri listelendi');
-  }
-
-  function applyGlobalFilters() {
-    const searchInput = document.getElementById('orderSearch');
-    const query = (searchInput?.value || '').toLocaleLowerCase('tr-TR').trim();
-    
-    // Aktif durum sekmesini tespit et
-    const activeTab = document.querySelector('.filter-tab.active');
-    let activeStatus = 'all';
-    if (activeTab) {
-      const onclickAttr = activeTab.getAttribute('onclick') || '';
-      const match = onclickAttr.match(/filterCards\('([^']+)'/);
-      if (match) activeStatus = match[1];
-    }
-
-    const allCards = Array.from(document.querySelectorAll('.order-card'));
-
-    const hideMarketplace = document.getElementById('hideMarketplaceCheck')?.checked ?? true;
-
-    currentlyMatchedCards = allCards.filter(card => {
-      // 0. Pazaryeri Gizleme Kontrolü
-      if (hideMarketplace && card.dataset.isMarketplace === 'true') {
-        return false;
-      }
-      // 1. Durum Sekmesi Kontrolü
-      if (activeStatus !== 'all') {
-        const statuses = (card.dataset.status || '').split(' ');
-        const matchesStatus = statuses.includes(activeStatus) || card.classList.contains(activeStatus);
-        if (!matchesStatus) return false;
-      }
-
-      // 2. Arama Metni Kontrolü (Sipariş No, 3 haneli kod, Cari Adı, Açıklama vb.)
-      if (query) {
-        const orderId = (card.querySelector('.order-number-badge')?.dataset?.orderId || card.dataset.orderId || '').toLocaleLowerCase('tr-TR');
-        const badgeSpan = (card.querySelector('.order-number-badge span')?.innerText || '').toLocaleLowerCase('tr-TR').trim();
-        const cardText = (card.innerText + ' ' + orderId + ' ' + badgeSpan).toLocaleLowerCase('tr-TR');
-        if (!cardText.includes(query)) return false;
-      }
-
-      return true;
-    });
-
-    // Varsayılan olarak Sipariş Numarasına göre Büyükten Küçüğe sırala (Aktif bir çip yoksa)
-    const activeChip = document.querySelector('.sort-chip.active-desc, .sort-chip.active-asc');
-    if (!activeChip) {
-      currentlyMatchedCards.sort((a, b) => {
-        const idA = a.querySelector('.order-number-badge')?.dataset?.orderId || a.dataset.orderId || '';
-        const idB = b.querySelector('.order-number-badge')?.dataset?.orderId || b.dataset.orderId || '';
-        const numA = parseInt(idA.replace(/[^0-9]/g, ''), 10) || 0;
-        const numB = parseInt(idB.replace(/[^0-9]/g, ''), 10) || 0;
-        return numB - numA;
-      });
-    }
-
-    currentPage = 1;
-    if (typeof renderPagination === 'function') {
-      renderPagination();
-    }
-    if (typeof updateStatusTabCounts === 'function') {
-      updateStatusTabCounts();
-    }
-  }
-
-  // Canlı Arama Filtresi (Sayfalama Bypass'ı Kesinlikle Engellendi)
-  const orderSearchInput = document.getElementById('orderSearch');
-  if (orderSearchInput) {
-    orderSearchInput.addEventListener('input', applyGlobalFilters);
-  }
-
-  // Kapsamlı Filtre Paneli Açma / Kapatma (Sağdan Slide-in Drawer)
-  function openFilterDrawer() {
-    const backdrop = document.getElementById('filterDrawerBackdrop');
-    const drawer = document.getElementById('filterDrawer');
-    const toggleBtn = document.getElementById('btnAdvToggle');
-    if (backdrop) backdrop.classList.add('show');
-    if (drawer) drawer.classList.add('show');
-    if (toggleBtn) toggleBtn.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    lucide.createIcons();
-  }
-
-  function closeFilterDrawer() {
-    const backdrop = document.getElementById('filterDrawerBackdrop');
-    const drawer = document.getElementById('filterDrawer');
-    const toggleBtn = document.getElementById('btnAdvToggle');
-    if (backdrop) backdrop.classList.remove('show');
-    if (drawer) drawer.classList.remove('show');
-    if (toggleBtn) toggleBtn.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  function toggleAdvancedFilter() {
-    const drawer = document.getElementById('filterDrawer');
-    if (drawer && drawer.classList.contains('show')) {
-      closeFilterDrawer();
-    } else {
-      openFilterDrawer();
-    }
-  }
-
-  // Kapsamlı Filtrelemeyi Uygula
-  function applyAdvancedFilter() {
-    const cariAciklama = (document.getElementById('advCariAciklama')?.value || '').toLocaleLowerCase('tr-TR').trim();
-    const cariKod = (document.getElementById('advCariKod')?.value || '').toLocaleLowerCase('tr-TR').trim();
-    const saticiKodu = (document.getElementById('advSaticiKodu')?.value || '').toLocaleLowerCase('tr-TR').trim();
-    const satisTemsilcisi = (document.getElementById('advSatisTemsilcisi')?.value || '').toLocaleLowerCase('tr-TR').trim();
-    const islemNo = (document.getElementById('advIslemNo')?.value || '').toLocaleLowerCase('tr-TR').trim();
-    const urunKodu = (document.getElementById('advUrunKodu')?.value || '').toLocaleLowerCase('tr-TR').trim();
-    
-    const baslangicTarihVal = document.getElementById('advBaslangicTarih')?.value || '';
-    const bitisTarihVal = document.getElementById('advBitisTarih')?.value || '';
-    
-    const startDate = baslangicTarihVal ? new Date(baslangicTarihVal + 'T00:00:00').getTime() : null;
-    const endDate = bitisTarihVal ? new Date(bitisTarihVal + 'T23:59:59').getTime() : null;
-
-    const checkIade = document.getElementById('advCheckIade')?.checked || false;
-    const checkTamamlandi = document.getElementById('advCheckTamamlandi')?.checked || false;
-    const checkOnaylandi = document.getElementById('advCheckOnaylandi')?.checked || false;
-
-    const allCards = Array.from(document.querySelectorAll('.order-card'));
-
-    const filteredCards = allCards.filter(card => {
-      const orderId = card.querySelector('.order-number-badge')?.dataset?.orderId || card.dataset.orderId || '';
-      const orderData = ordersDatabase[orderId] || {};
-      const cardText = (card.innerText + ' ' + orderId).toLocaleLowerCase('tr-TR');
-
-      // 1. Cari Açıklama / Adı
-      if (cariAciklama) {
-        const cariName = (orderData.cariName || '').toLocaleLowerCase('tr-TR');
-        if (!cardText.includes(cariAciklama) && !cariName.includes(cariAciklama)) return false;
-      }
-
-      // 2. Cari Kodu / VKN / GLN / UTS
-      if (cariKod) {
-        const taxId = (orderData.taxId || '').toLocaleLowerCase('tr-TR');
-        const gln = (orderData.gln || '').toLocaleLowerCase('tr-TR');
-        const uts = (orderData.uts || '').toLocaleLowerCase('tr-TR');
-        if (!cardText.includes(cariKod) && !taxId.includes(cariKod) && !gln.includes(cariKod) && !uts.includes(cariKod)) return false;
-      }
-
-      // 3. Satıcı Kodu / Depo
-      if (saticiKodu) {
-        const depo = (orderData.depo || '').toLocaleLowerCase('tr-TR');
-        if (!cardText.includes(saticiKodu) && !depo.includes(saticiKodu)) return false;
-      }
-
-      // 4. Satış Temsilcisi / Satış Kanalı
-      if (satisTemsilcisi) {
-        const rep = (orderData.salesRep || '').toLocaleLowerCase('tr-TR');
-        if (!cardText.includes(satisTemsilcisi) && !rep.includes(satisTemsilcisi)) return false;
-      }
-
-      // 5. İşlem Numarası (Tam kod veya 3 haneli kod)
-      if (islemNo) {
-        const badgeSpan = card.querySelector('.order-number-badge span')?.innerText.trim().toLocaleLowerCase('tr-TR') || '';
-        if (!orderId.toLocaleLowerCase('tr-TR').includes(islemNo) && !badgeSpan.includes(islemNo) && !cardText.includes(islemNo)) return false;
-      }
-
-      // 6. Ürün Kodu veya Ürün Adı
-      if (urunKodu) {
-        const items = orderData.items || [];
-        const hasItemMatch = items.some(it => (it.code || '').toLocaleLowerCase('tr-TR').includes(urunKodu) || (it.name || '').toLocaleLowerCase('tr-TR').includes(urunKodu));
-        if (!hasItemMatch && !cardText.includes(urunKodu)) return false;
-      }
-
-      // 7. Tarih Aralığı Filtresi
-      if (startDate || endDate) {
-        const dateStr = card.querySelector('.order-datetime')?.innerText || orderData.date || '';
-        const orderTime = parseDateTime(dateStr);
-        if (orderTime > 0) {
-          if (startDate && orderTime < startDate) return false;
-          if (endDate && orderTime > endDate) return false;
-        }
-      }
-
-      // 8. Checkbox Bayrakları
-      if (checkIade) {
-        const isReturn = card.classList.contains('status-iade-bekliyor') || card.classList.contains('status-iade-onaylandi') || card.classList.contains('status-iade-edildi');
-        if (!isReturn) return false;
-      }
-
-      if (checkTamamlandi) {
-        const isCompleted = card.classList.contains('status-teslim-edildi') || card.classList.contains('status-faturalandi');
-        if (!isCompleted) return false;
-      }
-
-      if (checkOnaylandi) {
-        const isCancelledOrDraft = card.classList.contains('status-taslak') || card.classList.contains('status-iptal');
-        if (isCancelledOrDraft) return false;
-      }
-
-      return true;
-    });
-
-    // Sayfalama ve listeyi güncelle
-    currentlyMatchedCards = filteredCards;
-    currentPage = 1;
-    if (typeof renderPagination === 'function') {
-      renderPagination();
-    }
-    if (typeof updateStatusTabCounts === 'function') {
-      updateStatusTabCounts();
-    }
-
-    // Drawer'ı kapat
-    closeFilterDrawer();
-
-    // Filtre aktiflik noktasını güncelle
-    const hasFilter = !!(cariAciklama || cariKod || saticiKodu || satisTemsilcisi || islemNo || urunKodu || baslangicTarihVal || bitisTarihVal || checkIade || checkTamamlandi || checkOnaylandi);
-    const dot = document.getElementById('filterActiveDot');
-    if (dot) dot.style.display = hasFilter ? 'block' : 'none';
-
-    // Bildirim göster
-    const toast = document.getElementById('toast');
-    if (toast) {
-      toast.innerText = `Filtreleme uygulandı: ${filteredCards.length} sipariş bulundu.`;
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 2500);
-    }
-  }
-
-  // Tümünü Çek Butonu
-  function fetchAllOrders() {
-    resetAdvancedFilter();
-    closeFilterDrawer();
-    const toast = document.getElementById('toast');
-    if (toast) {
-      toast.innerText = 'Tüm siparişler listelendi.';
-      toast.style.display = 'block';
-      setTimeout(() => { toast.style.display = 'none'; }, 2000);
-    }
-  }
-
-  // Filtreleri Sıfırla / Temizle
-  function resetAdvancedFilter() {
-    document.getElementById('advFilterForm')?.reset();
-    const searchInput = document.getElementById('orderSearch');
-    if (searchInput) searchInput.value = '';
-    
-    const dot = document.getElementById('filterActiveDot');
-    if (dot) dot.style.display = 'none';
-
-    // Tümü sekmesini aktif et
-    document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
-    const firstTab = document.querySelector('.filter-tab');
-    if (firstTab) firstTab.classList.add('active');
-
-    currentlyMatchedCards = Array.from(document.querySelectorAll('.order-card'));
-    currentPage = 1;
-    if (typeof renderPagination === 'function') {
-      renderPagination();
-    }
-    if (typeof updateStatusTabCounts === 'function') {
-      updateStatusTabCounts();
-    }
-  }
-
-  // Kart Detaylarını Açma/Kapatma (İlk Açılışta 4 Saniyelik Veritabanı Loader Efekti, Sonraki Açılışlarda Anında Açılma - Cache Mantığı)
-  const cardLoadTimers = new Map();
-  const loadedCardsCache = new WeakSet();
-
-  function handleCardHeaderClick(event, headerElement) {
-    if (event.target.closest('.actions-dropdown') || 
-        event.target.closest('.card-checkbox') || 
-        event.target.closest('.order-number-badge') ||
-        event.target.closest('.btn-actions') ||
-        event.target.closest('.dropdown-menu')) {
-      return;
-    }
-    
-    const card = headerElement.closest('.order-card');
-    if (!card) return;
-
-    // Eğer zaten açıksa anında kapat
-    if (card.classList.contains('expanded')) {
-      card.classList.remove('expanded');
-      return;
-    }
-
-    // Kart daha önce yüklendiyse (önbellekte varsa) anında aç, loader gösterme
-    if (loadedCardsCache.has(card)) {
-      card.classList.add('expanded');
-      return;
-    }
-
-    // İlk defa açılıyorsa: Kartı aç ve 4 saniye boyunca yükleme ekranı göster
-    card.classList.add('expanded', 'loading');
-
-    // Eğer kartın içinde loading overlay henüz yoksa ekle
-    let loader = card.querySelector('.card-loading-overlay');
-    if (!loader) {
-      loader = document.createElement('div');
-      loader.className = 'card-loading-overlay';
-      loader.innerHTML = `
-        <div class="card-loading-spinner-wrap">
-          <div class="card-loading-spinner"></div>
-        </div>
-        <div class="card-loading-meta">
-          <span class="card-loading-title">
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-database"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
-            Sipariş Detayları Yükleniyor...
-          </span>
-          <span class="card-loading-subtitle">Veritabanından canlı cari, fatura ve sevk kayıtları alınıyor</span>
-        </div>
-      `;
-      headerElement.insertAdjacentElement('afterend', loader);
-    }
-
-    if (cardLoadTimers.has(card)) {
-      clearTimeout(cardLoadTimers.get(card));
-    }
-
-    const timer = setTimeout(() => {
-      card.classList.remove('loading');
-      loadedCardsCache.add(card); // Önbelleğe kaydet
-      cardLoadTimers.delete(card);
-      if (window.lucide) lucide.createIcons();
-    }, 4000);
-
-    cardLoadTimers.set(card, timer);
-  }
-
-  // Durum Sekmeleri Alanında Fare Tekerleği ve Sürükleme ile Yatay Kaydırma
-  const filterContainer = document.querySelector('.status-filters');
-  if (filterContainer) {
-    // Fare tekerleği ile yatay kaydırma
-    filterContainer.addEventListener('wheel', function(e) {
-      if (e.deltaY !== 0) {
-        e.preventDefault();
-        filterContainer.scrollLeft += e.deltaY * 1.2;
-      }
-    }, { passive: false });
-
-    // Fare ile basılı tutup sürükleyerek kaydırma (Drag-to-scroll)
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    filterContainer.addEventListener('mousedown', (e) => {
-      isDown = true;
-      filterContainer.classList.add('active');
-      startX = e.pageX - filterContainer.offsetLeft;
-      scrollLeft = filterContainer.scrollLeft;
-    });
-
-    filterContainer.addEventListener('mouseleave', () => {
-      isDown = false;
-    });
-
-    filterContainer.addEventListener('mouseup', () => {
-      isDown = false;
-    });
-
-    filterContainer.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - filterContainer.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      filterContainer.scrollLeft = scrollLeft - walk;
-    });
-  }
-
-  // =========================================================================
-  // 12'Lİ HIZLI VERİ SIRALAMA (3-KADEMELİ DÖNGÜ: Varsayılan ⇄ / Azalan ↓ / Artan ↑)
-  // =========================================================================
-  const currentSortStates = {};
-  let defaultOrderCardsCache = [];
-
-  function initDefaultOrderCards() {
-    if (defaultOrderCardsCache.length === 0) {
-      defaultOrderCardsCache = Array.from(document.querySelectorAll('.order-card'));
-    }
-  }
-
-  const SORT_SVG_ICONS = {
-    neutral: '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>',
-    down: '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>',
-    up: '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>'
   };
 
   function updateChipIcon(chip, state) {
