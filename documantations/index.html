@@ -391,19 +391,28 @@
     }
 
     .card-v-check {
-      position: absolute;
-      top: -6px;
-      left: -6px;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
+      position: absolute !important;
+      top: -5px !important;
+      left: -6px !important;
+      width: 16px !important;
+      height: 16px !important;
+      border-radius: 50% !important;
       background: #64748b;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      color: #fff !important;
+      border: 2px solid #ffffff !important;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.45) !important;
+      z-index: 25 !important;
+      box-sizing: border-box !important;
     }
-    .card-v-check svg { width: 10px; height: 10px; }
+    .card-v-check svg, .card-v-check i {
+      width: 9px !important;
+      height: 9px !important;
+      stroke-width: 3 !important;
+      display: block !important;
+    }
 
     .card-header-bar {
       display: flex;
@@ -413,6 +422,45 @@
       padding: 6px 12px;
       border-radius: 9px;
       cursor: pointer;
+    }
+
+    .card-header-row.row-desc {
+      order: 10;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: left;
+      gap: 4px;
+      font-size: 10.5px;
+      color: #475569;
+      padding: 2px 0 0 0;
+      margin-top: 2px;
+      border-top: 1px dashed #e2e8f0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+    }
+    .card-header-row.row-desc svg, .card-header-row.row-desc i {
+      width: 11px !important;
+      height: 11px !important;
+      color: #64748b !important;
+      flex-shrink: 0 !important;
+    }
+    .card-header-row.row-desc .header-desc-label {
+      font-weight: 700;
+      color: #475569;
+      flex-shrink: 0;
+    }
+    .card-header-row.row-desc .header-desc-content {
+      color: #64748b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .order-card.expanded .card-header-row.row-desc {
+      display: none !important;
     }
 
     .order-card.expanded .card-header-bar {
@@ -426,8 +474,15 @@
       display: contents;
     }
 
-    .order-number-badge {
+    .card-header-row.row-1 .row-left {
       order: 1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .order-number-badge {
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -483,11 +538,35 @@
       display: none !important;
     }
 
-    .card-header-row.row-1 .row-right {
+    .sales-rep-badge {
       order: 3;
+      display: inline-flex;
+      align-items: center;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      flex-shrink: 0;
+    }
+
+    .card-header-row.row-3 .row-left {
+      order: 4;
+      margin-left: auto;
       display: flex;
       align-items: center;
       gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .card-header-row.row-1 .row-right {
+      order: 5;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
     }
 
     .delivery-type-icon {
@@ -525,26 +604,7 @@
     }
     .order-datetime svg { width: 12px; height: 12px; }
 
-    .sales-rep-badge {
-      order: 4;
-      display: inline-flex;
-      align-items: center;
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 700;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #1d4ed8;
-    }
 
-    .card-header-row.row-3 .row-left {
-      order: 5;
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
 
     .status-pill {
       display: inline-flex;
@@ -1961,6 +2021,7 @@
         </table></div>
 
         <div style="margin-top: 18px;">
+          <!-- Kontrol Barı -->
           <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; padding: 10px 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;">
             <div style="display: flex; align-items: center; gap: 8px;">
               <span style="font-size: 13px; font-weight: 800; color: #0f172a;">🔄 Canlı Veritabanı Loader & Cache Simülasyonu</span>
@@ -1981,68 +2042,80 @@
           </div>
 
           <!-- BİREBİR GERÇEKÇİ SİPARİŞ KARTI (CANLI SİMÜLATÖR) -->
-          <div class="order-card status-hazirlaniyor" id="demoSimulationCard" style="cursor: pointer;" onclick="handleDemoSimulationCardClick(event, this)">
+          <div class="order-card status-hazirlaniyor" id="demoSimulationCard" style="cursor: pointer; margin-bottom: 0;" onclick="handleDemoSimulationCardClick(event, this)">
             
             <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
-            <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlanıyor" data-tip="Sipariş Süreç İlerleme Çubuğu">
-              <div class="card-v-check"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="loader-2" aria-hidden="true" class="lucide lucide-loader-2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg></div>
+            <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlanıyor (3/6)" data-tip="Sipariş Süreç İlerleme Çubuğu">
+              <div class="card-v-check" style="background:#eff6ff; border-color:#2563eb; color:#2563eb;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-2" style="animation: spin 1.2s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+              </div>
               <div class="card-v-fill" style="height: 50%;"></div>
             </div>
 
-            <!-- Üst Başlık (3 Satırlı Yapı) -->
+            <!-- Üst Başlık Barı -->
             <div class="card-header-bar" onclick="event.stopPropagation(); toggleDemoLoaderCard()">
               <!-- 1. Satır: Sipariş No, Depo, Tarih, Saat -->
               <div class="card-header-row row-1">
                 <div class="row-left">
-                  <div class="order-number-badge" data-order-id="1-WS-2-51896" onclick="event.stopPropagation(); copyToClipboard('1-WS-2-51896')" title="Tamamını kopyala: 1-WS-2-51896" data-tip="Sipariş No: 1-WS-2-51896">
+                  <div class="order-number-badge" data-order-id="1-WS-2-51896" onclick="event.stopPropagation(); copyToClipboard('1-WS-2-51896')" title="Tamamını kopyala: 1-WS-2-51896">
                     <span>019</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                   </div>
                 </div>
                 <div class="row-right">
-                  <span class="delivery-type-icon" title="Teslimat: DHL Kargo (KA)" data-tip="Teslimat / Taşıma Türü İkonu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg></span>
-                  <span class="depo-badge" data-tip="Depo Kodu">MD</span>
-                  <span class="order-datetime" data-tip="Sipariş Tarih & Saati">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="calendar" aria-hidden="true" class="lucide lucide-calendar"><path d="M8 2v3"></path><path d="M16 2v3"></path><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18"></path></svg> 21 / 08 / 2026
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" style="margin-left: 2px;" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> 21:40
+                  <span class="delivery-type-icon" title="Teslimat: DHL Kargo (KA)"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg></span>
+                  <span class="depo-badge">MD</span>
+                  <span class="order-datetime">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3"/><path d="M16 2v3"/><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/></svg> 21 / 08 / 2026
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 21:40
                   </span>
                 </div>
               </div>
 
-              <!-- 2. Satır: Müşteri Adı / İlçe, Kullanıcı (Sipariş Kaynağı) -->
+              <!-- 2. Satır: Müşteri Adı / İlçe, Satış Kanalı -->
               <div class="card-header-row row-2">
-                <span class="header-cari-name" data-tip="Cari / Müşteri Ünvanı">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="building-2" aria-hidden="true" class="lucide lucide-building-2"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg>
+                <span class="header-cari-name">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h4"/><path d="M10 8h4"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg>
                   <span>DR. AHMET YILMAZ DİŞ KLİNİĞİ</span>
                   <span class="header-district">/ Nişantaşı</span>
                 </span>
-                <span class="sales-rep-badge dental" data-tip="Satış Kanalı">DENTAL PİYASA</span>
+                <span class="sales-rep-badge dental">DENTAL PİYASA</span>
               </div>
 
-              <!-- 3. Satır: Tutar, Sipariş Durumu ve Butonlar -->
+              <!-- 3. Satır Açıklama (Kapalıyken Görünür, Açıldığında Gizlenir) -->
+              <div class="card-header-row row-desc">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
+                <span class="header-desc-label">Açıklama:</span>
+                <span class="header-desc-content">Cerrahi el aletleri ameliyat gününe yetişmeli, acil sevk lütfen.</span>
+              </div>
+
+              <!-- 4. Satır: Tutar, Sipariş Durumu ve Butonlar -->
               <div class="card-header-row row-3">
                 <div class="row-left">
-                  <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">14.850,00 ₺</span>
-                  <span class="status-pill pill-hazirlaniyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> Hazırlanıyor</span>
+                  <span class="header-price-amount price-paid">14.850,00 ₺</span>
+                  <span class="status-pill pill-hazirlaniyor">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    Hazırlanıyor
+                  </span>
                 </div>
                 <div class="row-right">
                   <div class="actions-dropdown" onclick="event.stopPropagation()">
-                    <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü">
-                      İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+                    <button type="button" class="btn-actions" onclick="toggleDropdown(this)">
+                      İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                     </button>
                     <div class="dropdown-menu">
-                      <button class="dropdown-item" onclick="event.stopPropagation()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="edit-3" aria-hidden="true" class="lucide lucide-edit-3"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> <span style="color:#2563eb; font-weight:600;">Detaya Git</span></button>
-                      <button class="dropdown-item" onclick="event.stopPropagation()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="user" aria-hidden="true" class="lucide lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Müşteri Detay</button>
-                      <button class="dropdown-item" onclick="event.stopPropagation()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="printer" aria-hidden="true" class="lucide lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg> Fiş Yazdır</button>
-                      <button class="dropdown-item" onclick="event.stopPropagation()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="printer" aria-hidden="true" class="lucide lucide-printer"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg> İşlemi Kopyala</button>
-                      <button class="dropdown-item" onclick="event.stopPropagation()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-square" aria-hidden="true" class="lucide lucide-message-square"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg> Not Ekle</button>
+                      <button type="button" class="dropdown-item"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> <span style="color:#2563eb; font-weight:600;">Detaya Git</span></button>
+                      <button type="button" class="dropdown-item"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Müşteri Detay</button>
+                      <button type="button" class="dropdown-item"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect width="12" height="8" x="6" y="14" rx="1"/></svg> Fiş Yazdır</button>
+                      <button type="button" class="dropdown-item"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect width="12" height="8" x="6" y="14" rx="1"/></svg> İşlemi Kopyala</button>
+                      <button type="button" class="dropdown-item"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg> Not Ekle</button>
                       <div class="dropdown-divider"></div>
-                      <button class="dropdown-item text-danger" onclick="event.stopPropagation()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x-circle" aria-hidden="true" class="lucide lucide-x-circle"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> Siparişi İptal Et</button>
-                      <button class="dropdown-item text-danger" onclick="event.stopPropagation()"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="trash-2" aria-hidden="true" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg> <span style="color:#dc2626; font-weight:600;">Sil</span></button>
+                      <button type="button" class="dropdown-item text-danger"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg> Siparişi İptal Et</button>
+                      <button type="button" class="dropdown-item text-danger"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg> <span style="color:#dc2626; font-weight:600;">Sil</span></button>
                     </div>
                   </div>
-                  <button class="btn-card-expand" title="Detayları Aç/Kapat" data-tip="Kart Detaylarını Aç/Kapat">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+                  <button type="button" class="btn-card-expand" title="Detayları Aç/Kapat">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                   </button>
                 </div>
               </div>
@@ -2051,7 +2124,7 @@
             <!-- Müşteri Notu Şeridi (Kapalıyken de görünür) -->
             <div class="card-note-bar" onclick="event.stopPropagation()">
               <span class="note-label">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-square" aria-hidden="true" class="lucide lucide-message-square"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg> Müşteri Notu:
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg> Müşteri Notu:
               </span>
               <span class="note-text">"Cerrahi el aletleri ameliyat gününe yetişmeli, acil sevk lütfen."</span>
               <button type="button" class="btn-note-copy" onclick="copyToClipboard('Cerrahi el aletleri ameliyat gününe yetişmeli, acil sevk lütfen.')">Kopyala</button>
@@ -2078,10 +2151,10 @@
             <div class="card-body-grid">
               <!-- 1. SÜTUN: Cari & Müşteri -->
               <div class="grid-col">
-                <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="building-2" aria-hidden="true" class="lucide lucide-building-2"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg> Cari Bilgileri | Şahıs Özel</div>
-                <div class="data-value cari-name" onclick="copyToClipboard('DR. AHMET YILMAZ DİŞ KLİNİĞİ')" title="Kopyala: DR. AHMET YILMAZ DİŞ KLİNİĞİ">
-                  <span class="cari-title-left"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="building-2" aria-hidden="true" class="lucide lucide-building-2"><path d="M10 12h4"></path><path d="M10 8h4"></path><path d="M14 21v-3a2 2 0 0 0-4 0v3"></path><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"></path><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"></path></svg> DR. AHMET YILMAZ DİŞ KLİNİĞİ</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+                <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h4"/><path d="M10 8h4"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg> Cari Bilgileri | Şahıs Özel</div>
+                <div class="data-value cari-name" onclick="event.stopPropagation(); copyToClipboard('DR. AHMET YILMAZ DİŞ KLİNİĞİ')" title="Kopyala: DR. AHMET YILMAZ DİŞ KLİNİĞİ">
+                  <span class="cari-title-left"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h4"/><path d="M10 8h4"/><path d="M14 21v-3a2 2 0 0 0-4 0v3"/><path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/><path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/></svg> DR. AHMET YILMAZ DİŞ KLİNİĞİ</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="copy-inline-icon"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                 </div>
                 <div class="data-row"><span class="data-label">TCKN:</span> <span class="data-value">38910294812</span></div>
                 <div class="data-row"><span class="data-label">Vergi Dairesi:</span> <span class="data-value">Şişli V.D.</span></div>
@@ -2092,7 +2165,7 @@
 
               <!-- 2. SÜTUN: Fatura & Vade -->
               <div class="grid-col">
-                <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura &amp; Vade</div>
+                <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="m9 15 2 2 4-4"/></svg> Fatura & Vade</div>
                 <div class="data-row"><span class="data-label">Fatura:</span> <span class="data-value" style="color:#d97706; font-weight:700;">Fatura Bekliyor</span></div>
                 <div class="data-row"><span class="data-label">Fatura No:</span> <span class="data-value">-</span></div>
                 <div class="data-row"><span class="data-label">Vade Tarihi:</span> <span class="data-value" style="font-weight:700;">15 / 11 / 2026</span></div>
@@ -2104,11 +2177,11 @@
 
               <!-- 3. SÜTUN: Lojistik & Durum -->
               <div class="grid-col">
-                <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg> Lojistik &amp; Durum</div>
+                <div class="col-title"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg> Lojistik & Durum</div>
                 <div class="data-row"><span class="data-label">Teslimat:</span> <span class="data-value">DHL Kargo (KA)</span></div>
                 <div class="data-row"><span class="data-label">Ürün Sayısı:</span> <span class="data-value"><span class="badge-qty">3 / 6 Adet</span></span></div>
                 <div class="data-row"><span class="data-label">Kargo Durumu:</span> <span class="data-value" style="color:#2563eb; font-weight:700;">Depoda Toplanıyor</span></div>
-                <div class="cargo-tracking-row"><button type="button" class="cargo-tracking-btn" style="flex:1;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg> DHL KA / Hazırlanıyor</button></div>
+                <div class="cargo-tracking-row"><button type="button" class="cargo-tracking-btn" style="flex:1;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg> DHL KA / Hazırlanıyor</button></div>
               </div>
 
               <!-- 4. SÜTUN: Finansal Özet -->
@@ -2119,7 +2192,7 @@
                 </div>
                 <div class="price-group" style="margin-top: 2px;">
                   <div class="price-paid-row"><span>Ödeme:</span> <span class="price-paid-val" style="color:#16a34a;">14.850,00 ₺</span></div>
-                  <span class="payment-status-tag pay-paid"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" style="width:9px;height:9px;" class="lucide lucide-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Ödendi</span>
+                  <span class="payment-status-tag pay-paid"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Ödendi</span>
                 </div>
                 <div class="customer-balance-row">
                   <span class="customer-balance-title">Cari Bakiye:</span>
