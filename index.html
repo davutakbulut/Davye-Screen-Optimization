@@ -1856,10 +1856,13 @@
     }
 
     .btn-card-photo svg,
-    .btn-card-photo i {
-      width: 13px;
-      height: 13px;
-      stroke-width: 2.2;
+    .btn-card-photo i,
+    .btn-card-photo .lucide,
+    .btn-card-photo .lucide-camera {
+      width: 13px !important;
+      height: 13px !important;
+      stroke-width: 2.2 !important;
+      display: block;
     }
 
     .btn-actions {
@@ -2860,9 +2863,13 @@
         max-width: 24px;
       }
       .btn-card-photo svg,
-      .btn-card-photo i {
-        width: 13px;
-        height: 13px;
+      .btn-card-photo i,
+      .btn-card-photo .lucide,
+      .btn-card-photo .lucide-camera {
+        width: 13px !important;
+        height: 13px !important;
+        stroke-width: 2.2 !important;
+        display: block;
       }
       .btn-actions {
         height: 24px;
@@ -5853,7 +5860,9 @@
           <span class="status-pill pill-kargo-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargo Bekliyor</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67986')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67986')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -7267,7 +7276,9 @@
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67782')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67782')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -7469,7 +7480,9 @@
           <span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargoda</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67758')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67758')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -7873,7 +7886,9 @@
           <span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargoda</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67674')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67674')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -8075,7 +8090,9 @@
           <span class="status-pill pill-kargo-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargo Bekliyor</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67647')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67647')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -8277,7 +8294,9 @@
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67621')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67621')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -8479,7 +8498,9 @@
           <span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargoda</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67576')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67576')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -8681,7 +8702,9 @@
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67553')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67553')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -8883,7 +8906,9 @@
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67008')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67008')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -9081,7 +9106,9 @@
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-66902')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-66902')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -9283,7 +9310,9 @@
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-65813')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-65813')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -9485,7 +9514,9 @@
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-63902')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-63902')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -9687,7 +9718,9 @@
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-63758')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-63758')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
@@ -10091,7 +10124,9 @@
           <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
         </div>
         <div class="row-right">
-          <button type="button" class="btn-quick-photo" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-60004')" title="Paketleme Kontrol Görseli"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+          <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-60004')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="camera" aria-hidden="true" class="lucide lucide-camera"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+          </button>
           <div class="actions-dropdown" onclick="event.stopPropagation()">
             <button class="btn-actions" onclick="toggleDropdown(this)" data-tip="Sipariş İşlem Menüsü (Fatura Kes, Barkod Yazdır, İptal/İade) • Operasyon modülü">
               İşlemler <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" aria-hidden="true" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
