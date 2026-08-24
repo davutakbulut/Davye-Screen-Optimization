@@ -5900,6 +5900,7 @@
       taxId: "4448888888",
       salesRep: "ERDİ EKİZ",
       desc: "zehra sever gerçek",
+      note: "Klinikte ameliyat var, saat 12:00'den önce kuryeye teslim edilmeli.",
       vade: "22 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -5929,6 +5930,7 @@
       taxId: "5490309762",
       salesRep: "ÜMİT VELİOĞLU",
       desc: "ZEYNEP BORLUSOY",
+      note: "Lütfen faturayı kurumsal e-posta adresine (muhasebe@gulumse.com) iletiniz. Ürünler orijinal kutusunda olsun.",
       vade: "22 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -5957,6 +5959,7 @@
       taxId: "5490309762",
       salesRep: "ÜMİT VELİOĞLU",
       desc: "Klinik sarf takviyesi",
+      note: "Acil klinik ihtiyacı. Koli üzerine dikkat kırılabilir etiketi yapıştırılsın.",
       vade: "22 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -5985,6 +5988,7 @@
       taxId: "2010423245",
       salesRep: "ERDİ EKİZ",
       desc: "Sevkıyat hazırlandı",
+      note: "Toplama sonrası kalite kontrol masasına sevk edilecek.",
       vade: "22 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6015,6 +6019,7 @@
       salesRep: "HEPSİBURADA",
       isMarketplace: true,
       desc: "HB-HBV00000213192",
+      note: "Müşteri teslimat öncesi aranmak istiyor.",
       vade: "17 / 09 / 2026",
       depo: "MD",
       isPickable: false,
@@ -6044,6 +6049,7 @@
       salesRep: "HEPSİBURADA",
       isMarketplace: true,
       desc: "HB-HBV00000341829",
+      note: "Pazaryeri hızlı teslimat kolisine dahil edilsin.",
       vade: "17 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6075,6 +6081,7 @@
       salesRep: "HEPSİBURADA",
       isMarketplace: true,
       desc: "HB-HBV0000010991",
+      note: "Eksik kalan 35 adet için tedarikçi siparişi açıldı.",
       vade: "17 / 09 / 2026",
       depo: "MD",
       isPickable: false,
@@ -6103,6 +6110,7 @@
       taxId: "0090586950",
       salesRep: "MERKEZ DEPO",
       desc: "Klinik ameliyathane seti tamamlandı",
+      note: "Kutu içerisine garanti belgesi ve UTS karekod listesi eklensin.",
       vade: "24 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6132,6 +6140,7 @@
       salesRep: "HEPSİBURADA",
       isMarketplace: true,
       desc: "HB-HBV00000300188",
+      note: "Özel fatura bilgisi pakete iliştirilsin.",
       vade: "17 / 09 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6161,6 +6170,7 @@
       taxId: "307146233",
       salesRep: "MERKEZ DEPO",
       desc: "10 adet motor toplandı, kalan 19 adet için tedarik bekleniyor",
+      note: "Eksik parça tedariği bekleniyor.",
       vade: "24 / 08 / 2026",
       depo: "MD",
       isPickable: false,
@@ -6189,6 +6199,7 @@
       taxId: "8710153090",
       salesRep: "MERKEZ DEPO",
       desc: "Klinik sevkıyatı tamamlandı",
+      note: "Depodan özel korumalı ambalajla paketlenip kargolanacak.",
       vade: "24 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6214,15 +6225,16 @@
       delivery: "KARGO",
       phone: "-",
       cariCode: "5378847120",
-      taxId: "2781452410",
+      taxId: "5378847120",
       salesRep: "MERKEZ DEPO",
-      desc: "Cari risk limit aşımı nedeniyle blokeli",
+      desc: "Toplama bekliyor",
+      note: "Saat 15:00'e kadar kargoya verilmesi rica olunur.",
       vade: "24 / 08 / 2026",
       depo: "MD",
-      isPickable: false,
-      collector: "YUSUF ÖZGÜR",
+      isPickable: true,
+      collector: "BERAT SEVDA",
       items: [
-        { code: "ORT991", name: "Ortodontik Braket Seti", raf: "06A3", qty: 12, counted: 0, barcode: "8681334928174" }
+        { code: "FRZ200", name: "Karbür Frez Seti 10'lu", raf: "02B1", qty: 12, counted: 0, barcode: "8681334910294" }
       ]
     },
     {
@@ -6245,6 +6257,7 @@
       taxId: "6120565661",
       salesRep: "MERKEZ DEPO",
       desc: "Toplama onaylandı",
+      note: "Merkez depodan acil transfer, koli üstüne kırılabilir etiketi yapıştırılsın.",
       vade: "24 / 08 / 2026",
       depo: "MD",
       isPickable: true,
@@ -6434,16 +6447,16 @@
             </div>
           </div>
 
-                    ${order.note ? `
+                              ${order.note ? `
           <!-- Müşteri & Acil Sipariş Notu Barı (Sarı Şerit) -->
-          <div class="card-note-bar" onclick="event.stopPropagation(); copyToClipboard('${(order.note || '').replace(/'/g, "\'")}')" title="Notu kopyalamak için tıkla">
+          <div class="card-note-bar" onclick="event.stopPropagation(); copyToClipboard(\`${(order.note || '').replace(/`/g, '\`')}\`)" title="Notu kopyalamak için tıkla">
             <div class="card-note-left">
-              <span class="card-note-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-square" aria-hidden="true" class="lucide lucide-message-square"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"></path></svg></span>
+              <span class="card-note-icon"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="message-square" aria-hidden="true" class="lucide lucide-message-square"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"></path></svg></span>
               <span class="card-note-text"><strong>Acil Sevk:</strong> ${order.note} <span class="card-note-code">${order.orderRef}_ACIL</span></span>
             </div>
             <div class="card-note-right">
-              <button type="button" class="btn-copy-note" onclick="event.stopPropagation(); copyToClipboard('${(order.note || '').replace(/'/g, "\'")}')" title="Notu Kopyala">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg> Kopyala
+              <button type="button" class="btn-copy-note" onclick="event.stopPropagation(); copyToClipboard(\`${(order.note || '').replace(/`/g, '\`')}\`)" title="Notu Kopyala">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="copy" aria-hidden="true" class="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg> Kopyala
               </button>
             </div>
           </div>` : ''}
