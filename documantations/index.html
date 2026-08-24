@@ -1380,7 +1380,7 @@
         </div>
         <div>
           <div class="doc-brand-title">DAVYE SİPARİŞ YÖNETİM SİSTEMİ</div>
-          <div class="doc-brand-subtitle">Resmi Mimari, Kod & UI/UX Dökümantasyonu • <span style="color:#2563eb; font-weight:700;">Son Güncelleme: 24 / 08 / 2026 17:25</span></div>
+          <div class="doc-brand-subtitle">Resmi Mimari, Kod & UI/UX Dökümantasyonu • <span style="color:#2563eb; font-weight:700;">Son Güncelleme: 24 / 08 / 2026 17:40</span></div>
         </div>
       </div>
       <a href="../index.html" target="_blank" class="btn-live-preview">
@@ -2321,7 +2321,7 @@
       <section class="doc-card-section" id="section-actions-menu">
         <div class="doc-section-header">
           <span class="doc-section-tag">Bölüm 9</span>
-          <h2 class="doc-section-title">İşlemler Menüsü (6 Operasyonel Aksiyon)</h2>
+          <h2 class="doc-section-title">İşlemler Menüsü (7 Operasyonel Aksiyon)</h2>
           <p class="doc-section-desc">
             Kullanıcının paylaştığı referans tasarımı doğrultusunda her kartın sağ üst köşesindeki "İşlemler ▾" menüsündeki aksiyonlar.
           </p>
@@ -2339,7 +2339,8 @@
           <tbody>
             <tr><td><strong>Detaya Git</strong></td><td><i data-lucide="edit-3" style="color:#2563eb;"></i></td><td><code>openDetailModal(orderId)</code></td><td>Sipariş kalemlerini, ürün lotlarını, fiyat kırılımlarını ve lojistik hareketlerini içeren tam detay modalını açar.</td></tr>
             <tr><td><strong>Müşteri Detay</strong></td><td><i data-lucide="user"></i></td><td><code>openCustomerModal(orderId)</code></td><td>Müşterinin VKN, Vergi Dairesi, GLN, UTS, Adres, Telefon ve Risk Limitini gösteren CRM modalını açar.</td></tr>
-            <tr><td><strong>İşlemi Kopyala</strong></td><td><i data-lucide="printer"></i></td><td><code>duplicateOrder(orderId)</code></td><td>Mevcut siparişin tüm verilerini kopyalayarak yeni bir taslak sipariş oluşturur.</td></tr>
+            <tr><td><strong>Fiş Yazdır</strong></td><td><i data-lucide="receipt" style="color:#2563eb;"></i></td><td><code>openReceiptModal(orderId)</code></td><td>Siparişin 80mm termal teslim & bilgi fişini açar ve termal POS yazıcıdan çıktısını alır.</td></tr>
+            <tr><td><strong>İşlemi Kopyala</strong></td><td><i data-lucide="copy"></i></td><td><code>duplicateOrder(orderId)</code></td><td>Mevcut siparişin tüm verilerini kopyalayarak yeni bir taslak sipariş oluşturur.</td></tr>
                                     <tr><td><strong>Not Ekle</strong></td><td><i data-lucide="message-square"></i></td><td><code>openNoteModal(orderId)</code></td><td>Kartın üstüne sarı acil müşteri notu barı (<code>card-note-bar</code>) ekler.</td></tr>
             <tr><td><strong>Siparişi İptal Et</strong></td><td><i data-lucide="x-circle" style="color:#dc2626;"></i></td><td><code>openCancelModal(orderId)</code></td><td>Gerekçe seçtirerek siparişi iptal durumuna geçirir.</td></tr>
             <tr><td><strong>Sil</strong></td><td><i data-lucide="trash-2" style="color:#dc2626;"></i></td><td><code>deleteOrder(orderId)</code></td><td>Onay aldıktan sonra kartı animasyonla listeden tamamen siler.</td></tr>
@@ -2353,7 +2354,8 @@
           <div style="display: inline-block; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); width: 220px;">
             <button class="dropdown-item" onclick="alert('Detaya Git tıklandı')"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> <span style="color:#2563eb; font-weight:600;">Detaya Git</span></button>
             <button class="dropdown-item" onclick="alert('Müşteri Detay tıklandı')"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Müşteri Detay</button>
-            <button class="dropdown-item" onclick="alert('İşlemi Kopyala tıklandı')"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg> İşlemi Kopyala</button>
+            <button class="dropdown-item" onclick="alert('Fiş Yazdır tıklandı')"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/></svg> Fiş Yazdır</button>
+            <button class="dropdown-item" onclick="alert('İşlemi Kopyala tıklandı')"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> İşlemi Kopyala</button>
             <button class="dropdown-item" onclick="alert('Fatura Kes tıklandı')"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Fatura Kes / Görüntüle</button>
             <button class="dropdown-item" onclick="alert('İrsaliye Yazdır tıklandı')"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m9 15 2 2 4-4"/></svg> İrsaliye Yazdır</button>
             <button class="dropdown-item" onclick="alert('Not Ekle tıklandı')"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg> Not Ekle</button>
@@ -2541,7 +2543,7 @@
           <h2>Kargo Akış Durum Senaryoları & Ertesi Gün 12:00 Hareketsizlik Uyarısı</h2>
           <div class="doc-section-meta">
             <span><i data-lucide="truck"></i> Canlı Kargo Takibi & SLA</span>
-            <span><i data-lucide="calendar"></i> Son Güncelleme: 24 / 08 / 2026 17:25</span>
+            <span><i data-lucide="calendar"></i> Son Güncelleme: 24 / 08 / 2026 17:40</span>
           </div>
         </div>
 
@@ -2600,7 +2602,7 @@
           <h2>19 Adımlı İnteraktif Sayfa Tanıtım Turu (Onboarding Tour)</h2>
           <div class="doc-section-meta">
             <span><i data-lucide="compass"></i> Onboarding Engine &amp; Spotlight</span>
-            <span><i data-lucide="calendar"></i> Son Güncelleme: 24 / 08 / 2026 17:25</span>
+            <span><i data-lucide="calendar"></i> Son Güncelleme: 24 / 08 / 2026 17:40</span>
           </div>
         </div>
 
@@ -2609,7 +2611,7 @@
           <p>Paneli ilk kez kullanan veya operasyonel detayları öğrenmek isteyen personelin tüm ekran özelliklerini sırayla ve etkileşimli olarak deneyimleyebilmesi için <strong>19 adımlı bütünsel tanıtım turu</strong> kurgulanmıştır:</p>
           <ul class="doc-list">
             <li><strong>1-7. Adımlar (Üst Panel &amp; Kontroller):</strong> Davye Header, Sol Menü Navigasyonu, Canlı Arama, Pazaryeri Filtresi, Gelişmiş Filtre Çekmecesi, 12'li Sıralama Çubuğu ve Yaşam Döngüsü Sekmeleri.</li>
-            <li><strong>8-14. Adımlar (Kapalı Kart Hiyerarşisi):</strong> Dikey İlerleme Barı, 1. Satır (Sipariş No, Depo, Tarih), 2. Satır (Cari, Tutar, Durum), Kapalı Kart Açıklama Satırı, Acil Müşteri Notu Şeridi, Paketleme Kontrol Fotoğrafı ve 6 Aksiyonlu İşlem Menüsü.</li>
+            <li><strong>8-14. Adımlar (Kapalı Kart Hiyerarşisi):</strong> Dikey İlerleme Barı, 1. Satır (Sipariş No, Depo, Tarih), 2. Satır (Cari, Tutar, Durum), Kapalı Kart Açıklama Satırı, Acil Müşteri Notu Şeridi, Paketleme Kontrol Fotoğrafı ve 7 Aksiyonlu İşlem Menüsü (Fiş Yazdır dahil).</li>
             <li><strong>15-18. Adımlar (Açık Kart 4 Sütunlu Grid):</strong> 1. Sütun (Cari/VKN/GLN/Adres), 2. Sütun (Fatura/Vade/Açıklama), 3. Sütun (Lojistik/Kargo/SLA Uyarısı), 4. Sütun (Finans/Tahsilat).</li>
             <li><strong>19. Adım (Sayfalama &amp; Sayaç):</strong> Sayfa boyutu seçici, anlık sipariş sayacı ve sayfa geçiş butonları.</li>
             <li><strong>Akıllı Kart Açma/Kapatma:</strong> Kart içi alanlar tanıtılırken kart otomatik olarak açılır (0ms); kapalı kart alanlarında otomatik kapanır.</li>
@@ -2660,7 +2662,7 @@
 
   <!-- FOOTER -->
   <footer class="doc-footer">
-    <div><strong>Davye Sipariş Yönetim Paneli Dökümantasyonu</strong> • <strong>Son Güncelleme:</strong> 24 / 08 / 2026 17:25 • Konuşma geçmişindeki tüm gerçek kullanıcı kuralları ve korelasyonlarla oluşturulmuştur.</div>
+    <div><strong>Davye Sipariş Yönetim Paneli Dökümantasyonu</strong> • <strong>Son Güncelleme:</strong> 24 / 08 / 2026 17:40 • Konuşma geçmişindeki tüm gerçek kullanıcı kuralları ve korelasyonlarla oluşturulmuştur.</div>
   </footer>
 
   <script>
