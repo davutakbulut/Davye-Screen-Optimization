@@ -3645,7 +3645,7 @@
     .onboarding-popover {
       position: fixed;
       z-index: 99999;
-      width: 340px;
+      width: 440px;
       max-width: calc(100vw - 24px);
       background: #ffffff;
       border-radius: 12px;
@@ -3657,6 +3657,7 @@
       opacity: 0;
       visibility: hidden;
       transform: translateY(6px);
+      box-sizing: border-box;
     }
 
     .onboarding-popover.active {
@@ -3760,49 +3761,58 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 9px 14px 11px 14px;
+      padding: 10px 16px 12px 16px;
       background: #f8fafc;
       border-top: 1px solid #f1f5f9;
-      gap: 8px;
+      gap: 12px;
+      box-sizing: border-box;
     }
 
     .onboarding-dots {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
+      flex-wrap: nowrap;
+      overflow: hidden;
     }
 
     .onboarding-dot {
-      width: 5px;
-      height: 5px;
+      width: 4px;
+      height: 4px;
       border-radius: 50%;
       background: #cbd5e1;
       transition: all 0.2s ease;
+      cursor: pointer;
+      flex-shrink: 0;
     }
 
     .onboarding-dot.active {
-      width: 14px;
-      border-radius: 4px;
+      width: 11px;
+      border-radius: 3px;
       background: #2563eb;
     }
 
     .onboarding-actions {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
 
     .onboarding-btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 4px;
-      padding: 5px 10px;
+      padding: 6px 12px;
       border-radius: 6px;
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.15s ease;
       border: 1px solid transparent;
+      white-space: nowrap;
     }
 
     .onboarding-btn-prev {
@@ -18308,10 +18318,13 @@
   <!-- Tanıtım Bilgi Baloncuğu (Popover) -->
   <div id="onboardingPopover" class="onboarding-popover">
     <div class="onboarding-popover-header">
-      <span class="onboarding-step-badge" id="onboardingStepBadge">Adım 1 / 12</span>
-      <button type="button" class="onboarding-btn-close" onclick="closeOnboardingTour()" title="Turu Kapat (Esc)">
-        <i data-lucide="x"></i>
-      </button>
+      <span class="onboarding-step-badge" id="onboardingStepBadge">Adım 1 / 19</span>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button type="button" class="onboarding-btn-skip" onclick="closeOnboardingTour()" title="Tanıtım turunu kapat">Turu Geç</button>
+        <button type="button" class="onboarding-btn-close" onclick="closeOnboardingTour()" title="Turu Kapat (Esc)">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
     </div>
     <div class="onboarding-popover-body">
       <div class="onboarding-title-row">
@@ -18323,9 +18336,8 @@
       <div class="onboarding-desc" id="onboardingDesc">Adım açıklaması burada yer alır.</div>
     </div>
     <div class="onboarding-popover-footer">
-      <div class="onboarding-dots" id="onboardingDots"></div>
+      <div class="onboarding-dots" id="onboardingDots" title="Adımlara doğrudan gitmek için tıklayabilirsiniz"></div>
       <div class="onboarding-actions">
-        <button type="button" class="onboarding-btn-skip" onclick="closeOnboardingTour()">Turu Geç</button>
         <button type="button" id="onboardingBtnPrev" class="onboarding-btn onboarding-btn-prev" onclick="prevOnboardingStep()">
           <i data-lucide="chevron-left"></i> Geri
         </button>
@@ -18723,7 +18735,7 @@ function updateSpotlightAndPopover(targetEl, step, index) {
     popover.style.right = '';
 
     const popoverRect = popover.getBoundingClientRect();
-    const popWidth = Math.max(340, popoverRect.width || 360);
+    const popWidth = Math.max(440, popoverRect.width || 440);
     const popHeight = Math.max(160, popoverRect.height || 190);
     const margin = 14;
 
