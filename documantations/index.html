@@ -1412,31 +1412,32 @@
         <input type="text" id="docSearchInput" placeholder="Dökümanda ara (örn: loader, badge, cari)..." oninput="filterDocNavigation(this.value)">
       </div>
 
-      <ul class="doc-nav-list" id="docNavList">
-        <div class="doc-nav-group-title">1. Sistem Genel Mimarisi</div>
+            <ul class="doc-nav-list" id="docNavList">
+        <div class="doc-nav-group-title">1. Sistem Mimarisi & Tasarım</div>
         <li class="doc-nav-item active" data-keywords="genel mimari prensipler layout responsive mobil masaustu"><a href="#section-architecture"><i data-lucide="layout"></i> Mimari & Grid Kuralları</a></li>
         <li class="doc-nav-item" data-keywords="zebra striping flat tasarim renk paleti arka plan beyaz mavi"><a href="#section-colors"><i data-lucide="palette"></i> Renkler & Zebra Şerit</a></li>
 
-        <div class="doc-nav-group-title">2. Kart Yapısı & Veritabanı</div>
+        <div class="doc-nav-group-title">2. Kart Hiyerarşisi & Veritabanı</div>
         <li class="doc-nav-item" data-keywords="kart kapali acik baslik header body 4 sutun grid"><a href="#section-card-structure"><i data-lucide="layers"></i> Kart Yapısı (Kapalı/Açık)</a></li>
-        <li class="doc-nav-item" data-keywords="loader veritabani 4 saniye cache onbellek weakset simülasyon"><a href="#section-loader-cache"><i data-lucide="database"></i> 1s Loader & Cache Mantığı</a></li>
+        <li class="doc-nav-item" data-keywords="loader veritabani 1 saniye cache onbellek weakset simülasyon"><a href="#section-loader-cache"><i data-lucide="database"></i> 1s Loader & Cache Mantığı</a></li>
         <li class="doc-nav-item" data-keywords="ilerleme cubugu dikey bar check ikon surec"><a href="#section-progress-bar"><i data-lucide="activity"></i> Sol İlerleme Çubuğu</a></li>
         <li class="doc-nav-item" data-keywords="kamera paketleme gorseli koli kontrol foto"><a href="#section-photo-icon"><i data-lucide="camera"></i> Paketleme Fotoğrafı İkonu</a></li>
 
-        <div class="doc-nav-group-title">3. Rozetler & Alan Detayları</div>
+        <div class="doc-nav-group-title">3. Rozetler, Alanlar & Bakiye</div>
         <li class="doc-nav-item" data-keywords="siparis numarasi 3 hane 007 kopyala panoya tam"><a href="#section-order-badge"><i data-lucide="hash"></i> 3 Hane Sipariş No</a></li>
-        <li class="doc-nav-item" data-keywords="durum rozetleri 23 durum kombinasyon taslak alindi hazirlandi paketlendi faturalandi iptal iade"><a href="#section-status-pills"><i data-lucide="tag"></i> 23 Durum Kombinasyonu</a></li>
-        <li class="doc-nav-item" data-keywords="depo md ed dental ecza lojistik teslimat dhl kurye kanal trendyol dental piyasa"><a href="#section-meta-badges"><i data-lucide="truck"></i> Depo (MD/ED), Kargo & Kanal</a></li>
-        <li class="doc-nav-item" data-keywords="24 27 alan vkn vd gln uts adres vade aciklama goz popup"><a href="#section-card-fields"><i data-lucide="list"></i> 24-27 Kart Alanı & Kaynakları</a></li>
+        <li class="doc-nav-item" data-keywords="durum rozetleri 23 durum kombinasyon taslak alindi hazirlandi paketlendi faturalandi iptal iade"><a href="#section-status-pills"><i data-lucide="tag"></i> Durum Rozetleri</a></li>
+        <li class="doc-nav-item" data-keywords="depo md ed dental ecza lojistik teslimat dhl kurye kanal trendyol dental piyasa"><a href="#section-meta-badges"><i data-lucide="truck"></i> Depo, Kargo & Satış Kanalı</a></li>
+        <li class="doc-nav-item" data-keywords="24 27 alan vkn vd gln uts adres vade aciklama goz popup musteri toplam cari bakiye borc alacak"><a href="#section-card-fields"><i data-lucide="list"></i> 27 Kart Alanı & Toplam Bakiye</a></li>
 
         <div class="doc-nav-group-title">4. İşlemler & Modallar</div>
-        <li class="doc-nav-item" data-keywords="islemler menusu detaya git musteri detay islemi kopyala sil fatura irsaliye not iptal"><a href="#section-actions-menu"><i data-lucide="more-horizontal"></i> İşlemler Menüsü (8 Aksiyon)</a></li>
-        <li class="doc-nav-item" data-keywords="modallar detay crm barkod zpl iptal kargo takip aciklama"><a href="#section-modals"><i data-lucide="app-window"></i> Modallar & CRM Akışları</a></li>
+        <li class="doc-nav-item" data-keywords="islemler menusu detaya git musteri detay fis yazdir termal pos 80mm islemi kopyala sil not ekle iptal et"><a href="#section-actions-menu"><i data-lucide="more-horizontal"></i> İşlemler Menüsü (7 Aksiyon)</a></li>
+        <li class="doc-nav-item" data-keywords="fis yazdir termal pos 80mm makbuz barkod yazdirma modal"><a href="#section-receipt-slip"><i data-lucide="receipt"></i> 80mm Termal POS Fişi</a></li>
 
-        <div class="doc-nav-group-title">5. Filtreler, Sıralama & Sayfalama</div>
-        <li class="doc-nav-item" data-keywords="filtre sekmeler yatay scroll drawer cekmece sayfalama 1-10 / 21"><a href="#section-filters-pagination"><i data-lucide="filter"></i> Filtreler & Sayfalama Sayacı</a></li>
+        <div class="doc-nav-group-title">5. Filtreleme, Sıralama & Rehber</div>
+        <li class="doc-nav-item" data-keywords="filtre sekmeler pazaryerleri gizli drawer cekmece sayfalama 1-10 / 21"><a href="#section-filters-pagination"><i data-lucide="filter"></i> Filtreler & Sayfalama Sayacı</a></li>
         <li class="doc-nav-item" data-keywords="12li siralama 3 kademeli dongu chip azalan artan varsayilan tutar vade cari siparis no depo teslimat"><a href="#section-inline-sorting"><i data-lucide="arrow-up-down"></i> 12'li Hızlı Sıralama Çubuğu</a></li>
-        <li class="doc-nav-item" data-keywords="kargo akis senaryo ertesi gun 12:00 hareketsizlik uyarisi takilma canli takip timeline uyari"><a href="#section-cargo-lifecycle"><i data-lucide="truck"></i> Kargo Akışı & Hareketsizlik Uyarısı</a></li>
+        <li class="doc-nav-item" data-keywords="kargo akis senaryo ertesi gun 12:00 hareketsizlik uyarisi takilma canli takip timeline uyari"><a href="#section-cargo-lifecycle"><i data-lucide="truck"></i> Kargo Akışı & SLA Uyarısı</a></li>
+        <li class="doc-nav-item" data-keywords="onboarding tur rehber tanitim popover spotlight 19 adim"><a href="#section-onboarding-tour"><i data-lucide="compass"></i> 19 Adımlı Tanıtım Turu</a></li>
       </ul>
     </aside>
 
@@ -1458,28 +1459,23 @@
           Masaüstünde ekranda tek seferde daha fazla siparişi tarayabilmek için kartlar <strong>varsayılan olarak kapalı</strong> gelir. Mobilde ise 3 satırlı kompakt başlık düzeni korunur ve dokunulduğunda dikey açılır.
         </div>
 
-        <div class="table-responsive-wrap"><table class="doc-meta-table">
+                <div class="table-responsive-wrap"><table class="doc-meta-table">
           <thead>
             <tr>
-              <th>Görünüm Türü</th>
-              <th>Medya Sorgusu (Breakpoint)</th>
-              <th>Başlık Düzeni</th>
-              <th>Gövde Düzeni</th>
+              <th>Aksiyon Adı</th>
+              <th>İkon</th>
+              <th>Tetiklenen Fonksiyon</th>
+              <th>Davranış & Amaç</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><strong>Masaüstü (Desktop)</strong></td>
-              <td><code>@media (min-width: 641px)</code></td>
-              <td>Tek yatay esnek satır (<code>display: flex; gap: 8px</code>). Kapalıyken Cari Adı görünür; tıklandığında 1. sütunda aynı veri zaten açıldığı için başlıktaki Cari Adı gizlenir.</td>
-              <td>4 Sütunlu Grid: <code>1.3fr 1.1fr 1.3fr 0.9fr</code></td>
-            </tr>
-            <tr>
-              <td><strong>Mobil (Mobile)</strong></td>
-              <td><code>@media (max-width: 640px)</code></td>
-              <td>3 Ayrı Satır (1. Satır: Sipariş No & Depo & Tarih, 2. Satır: Cari Adı & Kanal, 3. Satır: Tutar & Durum Rozeti & İşlemler)</td>
-              <td>Tek sütun dikey kart gövdesi (dikey akış)</td>
-            </tr>
+            <tr><td><strong>Detaya Git</strong></td><td><code>edit-3</code> (Mavi)</td><td><code>openDetailModal(id)</code></td><td>Tam ERP sipariş düzenleme ve kalem detay modalını açar.</td></tr>
+            <tr><td><strong>Müşteri Detay</strong></td><td><code>user</code> (Gri)</td><td><code>openCustomerModal(id)</code></td><td>Cari CRM kartı, VKN/UTS, bakiye ve iletişim özetini açar.</td></tr>
+            <tr><td><strong>Fiş Yazdır</strong></td><td><code>receipt</code> (Gri)</td><td><code>openReceiptModal(id)</code></td><td>80mm termal POS bilgi ve teslimat fişini açar ve yazdırır.</td></tr>
+            <tr><td><strong>İşlemi Kopyala</strong></td><td><code>printer/copy</code> (Gri)</td><td><code>duplicateOrder(id)</code></td><td>Siparişi klonlayarak yeni bir taslak oluşturur.</td></tr>
+            <tr><td><strong>Not Ekle</strong></td><td><code>message-square</code> (Gri)</td><td><code>openNoteModal(id)</code></td><td>Kart üstüne acil sarı müşteri notu şeridi ekler.</td></tr>
+            <tr><td><strong>Siparişi İptal Et</strong></td><td><code>x-circle</code> (Kırmızı)</td><td><code>openCancelModal(id)</code></td><td>Gerekçe seçtirerek siparişi iptal statüsüne alır.</td></tr>
+            <tr><td><strong>Sil</strong></td><td><code>trash-2</code> (Kırmızı)</td><td><code>deleteOrder(id)</code></td><td>Siparişi listeden yumuşak animasyonla kaldırır.</td></tr>
           </tbody>
         </table></div>
       </section>
@@ -2537,33 +2533,54 @@
           </div>
         </div>
       </section>
-      <!-- 13. KARGO AKIŞI & ERTESİ GÜN 12:00 HAREKETSİZLİK UYARISI -->
-      <section class="doc-section" id="section-cargo-lifecycle">
+            <!-- BÖLÜM 14: KARGO AKIŞI & ERTESİ GÜN 12:00 HAREKETSİZLİK UYARISI -->
+      <section class="doc-card-section" id="section-cargo-lifecycle">
         <div class="doc-section-header">
-          <div class="doc-section-badge">Standardizasyon & SLA Kuralı</div>
-          <h2>Kargo Akış Durum Senaryoları & Ertesi Gün 12:00 Hareketsizlik Uyarısı</h2>
-          <div class="doc-section-meta">
-            <span><i data-lucide="truck"></i> Canlı Kargo Takibi & SLA</span>
-            <span><i data-lucide="calendar"></i> Son Güncelleme: 24 / 08 / 2026 19:55</span>
-          </div>
+          <span class="doc-section-tag">Bölüm 14</span>
+          <h2 class="doc-section-title">Kargo Akış Durum Senaryoları & Ertesi Gün 12:00 Hareketsizlik Uyarısı</h2>
+          <p class="doc-section-desc">
+            Kargoya verilmiş siparişlerin lojistik süreçlerinin takibinde operasyonel aksaklıkların tespiti için getirilen çok aşamalı zaman çizelgesi ve SLA uyarı mekanizması.
+          </p>
         </div>
 
-        <div class="doc-card-explanation">
-          <h3><i data-lucide="info"></i> Neden Yapıldı ve Kural Mantığı Nedir?</h3>
-          <p>Kargoya verilmiş siparişlerin lojistik süreçlerinin takibinde operasyonel aksaklıkların derhal tespit edilmesi için iki kritik standart getirilmiştir:</p>
-          <ul class="doc-list">
-            <li><strong>Gerçekçi Çok Aşamalı Kargo Akış Çizelgesi:</strong> Kargoya verilen veya teslim edilen siparişler <em>Çıkış Şubesi ➔ Ana Transfer Merkezi ➔ Hat Sevkıyatı / Yolda ➔ Varış Dağıtım Şubesi ➔ Kurye Dağıtımda ➔ Teslim Edildi</em> şeklinde gerçek zamanlı adım adım hareketlerle kurgulanmıştır.</li>
-            <li><strong>Ertesi Gün 12:00 Hareketsizlik & Takılma Kuralı ($T_0 + 1$ Gün 12:00 SLA):</strong> Kargonun teslim edildiği günün <strong>ertesi günü saat 12:00'ye kadar</strong> kargoda yeni bir hareket kaydedilmemişse veya kargo aktarma merkezinde aynı aşamada takılı kalmışsa sistem otomatik olarak alarm üretir (<code>hasInactivityWarning: true</code>).</li>
-            <li><strong>Görsel Alarm Göstergeleri:</strong> Kart üzerindeki buton sarı/kehribar uyarı formatına (<code>.cargo-tracking-btn.btn-warning</code>) dönüşür (<code>⚠️ Hareketsiz (DHL: ...)</code>). Modalda ise en üstte açıklayıcı uyarı paneli (<code>.cargo-inactivity-alert</code>) ve zaman çizelgesinde takılan düğüm (<code>.cargo-step.warning</code>) görüntülenir.</li>
-          </ul>
+        <div class="doc-banner why">
+          <div class="doc-banner-title"><i data-lucide="check-circle-2"></i> Neden Yapıldı & Kullanıcı Mantığı:</div>
+          Kargoya verilen veya teslim edilen siparişler <em>Çıkış Şubesi ➔ Ana Transfer Merkezi ➔ Hat Sevkıyatı / Yolda ➔ Varış Dağıtım Şubesi ➔ Kurye Dağıtımda ➔ Teslim Edildi</em> şeklinde gerçek zamanlı adım adım hareketlerle kurgulanmıştır.
         </div>
 
-        <!-- Canlı UI Örneği -->
-        <div class="live-ui-box">
-          <div class="live-ui-title"><i data-lucide="play-circle"></i> Canlı UI Örneği: Hareketsizlik Uyarılı Kargo Takip Paneli</div>
-          
+        <div class="doc-banner trigger">
+          <div class="doc-banner-title"><i data-lucide="alert-triangle"></i> Ertesi Gün 12:00 Hareketsizlik SLA Kuralı:</div>
+          Kargonun teslim edildiği günün <strong>ertesi günü saat 12:00'ye kadar</strong> yeni bir hareket kaydedilmemişse veya kargo aktarma merkezinde aynı aşamada takılı kalmışsa sistem otomatik olarak alarm üretir (<code>hasInactivityWarning: true</code>). Kart üzerindeki buton sarı uyarı moduna (<code>.cargo-tracking-btn.btn-warning</code>) geçer.
+        </div>
+
+        <div class="table-responsive-wrap"><table class="doc-meta-table">
+          <thead>
+            <tr>
+              <th>Durum</th>
+              <th>Görsel Gösterge</th>
+              <th>Modal Paneli</th>
+              <th>Operasyonel Aksiyon</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Normal Akış</strong></td>
+              <td>Mavi / Yeşil Kargo Butonu</td>
+              <td>Standart yeşil zaman çizelgesi</td>
+              <td>Rutin teslimat takibi sürdürülür.</td>
+            </tr>
+            <tr>
+              <td><strong>Hareketsiz / Takıldı</strong></td>
+              <td>Sarı Kehribar Buton (<code>⚠️ Hareketsiz</code>)</td>
+              <td>Sarı SLA uyarı paneli + Uyarı ikonu</td>
+              <td>İlgili transfer merkezi veya kargo acentesi ile iletişime geçilir.</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <div style="margin-top: 20px;">
+          <div style="font-size: 11.5px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">Birebir Canlı Hareketsizlik Uyarılı Kargo Paneli:</div>
           <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:14px; max-width:520px; margin:0 auto;">
-            <!-- Uyarı Kutusu -->
             <div style="display:flex; align-items:flex-start; gap:9px; padding:10px 12px; background:#fffbeb; border:1px solid #fde68a; border-left:4px solid #f59e0b; border-radius:6px; font-size:11.5px; color:#92400e; line-height:1.45; margin-bottom:12px;">
               <i data-lucide="alert-triangle" style="width:16px; height:16px; color:#d97706; flex-shrink:0; margin-top:2px;"></i>
               <div>
@@ -2574,18 +2591,11 @@
                 </div>
               </div>
             </div>
-
-            <!-- Mini Timeline -->
             <div style="display:flex; flex-direction:column; gap:10px; padding-left:14px; border-left:2px solid #cbd5e1; margin-left:6px;">
               <div style="position:relative;">
                 <div style="position:absolute; left:-21px; top:2px; width:12px; height:12px; border-radius:50%; background:#10b981;"></div>
                 <div style="font-size:11px; font-weight:700; color:#065f46;">Çıkış Şubesi Teslim Aldı</div>
                 <div style="font-size:10px; color:#64748b;">19 / 08 / 2026 16:30 • Kadıköy Çıkış Şubesi</div>
-              </div>
-              <div style="position:relative;">
-                <div style="position:absolute; left:-21px; top:2px; width:12px; height:12px; border-radius:50%; background:#10b981;"></div>
-                <div style="font-size:11px; font-weight:700; color:#065f46;">Ana Transfer Merkezine Sevk Edildi</div>
-                <div style="font-size:10px; color:#64748b;">19 / 08 / 2026 21:15 • Tuzla Lojistik Hub</div>
               </div>
               <div style="position:relative;">
                 <div style="position:absolute; left:-21px; top:2px; width:12px; height:12px; border-radius:50%; background:#f59e0b; box-shadow:0 0 0 3px rgba(245,158,11,0.25);"></div>
@@ -2596,35 +2606,33 @@
           </div>
         </div>
       </section>
-      <!-- 14. 19 ADIMLI İNTERAKTİF SAYFA TANITIM TURU (ONBOARDING) -->
-      <section class="doc-section" id="section-onboarding-tour">
+
+      <!-- BÖLÜM 15: 19 ADIMLI İNTERAKTİF SAYFA TANITIM TURU -->
+      <section class="doc-card-section" id="section-onboarding-tour">
         <div class="doc-section-header">
-          <div class="doc-section-badge">Kullanıcı Deneyimi &amp; Rehber</div>
-          <h2>19 Adımlı İnteraktif Sayfa Tanıtım Turu (Onboarding Tour)</h2>
-          <div class="doc-section-meta">
-            <span><i data-lucide="compass"></i> Onboarding Engine &amp; Spotlight</span>
-            <span><i data-lucide="calendar"></i> Son Güncelleme: 24 / 08 / 2026 19:55</span>
-          </div>
+          <span class="doc-section-tag">Bölüm 15</span>
+          <h2 class="doc-section-title">19 Adımlı İnteraktif Sayfa Tanıtım Turu (Onboarding Tour)</h2>
+          <p class="doc-section-desc">
+            Paneli ilk kez kullanan personelin tüm arayüz bileşenlerini, kapalı ve açık kart alanlarını adım adım deneyimleyebilmesi için geliştirilen etkileşimli rehber motoru.
+          </p>
         </div>
 
-        <div class="doc-card-explanation">
-          <h3><i data-lucide="info"></i> Neden Yapıldı ve Tur Kapsamı Nedir?</h3>
-          <p>Paneli ilk kez kullanan veya operasyonel detayları öğrenmek isteyen personelin tüm ekran özelliklerini sırayla ve etkileşimli olarak deneyimleyebilmesi için <strong>19 adımlı bütünsel tanıtım turu</strong> kurgulanmıştır:</p>
-          <ul class="doc-list">
-            <li><strong>1-7. Adımlar (Üst Panel &amp; Kontroller):</strong> Davye Header, Sol Menü Navigasyonu, Canlı Arama, Pazaryeri Filtresi, Gelişmiş Filtre Çekmecesi, 12'li Sıralama Çubuğu ve Yaşam Döngüsü Sekmeleri.</li>
-            <li><strong>8-14. Adımlar (Kapalı Kart Hiyerarşisi):</strong> Dikey İlerleme Barı, 1. Satır (Sipariş No, Depo, Tarih), 2. Satır (Cari, Tutar, Durum), Kapalı Kart Açıklama Satırı, Acil Müşteri Notu Şeridi, Paketleme Kontrol Fotoğrafı ve 7 Aksiyonlu İşlem Menüsü (Fiş Yazdır dahil).</li>
-            <li><strong>15-18. Adımlar (Açık Kart 4 Sütunlu Grid):</strong> 1. Sütun (Cari/VKN/GLN/Adres), 2. Sütun (Fatura/Vade/Açıklama), 3. Sütun (Lojistik/Kargo/SLA Uyarısı), 4. Sütun (Finans/Tahsilat).</li>
-            <li><strong>19. Adım (Sayfalama &amp; Sayaç):</strong> Sayfa boyutu seçici, anlık sipariş sayacı ve sayfa geçiş butonları.</li>
-            <li><strong>Akıllı Kart Açma/Kapatma:</strong> Kart içi alanlar tanıtılırken kart otomatik olarak açılır (0ms); kapalı kart alanlarında otomatik kapanır.</li>
-            <li><strong>Çarpışma &amp; Taşma Önleme:</strong> Popover baloncuğu hedefin konumuna ve kalan boşluğa göre akıllıca yön değiştirir (Asla hedefin üstünü örtmez).</li>
-            <li><strong>Klavye &amp; Dokunmatik Destek:</strong> Sol/Sağ ok tuşları (<code>←</code> / <code>→</code>), <code>Esc</code> tuşu ve alt ilerleme noktaları (dots) ile tam etkileşimli geçiş.</li>
+        <div class="doc-banner why">
+          <div class="doc-banner-title"><i data-lucide="check-circle-2"></i> Kapsam & Tur Mantığı:</div>
+          Tanıtım turu 19 adımdan oluşur (Üst kontroller 1-7, Kapalı kart alanları 8-14, Açık kart 4 sütunu 15-18, Sayfalama ve sayaç 19). Kart içi alanlar tanıtılırken kart otomatik açılır; kapalı kart alanlarında otomatik kapanır.
+        </div>
+
+        <div class="doc-banner action">
+          <div class="doc-banner-title"><i data-lucide="compass"></i> Etkileşim & Konumlandırma Kuralları:</div>
+          <ul>
+            <li><strong>Akıllı Popover:</strong> Popover baloncuğu (440px sabit genişlik) hedefin konumuna göre ekran sınırlarını kontrol ederek daima hedefi kapatmayacak yönde açılır.</li>
+            <li><strong>Klavye Desteği:</strong> Sol/Sağ ok tuşları (<code>←</code> / <code>→</code>), <code>Esc</code> tuşu veya alttaki 19 nokta ile adımlar arasında serbestçe geçiş yapılabilir.</li>
+            <li><strong>İlk Ziyaret Kontrolü:</strong> <code>localStorage</code> anahtarı ile kullanıcının turu tamamlayıp tamamlamadığı saklanır.</li>
           </ul>
         </div>
 
-        <!-- Canlı UI Örneği -->
-        <div class="live-ui-box">
-          <div class="live-ui-title"><i data-lucide="play-circle"></i> Canlı UI Örneği: Onboarding Popover &amp; Adım Önizlemesi</div>
-          
+        <div style="margin-top: 20px;">
+          <div style="font-size: 11.5px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">Canlı Onboarding Popover & Adım Önizlemesi:</div>
           <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:12px; max-width:440px; margin:0 auto; box-shadow:0 10px 25px -5px rgba(15,23,42,0.15); overflow:hidden;">
             <div style="display:flex; align-items:center; justify-content:space-between; padding:10px 16px; background:#f8fafc; border-bottom:1px solid #f1f5f9;">
               <span style="font-size:10.5px; font-weight:700; color:#2563eb; background:#eff6ff; border:1px solid #bfdbfe; padding:2px 8px; border-radius:12px;">

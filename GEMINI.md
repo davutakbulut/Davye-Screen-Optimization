@@ -1,7 +1,7 @@
-# Davye Sipariş Yönetim Paneli - Geliştirme ve Senkronizasyon Kuralları
+# Davye Sipariş Yönetim Paneli - Geliştirme, Tasarım ve Senkronizasyon Kuralları
 
-> **Son Sistem Güncellemesi:** 24 / 08 / 2026 19:55  
-> Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
+> **Son Sistem Güncellemesi:** 24 / 08 / 2026 20:00  
+> Bu dosya, Davye Sipariş Yönetim Paneli projesinde yapılacak her türlü geliştirme, düzeltme, UI/UX tasarımı veya yeni özellik talebinde **Antigravity Yapay Zeka Asistanı** tarafından otomatik olarak yüklenen ve harfiyen uygulanması zorunlu ana sistem kuralıdır.
 
 ---
 
@@ -29,7 +29,7 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
    * Kapalı kartlarda üst satırda Sipariş No, Cari Adı, Satış Kanalı, Tarih ve Durum Pill'leri yer alırken; **kart kapalıyken altında 2. bir satır olarak sipariş açıklaması (`.card-header-row.row-desc`)** gösterilir.
    * Kart tıklandığında/açıldığında (`.order-card.expanded`):
      - Başlıktaki Cari Adı ve **açıklama satırı kaybolur / gizlenir** (`display: none !important;`).
-     - Açıklama kendi alanında (Gövde 3. sütun Açıklama & Entegrasyon kutusunda) görünür.
+     - Açıklama kendi alanında (Gövde 2. sütun Açıklama kutusunda) görünür.
      - 4 sütunlu `card-body-grid` açılır (`1.3fr 1.1fr 1.3fr 0.9fr`).
      - Başlıktaki ok 180° döner.
 2. **Mobil (Mobile `@media (max-width: 640px)`):**
@@ -56,6 +56,7 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
 ### D. Renk Paleti, Zebra Striping & Flat Tasarım
 1. Tekil satırlar `#ffffff` (Saf Beyaz), çift satırlar `#f0f6fe` (Pastel Soft Mavi).
 2. Kartlarda flat tasarım esastır (`box-shadow: none`).
+3. Border renk standardı: `#e2e8f0` (Normal), `#cbd5e1` (Hover/Vurgulu), `#bfdbfe` (Seçili/Aktif).
 
 ### E. Doğrulanmış Gerçek Veri Kuralı (Anti-Halüsinasyon)
 1. **Depo Kodları:** Yalnızca `MD` (Dental Ürünler) ve `ED` (Ecza Ürünleri) kodları kullanılabilir. Başka hayali depo kodu (MRL, GCL vb.) yazılamaz.
@@ -143,17 +144,45 @@ Her kartın işlemler menüsünde şu 7 aksiyon eksiksiz yer alır:
 ### P. 19-Adımlı Bütünsel İnteraktif Sayfa Tanıtım Turu (.onboarding-overlay & .onboarding-popover)
 1. **Kapsam:** Panelin tüm bileşenlerini sırasıyla gezen 19 adımlı tanıtım motoru uygulanır (1: Header, 2: Sol Menü, 3: Arama, 4: Pazaryeri Filtresi, 5: Gelişmiş Filtre, 6: 12'li Sıralama Çubuğu, 7: Yaşam Döngüsü Sekmeleri, 8: Dikey İlerleme Barı, 9: 1. Satır Meta, 10: 2. Satır Cari & Tutar, 11: Kapalı Kart Açıklaması, 12: Acil Müşteri Notu Şeridi, 13: Paketleme Fotoğrafı, 14: 7 Aksiyonlu İşlem Menüsü, 15: 1. Sütun Cari/VKN/Adres, 16: 2. Sütun Fatura/Vade, 17: 3. Sütun Kargo/SLA Uyarısı, 18: 4. Sütun Finans, 19: Sayfalama & Sayaç).
 2. **Akıllı Kart Hiyerarşisi:** Kart içi detay sütunları tanıtılırken ilgili sipariş kartı otomatik genişletilir (`.expanded`); kapalı kart alanları tanıtılırken kart otomatik daraltılır.
-3. **Çarpışma & Ekran Dışı Taşma Önleme:** Popover konumlandırma algoritması ekran kenarlarını ve hedef elemanın sınırlarını algılayarak hiçbir zaman hedef alanı kapatmayacak şekilde dinamik yön değiştirir.
+3. **Çarpışma & Ekran Dışı Taşma Önleme:** Popover konumlandırma algoritması ekran kenarlarını ve hedef elemanın sınırlarını algılayarak hiçbir zaman hedef alanı kapatmayacak şekilde dinamik yön değiştirir. Popover genişliği `440px` sabit tutulur.
 4. **Etkileşim:** Klavye yön tuşları (`ArrowLeft`, `ArrowRight`), `Esc` tuşu, alttaki ilerleme noktaları (*dots*) ve header'daki soru işareti butonu ile tam etkileşimli çalışır.
 
 ---
 
+### Q. Müşteri Toplam Cari Bakiye Gösterimi (.customer-balance-row)
+1. Sipariş kartı açıldığında (`.order-card.expanded`) 4. sütunun (Finansal Özet) en altında müşterinin güncel toplam cari hesap bakiyesi gösterilir.
+2. Açık borcu olan carilerde tutar kırmızı (`.customer-balance-val.debt` - örn: `24.850,00 ₺ (Borç)`), bakiyesi sıfır olan carilerde yeşil (`.customer-balance-val.clean` - örn: `0,00 ₺`), alacaklı carilerde mavi (`.customer-balance-val.credit` - örn: `1.200,00 ₺ (Alacak)`) vurgulanır.
+3. Bu bilgi ERP muhasebe ekstresi ve cari risk limitleri ile tam entegre çalışır.
+
+---
+
+### R. 80mm Termal POS Fişi Standardı (#orderReceiptModal)
+1. Sipariş işlem menüsündeki "Fiş Yazdır" butonuna basıldığında açılır.
+2. Standart 80mm termal rulo yazıcı formatında (`max-width: 340px`, ortalanmış `receipt-paper`), ürün kalemleri, adet, birim fiyat, ara toplam, vergi durumu ve taranabilir monospaced barkod içerir.
+3. `@media print` optimizasyonu ile tarayıcı yazdırma penceresinde ekrandaki tüm buton ve modal çerçeveleri gizlenerek doğrudan termal çıktı alınır.
+
+---
+
+### S. Tipografi & Yazı Tipi Kuralları
+1. **Ana Arayüz Fontu:** `'Plus Jakarta Sans', -apple-system, sans-serif` (Tüm başlıklar, etiketler, açıklamalar ve butonlar).
+2. **Sayısal & Kod Fontu:** `'JetBrains Mono', monospace` (Sipariş numaraları, VKN, GLN, UTS, para birimi tutarları, barkodlar ve sayaçlar).
+3. **Satır & Boşluk Oranları:** Kart içi grid sütunlarında `gap: 14px`, `padding: 9px 12px 10px 12px`, veri satırlarında `gap: 4px` ve `line-height: 1.35` uygulanır.
+
+---
+
+### T. Tekil JavaScript Motoru ve Global Kapsam Mimarisi
+1. Sayfa altında ayrık `<script>` blokları yerine tüm veri modelleri (`ordersDatabase`, `cargoDatabase`), filtreleme motoru, 12'li sıralama, sayfalama ve modal yöneticisi **tek bir konsolide `<script>` bloğunda** toplanır.
+2. Tüm UI fonksiyonları (`cycleSort`, `filterCards`, `applyGlobalFilters`, `openReceiptModal`, `openDetailModal`, `startOnboardingTour` vb.) doğrudan `window.*` nesnesine açıkça export edilerek 0ms gecikmeli ve `ReferenceError` riskinden arındırılmış çalışması sağlanır.
+
+---
+
 ## 📖 3. DÖKÜMANTASYON SAYFASI KURALLARI (`documantations/index.html`)
-1. **Sabit Header (Fixed):** Üst başlık hem masaüstünde hem mobilde `position: fixed` olarak en üstte sabit kalır.
-2. **Masaüstü Sticky Sidebar:** Sol menü `position: sticky; top: 78px; align-self: flex-start;` ile masaüstünde kaydırma boyunca sabit kalır.
+1. **Sabit Header (Fixed):** Üst başlık hem masaüstünde hem mobilde `position: fixed` olarak en üstte sabit kalır (`58px` yükseklik).
+2. **Masaüstü Sticky Sidebar:** Sol menü `position: sticky; top: 78px; align-self: flex-start;` ile masaüstünde kaydırma boyunca sabit kalır (`310px` genişlik).
 3. **Mobilde Drawer (Off-Canvas):** Mobilde içerik tam ekran açılır; logoya tıklandığında sol menü soldan açılır ve bir başlık seçildiğinde kendiliğinden kapanır.
-4. **Yüksek Performanslı ScrollSpy:** Tarayıcıyı kasmayan donanım hızlandırmalı `IntersectionObserver` ile sağdaki içerik kaydıkça sol menü otomatik seçilir.
-5. **Canlı UI Örnekleri:** Her bölümün altında teorik anlatımın yanında birebir çalışan, interaktif canlı HTML/CSS bileşeni yer almalıdır.
+4. **Bölüm Şablonu Standartı:** Eklenen tüm bölümler istisnasız `<section class="doc-card-section" id="...">` kapsayıcısıyla başlar; içinde `<span class="doc-section-tag">Bölüm X</span>`, `.doc-section-title`, `.doc-section-desc`, standart `.doc-banner` blokları (`.why`, `.source`, `.trigger`, `.action`), `.doc-meta-table` ve interaktif canlı UI demosu barındırır.
+5. **Yüksek Performanslı ScrollSpy:** Tarayıcıyı kasmayan donanım hızlandırmalı `IntersectionObserver` ile sağdaki içerik kaydıkça sol menü otomatik olarak aktif sınıfa (`.active`) geçer.
+6. **Eksiksiz Sidebar Menüsü:** Dökümantasyondaki tüm 15 bölüm sol menüde hiyerarşik 5 kategori altında `data-keywords` arama anahtarları ile eksiksiz listelenir.
 
 ---
 
