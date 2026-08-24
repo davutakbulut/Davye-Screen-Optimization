@@ -17170,6 +17170,536 @@
     }
   };
 
+  // =========================================================================
+  // MODAL VE AKSİYON FONKSİYONLARI (CRM, DETAY, PAKETLEME, KARGO, BARKOD)
+  // =========================================================================
+  let currentActiveOrderId = null;
+
+  // 1. Sipariş Detay Modalını Aç
+  function openDetailModal(orderId) {
+    currentActiveOrderId = orderId;
+    const order = ordersDatabase[orderId] || {};
+    
+    document.getElementById('modalOrderNo').innerText = `#${order.orderNo || orderId}`;
+    document.getElementById('modalStatusPills').innerHTML = order.statusPillsHtml || '<span class="status-pill pill-taslak">Taslak</span>';
+    document.getElementById('modalOrderDate').innerText = order.date || '21 / 08 / 2026';
+    document.getElementById('modalDepoBadge').innerText = order.depo || 'MD';
+    document.getElementById('modalSalesRep').innerText = order.salesRep || 'MERKEZ DEPO';
+
+    // Ürün Kalemleri Tablosu
+    let itemsHtml = '';
+    if (order.items && order.items.length > 0) {
+      order.items.forEach(item => {
+        itemsHtml += `
+          <tr>
+            <td style="font-family:'JetBrains Mono', monospace; font-weight:700; color:#2563eb;">${item.code}</td>
+            <td style="font-weight:600; color:#1e293b;">${item.name}</td>
+            <td style="text-align:center; font-weight:700; color:#0f172a;">${item.qty} Adet</td>
+            <td style="text-align:right; font-weight:600; color:#64748b;">${item.price}</td>
+            <td style="text-align:right; font-weight:700; color:#0f172a;">${item.total}</td>
+          </tr>
+        `;
+      });
+    } else {
+      itemsHtml = `<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding:16px;">Bu siparişte listelenecek ürün kalemi bulunamadı.</td></tr>`;
+    }
+
+    const bodyHtml = `
+      <!-- Temel Cari & Finans Bilgileri Kartı -->
+      <div class="modal-box">
+        <div class="modal-box-title">
+          <i data-lucide="building-2"></i> Cari &amp; Müşteri Bilgileri
+        </div>
+        <div class="modal-grid-2">
+          <div class="modal-field">
+            <span class="modal-field-label">Cari / Müşteri Ünvanı</span>
+            <span class="modal-field-val" style="font-weight:800; color:#0f172a;">${order.cariName || '-'}</span>
+          </div>
+          <div class="modal-field">
+            <span class="modal-field-label">Cari Türü</span>
+            <span class="modal-field-val">${order.cariType || 'Tüzel Kurumsal'}</span>
+          </div>
+          <div class="modal-field">
+            <span class="modal-field-label">${order.idLabel || 'VKN / TCKN'}</span>
+            <span class="modal-field-val" style="font-family:'JetBrains Mono', monospace;">${order.taxId || '-'} (${order.taxOffice || 'Vergi Dairesi'})</span>
+          </div>
+          <div class="modal-field">
+            <span class="modal-field-label">GLN / ÜTS No</span>
+            <span class="modal-field-val" style="font-family:'JetBrains Mono', monospace;">GLN: ${order.gln || '-'} • ÜTS: ${order.uts || '-'}</span>
+          </div>
+          <div class="modal-field" style="grid-column: 1 / -1;">
+            <span class="modal-field-label">Teslimat &amp; Fatura Adresi</span>
+            <span class="modal-field-val">${order.address || '-'}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Finansal & Fatura Özeti -->
+      <div class="modal-box">
+        <div class="modal-box-title">
+          <i data-lucide="wallet"></i> Finansal Özet &amp; Fatura Bilgileri
+        </div>
+        <div class="modal-grid-2">
+          <div class="modal-field">
+            <span class="modal-field-label">Toplam Tutar</span>
+            <span class="modal-field-val" style="font-size:14px; font-weight:800; color:#0f172a;">${order.totalPrice || '0,00 ₺'}</span>
+          </div>
+          <div class="modal-field">
+            <span class="modal-field-label">Ödenen Tutar &amp; Durum</span>
+            <span class="modal-field-val" style="font-weight:700; color:#16a34a;">${order.paidPrice || '0,00 ₺'} (${order.paymentStatus || 'Ödendi'})</span>
+          </div>
+          <div class="modal-field">
+            <span class="modal-field-label">Fatura Numarası &amp; Seri</span>
+            <span class="modal-field-val" style="font-family:'JetBrains Mono', monospace; font-weight:700;">${order.invoiceNo || '-'} (Seri: ${order.invoiceSerial || '-'})</span>
+          </div>
+          <div class="modal-field">
+            <span class="modal-field-label">Vade Tarihi</span>
+            <span class="modal-field-val" style="color:#d97706; font-weight:700;">${order.vade || '-'}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kargo ve Lojistik Durumu -->
+      <div class="modal-box">
+        <div class="modal-box-title">
+          <i data-lucide="truck"></i> Lojistik &amp; Sevkiyat Durumu
+        </div>
+        <div class="modal-field" style="margin-bottom:8px;">
+          <span class="modal-field-label">Kargo Firması &amp; Takip Kodu</span>
+          <span class="modal-field-val" style="display:flex; align-items:center; gap:8px;">
+            <strong style="color:#2563eb;">${order.delivery || 'DHL Kargo (KA)'}</strong>
+            <span style="font-family:'JetBrains Mono', monospace; background:#eff6ff; color:#1e40af; padding:2px 8px; border-radius:4px; border:1px solid #bfdbfe;">
+              ${order.cargoTrack || 'Takip No: DHL-91827364'}
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Sipariş Edilen Ürün Kalemleri Tablosu -->
+      <div class="modal-box" style="padding: 10px 12px;">
+        <div class="modal-box-title" style="border-bottom:none; margin-bottom:0; padding-bottom:6px;">
+          <i data-lucide="shopping-bag"></i> Sipariş Edilen Ürün Kalemleri
+        </div>
+        <div class="modal-table-wrap">
+          <table class="modal-table">
+            <thead>
+              <tr>
+                <th style="width: 16%;">Ürün Kodu</th>
+                <th style="width: 44%;">Ürün Açıklaması</th>
+                <th style="width: 14%; text-align:center;">Miktar</th>
+                <th style="width: 13%; text-align:right;">Birim Fiyat</th>
+                <th style="width: 13%; text-align:right;">Toplam</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${itemsHtml}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('modalBodyContent').innerHTML = bodyHtml;
+    document.getElementById('orderDetailModal').classList.add('show');
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+  }
+
+  // 2. Müşteri Detay (CRM) Modalını Aç
+  function openCustomerModal(orderId) {
+    currentActiveOrderId = orderId;
+    const order = ordersDatabase[orderId] || {};
+    
+    const cariNameEl = document.getElementById('modalCustomerCariName');
+    if (cariNameEl) cariNameEl.innerText = order.cariName || 'Müşteri Detayı';
+    
+    const modal = document.getElementById('customerDetailModal') || document.getElementById('orderDetailModal');
+    if (modal) {
+      modal.classList.add('show');
+      if (window.lucide && lucide.createIcons) lucide.createIcons();
+    } else {
+      openDetailModal(orderId);
+    }
+  }
+
+  // 3. Not Ekle Modalını Aç
+  function openNoteModal(orderId) {
+    currentActiveOrderId = orderId;
+    const order = ordersDatabase[orderId] || {};
+    const titleEl = document.getElementById('modalNoteTitle');
+    if (titleEl) titleEl.innerHTML = `<i data-lucide="message-square"></i> Siparişe Not Ekle (#${orderId})`;
+    const inputEl = document.getElementById('modalNoteInput');
+    if (inputEl) inputEl.value = order.note || '';
+    const modal = document.getElementById('orderNoteModal');
+    if (modal) modal.classList.add('show');
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+  }
+
+  function saveOrderNote() {
+    const inputEl = document.getElementById('modalNoteInput');
+    const noteVal = inputEl ? inputEl.value.trim() : '';
+    if (currentActiveOrderId && ordersDatabase[currentActiveOrderId]) {
+      ordersDatabase[currentActiveOrderId].note = noteVal;
+    }
+    closeModal();
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.innerText = 'Sipariş notu kaydedildi!';
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
+  }
+
+  // 4. Kargo Barkodu Modalını Aç
+  function openBarcodeModal(orderId, customBarcode) {
+    currentActiveOrderId = orderId;
+    const order = ordersDatabase[orderId] || {};
+    const barcodeVal = customBarcode || (order.cargoTrack && order.cargoTrack.includes('-') ? order.cargoTrack.split('-').slice(1).join('-').trim() : ('BAR-' + orderId.replace(/[^0-9]/g, '')));
+    
+    const carrierEl = document.getElementById('modalBarcodeCarrier');
+    if (carrierEl) carrierEl.innerText = order.delivery || 'DHL Kargo (KA)';
+    const agrEl = document.getElementById('modalBarcodeAgreement');
+    if (agrEl) agrEl.innerText = (order.salesRep ? order.salesRep + ' ANLAŞMALI SEVKİYAT' : 'HIZLI SEVKİYAT');
+    const desiEl = document.getElementById('modalBarcodeDesi');
+    if (desiEl) desiEl.innerText = (order.totalQty && order.totalQty > 100 ? '4 DESİ' : '2 DESİ');
+    const dateEl = document.getElementById('modalBarcodeDate');
+    if (dateEl) dateEl.innerText = order.date ? order.date.split(' ')[0] : '21 / 08 / 2026';
+    const recNameEl = document.getElementById('modalBarcodeReceiverName');
+    if (recNameEl) recNameEl.innerText = order.cariName || 'MÜŞTERİ';
+    const recAddrEl = document.getElementById('modalBarcodeReceiverAddress');
+    if (recAddrEl) recAddrEl.innerText = (order.address || 'İstanbul') + ' (Teslimat Bölgesi)';
+    const recContEl = document.getElementById('modalBarcodeReceiverContact');
+    if (recContEl) recContEl.innerText = `Vergi No / VKN: ${order.taxId || '-'} • GLN: ${order.gln || '-'}`;
+    const depoEl = document.getElementById('modalBarcodeDepo');
+    if (depoEl) depoEl.innerText = order.depo || 'MD';
+    const orderNoEl = document.getElementById('modalBarcodeOrderNo');
+    if (orderNoEl) orderNoEl.innerText = `Sipariş: #${orderId}`;
+    const codeEl = document.getElementById('modalBarcodeCode');
+    if (codeEl) codeEl.innerText = barcodeVal;
+    
+    const modal = document.getElementById('orderBarcodeModal');
+    if (modal) modal.classList.add('show');
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+  }
+
+  function printBarcode() {
+    window.print();
+  }
+
+  // 5. İptal Modalını Aç
+  function openCancelModal(orderId) {
+    currentActiveOrderId = orderId;
+    const order = ordersDatabase[orderId] || {};
+    const descEl = document.getElementById('modalCancelDesc');
+    if (descEl) descEl.innerText = `#${orderId} numaralı (${order.cariName || ''}) siparişi iptal etmek istediğinize emin misiniz?`;
+    const modal = document.getElementById('orderCancelModal');
+    if (modal) modal.classList.add('show');
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+  }
+
+  function confirmOrderCancel() {
+    const reasonEl = document.getElementById('modalCancelReason');
+    const reason = reasonEl ? reasonEl.value : 'Müşteri Talebi';
+    closeModal();
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.innerText = `#${currentActiveOrderId} siparişi iptal edildi. (${reason})`;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    }
+  }
+
+  // 6. Paketleme Görseli Modalını Aç
+  function openPackingPhotoModal(orderId) {
+    currentActiveOrderId = orderId;
+    const order = ordersDatabase[orderId] || {
+      orderNo: orderId,
+      cariName: 'MÜŞTERİ',
+      depo: 'MD',
+      date: '21 / 08 / 2026'
+    };
+
+    const titleEl = document.getElementById('modalPackingPhotoTitle');
+    if (titleEl) titleEl.innerHTML = `<i data-lucide="camera"></i> Paketleme Kontrol Görseli (#${order.orderNo || orderId})`;
+    const cariEl = document.getElementById('modalPhotoCari');
+    if (cariEl) cariEl.innerText = order.cariName || 'MÜŞTERİ';
+    const metaEl = document.getElementById('modalPhotoMeta');
+    if (metaEl) metaEl.innerText = `Paketleyen: Depo Ekibi (${order.depo || 'MD'}) • ${order.date || 'Bugün'}`;
+    const fallbackTextEl = document.getElementById('modalFallbackOrderText');
+    if (fallbackTextEl) fallbackTextEl.innerText = `#${order.orderNo || orderId} Paketleme & Güvenlik Mührü Tamamlandı`;
+    const barcodeTextEl = document.getElementById('modalPhotoBarcodeText');
+    if (barcodeTextEl) barcodeTextEl.innerText = `KOLİ-${orderId.replace(/[^0-9]/g, '') || '91827364'}`;
+    
+    // Görseli göster ve modalı aç
+    const imgEl = document.getElementById('modalPackingPhotoImage');
+    const fallbackEl = document.getElementById('modalPackingPhotoSvgFallback');
+    
+    const samplePhotos = {
+      '1-WS-2-51893': 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&auto=format&fit=crop&q=80',
+      '1-WS-2-51892': 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=700&auto=format&fit=crop&q=80',
+      '1-WS-2-51891': 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=700&auto=format&fit=crop&q=80',
+      '1-WS-2-51890': 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=700&auto=format&fit=crop&q=80',
+      '1-WS-2-51889': 'https://images.unsplash.com/photo-1586528116493-a029325540fa?w=700&auto=format&fit=crop&q=80',
+      '1-WS-2-51888': 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&auto=format&fit=crop&q=80',
+      '1-WS-2-51887': 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=700&auto=format&fit=crop&q=80',
+      '1-WS-2-51886': 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=700&auto=format&fit=crop&q=80',
+      '1-WS-2-51885': 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=700&auto=format&fit=crop&q=80'
+    };
+
+    if (imgEl && fallbackEl) {
+      imgEl.style.display = 'block';
+      fallbackEl.style.display = 'none';
+      imgEl.src = samplePhotos[orderId] || 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=700&auto=format&fit=crop&q=80';
+    }
+
+    const modal = document.getElementById('orderPackingPhotoModal');
+    if (modal) modal.classList.add('show');
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+  }
+
+  function downloadPackingPhoto() {
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.innerText = 'Paketleme kontrol görseli yüksek çözünürlükte indiriliyor...';
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    }
+  }
+
+  // 7. Canlı Kargo Takip ve Teslimat Hareketleri Modalını Aç
+  function openCargoModal(orderId) {
+    currentActiveOrderId = orderId;
+    const order = ordersDatabase[orderId] || {};
+    
+    // Kargoya verilmemiş sipariş kontrolü
+    const isPreCargo = order.statusClass && (
+      order.statusClass.includes('status-taslak') ||
+      order.statusClass.includes('status-alindi') ||
+      order.statusClass.includes('status-hazirlaniyor') ||
+      order.statusClass.includes('status-hazirlandi') ||
+      order.statusClass.includes('status-fatura-bekliyor') ||
+      order.statusClass.includes('status-paketleme-bekliyor') ||
+      order.statusClass.includes('status-paketlendi') ||
+      order.statusClass.includes('status-kargo-bekliyor') ||
+      order.statusClass.includes('status-iptal')
+    ) && !order.statusClass.includes('status-kargoda') && !order.statusClass.includes('status-teslim-edildi') && !order.statusClass.includes('status-iade');
+
+    if (isPreCargo) {
+      if (order.statusClass.includes('status-paketlendi') || order.statusClass.includes('status-kargo-bekliyor') || order.statusClass.includes('status-paketleme-bekliyor')) {
+        openBarcodeModal(orderId);
+      } else {
+        openDetailModal(orderId);
+      }
+      return;
+    }
+
+    const cargo = cargoDatabase[orderId] || {
+      orderNo: orderId,
+      cariName: ordersDatabase[orderId]?.cariName || 'MÜŞTERİ',
+      carrier: order.delivery || 'DHL Kargo (KA)',
+      trackingCode: 'DHL-' + orderId.replace(/[^0-9]/g, ''),
+      status: 'Kargo Sürecinde',
+      statusClass: 'status-transit',
+      statusColor: '#0891b2',
+      recipient: order.cariName || 'Yetkili Alıcı',
+      deliveryAddress: order.address || 'Teslimat Adresi',
+      deliveryDate: order.date ? order.date.split(' ')[0] : '22 / 08 / 2026',
+      branch: 'Kadıköy Dağıtım Şubesi',
+      events: [
+        { title: 'Sipariş Çıkış Şubesi Teslim Aldı', desc: 'Gönderi kabul edildi.', location: 'Kadıköy Şube', time: 'Dün 17:00', status: 'completed', icon: 'check' },
+        { title: 'Transfer Merkezinde İşlemde', desc: 'Gönderi transfer merkezinde işlem görmektedir.', location: 'Tuzla Hub', time: 'Bugün', status: 'active', icon: 'truck' }
+      ]
+    };
+
+    const titleEl = document.getElementById('modalCargoTitle');
+    if (titleEl) titleEl.innerHTML = `<i data-lucide="truck"></i> Canlı Kargo Takibi (#${cargo.orderNo || orderId})`;
+    const carrierBadgeEl = document.getElementById('modalCargoCarrierBadge');
+    if (carrierBadgeEl) carrierBadgeEl.innerText = cargo.carrier || 'Kargo';
+    
+    // Hareketsizlik Uyarısı Banner'ı Render Et
+    const warningContainer = document.getElementById('modalCargoWarningContainer');
+    if (warningContainer) {
+      if (cargo.hasInactivityWarning) {
+        warningContainer.innerHTML = `
+          <div class="cargo-inactivity-alert">
+            <i data-lucide="alert-triangle"></i>
+            <div>
+              <span class="cargo-inactivity-alert-title">⚠️ Kargo Hareketsizlik / SLA Gecikme Uyarısı</span>
+              <span>${cargo.warningReason || 'Kargonun verildiği tarihten itibaren ertesi gün saat 12:00 süresi aşılmış olup yeni bir hareket kaydedilmemiştir / aynı aşamada beklemektedir.'}</span>
+              <div style="font-size:10px; font-weight:700; color:#b45309; margin-top:3px;">
+                ⏳ Hareketsiz Süre: ${cargo.inactivityDuration || '30+ Saat'} • Öneri: İlgili kargo şubesi veya transfer merkezi ile iletişime geçiniz.
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        warningContainer.innerHTML = '';
+      }
+    }
+
+    // Banner güncelle
+    const bannerEl = document.getElementById('modalCargoBanner');
+    if (bannerEl) bannerEl.className = `cargo-status-banner ${cargo.statusClass || 'status-delivered'}`;
+    
+    const branchTextEl = document.getElementById('modalCargoBranchText');
+    if (branchTextEl) branchTextEl.innerText = cargo.branch || '';
+    const trackCodeEl = document.getElementById('modalCargoTrackingCode');
+    if (trackCodeEl) trackCodeEl.innerText = cargo.trackingCode || '000000000';
+    const recipientEl = document.getElementById('modalCargoRecipient');
+    if (recipientEl) recipientEl.innerText = cargo.recipient || '-';
+    const delDateEl = document.getElementById('modalCargoDeliveryDate');
+    if (delDateEl) delDateEl.innerText = cargo.deliveryDate || '-';
+    const addrEl = document.getElementById('modalCargoAddress');
+    if (addrEl) addrEl.innerText = cargo.deliveryAddress || '-';
+
+    // Status Badge Icon
+    const badgeIcon = cargo.hasInactivityWarning ? 'alert-triangle' : (cargo.statusClass === 'status-delivered' ? 'check-circle' : (cargo.statusClass === 'status-delivery' ? 'bike' : 'truck'));
+    const statusBadgeEl = document.getElementById('modalCargoStatusBadge');
+    if (statusBadgeEl) {
+      statusBadgeEl.innerHTML = `
+        <i data-lucide="${badgeIcon}" style="color:${cargo.statusColor || '#059669'}; width:13px; height:13px;"></i>
+        <span id="modalCargoStatusText">${cargo.status || 'Teslim Edildi'}</span>
+      `;
+    }
+
+    // Timeline oluştur
+    const timelineEl = document.getElementById('modalCargoTimeline');
+    if (timelineEl) {
+      let timelineHtml = '';
+      (cargo.events || []).forEach(evt => {
+        timelineHtml += `
+          <div class="cargo-step ${evt.status}">
+            <div class="cargo-step-node">
+              <i data-lucide="${evt.icon || 'check'}"></i>
+            </div>
+            <div class="cargo-step-header">
+              <span class="cargo-step-title">${evt.title}</span>
+              <span class="cargo-step-time">${evt.time}</span>
+            </div>
+            <div class="cargo-step-desc">${evt.desc}</div>
+            <div class="cargo-step-location">
+              <i data-lucide="map-pin" style="width:10px; height:10px;"></i> ${evt.location}
+            </div>
+          </div>
+        `;
+      });
+      timelineEl.innerHTML = timelineHtml;
+    }
+
+    const modal = document.getElementById('orderCargoModal');
+    if (modal) modal.classList.add('show');
+    if (window.lucide && lucide.createIcons) lucide.createIcons();
+  }
+
+  function copyTrackingCode() {
+    const carrier = document.getElementById('modalCargoCarrierBadge')?.innerText?.trim() || '';
+    const code = document.getElementById('modalCargoTrackingCode')?.innerText?.trim() || '';
+    if (code) {
+      const fullText = carrier ? `${carrier} - ${code}` : code;
+      copyToClipboard(fullText);
+    }
+  }
+
+  function copyCargoLink() {
+    const code = document.getElementById('modalCargoTrackingCode')?.innerText || '591827361';
+    const link = `https://kargotakip.davye.com/track?code=${code}`;
+    copyToClipboard(link);
+  }
+
+  function openCarrierSite() {
+    const code = document.getElementById('modalCargoTrackingCode')?.innerText || '591827361';
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.innerText = `Kargo entegrasyon ekranı açılıyor (Takip No: ${code})...`;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
+  }
+
+  // 8. Genel Yardımcı Fonksiyonlar
+  function closeModal() {
+    document.querySelectorAll('.modal-backdrop').forEach(modal => {
+      modal.classList.remove('show');
+    });
+  }
+
+  function printModalOrder() {
+    window.print();
+  }
+
+  function copyToClipboard(text) {
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      const toast = document.getElementById('toast');
+      if (toast) {
+        toast.innerText = `Panoya kopyalandı: ${text}`;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2000);
+      }
+    }).catch(err => {
+      console.error('Kopyalama hatası:', err);
+    });
+  }
+
+  function duplicateOrder(orderId) {
+    const toast = document.getElementById('toast');
+    if (toast) {
+      toast.innerText = `#${orderId} siparişi kopyalandı ve yeni taslak oluşturuldu.`;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    }
+  }
+
+  function deleteOrder(orderId) {
+    const cards = document.querySelectorAll('.order-card');
+    cards.forEach(card => {
+      const orderNumEl = card.querySelector('.order-number-badge span');
+      const cardId = card.dataset.orderId || (card.querySelector('.order-number-badge')?.dataset?.orderId);
+      if (cardId === orderId || (orderNumEl && orderNumEl.innerText.includes(orderId))) {
+        card.style.transition = 'all 0.3s ease';
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          card.remove();
+          const toast = document.getElementById('toast');
+          if (toast) {
+            toast.innerText = `#${orderId} numaralı sipariş listeden silindi.`;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2500);
+          }
+          if (typeof updateMatchedCountDisplay === 'function') updateMatchedCountDisplay();
+        }, 300);
+      }
+    });
+  }
+
+  function toggleDropdown(button) {
+    const currentMenu = button.nextElementSibling;
+    const allMenus = document.querySelectorAll('.dropdown-menu');
+    
+    allMenus.forEach(menu => {
+      if (menu !== currentMenu) {
+        menu.classList.remove('show');
+      }
+    });
+
+    if (currentMenu) currentMenu.classList.toggle('show');
+  }
+
+  // Dışarı tıklandığında menüleri kapat
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.actions-dropdown')) {
+      document.querySelectorAll('.dropdown-menu.show').forEach(m => m.classList.remove('show'));
+    }
+  });
+
+  // ESC Tuşu ile Modal & Drawer Kapatma
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeModal();
+      if (typeof closeFilterDrawer === 'function') closeFilterDrawer();
+    }
+  });
+
   function updateChipIcon(chip, state) {
     const indicator = chip.querySelector('.sort-indicator');
     if (!indicator) return;
