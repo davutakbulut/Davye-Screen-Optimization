@@ -5044,7 +5044,7 @@
       Fatura Bekliyor <span class="tab-count">6</span>
     </button>
     <button class="filter-tab" onclick="filterCards('status-faturalandi', this)">
-      Faturası Kesildi <span class="tab-count">5</span>
+      Fatura Kesildi <span class="tab-count">5</span>
     </button>
     <button class="filter-tab" onclick="filterCards('status-faturasiz', this)">
       Faturasız <span class="tab-count">4</span>
@@ -5640,7 +5640,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67998 -->
-  <div class="order-card status-hazirlandi" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-hazirlandi status-fatura-bekliyor" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -5682,7 +5682,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">3.365,00 ₺</span>
-          <span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"></svg> Hazırlandı</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Hazırlandı</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           
@@ -5842,7 +5842,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67986 -->
-  <div class="order-card status-kargo-bekliyor" data-status="status-kargo-bekliyor" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-kargo-bekliyor status-fatura-bekliyor" data-status="status-kargo-bekliyor" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Kargo Bekliyor" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -5884,7 +5884,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">3.943,38 ₺</span>
-          <span class="status-pill pill-kargo-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargo Bekliyor</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-kargo-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargo Bekliyor</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67986')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -6046,7 +6046,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67896 -->
-  <div class="order-card status-hazirlandi" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-hazirlandi status-faturalandi" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -6088,7 +6088,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">3.600,00 ₺</span>
-          <span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"></svg> Hazırlandı</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Hazırlandı</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura Kesildi</span></div>
         </div>
         <div class="row-right">
           
@@ -6248,7 +6248,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67875 -->
-  <div class="order-card status-hazirlandi" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-hazirlandi status-fatura-bekliyor" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -6290,7 +6290,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">7.049,70 ₺</span>
-          <span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"></svg> Hazırlandı</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Hazırlandı</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           
@@ -6450,7 +6450,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67874 -->
-  <div class="order-card status-faturalandi" data-status="status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-hazirlandi status-faturalandi" data-status="status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Faturalandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -6492,7 +6492,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">16.500,00 ₺</span>
-          <span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"></svg> Faturalandı</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Hazırlandı</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura Kesildi</span></div>
         </div>
         <div class="row-right">
           
@@ -6614,7 +6614,7 @@
         </div>
         <div class="data-row">
           <span class="data-label">Kargo Durumu:</span>
-          <span class="data-value" data-tip="Anlık Kargo / Sevk Operasyon Aşaması • Kargo Entegrasyonu / Depo Takibinden gelir" style="color: #64748b; font-weight:600;">Faturası Kesildi / Paketleme Sırasında</span>
+          <span class="data-value" data-tip="Anlık Kargo / Sevk Operasyon Aşaması • Kargo Entegrasyonu / Depo Takibinden gelir" style="color: #64748b; font-weight:600;">Fatura Kesildi / Paketleme Sırasında</span>
         </div>
         <div class="cargo-tracking-row">
           <a href="javascript:void(0)" onclick="openBarcodeModal('1-WS-2-67874', 'DHL-6787401')" class="cargo-tracking-btn btn-shipping" style="flex:1;" data-tip="Canlı Kargo Takip & Sevk Barkodu Butonu • Kargo API & ZPL Servisinden gelir">
@@ -6652,7 +6652,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67846 -->
-  <div class="order-card status-faturalandi" data-status="status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-hazirlandi status-faturalandi" data-status="status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Faturalandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -6694,7 +6694,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">17.715,89 ₺</span>
-          <span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"></svg> Faturalandı</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Hazırlandı</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura Kesildi</span></div>
         </div>
         <div class="row-right">
           
@@ -6854,7 +6854,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67839 -->
-  <div class="order-card status-hazirlandi" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-hazirlandi status-fatura-bekliyor" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -6896,7 +6896,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">57.815,19 ₺</span>
-          <span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"></svg> Hazırlandı</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Hazırlandı</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           
@@ -7056,7 +7056,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67833 -->
-  <div class="order-card status-hazirlandi" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-hazirlandi status-fatura-bekliyor" data-status="status-hazirlandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Hazırlandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -7098,7 +7098,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">31.671,00 ₺</span>
-          <span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"></svg> Hazırlandı</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-hazirlandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle-2" aria-hidden="true" class="lucide lucide-check-circle-2"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg> Hazırlandı</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           
@@ -7258,7 +7258,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67782 -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-teslim-edildi status-faturalandi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -7300,7 +7300,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">28.000,00 ₺</span>
-          <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura Kesildi</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67782')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -7462,7 +7462,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67758 -->
-  <div class="order-card status-kargoda" data-status="status-kargoda" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-kargoda status-fatura-bekliyor" data-status="status-kargoda" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Kargoda" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -7504,7 +7504,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">1.800,00 ₺</span>
-          <span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargoda</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargoda</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67758')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -7868,7 +7868,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67674 -->
-  <div class="order-card status-kargoda" data-status="status-kargoda" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-kargoda status-fatura-bekliyor" data-status="status-kargoda" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Kargoda" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -7910,7 +7910,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">10.795,20 ₺</span>
-          <span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargoda</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargoda</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67674')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -8072,7 +8072,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67647 -->
-  <div class="order-card status-kargo-bekliyor" data-status="status-kargo-bekliyor" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-kargo-bekliyor status-fatura-bekliyor" data-status="status-kargo-bekliyor" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Kargo Bekliyor" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -8114,7 +8114,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-unpaid" data-tip="Sipariş Tutarı">8.935,61 ₺</span>
-          <span class="status-pill pill-kargo-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargo Bekliyor</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-kargo-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargo Bekliyor</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67647')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -8276,7 +8276,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67621 -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-teslim-edildi status-fatura-bekliyor" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -8318,7 +8318,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">1.880,20 ₺</span>
-          <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67621')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -8480,7 +8480,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67576 -->
-  <div class="order-card status-kargoda" data-status="status-kargoda" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-kargoda status-fatura-bekliyor" data-status="status-kargoda" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Kargoda" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -8522,7 +8522,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">7.680,50 ₺</span>
-          <span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargoda</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"></svg> Kargoda</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67576')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -8684,7 +8684,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67553 -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-teslim-edildi status-fatura-bekliyor" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -8726,7 +8726,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">1.913,68 ₺</span>
-          <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67553')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -8888,7 +8888,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-67008 -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-teslim-edildi status-fatura-bekliyor" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -8930,7 +8930,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">0,10 ₺</span>
-          <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-67008')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -9088,7 +9088,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-66902 -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-teslim-edildi status-fatura-bekliyor" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -9130,7 +9130,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">937,89 ₺</span>
-          <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-66902')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -9292,7 +9292,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-65813 -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-teslim-edildi status-fatura-bekliyor" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -9334,7 +9334,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">304.334,66 ₺</span>
-          <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-65813')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -9496,7 +9496,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-63902 -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-teslim-edildi status-fatura-bekliyor" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -9538,7 +9538,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">128,80 ₺</span>
-          <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-63902')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -9700,7 +9700,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-63758 -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-teslim-edildi status-fatura-bekliyor" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -9742,7 +9742,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">1.890,51 ₺</span>
-          <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-63758')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -9904,7 +9904,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-63729 -->
-  <div class="order-card status-faturalandi" data-status="status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-teslim-edildi status-faturalandi" data-status="status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Faturalandı" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -9946,7 +9946,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">1.540,00 ₺</span>
-          <span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"></svg> Faturalandı</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura Kesildi</span></div>
         </div>
         <div class="row-right">
           
@@ -10106,7 +10106,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-60004 -->
-  <div class="order-card status-teslim-edildi" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-teslim-edildi status-fatura-bekliyor" data-status="status-teslim-edildi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: Teslim Edildi" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -10148,7 +10148,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip="Sipariş Tutarı">700,00 ₺</span>
-          <span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-circle" aria-hidden="true" class="lucide lucide-check-circle"></svg> Teslim Edildi</span>
+          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-60004')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -11502,7 +11502,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-51891 -->
-  <div class="order-card status-paketlendi status-faturasiz is-marketplace" data-status="status-paketlendi status-faturasiz" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
+  <div class="order-card status-paketlendi status-fatura-bekliyor is-marketplace" data-status="status-paketlendi status-faturasiz" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 4.5/6 (Paketlendi - Faturasız)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -11544,7 +11544,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">2.750,00 ₺</span>
-          <div class="status-pills-wrap"><span class="status-pill pill-paketlendi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="package-check" aria-hidden="true" class="lucide lucide-package-check"><path d="M12 22V12"></path><path d="m16 17 2 2 4-4"></path><path d="M21 11.127V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.729l7 4a2 2 0 0 0 2 .001l1.32-.753"></path><path d="M3.29 7 12 12l8.71-5"></path><path d="m7.5 4.27 8.997 5.148"></path></svg> Paketlendi</span><span class="status-pill pill-taslak" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-minus" aria-hidden="true" class="lucide lucide-file-minus"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M9 15h6"></path></svg> Faturasız</span></div>
+          <div class="status-pills-wrap"><span class="status-pill pill-paketlendi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="package-check" aria-hidden="true" class="lucide lucide-package-check"><path d="M12 22V12"></path><path d="m16 17 2 2 4-4"></path><path d="M21 11.127V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.729l7 4a2 2 0 0 0 2 .001l1.32-.753"></path><path d="M3.29 7 12 12l8.71-5"></path><path d="m7.5 4.27 8.997 5.148"></path></svg> Paketlendi</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-51891')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -11701,7 +11701,7 @@
   <div class="order-card status-paketleme-bekliyor status-faturalandi" data-status="status-paketleme-bekliyor status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
-    <div class="card-v-progress" title="Sipariş İlerlemesi: 4/6 (Paketleme Bekliyor / Faturası Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
+    <div class="card-v-progress" title="Sipariş İlerlemesi: 4/6 (Paketleme Bekliyor / Fatura Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
       <div class="card-v-check"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="loader-2" aria-hidden="true" class="lucide lucide-loader-2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg></div>
       <div class="card-v-fill"></div>
     </div>
@@ -11740,7 +11740,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">9.750,00 ₺</span>
-          <div class="status-pills-wrap"><span class="status-pill pill-paketleme-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="package" aria-hidden="true" class="lucide lucide-package"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"></path><path d="M12 22V12"></path><polyline points="3.29 7 12 12 20.71 7"></polyline><path d="m7.5 4.27 9 5.15"></path></svg> Paketleme Bekliyor</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Faturası Kesildi</span></div>
+          <div class="status-pills-wrap"><span class="status-pill pill-paketleme-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="package" aria-hidden="true" class="lucide lucide-package"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"></path><path d="M12 22V12"></path><polyline points="3.29 7 12 12 20.71 7"></polyline><path d="m7.5 4.27 9 5.15"></path></svg> Paketleme Bekliyor</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura Kesildi</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-51890')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -12485,7 +12485,7 @@
   <div class="order-card status-paketlendi status-faturalandi" data-status="status-paketlendi status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
-    <div class="card-v-progress" title="Sipariş İlerlemesi: 5/6 (Paketlendi / Faturası Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
+    <div class="card-v-progress" title="Sipariş İlerlemesi: 5/6 (Paketlendi / Fatura Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
       <div class="card-v-check"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="loader-2" aria-hidden="true" class="lucide lucide-loader-2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg></div>
       <div class="card-v-fill"></div>
     </div>
@@ -12524,7 +12524,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">8.120,00 ₺</span>
-          <div class="status-pills-wrap"><span class="status-pill pill-paketlendi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="package-check" aria-hidden="true" class="lucide lucide-package-check"><path d="M12 22V12"></path><path d="m16 17 2 2 4-4"></path><path d="M21 11.127V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.729l7 4a2 2 0 0 0 2 .001l1.32-.753"></path><path d="M3.29 7 12 12l8.71-5"></path><path d="m7.5 4.27 8.997 5.148"></path></svg> Paketlendi</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Faturası Kesildi</span></div>
+          <div class="status-pills-wrap"><span class="status-pill pill-paketlendi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="package-check" aria-hidden="true" class="lucide lucide-package-check"><path d="M12 22V12"></path><path d="m16 17 2 2 4-4"></path><path d="M21 11.127V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.729l7 4a2 2 0 0 0 2 .001l1.32-.753"></path><path d="M3.29 7 12 12l8.71-5"></path><path d="m7.5 4.27 8.997 5.148"></path></svg> Paketlendi</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura Kesildi</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-51886')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -12681,7 +12681,7 @@
   <div class="order-card status-kargo-bekliyor status-faturalandi is-marketplace" data-status="status-kargo-bekliyor status-faturalandi" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
-    <div class="card-v-progress" title="Sipariş İlerlemesi: 5/6 (Kargo Bekliyor / Faturası Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
+    <div class="card-v-progress" title="Sipariş İlerlemesi: 5/6 (Kargo Bekliyor / Fatura Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
       <div class="card-v-check"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="loader-2" aria-hidden="true" class="lucide lucide-loader-2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg></div>
       <div class="card-v-fill"></div>
     </div>
@@ -12720,7 +12720,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">5.340,00 ₺</span>
-          <div class="status-pills-wrap"><span class="status-pill pill-kargo-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> Kargo Bekliyor</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Faturası Kesildi</span></div>
+          <div class="status-pills-wrap"><span class="status-pill pill-kargo-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="clock" aria-hidden="true" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg> Kargo Bekliyor</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura Kesildi</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-51885')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -12877,7 +12877,7 @@
   <div class="order-card status-kargoda status-faturalandi is-marketplace" data-status="status-kargoda status-faturalandi" data-order-group="Pazaryeri Siparişleri" data-is-marketplace="true">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
-    <div class="card-v-progress" title="Sipariş İlerlemesi: 5/6 (Kargoya Verildi / Faturası Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
+    <div class="card-v-progress" title="Sipariş İlerlemesi: 5/6 (Kargoya Verildi / Fatura Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
       <div class="card-v-check"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="loader-2" aria-hidden="true" class="lucide lucide-loader-2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg></div>
       <div class="card-v-fill"></div>
     </div>
@@ -12916,7 +12916,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">3.850,00 ₺</span>
-          <div class="status-pills-wrap"><span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg> Kargoya Verildi</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Faturası Kesildi</span></div>
+          <div class="status-pills-wrap"><span class="status-pill pill-kargoda"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="truck" aria-hidden="true" class="lucide lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg> Kargoya Verildi</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura Kesildi</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-51884')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -13070,7 +13070,7 @@
 
   <!-- ========================================================================= -->
   <!-- KART: #1-WS-2-51883 -->
-  <div class="order-card status-teslim-edildi status-faturasiz" data-status="status-teslim-edildi status-faturasiz" data-order-group="Direkt Satış" data-is-marketplace="false">
+  <div class="order-card status-teslim-edildi status-fatura-bekliyor" data-status="status-teslim-edildi status-faturasiz" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
     <div class="card-v-progress" title="Sipariş İlerlemesi: 6/6 (Teslim Edildi - Faturasız Tamamlandı)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
@@ -13112,7 +13112,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">3.900,00 ₺</span>
-          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-taslak" style="background:#f1f5f9; color:#475569; border-color:#cbd5e1;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-minus" aria-hidden="true" class="lucide lucide-file-minus"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="M9 15h6"></path></svg> Faturasız</span></div>
+          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-fatura-bekliyor"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="alert-triangle" aria-hidden="true" class="lucide lucide-alert-triangle"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg> Fatura Bekliyor</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-51883')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -13269,7 +13269,7 @@
   <div class="order-card status-teslim-edildi status-faturalandi" data-status="status-teslim-edildi status-faturalandi" data-order-group="Direkt Satış" data-is-marketplace="false">
     
     <!-- Sol Dikey İlerleme Çubuğu & En Üstte Süreç İkonu -->
-    <div class="card-v-progress" title="Sipariş İlerlemesi: 6/6 (Teslim Edildi / Faturası Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
+    <div class="card-v-progress" title="Sipariş İlerlemesi: 6/6 (Teslim Edildi / Fatura Kesildi)" data-tip="Sipariş Süreç İlerleme Çubuğu • Depo, Fatura ve Kargo durumuna göre dinamik hesaplanır">
       <div class="card-v-check"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check" aria-hidden="true" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"></path></svg></div>
       <div class="card-v-fill"></div>
     </div>
@@ -13308,7 +13308,7 @@
       <div class="card-header-row row-3">
         <div class="row-left">
           <span class="header-price-amount price-paid" data-tip=\"Sipariş Tutarı\">12.450,00 ₺</span>
-          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Faturası Kesildi</span></div>
+          <div class="status-pills-wrap"><span class="status-pill pill-teslim-edildi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="check-check" aria-hidden="true" class="lucide lucide-check-check"><path d="M18 6 7 17l-5-5"></path><path d="m22 10-7.5 7.5L13 16"></path></svg> Teslim Edildi</span><span class="status-pill pill-faturalandi"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="file-check" aria-hidden="true" class="lucide lucide-file-check"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"></path><path d="M14 2v5a1 1 0 0 0 1 1h5"></path><path d="m9 15 2 2 4-4"></path></svg> Fatura Kesildi</span></div>
         </div>
         <div class="row-right">
           <button class="btn-card-photo" title="Paketleme Görselini Gör" onclick="event.stopPropagation(); openPackingPhotoModal('1-WS-2-51882')" data-tip="Paketleme Kontrol Fotoğrafı • Depo Fotoğraflı Doğrulama modülünden gelir">
@@ -14789,7 +14789,7 @@
       totalPrice: "16.500,00 ₺",
       paidPrice: "0,00 ₺",
       paymentStatus: "Ödenmedi",
-      cargoStatus: "Faturası Kesildi / Paketleme Sırasında",
+      cargoStatus: "Fatura Kesildi / Paketleme Sırasında",
       cargoTrack: "DHL-6787401",
       note: "zenit dental ağız ve diş sağlığı anlaşmalı sevkıyat",
       orderGroup: "Direkt Satış",
@@ -18156,7 +18156,7 @@ const ONBOARDING_CONFIG = {
     {
       target: '.status-filters',
       title: 'Sipariş Yaşam Döngüsü Sekmeleri',
-      description: 'Siparişlerinizi Tamamlanmamış Sipariş, Sipariş Alındı, Hazırlanıyor, Kargo Bekliyor, Kargoda, Fatura Bekliyor ve Faturası Kesildi aşamalarına göre tek tıkla filtreleyebilirsiniz.',
+      description: 'Siparişlerinizi Tamamlanmamış Sipariş, Sipariş Alındı, Hazırlanıyor, Kargo Bekliyor, Kargoda, Fatura Bekliyor ve Fatura Kesildi aşamalarına göre tek tıkla filtreleyebilirsiniz.',
       icon: 'filter',
       position: 'bottom'
     },
