@@ -1651,10 +1651,9 @@
            1) Sipariş No + Cari / İlçe ........................ Tarih + Saat
            2) Sipariş Durumları ........ Satış Kanalı + Teslimat Tipi + Depo
            3) Açıklama .................. Tutar + İşlemler + Detay butonu
-         AÇIK kart (mobil dizilimi):
-           1) Sipariş No ..................... Teslimat Tipi + Depo + Tarih
-           2) Cari / İlçe ................................... Satış Kanalı
-           3) Tutar + Sipariş Durumları ........ İşlemler + Detay butonu */
+         AÇIK kart (2 satır, cari ismi gövdede):
+           1) Sipariş No ...... Satış Kanalı + Teslimat Tipi + Depo + Tarih
+           2) Tutar + Sipariş Durumları ........ İşlemler + Detay butonu */
       @media (max-width: 1024px) {
         .card-header-bar {
           gap: 2px 8px;
@@ -1699,19 +1698,18 @@
         .order-card:not(.expanded) .row-3 .header-price-amount { order: 11; margin-left: auto; }
         .order-card:not(.expanded) .row-3 .row-right { order: 12; }
 
-        /* AÇIK kart: mobil dizilimi */
-        .order-card.expanded .card-header-bar::before { order: 5; }
-        .order-card.expanded .card-header-bar::after { order: 8; }
+        /* AÇIK kart: cari ismi gizli (gövdede var), satış kanalı 1. satırda */
+        .order-card.expanded .card-header-bar::before { order: 6; }
+        .order-card.expanded .card-header-bar::after { display: none; }
         .order-card.expanded .row-1 .row-left { order: 1; }
-        .order-card.expanded .delivery-type-icon { order: 2; margin-left: auto; }
-        .order-card.expanded .depo-badge { order: 3; }
-        .order-card.expanded .order-datetime { order: 4; }
-        .order-card.expanded .card-header-row.row-2 .header-cari-name { order: 6; display: inline-flex !important; }
-        .order-card.expanded .sales-rep-badge { order: 7; margin-left: auto; }
-        .order-card.expanded .row-3 .header-price-amount { order: 9; }
+        .order-card.expanded .sales-rep-badge { order: 2; margin-left: auto; }
+        .order-card.expanded .delivery-type-icon { order: 3; }
+        .order-card.expanded .depo-badge { order: 4; }
+        .order-card.expanded .order-datetime { order: 5; }
+        .order-card.expanded .row-3 .header-price-amount { order: 7; }
         .order-card.expanded .row-3 .status-pills-wrap,
-        .order-card.expanded .row-3 .row-left > .status-pill { order: 10; }
-        .order-card.expanded .row-3 .row-right { order: 11; margin-left: auto; }
+        .order-card.expanded .row-3 .row-left > .status-pill { order: 8; }
+        .order-card.expanded .row-3 .row-right { order: 9; margin-left: auto; }
       }
     }
 
@@ -2970,6 +2968,24 @@
         color: #ffffff;
         border-color: #0f172a;
       }
+      /* Açık kart: cari ismi gizlenir (gövdede var), satış kanalı 1. satıra, teslimat tipinin soluna çıkar */
+      .order-card.expanded .card-header-bar {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .order-card.expanded .card-header-row.row-1,
+      .order-card.expanded .card-header-row.row-2 {
+        display: contents;
+      }
+      .order-card.expanded .header-cari-name {
+        display: none;
+      }
+      .order-card.expanded .card-header-row.row-1 .row-left { order: 1; }
+      .order-card.expanded .card-header-row.row-2 .sales-rep-badge { order: 2; margin-left: auto; }
+      .order-card.expanded .card-header-row.row-1 .row-right { order: 3; margin-left: 0; }
+      .order-card.expanded .card-header-row.row-3 { order: 4; }
+
       /* Gövde: Mobilde varsayılan kapalıdır, .expanded olunca açılır */
       .card-body-grid {
         display: none;
