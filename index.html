@@ -1599,6 +1599,12 @@
       .card-header-row.row-3 .header-price-amount {
         display: none; /* Masaüstünde tutar 4. sütunda görünür */
       }
+      /* Tablet: tutar başlıkta, durum rozetlerinin solunda görünür */
+      @media (max-width: 1024px) {
+        .card-header-row.row-3 .header-price-amount {
+          display: inline-flex;
+        }
+      }
       .card-header-row.row-3 .row-left {
         order: 5;
         display: flex;
