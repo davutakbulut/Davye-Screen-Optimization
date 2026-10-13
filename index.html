@@ -1555,7 +1555,7 @@
         font-size: 12px;
         font-weight: 700;
         color: #0f172a;
-        margin: 0 4px;
+        margin: 0;
         white-space: nowrap;
         min-width: 0;
       }
@@ -1844,7 +1844,7 @@
       font-size: 10px;
       font-weight: 500;
       color: #64748b;
-      margin-left: 2px;
+      margin-left: 0;
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -4842,6 +4842,13 @@
       transform: rotate(45deg);
     }
 
+    /* Kart başlığı: tüm rozet/öğe yatay aralıkları durum rozetleriyle aynı (4px) */
+    .order-card .card-header-bar,
+    .order-card .card-header-bar .card-header-row,
+    .order-card .card-header-bar .card-header-row .row-left,
+    .order-card .card-header-bar .card-header-row .row-right {
+      column-gap: 4px;
+    }
   </style>
 </head>
 <body>
