@@ -1530,8 +1530,16 @@
       .card-header-row.row-2 {
         display: contents;
       }
+      /* Durum rozetleri + İşlemler tek blok: alt satıra birlikte iner, hep sağa yaslı kalır */
       .card-header-row.row-3 {
-        display: contents;
+        order: 5;
+        width: auto;
+        margin-left: auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 3px 6px;
       }
       .card-header-row.row-1 .row-left {
         order: 1;
@@ -1593,7 +1601,6 @@
       }
       .card-header-row.row-3 .row-left {
         order: 5;
-        margin-left: auto;
         display: flex;
         align-items: center;
         gap: 6px;
