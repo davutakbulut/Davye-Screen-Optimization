@@ -1646,10 +1646,15 @@
         border-radius: 0;
       }
 
-      /* Tablet (641-1024px): 3 satırlı başlık
-         1) Sipariş No + Cari / İlçe ........................ Tarih + Saat
-         2) Sipariş Durumları ........ Satış Kanalı + Teslimat Tipi + Depo
-         3) Açıklama .................. Tutar + İşlemler + Detay butonu */
+      /* Tablet (641-1024px) başlık düzeni
+         KAPALI kart (3 satır):
+           1) Sipariş No + Cari / İlçe ........................ Tarih + Saat
+           2) Sipariş Durumları ........ Satış Kanalı + Teslimat Tipi + Depo
+           3) Açıklama .................. Tutar + İşlemler + Detay butonu
+         AÇIK kart (mobil dizilimi):
+           1) Sipariş No ..................... Teslimat Tipi + Depo + Tarih
+           2) Cari / İlçe ................................... Satış Kanalı
+           3) Tutar + Sipariş Durumları ........ İşlemler + Detay butonu */
       @media (max-width: 1024px) {
         .card-header-bar {
           gap: 2px 8px;
@@ -1661,22 +1666,15 @@
           flex-basis: 100%;
           height: 0;
         }
-        .card-header-bar::before { order: 4; }
-        .card-header-bar::after { order: 9; }
         /* Sarmalayıcılar çözülür, içlerindeki öğeler doğrudan satırlara dağılır */
         .card-header-row.row-1 .row-right,
         .card-header-row.row-3,
         .card-header-row.row-3 .row-left {
           display: contents;
         }
-        .card-header-row.row-1 .row-left { order: 1; }
-        .card-header-row.row-2 .header-cari-name { order: 2; }
-        .card-header-row.row-1 .order-datetime { order: 3; margin-left: auto; }
-        .card-header-row.row-3 .status-pills-wrap,
-        .card-header-row.row-3 .row-left > .status-pill { order: 5; }
-        .card-header-row.row-2 .sales-rep-badge { order: 6; margin-left: auto; }
-        .card-header-row.row-1 .delivery-type-icon { order: 7; }
-        .card-header-row.row-1 .depo-badge { order: 8; }
+        .card-header-row.row-3 .header-price-amount {
+          display: inline-flex;
+        }
         .card-header-row.row-desc {
           order: 10;
           width: auto;
@@ -1686,12 +1684,34 @@
           margin-top: 0;
           border-top: none;
         }
-        .card-header-row.row-3 .header-price-amount {
-          order: 11;
-          display: inline-flex;
-          margin-left: auto;
-        }
-        .card-header-row.row-3 .row-right { order: 12; }
+
+        /* KAPALI kart */
+        .order-card:not(.expanded) .card-header-bar::before { order: 4; }
+        .order-card:not(.expanded) .card-header-bar::after { order: 9; }
+        .order-card:not(.expanded) .row-1 .row-left { order: 1; }
+        .order-card:not(.expanded) .header-cari-name { order: 2; }
+        .order-card:not(.expanded) .order-datetime { order: 3; margin-left: auto; }
+        .order-card:not(.expanded) .row-3 .status-pills-wrap,
+        .order-card:not(.expanded) .row-3 .row-left > .status-pill { order: 5; }
+        .order-card:not(.expanded) .sales-rep-badge { order: 6; margin-left: auto; }
+        .order-card:not(.expanded) .delivery-type-icon { order: 7; }
+        .order-card:not(.expanded) .depo-badge { order: 8; }
+        .order-card:not(.expanded) .row-3 .header-price-amount { order: 11; margin-left: auto; }
+        .order-card:not(.expanded) .row-3 .row-right { order: 12; }
+
+        /* AÇIK kart: mobil dizilimi */
+        .order-card.expanded .card-header-bar::before { order: 5; }
+        .order-card.expanded .card-header-bar::after { order: 8; }
+        .order-card.expanded .row-1 .row-left { order: 1; }
+        .order-card.expanded .delivery-type-icon { order: 2; margin-left: auto; }
+        .order-card.expanded .depo-badge { order: 3; }
+        .order-card.expanded .order-datetime { order: 4; }
+        .order-card.expanded .card-header-row.row-2 .header-cari-name { order: 6; display: inline-flex !important; }
+        .order-card.expanded .sales-rep-badge { order: 7; margin-left: auto; }
+        .order-card.expanded .row-3 .header-price-amount { order: 9; }
+        .order-card.expanded .row-3 .status-pills-wrap,
+        .order-card.expanded .row-3 .row-left > .status-pill { order: 10; }
+        .order-card.expanded .row-3 .row-right { order: 11; margin-left: auto; }
       }
     }
 
