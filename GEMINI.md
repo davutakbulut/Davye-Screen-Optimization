@@ -40,7 +40,28 @@ Kullanıcıdan herhangi bir sipariş sayfası güncellemesi veya yeni özellik t
      - **3. Satır (`.row-desc`):** Sipariş Açıklaması (`Açıklama: ...`)
      - **4. Satır (`.row-3`):** Tutar + Durum Rozetleri + [Fotoğraf + İşlemler + Aç/Kapat Oku]
    * Kart açıldığında mobilde de 3. satırdaki açıklama gizlenir (`display: none !important;`) ve dikey tek sütunlu gövde içinde kendi alanında görünür.
+   * Kart açıldığında (`.order-card.expanded`) başlık **2 satıra** iner: Cari ismi başlıktan gizlenir (gövdede var), Satış Kanalı 1. satıra, Teslimat Türü'nün soluna çıkar.
    * Sayfa genelinde yatay taşma (`overflow-x`) kesinlikle engellenmelidir (`overflow-x: clip`).
+3. **Tablet (`@media (min-width: 641px) and (max-width: 1024px)`):**
+   * **Kapalı kart — 3 satır:**
+     - **1. Satır:** Sipariş No + Cari / İlçe (sola) · Tarih + Saat (sağa)
+     - **2. Satır:** Durum Rozetleri (sola) · Satış Kanalı + Teslimat Türü + Depo (sağa)
+     - **3. Satır:** Açıklama (sola, sığmazsa `…` ile kesilir) · Tutar + [Fotoğraf] + İşlemler + Aç/Kapat Oku (sağa)
+   * **Açık kart — 2 satır (mobil açık kart ile aynı dizilim):**
+     - **1. Satır:** Sipariş No (sola) · Satış Kanalı + Teslimat Türü + Depo + Tarih + Saat (sağa)
+     - **2. Satır:** Tutar + Durum Rozetleri (sola) · [Fotoğraf] + İşlemler + Aç/Kapat Oku (sağa)
+
+#### A.1 Kart Başlığı Responsive Kural Seti (Tüm Cihazlar)
+Kart başlığına (`.card-header-bar`) dokunan her değişiklik aşağıdaki kurallara uymak zorundadır:
+
+1. **Üç kırılım, başka kırılım yok:** Mobil `≤640px`, Tablet `641–1024px`, Masaüstü `≥1025px`. Başlık düzeni için yeni bir `@media` eşiği eklenmez; cihaz adı/modeli değil yalnızca genişlik esas alınır.
+2. **Tek HTML, sıra CSS ile:** Başlık HTML'i tüm cihazlarda aynıdır. Satır ve sıra farkları yalnızca CSS ile (`order`, `display: contents`, `flex-wrap`) verilir; cihaza özel HTML kopyası veya JS ile DOM taşıma yapılmaz.
+3. **Durum × kırılım matrisi:** Her kırılımda kart **kapalı** ve **açık** olmak üzere iki ayrı düzenle tanımlıdır (yukarıdaki satır listeleri). Bir düzen değişirse 6 hücrenin (3 kırılım × 2 durum) hepsi kontrol edilir.
+4. **Hizalama:** Her satırda sol grup sola, sağ grup `margin-left: auto` ile sağa yaslanır. `justify-content: space-between` ile öğeleri satıra yaymak yasaktır; sığmayan grup bütün olarak alt satıra iner.
+5. **Boşluk:** Başlıktaki tüm rozet/öğeler arası yatay boşluk **4px**'tir (durum rozetleriyle aynı). Öğeye özel `margin-left/right` ile boşluk verilmez.
+6. **Tekrar yok:** Kart açıkken gövdede zaten görünen bilgi (Cari ismi, Açıklama) başlıkta gösterilmez. Masaüstünde Tutar gövdenin 4. sütunundadır, başlıkta gizlidir; tablet ve mobilde başlıkta görünür.
+7. **Taşma yok:** Hiçbir genişlikte başlık yatay taşmaz. Uzun metinler (Açıklama) `…` ile kesilir, Cari ismi 33ch sınırına uyar (Kural K).
+8. **Doğrulama zorunlu:** Başlık değişikliği, şu genişliklerde kapalı ve açık kartla ölçülmeden tamamlanmış sayılmaz: `320`, `375`, `660`, `768`, `1024`, `1280`, `1440` px. Kontrol edilenler: her öğe doğru satırda ve sırada mı, sol/sağ kenara yaslı mı, boşluklar 4px mi, taşma var mı.
 
 ### B. Kart İçi Yükleme (Database Loader) & Cache
 1. Bir kart ilk kez tıklandığında 1 saniyelik veritabanı simülasyon loader'ı çalışır (`.order-card.expanded.loading`).
