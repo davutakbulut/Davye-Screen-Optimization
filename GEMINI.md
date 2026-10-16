@@ -63,6 +63,7 @@ Kart başlığına (`.card-header-bar`) dokunan her değişiklik aşağıdaki ku
 6. **Tekrar yok:** Kart açıkken gövdede zaten görünen bilgi (Cari ismi, Açıklama) başlıkta gösterilmez. Tutar tüm kırılımlarda başlıkta görünür.
 7. **Taşma yok:** Hiçbir genişlikte başlık yatay taşmaz. Uzun metinler (Açıklama) `…` ile kesilir, Cari ismi 33ch sınırına uyar (Kural K).
 8. **Doğrulama zorunlu:** Başlık değişikliği, şu genişliklerde kapalı ve açık kartla ölçülmeden tamamlanmış sayılmaz: `320`, `375`, `660`, `768`, `1024`, `1279`, `1280`, `1440` px. Kontrol edilenler: her öğe doğru satırda ve sırada mı, sol/sağ kenara yaslı mı, boşluklar 4px mi, taşma var mı.
+9. **Sayfalar arası tutarlılık:** Üst bar, sol menü, arama/araç çubuğu (`.top-toolbar`), durum sekmeleri (`.status-filters`) ve sıralama çubuğu (`.inline-sort-bar-wrapper`) tüm sayfalarda **aynı CSS** ile ve aynı piksel konumlarında durur; ana kaynak `index.html`'dir. Sekme çubuğu `overflow-x: scroll` ile kaydırma çubuğu alanını her zaman ayırır, böylece sekme sayısı farklı olsa da sayfa geçişinde içerik kaymaz. Bu bileşenlerden birinde yapılan değişiklik diğer sayfalara da aynen kopyalanır.
 
 ### B. Kart İçi Yükleme (Database Loader) & Cache
 1. Bir kart ilk kez tıklandığında 1 saniyelik veritabanı simülasyon loader'ı çalışır (`.order-card.expanded.loading`).
