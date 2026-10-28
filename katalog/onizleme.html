@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fiyat Listesi</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap">
+  <style>body { margin: 0; background: #fff; }</style>
+  <script type="importmap">
+    { "imports": {
+      "@angular/core": "https://cdn.jsdelivr.net/npm/@angular/core@19.2.14/+esm",
+      "@angular/compiler": "https://cdn.jsdelivr.net/npm/@angular/compiler@19.2.14/+esm",
+      "@angular/platform-browser": "https://cdn.jsdelivr.net/npm/@angular/platform-browser@19.2.14/+esm"
+    } }
+  </script>
+</head>
+<body>
+  <app-katalog></app-katalog>
+  <!-- Yalnız önizleme: Angular CLI olmadan bileşeni tarayıcıda JIT ile çalıştırır.
+       Gerçek projede katalog.component.* dosyalarını kullan. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/typescript/5.6.3/typescript.min.js"></script>
+  <script type="module">
+    import '@angular/compiler';
+    import { provideExperimentalZonelessChangeDetection } from '@angular/core';
+    import { bootstrapApplication } from '@angular/platform-browser';
+
+    const metin = (yol) => fetch(yol).then((r) => r.text());
+    const [ts, template, css] = await Promise.all(
+      ['katalog.component.ts', 'katalog.component.html', 'katalog.component.css'].map(metin));
+    const kaynak = ts
+      .replace("templateUrl: './katalog.component.html'", 'template: ' + JSON.stringify(template))
+      .replace("styleUrl: './katalog.component.css'", 'styles: [' + JSON.stringify(css) + ']');
+    const js = window.ts.transpile(kaynak, { target: 99, module: 99, experimentalDecorators: true });
+    const { KatalogComponent } = await import(URL.createObjectURL(new Blob([js], { type: 'text/javascript' })));
+    bootstrapApplication(KatalogComponent, { providers: [provideExperimentalZonelessChangeDetection()] });
+  </script>
+</body>
+</html>
