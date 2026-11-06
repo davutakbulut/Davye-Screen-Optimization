@@ -10,12 +10,13 @@
 <style>
 :root{
   /* Ana renk sipariş türüne göre: Dental #009eb5, Ecza #00588c (body[data-depot]) */
-  --brand:#009eb5; --brand-ink:#007f92; --brand-soft:#e6f6f9; --brand-glow:rgba(0,158,181,.45);
+  /* --brand-strong: yazı taşıyan yerler için koyu ton (beyaz/açık zemine karşı ≥4,5:1 kontrast) */
+  --brand:#009eb5; --brand-strong:#007a8c; --brand-ink:#006a7a; --brand-soft:#e6f6f9; --brand-glow:rgba(0,158,181,.45);
   --bg-body:#f1f5f9; --card:#fff; --text:#0f172a; --text-2:#475569; --muted:#64748b;
   --border:#e2e8f0; --border-2:#cbd5e1; --ok:#16a34a; --danger:#dc2626;
   --r-card:12px; --r-ctl:10px; --tap:42px;
 }
-body[data-depot="ecza"]{--brand:#00588c;--brand-ink:#004670;--brand-soft:#e6eff5;--brand-glow:rgba(0,88,140,.45)}
+body[data-depot="ecza"]{--brand:#00588c;--brand-strong:#00588c;--brand-ink:#004670;--brand-soft:#e6eff5;--brand-glow:rgba(0,88,140,.45)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;overflow-x:hidden}
 body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:var(--bg-body);color:var(--text);font-size:15px;line-height:1.4;
@@ -33,7 +34,7 @@ button:active:not(:disabled){transform:scale(.97)}
 .topbar h1{font-size:16px;font-weight:700;margin:0;flex:1;min-width:0}
 .topbar h1 small{display:block;font-size:12px;font-weight:500;color:var(--muted)}
 .rates{display:flex;gap:4px;flex:none}
-.rate{font-size:12px;font-weight:600;padding:4px 7px;border-radius:6px;background:var(--brand-soft);color:var(--brand)}
+.rate{font-size:12px;font-weight:600;padding:4px 7px;border-radius:6px;background:var(--brand-soft);color:var(--brand-strong)}
 .rate.usd{background:#ecfdf3;color:#15803d}
 
 /* Adım göstergesi */
@@ -60,7 +61,7 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 
 /* Müşteri kartı: ekranın en önemli bilgisi */
 .cust{display:flex;align-items:center;gap:12px;padding:14px}
-.avatar{width:48px;height:48px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700;font-size:17px;flex:none}
+.avatar{width:48px;height:48px;border-radius:50%;background:var(--brand-strong);color:#fff;display:grid;place-items:center;font-weight:700;font-size:17px;flex:none}
 .cust .tx{flex:1;min-width:0}
 /* Uzun cari adı: 2 satır görünür, kalanı yana kaydırılarak okunur (taşan metin sağdaki sütuna akar) */
 .cust .nm{font-size:15px;font-weight:700;line-height:1.3;height:2.6em;column-width:100vw;column-gap:16px;column-fill:auto;
@@ -93,10 +94,10 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .field > .lb{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:8px;display:flex;justify-content:space-between;gap:8px}
 .seg{display:flex;background:var(--bg-body);border-radius:var(--r-ctl);padding:3px;gap:3px}
 .seg button{flex:1;min-height:36px;border-radius:8px;font-weight:600;color:var(--text-2)}
-.seg button[aria-pressed="true"]{background:var(--card);color:var(--brand);box-shadow:0 1px 3px rgba(15,23,42,.12)}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--brand-strong);box-shadow:0 1px 3px rgba(15,23,42,.12)}
 .seg-type{background:var(--border);padding:4px}
 .seg-type button{min-height:40px;font-size:15px}
-.seg-type button[aria-pressed="true"]{background:var(--brand);color:#fff}
+.seg-type button[aria-pressed="true"]{background:var(--brand-strong);color:#fff}
 .seg-type button,[data-group="tax"] button,[data-group="due"] button{display:flex;align-items:center;justify-content:center;gap:6px}
 [data-group="due"] button{gap:3px}
 /* Seçili sipariş türünde ve vergi tipinde tik */
@@ -109,7 +110,7 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .cs-btn{width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:var(--r-ctl);background:var(--brand-soft);color:var(--brand)}
 .cs-btn.primary-ic{background:var(--brand);color:#fff}
 .cs-btn:active{filter:brightness(.92)}
-.cs-new{display:inline-flex;align-items:center;gap:6px;margin-top:10px;height:38px;padding:0 14px;border-radius:var(--r-ctl);background:var(--brand);color:#fff;font-weight:600;font-size:14px}
+.cs-new{display:inline-flex;align-items:center;gap:6px;margin-top:10px;height:38px;padding:0 14px;border-radius:var(--r-ctl);background:var(--brand-strong);color:#fff;font-weight:600;font-size:14px}
 .cs-box{flex:1;min-width:0;display:flex;align-items:center;gap:8px;min-height:44px;padding:0 4px 0 12px;border:2px solid var(--brand);border-radius:var(--r-ctl);color:var(--muted)}
 .cs-box input{border:0;outline:0;padding:0;min-height:40px;flex:1;min-width:0}
 .cs-box input:focus{outline:0}
@@ -127,7 +128,7 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 /* Kaydırınca arkada beliren eylem: sağa Seç (yeşil), sola Düzenle (lacivert) */
 .swipe-bg{position:absolute;left:12px;right:12px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-radius:10px;color:#fff;font-weight:700;font-size:13px;background:var(--border-2)}
 .swipe-bg[data-dir="sel"]{background:var(--ok)}
-.swipe-bg[data-dir="edit"]{background:var(--brand)}
+.swipe-bg[data-dir="edit"]{background:var(--brand-strong)}
 .swipe-bg[data-dir="sel"] .sw-edit,.swipe-bg[data-dir="edit"] .sw-sel{visibility:hidden}
 .swipe-bg span{transition:transform .15s}
 .swipe-bg.arm span{transform:scale(1.15)}
@@ -153,7 +154,7 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .cs-progress::before{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;border-radius:2px;background:var(--brand);transform:translateX(-100%)}
 .cs-progress.on::before{animation:indet 1.1s ease-in-out infinite}
 @keyframes indet{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
-.cs-wait{display:flex;align-items:center;justify-content:center;gap:8px;margin:6px 0 4px;padding:7px 12px;border-radius:20px;background:var(--brand-soft);color:var(--brand);font-size:13px;font-weight:600;animation:csIn .25s ease-out both}
+.cs-wait{display:flex;align-items:center;justify-content:center;gap:8px;margin:6px 0 4px;padding:7px 12px;border-radius:20px;background:var(--brand-soft);color:var(--brand-strong);font-size:13px;font-weight:600;animation:csIn .25s ease-out both}
 #custWaitTxt{animation:csIn .3s ease-out both;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .dots{display:inline-flex;gap:3px;flex:none}
 .dots i{width:5px;height:5px;border-radius:50%;background:currentColor;animation:dot 1s ease-in-out infinite}
@@ -197,7 +198,7 @@ main:not(.need-cust) > section:nth-of-type(6){animation-delay:120ms}
 @keyframes tickIn{from{clip-path:inset(0 100% 0 0);transform:scale(.6)}to{clip-path:inset(0);transform:none}}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chips button{min-height:34px;padding:0 10px;border-radius:20px;border:1px solid var(--border-2);font-weight:600;font-size:14px;color:var(--text-2)}
-.chips button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+.chips button[aria-pressed="true"]{background:var(--brand-strong);border-color:var(--brand-strong);color:#fff}
 
 input,textarea,select{font:inherit;font-size:16px;color:var(--text);width:100%;min-height:var(--tap);border:1px solid var(--border-2);
   border-radius:var(--r-ctl);padding:7px 12px;background:var(--card)}
@@ -230,7 +231,7 @@ textarea{resize:vertical;min-height:80px}
 .actionbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--border);
   padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px}
 .actionbar .icon-btn{width:46px;height:46px;border:1px solid var(--border-2);border-radius:12px}
-.primary{flex:1;height:46px;border-radius:12px;background:var(--brand);color:#fff;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
+.primary{flex:1;height:46px;border-radius:12px;background:var(--brand-strong);color:#fff;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
 .primary:active{background:var(--brand-ink)}
 /* Kaydetme anı: dönen ikon → ✓ Kaydedildi → ürün adımı */
 .primary .spin,.primary .saved{display:none}
@@ -261,7 +262,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 .sheet .grab{width:40px;height:4px;border-radius:2px;background:var(--border-2);margin:8px auto}
 .sheet h2{font-size:16px;margin:4px 16px 8px}
 .opt{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:10px 16px;text-align:left;border-top:1px solid var(--border)}
-.opt[aria-selected="true"]{color:var(--brand);font-weight:700}
+.opt[aria-selected="true"]{color:var(--brand-strong);font-weight:700}
 .opt[aria-selected="true"]::after{content:"✓";margin-left:auto}
 .vl.ad,.opt .ad{display:block;white-space:normal}
 .ad-st{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -277,7 +278,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 .opt-form{display:flex;align-items:center;gap:6px;padding:8px 12px;border-top:1px solid var(--border);animation:csIn .2s ease-out both}
 .opt-form input{flex:1;min-width:0}
 .opt-form button{width:42px;height:42px;flex:none;border-radius:10px;font-size:16px;font-weight:700}
-.of-ok{background:var(--brand);color:#fff}
+.of-ok{background:var(--brand-strong);color:#fff}
 .of-no{border:1px solid var(--border-2);color:var(--muted)}
 .ed{display:flex;flex-direction:column;gap:10px;padding:0 16px 16px}
 .ed label{display:block;font-size:12px;font-weight:600;color:var(--text-2)}
