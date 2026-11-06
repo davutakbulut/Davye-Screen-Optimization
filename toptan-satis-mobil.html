@@ -62,14 +62,13 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .cust .nm{font-size:17px;font-weight:700;line-height:1.3;height:2.6em;column-width:100vw;column-gap:16px;column-fill:auto;
   overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain}
 .cust .nm::-webkit-scrollbar{display:none}
-/* Kimlik bilgileri: TC/VKN, ÜTS yan yana, vergi dairesi en sağda */
+/* Kimlik bilgileri: TC/VKN ile vergi dairesi yan yana, ardından ÜTS (Dental) veya GLN (Ecza) */
 .cust{flex-wrap:wrap}
 .cust .ids{flex-basis:100%}
 .ids{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;font-size:12px;color:var(--text-2)}
 .ids:empty{display:none}
 .id-chip{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 7px;border-radius:6px;background:var(--bg-body);white-space:nowrap}
 .id-chip svg{color:var(--brand);flex:none}
-.id-chip.vd{margin-left:auto}
 .cs-item .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
 .cs-item .ids{font-size:11px}
 .cs-item .id-chip{height:22px}
@@ -396,7 +395,7 @@ function depot(){ return document.querySelector('[data-group="depot"] [aria-pres
 function idsHtml(n){
   const d = CUST_INFO[n]; if (!d) return '';
   const chip = (k, lab, v, cls) => '<span class="id-chip' + (cls || '') + '" title="' + lab + ': ' + esc(v) + '" aria-label="' + lab + ' ' + esc(v) + '">' + ID_ICON[k] + '<span' + (cls ? '' : ' class="mono"') + '>' + esc(v) + '</span></span>';
-  return chip(d[0] === 'TC' ? 'TC' : 'VKN', d[0], d[1]) + (depot() === 'ecza' ? chip('GLN', 'GLN', d[4]) : chip('UTS', 'ÜTS', d[3])) + chip('VD', 'Vergi Dairesi', d[2], ' vd');
+  return chip(d[0] === 'TC' ? 'TC' : 'VKN', d[0], d[1]) + chip('VD', 'Vergi Dairesi', d[2], ' vd') + (depot() === 'ecza' ? chip('GLN', 'GLN', d[4]) : chip('UTS', 'ÜTS', d[3]));
 }
 // Ada ek olarak TC/VKN, ÜTS, GLN ve vergi dairesiyle de aranır
 const CUST_S = CUSTOMERS.map(n => norm(n + ' ' + (CUST_INFO[n] || []).join(' ')));
