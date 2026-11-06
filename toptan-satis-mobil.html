@@ -191,6 +191,9 @@ main:not(.need-cust) > section:nth-of-type(6){animation-delay:120ms}
 .addr-n svg{color:var(--brand)}
 .note-warn{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:600;color:#b45309}
 .note-warn svg{flex:none}
+.note-info{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:600;color:var(--muted)}
+.note-info svg{flex:none}
+#noteBtn2{border-top:1px solid var(--border)}
 /* Seçili vade gününün yanında "gün" yazar */
 [data-group="due"] button[aria-pressed="true"]::after{content:"gün"}
 [data-group="due"] button[aria-pressed="true"]::before{width:13px;height:13px}
@@ -383,7 +386,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
     <ul class="lock-list">
       <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></svg>Fatura ve teslimat adresi</li>
       <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Vergi tipi ve vade</li>
-      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Fatura açıklaması</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Fatura ve sipariş notu</li>
       <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9.5c.5-1 1.6-1.5 3-1.5 1.7 0 3 .9 3 2.2 0 2.8-6 1.8-6 4.6 0 1.3 1.3 2.2 3 2.2 1.4 0 2.5-.5 3-1.5M12 6v2M12 16v2"/></svg>Para birimi</li>
     </ul>
   </section>
@@ -431,16 +434,25 @@ body.on-step2 .actionbar{transform:translateY(110%)}
     </div>
   </section>
 
-  <!-- 4. Fatura Açıklaması -->
-  <section class="card" aria-label="Fatura Açıklaması">
-    <button class="row" id="noteBtn" onclick="showNote()">
+  <!-- 4. Açıklamalar: faturada görünen + yalnızca iç operasyon -->
+  <section class="card" aria-label="Açıklamalar">
+    <button class="row" id="noteBtn" onclick="showNote('')">
       <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/></svg></span>
       <span class="tx"><span class="lb">Fatura Açıklaması</span><span class="vl empty" style="white-space:normal">Bu not faturada görünecektir. (isteğe bağlı)</span></span>
     </button>
     <div class="field" id="noteWrap" hidden style="border-top:1px solid var(--border)">
       <label for="description" class="lb">Fatura Açıklaması</label>
-      <textarea id="description" placeholder="Faturada görünecek not" aria-describedby="noteWarn" onblur="noteBlur()"></textarea>
+      <textarea id="description" placeholder="Faturada görünecek not" aria-describedby="noteWarn" onblur="noteBlur('')"></textarea>
       <span class="note-warn" id="noteWarn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h0"/></svg>Bu not faturada görünecektir.</span>
+    </div>
+    <button class="row" id="noteBtn2" onclick="showNote('2')">
+      <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h4"/></svg></span>
+      <span class="tx"><span class="lb">Sipariş Açıklaması</span><span class="vl empty" style="white-space:normal">Faturada görünmez, yalnızca iç operasyon içindir. (isteğe bağlı)</span></span>
+    </button>
+    <div class="field" id="noteWrap2" hidden style="border-top:1px solid var(--border)">
+      <label for="orderNote" class="lb">Sipariş Açıklaması</label>
+      <textarea id="orderNote" placeholder="Depo, sevkiyat, hazırlık için iç not" aria-describedby="noteInfo" onblur="noteBlur('2')"></textarea>
+      <span class="note-info" id="noteInfo"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Bu not faturada görünmez, yalnızca ekip görür.</span>
     </div>
   </section>
 
@@ -628,9 +640,10 @@ function toggleSameAddr(){
   $('shipRow').hidden = $('sameAddr').checked;
   if ($('sameAddr').checked) setAddr('ship', getAddr('bill'));
 }
-function showNote(){ $('noteBtn').hidden = true; $('noteWrap').hidden = false; $('description').focus(); }
+// k: '' Fatura Açıklaması, '2' Sipariş Açıklaması (iç not)
+function showNote(k){ $('noteBtn' + k).hidden = true; $('noteWrap' + k).hidden = false; $('noteWrap' + k).querySelector('textarea').focus(); }
 // Boş bırakılıp dışarı dokunulursa kapalı satıra geri döner
-function noteBlur(){ if (!$('description').value.trim()){ $('description').value = ''; $('noteWrap').hidden = true; $('noteBtn').hidden = false; } }
+function noteBlur(k){ const t = $('noteWrap' + k).querySelector('textarea'); if (!t.value.trim()){ t.value = ''; $('noteWrap' + k).hidden = true; $('noteBtn' + k).hidden = false; } }
 
 function fmt(iso){ const [y,m,d] = iso.split('-'); return d + '.' + m + '.' + y; }
 function addDays(iso, n){ const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return d.toISOString().slice(0,10); }
