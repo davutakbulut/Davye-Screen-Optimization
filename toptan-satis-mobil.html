@@ -382,7 +382,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
     </div>
     <button class="row" id="salesRow" hidden onclick="openPicker('sales')">
       <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M10 2h4v4h-4zM8.5 17c.5-1.7 1.9-2.5 3.5-2.5s3 .8 3.5 2.5"/><circle cx="12" cy="11" r="2"/></svg></span>
-      <span class="tx"><span class="lb">Satış Sorumlusu</span><span class="vl" data-v="sales">DAVUT AKBULUT</span></span>
+      <span class="tx"><span class="lb">Satış Sorumlusu</span><span class="vl" data-v="sales" data-raw="DAVUT AKBULUT">Davut Akbulut</span></span>
       <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
     </button>
   </section>
@@ -580,7 +580,8 @@ function closeSheets(){ $('scrim').classList.remove('open'); document.querySelec
 function openPicker(key){
   const p = PICKERS[key];
   const isAddr = key === 'bill' || key === 'ship';
-  const cur = isAddr ? getAddr(key) : document.querySelector('[data-v="' + key + '"]').textContent;
+  const vEl = document.querySelector('[data-v="' + key + '"]');
+  const cur = isAddr ? getAddr(key) : (vEl.dataset.raw ?? vEl.textContent);
   $('pickTitle').textContent = p.title;
   $('pickSearch').hidden = !p.search;
   $('pickQ').value = '';
@@ -597,11 +598,11 @@ function openPicker(key){
     b.className = 'opt'; b.role = 'option';
     const at = w ? norm(o).indexOf(w) : -1;  // eşleşen kısım vurgulanır (norm harf sayısını korur)
     if (isAddr) b.innerHTML = '<span class="ad">' + addrHtml(o) + '</span>';
-    else if (at >= 0) b.innerHTML = esc(o.slice(0, at)) + '<mark>' + esc(o.slice(at, at + w.length)) + '</mark>' + esc(o.slice(at + w.length));
-    else b.textContent = o;
+    else if (at >= 0){ const d = disp(o); b.innerHTML = esc(d.slice(0, at)) + '<mark>' + esc(d.slice(at, at + w.length)) + '</mark>' + esc(d.slice(at + w.length)); }
+    else b.textContent = disp(o);
     b.setAttribute('aria-selected', o === cur);
     b.onclick = () => {
-      if (isAddr) setAddr(key, o); else document.querySelector('[data-v="' + key + '"]').textContent = o;
+      if (isAddr) setAddr(key, o); else { vEl.dataset.raw = o; vEl.textContent = disp(o); }
       closeSheets();
     };
     if (!isAddr) return $('pickList').appendChild(b);
@@ -709,6 +710,9 @@ document.querySelectorAll('[data-group]').forEach(g => g.addEventListener('click
 // Türkçe harf ve büyük/küçük harf duyarsız arama: "ozel", "ÖZEL", "özel" aynı sonucu verir. Uzunluk korunur, vurgulama için önemli.
 function norm(t){ return t.toLocaleLowerCase('tr').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ı/g, 'i'); }
 const CUST_N = CUSTOMERS.map(norm);
+// Ad gösterimi: her kelimenin ilk harfi büyük, gerisi küçük (Türkçe kurallarıyla); "T.C.", "A.Ş." gibi noktalı kısaltmalar büyük kalır.
+// Harf sayısı değişmez, bu yüzden aramadaki vurgulama konumları aynen kullanılabilir. Veri değişmez, yalnızca gösterim.
+function disp(n){ return n.split(' ').map(w => /^(\p{L}\.)+$/u.test(w) ? w.toLocaleUpperCase('tr') : w.charAt(0).toLocaleUpperCase('tr') + w.slice(1).toLocaleLowerCase('tr')).join(' '); }
 function initials(n){ return n.split(/\s+/).filter(w => !/\.$/.test(w)).slice(0, 2).map(w => w[0]).join('').toLocaleUpperCase('tr'); }
 function esc(t){ return t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
@@ -766,8 +770,8 @@ const SKELETON = '<div class="sk" aria-hidden="true"><i class="a"></i><span clas
 const emptyHtml = q => '<div class="cs-state"><svg class="cs-art" viewBox="0 0 120 96" fill="none" aria-hidden="true"><circle cx="60" cy="48" r="40" fill="var(--brand-soft)"/><rect x="34" y="26" width="40" height="48" rx="6" fill="var(--card)" stroke="var(--brand)" stroke-width="2.5"/><path d="M42 38h24M42 47h18M42 56h12" stroke="var(--border-2)" stroke-width="2.5" stroke-linecap="round"/><circle cx="76" cy="62" r="13" fill="var(--card)" stroke="var(--brand)" stroke-width="2.5"/><path d="M86 72l9 9" stroke="var(--brand)" stroke-width="3" stroke-linecap="round"/><path d="M72 58l8 8M80 58l-8 8" stroke="var(--danger)" stroke-width="2.5" stroke-linecap="round"/></svg><b>Bu adla müşteri yok</b><span>“' + esc(q) + '” için kayıt bulunamadı. Hemen ekleyelim mi?</span><button type="button" class="cs-new" onclick="newCust()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5M19 8v6M16 11h6"/></svg>Yeni müşteri oluştur</button></div>';
 
 function custItem(i, k, anim){
-  const n = CUSTOMERS[i], w = custWord, at = w ? CUST_N[i].indexOf(w) : -1;
-  const label = at < 0 ? esc(n) : esc(n.slice(0, at)) + '<mark>' + esc(n.slice(at, at + w.length)) + '</mark>' + esc(n.slice(at + w.length));
+  const n = CUSTOMERS[i], d = disp(n), w = custWord, at = w ? CUST_N[i].indexOf(w) : -1;
+  const label = at < 0 ? esc(d) : esc(d.slice(0, at)) + '<mark>' + esc(d.slice(at, at + w.length)) + '</mark>' + esc(d.slice(at + w.length));
   return '<button class="cs-item' + (k === 0 && custQuery ? ' hl' : '') + (anim ? ' in" style="--i:' + Math.min(k % CUST_PAGE, 12) : '') + '" data-i="' + i + '" role="option" onclick="custClick(event, ' + i + ')"><span class="avatar av-edit" title="Müşteriyi düzenle"><span class="ini">' + esc(initials(n)) + '</span><svg class="pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></span><span class="tx"><span class="ids meta">' + metaHtml(i) + '</span><span class="nm">' + label + '</span><span class="ids">' + idsHtml(n) + '</span></span></button>';
 }
 function setHead(){ $('custHead').textContent = custQuery ? custTotal.toLocaleString('tr') + ' sonuç' : 'Müşteriler (' + custTotal.toLocaleString('tr') + ')'; }
@@ -889,16 +893,16 @@ function pickSelf(){
   const i = CUSTOMERS.indexOf(ME.cust);
   if (i < 0) return toast('Hesabına bağlı müşteri kaydı bulunamadı');
   pickFly(i, $('selfIni'));
-  document.querySelector('[data-v="sales"]').textContent = ME.name;  // sipariş kendi adına
+  const sv = document.querySelector('[data-v="sales"]'); sv.dataset.raw = ME.name; sv.textContent = disp(ME.name);  // sipariş kendi adına
 }
 $('selfIni').textContent = initials(ME.cust);
-$('selfName').textContent = ME.name + ' · kendi adıma sipariş';
+$('selfName').textContent = disp(ME.name) + ' · kendi adıma sipariş';
 let selCust = null;
 function pickCust(i){
   const changed = selCust !== CUSTOMERS[i];  // vazgeçip aynı müşteriye dönünce vade korunur
   selCust = CUSTOMERS[i];
   const n = CUSTOMERS[i];
-  $('custName').textContent = n; $('custName').scrollLeft = 0; $('custIds').innerHTML = idsHtml(n); $('custMeta').innerHTML = metaHtml(i); $('custInitials').textContent = initials(n);
+  $('custName').textContent = disp(n); $('custName').scrollLeft = 0; $('custIds').innerHTML = idsHtml(n); $('custMeta').innerHTML = metaHtml(i); $('custInitials').textContent = initials(n);
   // Adres seçenekleri seçilen cariye göre: ilk adres fatura
   const addrs = CUST_ADDR[n] || [ADDR];
   PICKERS.bill.opts = PICKERS.ship.opts = addrs;
@@ -922,7 +926,7 @@ let editIdx = -1;
 function openEdit(i){
   editIdx = i;
   const n = CUSTOMERS[i], d = CUST_INFO[n] || ['VKN', '', '', '', ''], l = CUST_LOC[n] || ['', ''];
-  $('edName').value = n; $('edIdType').value = d[0]; $('edId').value = d[1]; $('edVd').value = d[2];
+  $('edName').value = disp(n); $('edIdType').value = d[0]; $('edId').value = d[1]; $('edVd').value = d[2];
   $('edUts').value = d[3] || ''; $('edGln').value = d[4] || ''; $('edDist').value = l[0]; $('edCity').value = l[1];
   $('edErr').textContent = '';
   openSheet('editSheet');
@@ -931,7 +935,7 @@ function saveEdit(e){
   e.preventDefault();
   const v = id => $(id).value.trim(), name = v('edName'), t = $('edIdType').value, no = v('edId'), old = CUSTOMERS[editIdx];
   const err = !name ? 'Ad / unvan boş olamaz.'
-    : name !== old && CUSTOMERS.includes(name) ? 'Bu adla kayıtlı başka bir müşteri var.'
+    : CUSTOMERS.some((c, k) => k !== editIdx && norm(c) === norm(name)) ? 'Bu adla kayıtlı başka bir müşteri var.'
     : no && !(t === 'VKN' ? /^\d{10}$/ : /^\d{11}$/).test(no) ? (t === 'VKN' ? 'VKN 10 haneli olmalı.' : 'TC kimlik no 11 haneli olmalı.')
     : v('edUts') && !/^\d{13}$/.test(v('edUts')) ? 'ÜTS no 13 haneli olmalı.'
     : v('edGln') && !/^\d{13}$/.test(v('edGln')) ? 'GLN no 13 haneli olmalı.' : '';
@@ -945,7 +949,7 @@ function saveEdit(e){
   custCache.clear();  // aramada eski bilgi kalmasın
   if (selCust === old){
     selCust = name;
-    $('custName').textContent = name; $('custIds').innerHTML = idsHtml(name); $('custMeta').innerHTML = metaHtml(editIdx); $('custInitials').textContent = initials(name);
+    $('custName').textContent = disp(name); $('custIds').innerHTML = idsHtml(name); $('custMeta').innerHTML = metaHtml(editIdx); $('custInitials').textContent = initials(name);
   }
   renderList(false);
   closeSheets();
@@ -1009,7 +1013,7 @@ function goStep(n){
   const fwd = n === 2, out = fwd ? $('main') : $('step2'), inn = fwd ? $('step2') : $('main');
   document.querySelectorAll('.steps span').forEach((sp, k) => sp.classList.toggle('on', k < n));
   $('stepLabel').textContent = fwd ? 'Adım 2/3 · Ürün Seçimi → Kargo Bilgileri ve Gönderim' : STEP1_LABEL;
-  $('s2Cust').textContent = selCust || '';
+  $('s2Cust').textContent = selCust ? disp(selCust) : '';
   document.body.classList.toggle('on-step2', fwd);
   const d = fwd ? 1 : -1, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const swap = () => {
@@ -1084,7 +1088,8 @@ document.addEventListener('visibilitychange', () => {
 runSearch();
 $('custQ').focus();
 
-// self-check: vade hesabı, Türkçe arama
+// self-check: vade hesabı, Türkçe arama, ad gösterimi
+console.assert(disp('T.C. İSTANBUL AYDIN ÜNİVERSİTESİ A.Ş. LTD.') === 'T.C. İstanbul Aydın Üniversitesi A.Ş. Ltd.' && disp('IŞIK ılık') === 'Işık Ilık' && CUSTOMERS.every(n => disp(n).length === n.length), 'ad gösterimi hatalı');
 console.assert(norm('ÖZEL İĞDE ışık') === 'ozel igde isik' && CUSTOMERS.every((n, i) => CUST_N[i].length === n.length), 'norm uzunluğu bozuldu');
 console.assert(CUSTOMERS[searchCust('6850803026')[0]].startsWith('ÖZEL GEBZE') && idsHtml('davut akbulut') === '', 'kimlik araması hatalı');
 console.assert(CUSTOMERS[searchCust('ozel gebze')[0]].startsWith('ÖZEL GEBZE') && searchCust('dent').length > 0, 'müşteri araması hatalı');
