@@ -115,6 +115,8 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
   -webkit-mask-image:linear-gradient(#000 calc(100% - 24px),transparent);mask-image:linear-gradient(#000 calc(100% - 24px),transparent)}
 .cs-empty{padding:16px 2px;color:var(--muted);font-size:14px}
 main.need-cust > section:not(#custCard){opacity:.4;pointer-events:none}
+.addr-n{display:inline-flex;align-items:center;gap:2px}
+.addr-n svg{color:var(--brand)}
 .note-warn{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:600;color:#b45309}
 .note-warn svg{flex:none}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
@@ -479,7 +481,7 @@ function pickCust(i){
   // Adres seçenekleri seçilen cariye göre: ilk adres fatura
   const addrs = CUST_ADDR[n] || [ADDR];
   PICKERS.bill.opts = PICKERS.ship.opts = addrs;
-  document.querySelectorAll('.addr-n').forEach(e => e.textContent = '(' + addrs.length + ')');  // kayıtlı adres sayısı
+  document.querySelectorAll('.addr-n').forEach(e => e.innerHTML = '(<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>' + addrs.length + ')');  // kayıtlı adres sayısı
   document.querySelector('[data-v="bill"]').textContent = addrs[0];
   document.querySelector('[data-v="ship"]').textContent = addrs[1] || addrs[0];
   // Varsayılan: teslimat = fatura. Anahtar kapatılınca birden çok adresi olanda ikinci adres hazır gelir.
