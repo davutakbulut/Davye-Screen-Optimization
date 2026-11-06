@@ -88,7 +88,7 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .pill-btn.danger{background:#fef2f2;color:var(--danger)}
 .pill-btn{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background:var(--brand-soft);color:var(--brand);font-weight:600;font-size:14px;flex:none}
 
-/* Segment kontrol (Vergi tipi, Para birimi) */
+/* Segment kontrol (Fatura tipi, Para birimi) */
 .field{padding:10px 14px 14px}
 .field + .field{border-top:1px solid var(--border)}
 .field > .lb{font-size:13px;font-weight:600;color:var(--text-2);margin-bottom:8px;display:flex;justify-content:space-between;gap:8px}
@@ -100,7 +100,7 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .seg-type button[aria-pressed="true"]{background:var(--brand-strong);color:#fff}
 .seg-type button,[data-group="tax"] button,[data-group="due"] button{display:flex;align-items:center;justify-content:center;gap:6px}
 [data-group="due"] button{gap:3px}
-/* Seçili sipariş türünde ve vergi tipinde tik */
+/* Seçili sipariş türünde ve fatura tipinde tik */
 .seg-type button[aria-pressed="true"]::before,[data-group="tax"] button[aria-pressed="true"]::before,[data-group="due"] button[aria-pressed="true"]::before{content:"";width:16px;height:16px;flex:none;animation:tickIn .32s cubic-bezier(.2,.8,.2,1) both;background:currentColor;
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/contain no-repeat;
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/contain no-repeat}
@@ -395,7 +395,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
     </div>
     <ul class="lock-list">
       <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></svg>Fatura ve teslimat adresi</li>
-      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Vergi tipi ve vade</li>
+      <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Faturalı/faturasız ve vade</li>
       <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Fatura ve sipariş notu</li>
       <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9.5c.5-1 1.6-1.5 3-1.5 1.7 0 3 .9 3 2.2 0 2.8-6 1.8-6 4.6 0 1.3 1.3 2.2 3 2.2 1.4 0 2.5-.5 3-1.5M12 6v2M12 16v2"/></svg>Para birimi</li>
     </ul>
@@ -424,8 +424,8 @@ body.on-step2 .actionbar{transform:translateY(110%)}
   <section class="card" aria-label="Ödeme">
     <div class="card-h">Fiyat ve ödeme</div>
     <div class="field">
-      <div class="seg" data-group="tax" role="group" aria-label="Vergi tipi">
-        <button aria-pressed="true">Vergili</button><button aria-pressed="false">Vergisiz</button>
+      <div class="seg" data-group="tax" role="group" aria-label="Fatura tipi">
+        <button aria-pressed="true">Faturalı</button><button aria-pressed="false">Faturasız</button>
       </div>
     </div>
     <div class="switch-row" style="border-top:1px solid var(--border)">
