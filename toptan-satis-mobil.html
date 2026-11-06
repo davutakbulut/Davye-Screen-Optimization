@@ -266,6 +266,9 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 .ad-loc{display:flex;align-items:center;gap:4px;margin-top:2px;font-size:12px;font-weight:500;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ad-loc svg{flex:none;color:var(--brand)}
 .opt .ad{flex:1;min-width:0}
+.pick-search{padding:0 16px 8px}
+.pick-empty{padding:16px;color:var(--muted);font-size:14px;border-top:1px solid var(--border)}
+.opt mark{background:#fef08a;color:inherit;border-radius:2px}
 .opt-row{display:flex;align-items:center;border-top:1px solid var(--border)}
 .opt-row .opt{border-top:0;flex:1;min-width:0;padding-left:10px}
 .opt-edit{width:28px;height:28px;margin-left:12px;flex:none;border-radius:7px;display:grid;place-items:center;background:var(--brand-soft);color:var(--brand)}
@@ -473,6 +476,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 <div class="sheet" id="pickSheet" role="dialog" aria-modal="true" aria-labelledby="pickTitle">
   <div class="grab"></div>
   <h2 id="pickTitle"></h2>
+  <div class="pick-search" id="pickSearch" hidden><input id="pickQ" type="search" placeholder="Ara" autocomplete="off" aria-label="Listede ara" aria-controls="pickList"></div>
   <div id="pickList" role="listbox"></div>
 </div>
 
@@ -538,7 +542,8 @@ const CUST_ADDR = {"ÜMİT VELİOĞLU": ["Bağdat Cad. No: 210 D: 4, Kadıköy /
 CUST_ADDR['davut akbulut'] = ['Ergenekon Mahallesi, Harbiye Alanı, Cumhuriyet Cd. Kamilzade paşa pasajı kapı numarası:12 Itır Apartmanı  No:179 1. Kat Daire 2, 34367 Şişli/İstanbul', ADDR];
 CUST_ADDR['T.C. İSTANBUL AYDIN ÜNİVERSİTESİ AĞIZ VE DİŞ SAĞLIĞI UYGULAMA VE ARAŞ. MERKEZİ'] = ['Florya Mah. Beşyol Cad. No: 7, Küçükçekmece / İstanbul', 'Beşyol Mah. İnönü Cad. No: 38, Küçükçekmece / İstanbul']; // DEMO
 const PICKERS = {
-  sales:   { title: 'Satış Sorumlusu', opts: ['DAVUT AKBULUT'] },
+  // Satış sorumluları index.html sipariş verisinden; listede aranabilir
+  sales:   { title: 'Satış Sorumlusu', search: true, opts: ['DAVUT AKBULUT', 'DENTAL PİYASA', 'ERDİ EKİZ', 'HEPSİBURADA', 'MERKEZ DEPO', 'TRENDYOL AŞ. ŞTİ.', 'ÜMİT VELİOĞLU'] },
   ship:    { title: 'Teslimat Adresi', opts: [ADDR] },
   bill:    { title: 'Fatura Adresi', opts: [ADDR] }
 };
@@ -552,11 +557,23 @@ function openPicker(key){
   const isAddr = key === 'bill' || key === 'ship';
   const cur = isAddr ? getAddr(key) : document.querySelector('[data-v="' + key + '"]').textContent;
   $('pickTitle').textContent = p.title;
+  $('pickSearch').hidden = !p.search;
+  $('pickQ').value = '';
+  $('pickQ').oninput = () => draw($('pickQ').value);
+  $('pickQ').onkeydown = e => { if (e.key === 'Enter'){ e.preventDefault(); $('pickList').querySelector('.opt')?.click(); } };  // Enter ilk sonucu seçer
+  const draw = q => {
+  const w = norm(q).trim();
   $('pickList').innerHTML = '';
-  p.opts.forEach((o, idx) => {
+  const shown = p.opts.filter(o => !w || norm(o).includes(w));
+  if (!shown.length) $('pickList').innerHTML = '<div class="pick-empty">“' + esc(q.trim()) + '” ile eşleşen kayıt yok</div>';
+  shown.forEach(o => {
+    const idx = p.opts.indexOf(o);
     const b = document.createElement('button');
     b.className = 'opt'; b.role = 'option';
-    if (isAddr) b.innerHTML = '<span class="ad">' + addrHtml(o) + '</span>'; else b.textContent = o;
+    const at = w ? norm(o).indexOf(w) : -1;  // eşleşen kısım vurgulanır (norm harf sayısını korur)
+    if (isAddr) b.innerHTML = '<span class="ad">' + addrHtml(o) + '</span>';
+    else if (at >= 0) b.innerHTML = esc(o.slice(0, at)) + '<mark>' + esc(o.slice(at, at + w.length)) + '</mark>' + esc(o.slice(at + w.length));
+    else b.textContent = o;
     b.setAttribute('aria-selected', o === cur);
     b.onclick = () => {
       if (isAddr) setAddr(key, o); else document.querySelector('[data-v="' + key + '"]').textContent = o;
@@ -571,7 +588,10 @@ function openPicker(key){
     row.appendChild(b);
     $('pickList').appendChild(row);
   });
+  };
+  draw('');
   openSheet('pickSheet');
+  if (p.search) setTimeout(() => $('pickQ').focus(), 250);  // alt sayfa açıldıktan sonra klavye gelsin
 }
 
 // shortcut: düzenlenen adres yalnızca bu sayfadaki veriye yazılır, canlıda cari adres servisine gönderilmeli
