@@ -85,7 +85,6 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .cs-item .ids{font-size:11px}
 .cs-item .id-chip{height:22px}
 .cust-acts{display:flex;flex-direction:column;gap:4px;flex:none}
-.pill-btn.danger{background:#fef2f2;color:var(--danger)}
 .pill-btn{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background:var(--brand-soft);color:var(--brand);font-weight:600;font-size:14px;flex:none}
 
 /* Segment kontrol (Fatura tipi, Para birimi) */
@@ -377,7 +376,6 @@ body.on-step2 .actionbar{transform:translateY(110%)}
       </div>
       <div class="cust-acts">
         <button class="pill-btn" onclick="changeCust()" aria-label="Müşteriyi değiştir" title="Müşteriyi değiştir"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg></button>
-        <button class="pill-btn danger" onclick="clearSel()" aria-label="Müşteri seçimini kaldır" title="Müşteri seçimini kaldır"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
         <button class="pill-btn" onclick="editCust()" aria-label="Müşteriyi düzenle" title="Müşteriyi düzenle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></button>
       </div>
       <div class="ids" id="custIds"></div>
@@ -993,11 +991,6 @@ function pickFly(i, av){
   c.animate([{ transform: 'none' }, { transform: 'translate(' + (b.left - a.left) + 'px,' + (b.top - a.top) + 'px) scale(' + (b.width / a.width) + ')' }],
     { duration: 380, easing: 'cubic-bezier(.2,.8,.2,1)' }).onfinish = () => { c.remove(); dst.style.visibility = ''; };
 }
-function clearSel(){
-  selCust = null;
-  document.querySelectorAll('.addr-n').forEach(e => e.textContent = '');
-  changeCust();
-}
 function changeCust(){
   $('custSearch').hidden = false; $('custSel').hidden = true; $('salesRow').hidden = true;
   $('main').classList.add('need-cust');
@@ -1051,7 +1044,7 @@ document.addEventListener('pointerdown', e => {
   if (e.pointerType === 'touch' && navigator.vibrate && e.target.closest('.primary, .seg button, .chips button, .cs-item, .cs-btn, .pill-btn, .grid-acts button')) navigator.vibrate(8);
 }, { passive: true });
 
-Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, editAddr, setAddr, getAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, goStep, runSearch, custKey, clearCust, pickSelf, pickCust, changeCust, clearSel, editCust, custClick, openEdit, saveEdit, queueCust, searchBtn, newCust });
+Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, editAddr, setAddr, getAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, goStep, runSearch, custKey, clearCust, pickSelf, pickCust, changeCust, editCust, custClick, openEdit, saveEdit, queueCust, searchBtn, newCust });
 
 // Listede satırı kaydırma: sağa → Seç, sola → Düzenle (80 px eşiği geçince bırakınca çalışır)
 (() => {
