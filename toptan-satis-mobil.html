@@ -126,6 +126,8 @@ main.need-cust > section:not(#custCard){opacity:.4;pointer-events:none}
 .addr-n svg{color:var(--brand)}
 .note-warn{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:600;color:#b45309}
 .note-warn svg{flex:none}
+/* Seçili vade gününün yanında "gün" yazar */
+[data-group="due"] button[aria-pressed="true"]::after{content:"\00a0gün"}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chips button{min-height:34px;padding:0 12px;border-radius:20px;border:1px solid var(--border-2);font-weight:600;font-size:14px;color:var(--text-2)}
 .chips button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
@@ -290,7 +292,7 @@ textarea{resize:vertical;min-height:80px}
     </div>
     <div class="field" id="dueWrap" style="padding-top:0;border-top:0">
       <div class="chips" data-group="due">
-        <button aria-pressed="true" data-d="7">7 gün</button><button aria-pressed="false" data-d="15">15</button><button aria-pressed="false" data-d="30">30</button><button aria-pressed="false" data-d="45">45</button><button aria-pressed="false" data-d="60">60</button>
+        <button aria-pressed="true" data-d="7">7</button><button aria-pressed="false" data-d="15">15</button><button aria-pressed="false" data-d="30">30</button><button aria-pressed="false" data-d="45">45</button><button aria-pressed="false" data-d="60">60</button>
       </div>
       <div class="two" style="margin-top:10px">
         <div><label for="processDate">İşlem Tarihi</label><input type="date" id="processDate" value="2026-11-06" onchange="applyDue()"></div>
