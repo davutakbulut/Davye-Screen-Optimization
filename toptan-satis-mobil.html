@@ -202,7 +202,7 @@ textarea{resize:vertical;min-height:80px}
       <div class="cs-row">
       <label class="cs-box">
         <input id="custQ" type="search" placeholder="Ad, VKN/TC, ÜTS ara" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"
-          aria-label="Müşteri ara" aria-controls="custList" oninput="renderCust()" onkeydown="custKey(event)">
+          aria-label="Müşteri ara" aria-controls="custList" oninput="queueCust()" onkeydown="custKey(event)">
         <button type="button" class="cs-clear" id="custClear" hidden aria-label="Aramayı temizle" onclick="clearCust()">✕</button>
       </label>
       <button type="button" class="cs-btn primary-ic" onclick="searchBtn()" aria-label="Ara" title="Ara"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
@@ -456,26 +456,42 @@ function searchCust(q){
     .map(o => o.i);
 }
 
-let custHits = [];
-function renderCust(){
-  const q = $('custQ').value;
-  custHits = searchCust(q);
-  $('custClear').hidden = !q;
-  $('custHead').textContent = q.trim() ? custHits.length + ' sonuç' : 'Müşteriler (' + CUSTOMERS.length + ')';
-  const w = norm(q).trim().split(/\s+/)[0] || '';
-  $('custList').innerHTML = custHits.length ? custHits.map((i, k) => {
-    const n = CUSTOMERS[i], at = w ? CUST_N[i].indexOf(w) : -1;
-    const label = at < 0 ? esc(n) : esc(n.slice(0, at)) + '<mark>' + esc(n.slice(at, at + w.length)) + '</mark>' + esc(n.slice(at + w.length));
-    return '<button class="cs-item' + (k === 0 && q.trim() ? ' hl' : '') + '" role="option" onclick="pickCust(' + i + ')"><span class="avatar">' + esc(initials(n)) + '</span><span class="tx"><span class="ids meta">' + metaHtml(i) + '</span><span class="nm">' + label + '</span><span class="ids">' + idsHtml(n) + '</span></span></button>';
-  }).join('') : '<div class="cs-empty">“' + esc(q.trim()) + '” ile eşleşen müşteri yok.<br><button type="button" class="cs-new" onclick="newCust()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5M19 8v6M16 11h6"/></svg>Yeni müşteri oluştur</button></div>';
+let custHits = [], custShown = 0, custWord = '', custQuery = '';
+const CUST_PAGE = 50;  // 10 bin müşteride de akıcı kalsın diye liste 50'şer çizilir
+function custItem(i, k){
+  const n = CUSTOMERS[i], w = custWord, at = w ? CUST_N[i].indexOf(w) : -1;
+  const label = at < 0 ? esc(n) : esc(n.slice(0, at)) + '<mark>' + esc(n.slice(at, at + w.length)) + '</mark>' + esc(n.slice(at + w.length));
+  return '<button class="cs-item' + (k === 0 && custQuery ? ' hl' : '') + '" role="option" onclick="pickCust(' + i + ')"><span class="avatar">' + esc(initials(n)) + '</span><span class="tx"><span class="ids meta">' + metaHtml(i) + '</span><span class="nm">' + label + '</span><span class="ids">' + idsHtml(n) + '</span></span></button>';
 }
+function moreCust(){
+  if (custShown >= custHits.length) return;
+  const next = Math.min(custShown + CUST_PAGE, custHits.length);
+  $('custList').insertAdjacentHTML('beforeend', custHits.slice(custShown, next).map((i, j) => custItem(i, custShown + j)).join(''));
+  custShown = next;
+}
+function renderCust(){
+  clearTimeout(custTimer);
+  const q = $('custQ').value;
+  custHits = searchCust(q); custShown = 0;
+  custQuery = q.trim(); custWord = norm(q).trim().split(/\s+/)[0] || '';
+  $('custClear').hidden = !q;
+  $('custHead').textContent = custQuery ? custHits.length.toLocaleString('tr') + ' sonuç' : 'Müşteriler (' + CUSTOMERS.length.toLocaleString('tr') + ')';
+  $('custList').scrollTop = 0;
+  $('custList').innerHTML = custHits.length ? '' : '<div class="cs-empty">“' + esc(q.trim()) + '” ile eşleşen müşteri yok.<br><button type="button" class="cs-new" onclick="newCust()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5M19 8v6M16 11h6"/></svg>Yeni müşteri oluştur</button></div>';
+  moreCust();
+}
+// Yazarken her harfte değil, kısa bir duraklamada arar
+let custTimer;
+function queueCust(){ clearTimeout(custTimer); $('custClear').hidden = !$('custQ').value; custTimer = setTimeout(renderCust, 150); }
 function searchBtn(){
+  renderCust();  // bekleyen aramayı hemen uygula
   if ($('custQ').value.trim() && custHits.length === 1) return pickCust(custHits[0]);  // tek sonuç: doğrudan seç
-  renderCust(); $('custQ').focus();
+  $('custQ').focus();
 }
 // shortcut: canlıda yeni müşteri formuna gider; şimdilik bildirim gösterir
 function newCust(){ const q = $('custQ').value.trim(); toast(q ? '“' + q + '” için yeni müşteri formu açılır' : 'Yeni müşteri formu açılır'); }
 function custKey(e){
+  if (e.key === 'Enter') renderCust();
   if (e.key === 'Enter' && custHits.length && $('custQ').value.trim()){ e.preventDefault(); pickCust(custHits[0]); }
   if (e.key === 'Escape') clearCust();
 }
@@ -525,8 +541,10 @@ function saveHeader(){
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(); });
 
-Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, renderCust, custKey, clearCust, pickCust, changeCust, clearSel, searchBtn, newCust });
+Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, renderCust, custKey, clearCust, pickCust, changeCust, clearSel, queueCust, searchBtn, newCust });
 
+// Liste sonuna yaklaşınca sonraki 50 eklenir
+$('custList').addEventListener('scroll', e => { const l = e.target; if (l.scrollTop + l.clientHeight > l.scrollHeight - 300) moreCust(); }, { passive: true });
 renderCust();
 $('custQ').focus();
 
