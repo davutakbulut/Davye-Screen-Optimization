@@ -432,7 +432,12 @@ function updateDueHint(){
   const on = $('isCreditSale').checked;
   $('dueHint').textContent = on ? 'Vade: ' + fmt($('dueDate').value) + ' (' + daysBetween($('processDate').value, $('dueDate').value) + ' gün)' : 'Peşin';
 }
-function toggleCredit(){ $('dueWrap').hidden = !$('isCreditSale').checked; updateDueHint(); }
+// Varsayılan vade 7 gün: yeni müşteride ve vadeli ödeme yeniden açılınca buna döner
+function resetDue(){
+  document.querySelectorAll('[data-group="due"] button').forEach(b => b.setAttribute('aria-pressed', b.dataset.d === '7'));
+  applyDue();
+}
+function toggleCredit(){ $('dueWrap').hidden = !$('isCreditSale').checked; if ($('isCreditSale').checked) resetDue(); else updateDueHint(); }
 
 // Segment ve çip grupları: tek seçim
 document.querySelectorAll('[data-group]').forEach(g => g.addEventListener('click', e => {
@@ -597,6 +602,7 @@ function custKey(e){
 function clearCust(){ $('custQ').value = ''; runSearch(); $('custQ').focus(); }
 let selCust = null;
 function pickCust(i){
+  const changed = selCust !== CUSTOMERS[i];  // vazgeçip aynı müşteriye dönünce vade korunur
   selCust = CUSTOMERS[i];
   const n = CUSTOMERS[i];
   $('custName').textContent = n; $('custName').scrollLeft = 0; $('custIds').innerHTML = idsHtml(n); $('custMeta').innerHTML = metaHtml(i); $('custInitials').textContent = initials(n);
@@ -610,6 +616,7 @@ function pickCust(i){
   $('sameAddr').checked = true; $('shipRow').hidden = true;
   $('custSearch').hidden = true; $('custSel').hidden = false; $('salesRow').hidden = false;
   $('main').classList.remove('need-cust');
+  if (changed) resetDue();
   $('custQ').blur();
 }
 // Seçimi tamamen kaldırır: arama açılır, dışarı dokununca eski müşteri geri gelmez
