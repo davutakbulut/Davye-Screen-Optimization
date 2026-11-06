@@ -204,6 +204,8 @@ main:not(.need-cust) > section:nth-of-type(6){animation-delay:120ms}
 [data-group="due"] button[aria-pressed="true"]::before{width:13px;height:13px}
 /* Tik soldan sağa çizilerek belirir */
 @keyframes tickIn{from{clip-path:inset(0 100% 0 0);transform:scale(.6)}to{clip-path:inset(0);transform:none}}
+.kdv{font-size:10px;font-weight:800;letter-spacing:.02em;line-height:1;padding:3px 5px;border-radius:5px;background:var(--brand-soft);color:var(--brand-strong)}
+[data-group="tax"] button[aria-pressed="false"] .kdv{background:var(--border);color:var(--muted)}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chips button{min-height:34px;padding:0 10px;border-radius:20px;border:1px solid var(--border-2);font-weight:600;font-size:14px;color:var(--text-2)}
 .chips button[aria-pressed="true"]{background:var(--brand-strong);border-color:var(--brand-strong);color:#fff}
@@ -425,7 +427,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
     <div class="card-h">Fiyat ve ödeme</div>
     <div class="field">
       <div class="seg" data-group="tax" role="group" aria-label="Fatura tipi">
-        <button aria-pressed="true">Faturalı</button><button aria-pressed="false">Faturasız</button>
+        <button aria-pressed="true">Faturalı<span class="kdv" aria-label="artı KDV">+KDV</span></button><button aria-pressed="false">Faturasız</button>
       </div>
     </div>
     <div class="switch-row" style="border-top:1px solid var(--border)">
