@@ -79,7 +79,9 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .cs-item .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
 .cs-item .ids{font-size:11px}
 .cs-item .id-chip{height:22px}
-.pill-btn{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:var(--brand-soft);color:var(--brand);font-weight:600;font-size:14px;flex:none}
+.cust-acts{display:flex;gap:4px;flex:none}
+.pill-btn.danger{background:#fef2f2;color:var(--danger)}
+.pill-btn{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background:var(--brand-soft);color:var(--brand);font-weight:600;font-size:14px;flex:none}
 
 /* Segment kontrol (Vergi tipi, Para birimi) */
 .field{padding:10px 14px 14px}
@@ -215,7 +217,10 @@ textarea{resize:vertical;min-height:80px}
         <div class="ids meta" id="custMeta"></div>
         <div class="nm" id="custName" tabindex="0">davut akbulut</div>
       </div>
-      <button class="pill-btn" onclick="changeCust()" aria-label="Müşteriyi değiştir" title="Müşteriyi değiştir"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg></button>
+      <div class="cust-acts">
+        <button class="pill-btn" onclick="changeCust()" aria-label="Müşteriyi değiştir" title="Müşteriyi değiştir"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg></button>
+        <button class="pill-btn danger" onclick="clearSel()" aria-label="Müşteri seçimini kaldır" title="Müşteri seçimini kaldır"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
       <div class="ids" id="custIds"></div>
     </div>
     <button class="row" id="salesRow" hidden onclick="openPicker('sales')">
@@ -492,6 +497,12 @@ function pickCust(i){
   $('main').classList.remove('need-cust');
   $('custQ').blur();
 }
+// Seçimi tamamen kaldırır: arama açılır, dışarı dokununca eski müşteri geri gelmez
+function clearSel(){
+  selCust = null;
+  document.querySelectorAll('.addr-n').forEach(e => e.textContent = '');
+  changeCust();
+}
 function changeCust(){
   $('custSearch').hidden = false; $('custSel').hidden = true; $('salesRow').hidden = true;
   $('main').classList.add('need-cust');
@@ -514,7 +525,7 @@ function saveHeader(){
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(); });
 
-Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, renderCust, custKey, clearCust, pickCust, changeCust, searchBtn, newCust });
+Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, renderCust, custKey, clearCust, pickCust, changeCust, clearSel, searchBtn, newCust });
 
 renderCust();
 $('custQ').focus();
