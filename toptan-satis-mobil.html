@@ -263,6 +263,14 @@ body.on-step2 .ready-bar{opacity:0}
 .opt{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:10px 16px;text-align:left;border-top:1px solid var(--border)}
 .opt[aria-selected="true"]{color:var(--brand);font-weight:700}
 .opt[aria-selected="true"]::after{content:"✓";margin-left:auto}
+.opt-row{display:flex;align-items:center;border-top:1px solid var(--border)}
+.opt-row .opt{border-top:0;flex:1;min-width:0;padding-left:10px}
+.opt-edit{width:36px;height:36px;margin-left:12px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--brand-soft);color:var(--brand)}
+.opt-form{display:flex;align-items:center;gap:6px;padding:8px 12px;border-top:1px solid var(--border);animation:csIn .2s ease-out both}
+.opt-form input{flex:1;min-width:0}
+.opt-form button{width:42px;height:42px;flex:none;border-radius:10px;font-size:16px;font-weight:700}
+.of-ok{background:var(--brand);color:#fff}
+.of-no{border:1px solid var(--border-2);color:var(--muted)}
 .ed{display:flex;flex-direction:column;gap:10px;padding:0 16px 16px}
 .ed label{display:block;font-size:12px;font-weight:600;color:var(--text-2)}
 .ed label input,.ed label select{margin-top:4px}
@@ -541,7 +549,8 @@ function openPicker(key){
   const cur = document.querySelector('[data-v="' + key + '"]').textContent;
   $('pickTitle').textContent = p.title;
   $('pickList').innerHTML = '';
-  p.opts.forEach(o => {
+  const isAddr = key === 'bill' || key === 'ship';
+  p.opts.forEach((o, idx) => {
     const b = document.createElement('button');
     b.className = 'opt'; b.role = 'option'; b.textContent = o;
     b.setAttribute('aria-selected', o === cur);
@@ -550,11 +559,38 @@ function openPicker(key){
       el.textContent = o;
       closeSheets();
     };
-    $('pickList').appendChild(b);
+    if (!isAddr) return $('pickList').appendChild(b);
+    // Adreslerde başta düzenleme düğmesi: satır yerinde yazı kutusuna dönüşür
+    const row = document.createElement('div');
+    row.className = 'opt-row';
+    row.innerHTML = '<button type="button" class="opt-edit" aria-label="Adresi düzenle" title="Adresi düzenle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></button>';
+    row.firstChild.onclick = () => editAddr(key, idx, row);
+    row.appendChild(b);
+    $('pickList').appendChild(row);
   });
   openSheet('pickSheet');
 }
 
+// shortcut: düzenlenen adres yalnızca bu sayfadaki veriye yazılır, canlıda cari adres servisine gönderilmeli
+function editAddr(key, idx, row){
+  const opts = PICKERS[key].opts, old = opts[idx];
+  row.className = 'opt-form';
+  row.innerHTML = '<input aria-label="Adres" autocomplete="street-address"><button type="button" class="of-ok" aria-label="Kaydet">✓</button><button type="button" class="of-no" aria-label="Vazgeç">✕</button>';
+  const inp = row.querySelector('input');
+  inp.value = old; inp.focus();
+  const save = () => {
+    const v = inp.value.trim();
+    if (!v){ inp.setCustomValidity('Adres boş olamaz'); inp.reportValidity(); return; }
+    opts[idx] = v;  // fatura ve teslimat aynı listeyi paylaşır
+    ['bill', 'ship'].forEach(k => { const el = document.querySelector('[data-v="' + k + '"]'); if (el.textContent === old) el.textContent = v; });
+    openPicker(key);
+    toast('Adres güncellendi');
+  };
+  row.querySelector('.of-ok').onclick = save;
+  row.querySelector('.of-no').onclick = () => openPicker(key);
+  inp.onkeydown = e => { if (e.key === 'Enter') save(); if (e.key === 'Escape'){ e.stopPropagation(); openPicker(key); } };
+  inp.oninput = () => inp.setCustomValidity('');
+}
 function toggleSameAddr(){
   $('shipRow').hidden = $('sameAddr').checked;
   if ($('sameAddr').checked) document.querySelector('[data-v="ship"]').textContent = document.querySelector('[data-v="bill"]').textContent;
@@ -935,7 +971,7 @@ document.addEventListener('pointerdown', e => {
   if (e.pointerType === 'touch' && navigator.vibrate && e.target.closest('.primary, .seg button, .chips button, .cs-item, .cs-btn, .pill-btn, .grid-acts button')) navigator.vibrate(8);
 }, { passive: true });
 
-Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, goStep, runSearch, custKey, clearCust, pickCust, changeCust, clearSel, editCust, custClick, openEdit, saveEdit, queueCust, searchBtn, newCust });
+Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, editAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, goStep, runSearch, custKey, clearCust, pickCust, changeCust, clearSel, editCust, custClick, openEdit, saveEdit, queueCust, searchBtn, newCust });
 
 // Listede satırı kaydırma: sağa → Seç, sola → Düzenle (80 px eşiği geçince bırakınca çalışır)
 (() => {
