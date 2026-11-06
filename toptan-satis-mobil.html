@@ -233,7 +233,7 @@ body.on-step2 .ready-bar{opacity:0}
 .step2 p{margin:0 0 18px;color:var(--text-2);font-size:14px}
 /* Hazır olma göstergesi: müşteri %50, fatura adresi %75, ödeme geçerli %100 */
 .ready-bar{position:absolute;left:0;right:0;top:-1px;height:3px;pointer-events:none}
-.ready-bar i{display:block;height:100%;width:0;background:var(--brand);border-radius:0 2px 2px 0;transition:width .5s cubic-bezier(.2,.8,.2,1),background .3s}
+.ready-bar i{display:block;height:100%;background:var(--brand);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.2,.8,.2,1),background .3s}  /* genişlik yerine transform: yerleşim yeniden hesaplanmaz */
 .ready-bar.full i{background:var(--ok)}
 .ready-bar span{position:absolute;right:16px;top:-24px;font-size:11px;font-weight:700;color:var(--ok);background:#ecfdf3;padding:2px 8px;border-radius:10px;opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s}
 .ready-bar.full span{opacity:1;transform:none}
@@ -575,12 +575,12 @@ function updateReady(){
   readyTarget = pct;
   // Artarken %50 → %75 → %100 basamak basamak dolar
   clearTimeout(readyTimer);
-  const fill = bar.firstElementChild, cur = parseInt(fill.style.width) || 0;
+  const fill = bar.firstElementChild, cur = +fill.dataset.v || 0;
   const steps = [50, 75, 100].filter(v => v > cur && v <= pct);
   if (!steps.length) steps.push(pct);
   const next = () => {
     const v = steps.shift();
-    fill.style.width = v + '%';
+    fill.dataset.v = v; fill.style.transform = 'scaleX(' + v / 100 + ')';
     if (steps.length) return readyTimer = setTimeout(next, 280);
     bar.classList.toggle('full', v === 100);
     if (v === 100 && !was){ const b = document.querySelector('.actionbar .primary'); b.classList.remove('glow'); void b.offsetWidth; b.classList.add('glow'); }  // hazır olunca bir kez parlar
