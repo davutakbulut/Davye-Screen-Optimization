@@ -197,6 +197,24 @@ textarea{resize:vertical;min-height:80px}
 .actionbar .icon-btn{width:46px;height:46px;border:1px solid var(--border-2);border-radius:12px}
 .primary{flex:1;height:46px;border-radius:12px;background:var(--brand);color:#fff;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
 .primary:active{background:var(--brand-ink)}
+/* Kaydetme anı: dönen ikon → ✓ Kaydedildi → ürün adımı */
+.primary .spin,.primary .saved{display:none}
+.primary.saving .on,.primary.saving > svg,.primary.saved .on,.primary.saved > svg{display:none}
+.primary.saving .spin{display:block}
+.primary.saved{background:var(--ok)}
+.primary.saved .saved{display:inline-flex;align-items:center;gap:6px}
+.primary.saved .saved::before{content:"";width:18px;height:18px;background:currentColor;animation:tickIn .32s cubic-bezier(.2,.8,.2,1) both;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/contain no-repeat}
+.actionbar{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+body.on-step2 .actionbar{transform:translateY(110%)}
+body.on-step2 .ready-bar{opacity:0}
+.steps span{transition:background .3s}
+.step2{margin:12px 16px;max-width:608px;padding:28px 20px;text-align:center}
+@media (min-width:641px){.step2{margin:12px auto}}
+.s2-ic{width:64px;height:64px;margin:0 auto 12px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center}
+.step2 h2{margin:0 0 6px;font-size:18px}
+.step2 p{margin:0 0 18px;color:var(--text-2);font-size:14px}
 /* Hazır olma göstergesi: müşteri %50, fatura adresi %75, ödeme geçerli %100 */
 .ready-bar{position:absolute;left:0;right:0;top:-1px;height:3px;pointer-events:none}
 .ready-bar i{display:block;height:100%;width:0;background:var(--brand);border-radius:0 2px 2px 0;transition:width .5s cubic-bezier(.2,.8,.2,1),background .3s}
@@ -265,7 +283,7 @@ textarea{resize:vertical;min-height:80px}
 </header>
 
 <div class="steps" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
-<div class="step-label">Adım 1/3 · Fatura Bilgileri → Ürün Seçimi → Kargo Bilgileri ve Gönderim</div>
+<div class="step-label" id="stepLabel">Adım 1/3 · Fatura Bilgileri → Ürün Seçimi → Kargo Bilgileri ve Gönderim</div>
 
 <main class="need-cust" id="main">
   <!-- 0. Sipariş türü: hangi depoya gireceğini belirler -->
@@ -394,11 +412,19 @@ textarea{resize:vertical;min-height:80px}
   </section>
 </main>
 
+<!-- Adım 2: ürün seçimi (bu demoda yer tutucu) -->
+<section class="card step2" id="step2" hidden aria-label="Ürün seçimi">
+  <div class="s2-ic"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7M12 11v10"/></svg></div>
+  <h2>Ürün Seçimi</h2>
+  <p><b id="s2Cust"></b> için sipariş bilgileri kaydedildi. Ürün ekleme ekranı bu demoda henüz yok.</p>
+  <button type="button" class="ed-cancel" onclick="goStep(1)">← Sipariş bilgilerine dön</button>
+</section>
+
 <!-- Alt eylem çubuğu -->
 <nav class="actionbar" aria-label="Sipariş işlemleri">
   <div class="ready-bar" id="readyBar" aria-hidden="true"><i></i><span>Hazır ✓</span></div>
   <button class="icon-btn" aria-label="Diğer işlemler" onclick="openSheet('actSheet')"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
-  <button class="primary" onclick="saveHeader()"><span class="on">Kaydet, ürünleri ekle</span><span class="off">Önce müşteri seçin</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  <button class="primary" onclick="saveHeader()"><span class="on">Kaydet, ürünleri ekle</span><span class="off">Önce müşteri seçin</span> <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span class="spin" aria-hidden="true"></span><span class="saved">Kaydedildi</span></button>
 </nav>
 
 <div class="scrim" id="scrim" onclick="closeSheets()"></div>
@@ -817,7 +843,32 @@ function toast(msg){ closeSheets(); const t = $('toast'); t.textContent = msg; t
 function saveHeader(){
   if ($('main').classList.contains('need-cust')){ $('custQ').focus(); return toast('Önce müşteri seçin'); }
   if ($('isCreditSale').checked && $('dueDate').value < $('processDate').value) return toast('Vade tarihi işlem tarihinden önce olamaz');
-  toast('Sipariş başlığı kaydedildi · Ürün ekleme adımı');
+  if (saving) return;
+  saving = true;
+  const b = document.querySelector('.actionbar .primary');
+  b.classList.add('saving');
+  // shortcut: sahte kayıt süresi; canlıda servis cevabı beklenir, hata olursa düğme eski haline döner
+  setTimeout(() => {
+    b.classList.replace('saving', 'saved');
+    setTimeout(() => { goStep(2); b.classList.remove('saved'); saving = false; }, 650);
+  }, 700);
+}
+let saving = false;
+const STEP1_LABEL = document.getElementById('stepLabel').textContent;
+// Adımlar arası geçiş: eski sayfa sola kayıp söner, yenisi sağdan gelir (geri dönüşte tersi)
+function goStep(n){
+  const fwd = n === 2, out = fwd ? $('main') : $('step2'), inn = fwd ? $('step2') : $('main');
+  document.querySelectorAll('.steps span').forEach((sp, k) => sp.classList.toggle('on', k < n));
+  $('stepLabel').textContent = fwd ? 'Adım 2/3 · Ürün Seçimi → Kargo Bilgileri ve Gönderim' : STEP1_LABEL;
+  $('s2Cust').textContent = selCust || '';
+  document.body.classList.toggle('on-step2', fwd);
+  const d = fwd ? 1 : -1, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const swap = () => {
+    out.hidden = true; inn.hidden = false; scrollTo(0, 0);
+    if (!reduce) inn.animate([{ opacity: 0, transform: 'translateX(' + 24 * d + 'px)' }, { opacity: 1, transform: 'none' }], { duration: 280, easing: 'cubic-bezier(.2,.8,.2,1)' });
+  };
+  if (reduce) return swap();
+  out.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateX(' + -24 * d + 'px)' }], { duration: 200, easing: 'ease-in' }).onfinish = swap;
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(); });
@@ -826,7 +877,7 @@ document.addEventListener('pointerdown', e => {
   if (e.pointerType === 'touch' && navigator.vibrate && e.target.closest('.primary, .seg button, .chips button, .cs-item, .cs-btn, .pill-btn, .grid-acts button')) navigator.vibrate(8);
 }, { passive: true });
 
-Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, runSearch, custKey, clearCust, pickCust, changeCust, clearSel, editCust, custClick, openEdit, saveEdit, queueCust, searchBtn, newCust });
+Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, goStep, runSearch, custKey, clearCust, pickCust, changeCust, clearSel, editCust, custClick, openEdit, saveEdit, queueCust, searchBtn, newCust });
 
 // Liste sonuna yaklaşınca sonraki 50 eklenir
 $('custList').addEventListener('scroll', e => { const l = e.target; if (l.scrollTop + l.clientHeight > l.scrollHeight - 300) moreCust(); }, { passive: true });
