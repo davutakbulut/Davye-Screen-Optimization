@@ -276,7 +276,7 @@ textarea{resize:vertical;min-height:80px}
     </button>
     <div class="field" id="noteWrap" hidden style="border-top:1px solid var(--border)">
       <label for="description" class="lb">Fatura Açıklaması</label>
-      <textarea id="description" placeholder="Faturada görünecek not" aria-describedby="noteWarn"></textarea>
+      <textarea id="description" placeholder="Faturada görünecek not" aria-describedby="noteWarn" onblur="noteBlur()"></textarea>
       <span class="note-warn" id="noteWarn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h0"/></svg>Bu not faturada görünecektir.</span>
     </div>
   </section>
@@ -378,6 +378,8 @@ function toggleSameAddr(){
   if ($('sameAddr').checked) document.querySelector('[data-v="ship"]').textContent = document.querySelector('[data-v="bill"]').textContent;
 }
 function showNote(){ $('noteBtn').hidden = true; $('noteWrap').hidden = false; $('description').focus(); }
+// Boş bırakılıp dışarı dokunulursa kapalı satıra geri döner
+function noteBlur(){ if (!$('description').value.trim()){ $('description').value = ''; $('noteWrap').hidden = true; $('noteBtn').hidden = false; } }
 
 function fmt(iso){ const [y,m,d] = iso.split('-'); return d + '.' + m + '.' + y; }
 function addDays(iso, n){ const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return d.toISOString().slice(0,10); }
@@ -512,7 +514,7 @@ function saveHeader(){
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(); });
 
-Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, applyDue, customDue, toggleCredit, toast, saveHeader, renderCust, custKey, clearCust, pickCust, changeCust, searchBtn, newCust });
+Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, renderCust, custKey, clearCust, pickCust, changeCust, searchBtn, newCust });
 
 renderCust();
 $('custQ').focus();
