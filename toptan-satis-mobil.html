@@ -961,7 +961,8 @@ function changeCust(){
 // Arama açıkken kartın dışına dokunulursa önceki seçim geri gelir; seçim yoksa arama açık kalır.
 // Yakalama aşamasında çalışır ki dışarıdaki düğme (ör. Kaydet) geri gelmiş seçimi görsün.
 document.addEventListener('click', e => {
-  if (selCust && !$('custSearch').hidden && !e.target.closest('#custCard')) pickCust(CUSTOMERS.indexOf(selCust));
+  // Dental/Ecza değiştirmek aramayı kapatmaz: kullanıcı türü değiştirip aramaya devam edebilir
+  if (selCust && !$('custSearch').hidden && !e.target.closest('#custCard, .seg-type')) pickCust(CUSTOMERS.indexOf(selCust));
 }, true);
 
 let toastTimer;
