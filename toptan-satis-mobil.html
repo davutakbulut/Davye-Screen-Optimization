@@ -95,9 +95,10 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .seg-type{background:var(--border);padding:4px}
 .seg-type button{min-height:40px;font-size:15px}
 .seg-type button[aria-pressed="true"]{background:var(--brand);color:#fff}
-.seg-type button,[data-group="tax"] button{display:flex;align-items:center;justify-content:center;gap:6px}
+.seg-type button,[data-group="tax"] button,[data-group="due"] button{display:flex;align-items:center;justify-content:center;gap:6px}
+[data-group="due"] button{gap:3px}
 /* Seçili sipariş türünde ve vergi tipinde tik */
-.seg-type button[aria-pressed="true"]::before,[data-group="tax"] button[aria-pressed="true"]::before{content:"";width:16px;height:16px;flex:none;background:currentColor;
+.seg-type button[aria-pressed="true"]::before,[data-group="tax"] button[aria-pressed="true"]::before,[data-group="due"] button[aria-pressed="true"]::before{content:"";width:16px;height:16px;flex:none;animation:tickIn .32s cubic-bezier(.2,.8,.2,1) both;background:currentColor;
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/contain no-repeat;
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/contain no-repeat}
 /* Müşteri arama */
@@ -160,9 +161,12 @@ main:not(.need-cust) > section:nth-of-type(6){animation-delay:120ms}
 .note-warn{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:600;color:#b45309}
 .note-warn svg{flex:none}
 /* Seçili vade gününün yanında "gün" yazar */
-[data-group="due"] button[aria-pressed="true"]::after{content:"\00a0gün"}
+[data-group="due"] button[aria-pressed="true"]::after{content:"gün"}
+[data-group="due"] button[aria-pressed="true"]::before{width:13px;height:13px}
+/* Tik soldan sağa çizilerek belirir */
+@keyframes tickIn{from{clip-path:inset(0 100% 0 0);transform:scale(.6)}to{clip-path:inset(0);transform:none}}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
-.chips button{min-height:34px;padding:0 12px;border-radius:20px;border:1px solid var(--border-2);font-weight:600;font-size:14px;color:var(--text-2)}
+.chips button{min-height:34px;padding:0 10px;border-radius:20px;border:1px solid var(--border-2);font-weight:600;font-size:14px;color:var(--text-2)}
 .chips button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
 
 input,textarea,select{font:inherit;font-size:16px;color:var(--text);width:100%;min-height:var(--tap);border:1px solid var(--border-2);
