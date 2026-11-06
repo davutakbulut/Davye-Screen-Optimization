@@ -475,12 +475,13 @@ function pickCust(i){
   selCust = CUSTOMERS[i];
   const n = CUSTOMERS[i];
   $('custName').textContent = n; $('custName').scrollLeft = 0; $('custIds').innerHTML = idsHtml(n); $('custMeta').innerHTML = metaHtml(i); $('custInitials').textContent = initials(n);
-  // Adres seçenekleri seçilen cariye göre: ilk adres fatura, birden çok adresi olanda ikincisi teslimat
+  // Adres seçenekleri seçilen cariye göre: ilk adres fatura
   const addrs = CUST_ADDR[n] || [ADDR];
   PICKERS.bill.opts = PICKERS.ship.opts = addrs;
   document.querySelector('[data-v="bill"]').textContent = addrs[0];
   document.querySelector('[data-v="ship"]').textContent = addrs[1] || addrs[0];
-  $('sameAddr').checked = addrs.length === 1; $('shipRow').hidden = addrs.length === 1;
+  // Varsayılan: teslimat = fatura. Anahtar kapatılınca birden çok adresi olanda ikinci adres hazır gelir.
+  $('sameAddr').checked = true; $('shipRow').hidden = true;
   $('custSearch').hidden = true; $('custSel').hidden = false; $('salesRow').hidden = false;
   $('main').classList.remove('need-cust');
   $('custQ').blur();
