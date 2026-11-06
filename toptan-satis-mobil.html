@@ -441,6 +441,11 @@ function changeCust(){
   $('main').classList.add('need-cust');
   clearCust();
 }
+// Arama açıkken kartın dışına dokunulursa önceki seçim geri gelir; seçim yoksa arama açık kalır.
+// Yakalama aşamasında çalışır ki dışarıdaki düğme (ör. Kaydet) geri gelmiş seçimi görsün.
+document.addEventListener('click', e => {
+  if (selCust && !$('custSearch').hidden && !e.target.closest('#custCard')) pickCust(CUSTOMERS.indexOf(selCust));
+}, true);
 
 let toastTimer;
 function toast(msg){ closeSheets(); const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 1800); }
