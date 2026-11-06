@@ -59,7 +59,7 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .avatar{width:48px;height:48px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700;font-size:17px;flex:none}
 .cust .tx{flex:1;min-width:0}
 .cust .nm{font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cust .sub{font-size:13px;color:var(--text-2)}
+.cust .sub{font-size:13px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pill-btn{height:36px;padding:0 14px;border-radius:18px;background:var(--brand-soft);color:var(--brand);font-weight:600;font-size:14px;flex:none}
 
 /* Segment kontrol (Vergi tipi, Para birimi) */
@@ -151,18 +151,13 @@ textarea{resize:vertical;min-height:80px}
       <div class="avatar" id="custInitials">DA</div>
       <div class="tx">
         <div class="nm" id="custName">davut akbulut</div>
-        <div class="sub">Satış: <b id="salesName">DAVUT AKBULUT</b></div>
+        <div class="sub">Satış Sorumlusu: <b id="salesName">DAVUT AKBULUT</b></div>
       </div>
       <button class="pill-btn" onclick="toast('Müşteri arama açılır')">Değiştir</button>
     </div>
-    <button class="row" onclick="openPicker('subCust')">
-      <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5M17 11h4M19 9v4"/></svg></span>
-      <span class="tx"><span class="lb">Alt Müşteri</span><span class="vl empty" data-v="subCust">Seçilmedi (isteğe bağlı)</span></span>
-      <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
-    </button>
     <button class="row" onclick="openPicker('sales')">
-      <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
-      <span class="tx"><span class="lb">Satış Elemanı</span><span class="vl" data-v="sales">DAVUT AKBULUT</span></span>
+      <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M10 2h4v4h-4zM8.5 17c.5-1.7 1.9-2.5 3.5-2.5s3 .8 3.5 2.5"/><circle cx="12" cy="11" r="2"/></svg></span>
+      <span class="tx"><span class="lb">Satış Sorumlusu</span><span class="vl" data-v="sales">DAVUT AKBULUT</span></span>
       <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
     </button>
   </section>
@@ -272,8 +267,7 @@ textarea{resize:vertical;min-height:80px}
 // Seçenekler yalnızca ekrandaki gerçek değerlerdir (GEMINI.md E); canlıda API'den gelir.
 const ADDR = 'Molla Gürani, Uygar Sokağı No:17 A, Fatih İstanbul Türkiye';
 const PICKERS = {
-  subCust: { title: 'Alt Müşteri', opts: ['Seçilmedi (isteğe bağlı)'] },
-  sales:   { title: 'Satış Elemanı', opts: ['DAVUT AKBULUT'] },
+  sales:   { title: 'Satış Sorumlusu', opts: ['DAVUT AKBULUT'] },
   ship:    { title: 'Teslimat Adresi', opts: [ADDR] },
   bill:    { title: 'Fatura Adresi', opts: [ADDR] }
 };
@@ -293,7 +287,7 @@ function openPicker(key){
     b.setAttribute('aria-selected', o === cur);
     b.onclick = () => {
       const el = document.querySelector('[data-v="' + key + '"]');
-      el.textContent = o; el.classList.toggle('empty', /isteğe bağlı/.test(o));
+      el.textContent = o;
       if (key === 'sales') $('salesName').textContent = o;
       closeSheets();
     };
