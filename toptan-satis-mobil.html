@@ -240,6 +240,7 @@ textarea{resize:vertical;min-height:80px}
       <div class="cust-acts">
         <button class="pill-btn" onclick="changeCust()" aria-label="Müşteriyi değiştir" title="Müşteriyi değiştir"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg></button>
         <button class="pill-btn danger" onclick="clearSel()" aria-label="Müşteri seçimini kaldır" title="Müşteri seçimini kaldır"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        <button class="pill-btn" onclick="editCust()" aria-label="Müşteriyi düzenle" title="Müşteriyi düzenle"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></button>
       </div>
       <div class="ids" id="custIds"></div>
     </div>
@@ -605,6 +606,8 @@ function pickCust(i){
   $('custQ').blur();
 }
 // Seçimi tamamen kaldırır: arama açılır, dışarı dokununca eski müşteri geri gelmez
+// shortcut: canlıda seçili müşterinin düzenleme formuna gider; şimdilik bildirim gösterir
+function editCust(){ toast('“' + selCust + '” düzenleme formu açılır'); }
 function clearSel(){
   selCust = null;
   document.querySelectorAll('.addr-n').forEach(e => e.textContent = '');
@@ -632,7 +635,7 @@ function saveHeader(){
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(); });
 
-Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, runSearch, custKey, clearCust, pickCust, changeCust, clearSel, queueCust, searchBtn, newCust });
+Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, runSearch, custKey, clearCust, pickCust, changeCust, clearSel, editCust, queueCust, searchBtn, newCust });
 
 // Liste sonuna yaklaşınca sonraki 50 eklenir
 $('custList').addEventListener('scroll', e => { const l = e.target; if (l.scrollTop + l.clientHeight > l.scrollHeight - 300) moreCust(); }, { passive: true });
