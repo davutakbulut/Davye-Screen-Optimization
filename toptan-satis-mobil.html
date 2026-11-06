@@ -720,7 +720,15 @@ function norm(t){ return t.toLocaleLowerCase('tr').normalize('NFD').replace(/[̀
 const CUST_N = CUSTOMERS.map(norm);
 // Ad gösterimi: her kelimenin ilk harfi büyük, gerisi küçük (Türkçe kurallarıyla); "T.C.", "A.Ş." gibi noktalı kısaltmalar büyük kalır.
 // Harf sayısı değişmez, bu yüzden aramadaki vurgulama konumları aynen kullanılabilir. Veri değişmez, yalnızca gösterim.
-function disp(n){ return n.split(' ').map(w => /^(\p{L}\.)+$/u.test(w) ? w.toLocaleUpperCase('tr') : w.charAt(0).toLocaleUpperCase('tr') + w.slice(1).toLocaleLowerCase('tr')).join(' '); }
+// Şirket türü / unvan kısaltmaları her zaman büyük yazılır (noktalı ya da noktasız). Liste tek yerde: yeni kısaltma buraya eklenir.
+const UPPER_ABBR = new Set(['AŞ', 'A.Ş', 'ŞTİ', 'LTD', 'TİC', 'SAN', 'HİZM', 'KOOP', 'İTH', 'İHR', 'PAZ', 'ORG', 'T.C']);
+function disp(n){
+  return n.split(' ').map(w => {
+    const up = w.toLocaleUpperCase('tr');
+    if (UPPER_ABBR.has(up.replace(/\.$/, '')) || /^(\p{L}\.)+$/u.test(w)) return up;
+    return w.charAt(0).toLocaleUpperCase('tr') + w.slice(1).toLocaleLowerCase('tr');
+  }).join(' ');
+}
 function initials(n){ return n.split(/\s+/).filter(w => !/\.$/.test(w)).slice(0, 2).map(w => w[0]).join('').toLocaleUpperCase('tr'); }
 function esc(t){ return t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
@@ -936,7 +944,7 @@ function openEdit(i){
   editIdx = i;
   const n = CUSTOMERS[i], d = CUST_INFO[n] || ['VKN', '', '', '', ''], l = CUST_LOC[n] || ['', ''];
   const k = idPair(d);
-  $('edName').value = disp(n); $('edTc').value = k.tc; $('edVkn').value = k.vkn; $('edVd').value = d[2];
+  $('edName').value = n;  // formda resmi kayıt aynen gösterilir; kaydetmek yazımı değiştirmez $('edTc').value = k.tc; $('edVkn').value = k.vkn; $('edVd').value = d[2];
   $('edUts').value = d[3] || ''; $('edGln').value = d[4] || ''; $('edDist').value = l[0]; $('edCity').value = l[1];
   $('edErr').textContent = '';
   openSheet('editSheet');
@@ -1100,7 +1108,7 @@ runSearch();
 $('custQ').focus();
 
 // self-check: vade hesabı, Türkçe arama, ad gösterimi
-console.assert(disp('T.C. İSTANBUL AYDIN ÜNİVERSİTESİ A.Ş. LTD.') === 'T.C. İstanbul Aydın Üniversitesi A.Ş. Ltd.' && disp('IŞIK ılık') === 'Işık Ilık' && CUSTOMERS.every(n => disp(n).length === n.length), 'ad gösterimi hatalı');
+console.assert(disp('T.C. İSTANBUL AYDIN ÜNİVERSİTESİ A.Ş. LTD.') === 'T.C. İstanbul Aydın Üniversitesi A.Ş. LTD.' && disp('trendyol aş. şti.') === 'Trendyol AŞ. ŞTİ.' && disp('DR. AHMET') === 'Dr. Ahmet' && disp('IŞIK ılık') === 'Işık Ilık' && CUSTOMERS.every(n => disp(n).length === n.length), 'ad gösterimi hatalı');
 console.assert(norm('ÖZEL İĞDE ışık') === 'ozel igde isik' && CUSTOMERS.every((n, i) => CUST_N[i].length === n.length), 'norm uzunluğu bozuldu');
 console.assert(CUSTOMERS[searchCust('6850803026')[0]].startsWith('ÖZEL GEBZE') && idsHtml('davut akbulut') === '', 'kimlik araması hatalı');
 console.assert(CUSTOMERS[searchCust('ozel gebze')[0]].startsWith('ÖZEL GEBZE') && searchCust('dent').length > 0, 'müşteri araması hatalı');
