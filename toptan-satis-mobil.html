@@ -18,7 +18,9 @@
 html,body{margin:0;overflow-x:hidden}
 body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:var(--bg-body);color:var(--text);font-size:15px;line-height:1.4;
   padding-bottom:calc(88px + env(safe-area-inset-bottom))}
-button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;transition:transform .12s cubic-bezier(.2,.8,.2,1)}
+/* Basma hissi: dokununca hafifçe içe göçer */
+button:active:not(:disabled){transform:scale(.97)}
 .mono{font-family:"JetBrains Mono",monospace}
 
 /* Üst bar: tek satır, sadece gerekli bilgi */
@@ -800,6 +802,10 @@ function saveHeader(){
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(); });
+// Destekleyen telefonlarda seçim ve ana düğmelerde çok kısa titreşim (iOS Safari desteklemez, sessizce atlanır)
+document.addEventListener('pointerdown', e => {
+  if (e.pointerType === 'touch' && navigator.vibrate && e.target.closest('.primary, .seg button, .chips button, .cs-item, .cs-btn, .pill-btn, .grid-acts button')) navigator.vibrate(8);
+}, { passive: true });
 
 Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, runSearch, custKey, clearCust, pickCust, changeCust, clearSel, editCust, custClick, openEdit, saveEdit, queueCust, searchBtn, newCust });
 
