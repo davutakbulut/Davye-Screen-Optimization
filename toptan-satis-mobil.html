@@ -190,16 +190,6 @@ textarea{resize:vertical;min-height:80px}
         <button aria-pressed="true">Vergili</button><button aria-pressed="false">Vergisiz</button>
       </div>
     </div>
-    <div class="field">
-      <div class="lb"><span>Para Birimi</span><span class="mono" id="rateNote" style="color:var(--muted);font-weight:500">Kur: 1</span></div>
-      <div class="seg" data-group="cur">
-        <button aria-pressed="true" data-rate="1">₺ TL</button><button aria-pressed="false" data-rate="50,20">$ USD</button><button aria-pressed="false" data-rate="55,92">€ EUR</button>
-      </div>
-      <div id="rateWrap" hidden style="margin-top:8px">
-        <label for="exchangeRate" style="font-size:12px;color:var(--muted)">Döviz Kuru (düzenlenebilir)</label>
-        <input id="exchangeRate" class="mono" inputmode="decimal" value="1">
-      </div>
-    </div>
     <div class="switch-row" style="border-top:1px solid var(--border)">
       <span class="tx"><span class="lb">Vadeli Ödeme</span><span class="hint" id="dueHint">Vade: 13.11.2026 (7 gün)</span></span>
       <label class="switch"><input type="checkbox" id="isCreditSale" checked onchange="toggleCredit()" aria-label="Vadeli ödeme"><i></i></label>
@@ -224,6 +214,20 @@ textarea{resize:vertical;min-height:80px}
     <div class="field" id="noteWrap" hidden style="border-top:1px solid var(--border)">
       <label for="description" class="lb">Açıklama</label>
       <textarea id="description" placeholder="Siparişle ilgili not"></textarea>
+    </div>
+  </section>
+
+  <!-- 5. Para birimi -->
+  <section class="card" aria-label="Para birimi">
+    <div class="field">
+      <div class="lb"><span>Para Birimi</span><span class="mono" id="rateNote" style="color:var(--muted);font-weight:500">Kur: 1</span></div>
+      <div class="seg" data-group="cur">
+        <button aria-pressed="true" data-rate="1">₺ TL</button><button aria-pressed="false" data-rate="50,20">$ USD</button><button aria-pressed="false" data-rate="55,92">€ EUR</button>
+      </div>
+      <div id="rateWrap" hidden style="margin-top:8px">
+        <label for="exchangeRate" style="font-size:12px;color:var(--muted)">Döviz Kuru (düzenlenebilir)</label>
+        <input id="exchangeRate" class="mono" inputmode="decimal" value="1">
+      </div>
     </div>
   </section>
 </main>
