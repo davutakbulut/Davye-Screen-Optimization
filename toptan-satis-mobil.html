@@ -225,18 +225,18 @@ textarea{resize:vertical;min-height:80px}
   <!-- 2. Adres: aynıysa tek satır -->
   <section class="card" aria-label="Adres">
     <div class="card-h">Adres</div>
-    <button class="row" onclick="openPicker('ship')">
-      <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
-      <span class="tx"><span class="lb">Teslimat Adresi</span><span class="vl" data-v="ship">Molla Gürani, Uygar Sokağı No:17 A, Fatih İstanbul Türkiye</span></span>
+    <button class="row" onclick="openPicker('bill')">
+      <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></svg></span>
+      <span class="tx"><span class="lb">Fatura Adresi</span><span class="vl" data-v="bill">Molla Gürani, Uygar Sokağı No:17 A, Fatih İstanbul Türkiye</span></span>
       <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
     </button>
     <div class="switch-row" style="border-top:1px solid var(--border)">
-      <span class="tx"><span class="lb">Fatura adresi aynı</span><span class="hint">Kapatırsanız ayrı seçilir</span></span>
-      <label class="switch"><input type="checkbox" id="sameAddr" checked onchange="toggleSameAddr()" aria-label="Fatura adresi teslimat ile aynı"><i></i></label>
+      <span class="tx"><span class="lb">Teslimat adresi aynı</span><span class="hint">Kapatırsanız ayrı seçilir</span></span>
+      <label class="switch"><input type="checkbox" id="sameAddr" checked onchange="toggleSameAddr()" aria-label="Teslimat adresi fatura adresi ile aynı"><i></i></label>
     </div>
-    <button class="row" id="billRow" hidden onclick="openPicker('bill')">
-      <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></svg></span>
-      <span class="tx"><span class="lb">Fatura Adresi</span><span class="vl" data-v="bill">Molla Gürani, Uygar Sokağı No:17 A, Fatih İstanbul Türkiye</span></span>
+    <button class="row" id="shipRow" hidden onclick="openPicker('ship')">
+      <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span>
+      <span class="tx"><span class="lb">Teslimat Adresi</span><span class="vl" data-v="ship">Molla Gürani, Uygar Sokağı No:17 A, Fatih İstanbul Türkiye</span></span>
       <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
     </button>
   </section>
@@ -337,6 +337,10 @@ const CUST_INFO = {"ÜMİT VELİOĞLU": ["VKN", "5490309762", "Kadıköy V.D.", 
 // DEMO: Aydın Üniversitesi bilgileri uydurmadır, gerçek cari kartından alınmalı (kullanıcı isteği).
 CUST_INFO['T.C. İSTANBUL AYDIN ÜNİVERSİTESİ AĞIZ VE DİŞ SAĞLIĞI UYGULAMA VE ARAŞ. MERKEZİ'] = ['VKN', '0010475382', 'Küçükçekmece V.D.', '2660010475382', '8680010475382'];
 const ADDR = 'Molla Gürani, Uygar Sokağı No:17 A, Fatih İstanbul Türkiye';
+// Cari adresleri index.html sipariş verisinden (birden çok adresi olan cari seçimde hepsini gösterir).
+const CUST_ADDR = {"ÜMİT VELİOĞLU": ["Bağdat Cad. No: 210 D: 4, Kadıköy / İstanbul", "Barbaros Bulvarı No: 44, Beşiktaş / İstanbul", "Halaskargazi Cad. No: 112 D: 6, Şişli / İstanbul", "Hakimiyeti Milliye Cad. No: 78, Üsküdar / İstanbul", "Barbaros Mah. Mor Sümbül Sok. No: 12, Ataşehir / İstanbul", "Söğütlüçeşme Cad. No: 98, Kadıköy / İstanbul"], "ÖZEL GEBZE ÇAPA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ": ["Hacı Halil Mah. Bağdat Cad. No: 512, Gebze / Kocaeli"], "ERDİ EKİZ": ["İncirli Cad. No: 88 D: 3, Bakırköy / İstanbul", "Fevzipaşa Cad. No: 142 D: 2, Fatih / İstanbul", "Batı Mah. Erol Kaya Cad. No: 64, Pendik / İstanbul", "Büyükdere Cad. No: 180, Maslak / Sarıyer / İstanbul"], "DEPO KADİR ÖZDEMİR": ["Davye Merkez Depo Masası, Kadıköy / İstanbul"], "SEMA DENTAL MEDİKAL TİC. LTD.": ["Bağlarbaşı Mah. İnönü Cad. No: 42, Maltepe / İstanbul"], "FATİH YİĞİT YİĞİT DENTAL": ["Kordonboyu Mah. Ankara Cad. No: 120, Kartal / İstanbul"], "ÜLKÜ TÜRKMEN": ["Cihangir Mah. Sıraselviler Cad. No: 91, Beyoğlu / İstanbul"], "FEYZULLAH AHISKALI": ["Telsiz Mah. Balıklı Kazlıçeşme Yolu No: 14, Zeytinburnu / İstanbul"], "DR. HAKAN ÖZKUL": ["Valikonağı Cad. No: 88, Nişantaşı / Şişli / İstanbul"], "KUTAY HOCA": ["Mimar Sinan Mah. Çavuşdere Cad. No: 28, Üsküdar / İstanbul"], "DT. MİRDASH LLESHI": ["Abide-i Hürriyet Cad. No: 154 D: 3, Şişli / İstanbul"], "MEHRAN AMINIFARD": ["Nispetiye Cad. No: 62 D: 4, Levent / Beşiktaş / İstanbul"], "MUHAMMET UĞUR DERE": ["Moda Cad. No: 184 D: 2, Caferağa, Kadıköy / İstanbul"], "DR. ALTAN DEMİREL": ["Yeşilköy Mah. İstasyon Cad. No: 48, Bakırköy / İstanbul"], "DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ": ["Altayçeşme Mah. Çam Sok. No: 18, Maltepe / İstanbul"], "ÖZEL DENTAPARK POLİKLİNİĞİ": ["Kadıköy / İstanbul"], "SERAP BOZTEKE": ["Üsküdar / İstanbul"], "DR. AHMET YILMAZ DİŞ KLİNİĞİ": ["Nişantaşı / İstanbul"], "DENTAPOL DENTAL SAĞLIK HİZM. LTD.": ["Ataköy / İstanbul"], "DR. EMRE AKTAŞ KLİNİĞİ": ["Cihangir / İstanbul"], "KUTLU MEDİKAL LTD.": ["Fatih / İstanbul"], "MEGA DENT POLİKLİNİĞİ A.Ş.": ["Kartal / İstanbul"], "CAN DİŞ PROTEZ LABORATUVARI": ["Pendik / İstanbul"], "AVRASYA DİŞ HASTANESİ LTD.": ["Zeytinburnu / İstanbul"], "AYŞE KARACA": ["Ataşehir / İstanbul"], "MARMARA İMPLANT VE DİŞ MERKEZİ": ["Alemdağ Cad. No: 154, Ümraniye / İstanbul"], "DR. SELİM ERGÜN MUAYENEHANESİ": ["Cumhuriyet Cad. No: 22, Beylikdüzü / İstanbul"], "DENTAL İSTANBUL A.Ş.": ["Levent / İstanbul"], "GÖKSU DENTAL TİC. LTD.": ["Maltepe / İstanbul"], "ÖZLEM DENTAL KLİNİĞİ A.Ş.": ["Barbaros Bulvarı No: 88, Beşiktaş / İstanbul"], "DR. TOLGA YILDIZ POLİKLİNİĞİ": ["Tarabya / İstanbul"], "GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ A.Ş.": ["Büyükdere Cad. No: 120, Maslak / İstanbul"], "MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.": ["Levent / İstanbul"], "DR. BURAK ÖZKAN POLİKLİNİĞİ": ["Beylikdüzü / İstanbul"], "ESTETİK DENT AĞIZ VE DİŞ SAĞLIĞI POL.": ["Bakırköy / İstanbul"], "MEHMET CAN": ["Kadıköy / İstanbul"]};
+CUST_ADDR['davut akbulut'] = [ADDR];
+CUST_ADDR['T.C. İSTANBUL AYDIN ÜNİVERSİTESİ AĞIZ VE DİŞ SAĞLIĞI UYGULAMA VE ARAŞ. MERKEZİ'] = ['Florya Mah. Beşyol Cad. No: 7, Küçükçekmece / İstanbul', 'Beşyol Mah. İnönü Cad. No: 38, Küçükçekmece / İstanbul']; // DEMO
 const PICKERS = {
   sales:   { title: 'Satış Sorumlusu', opts: ['DAVUT AKBULUT'] },
   ship:    { title: 'Teslimat Adresi', opts: [ADDR] },
@@ -366,7 +370,10 @@ function openPicker(key){
   openSheet('pickSheet');
 }
 
-function toggleSameAddr(){ $('billRow').hidden = $('sameAddr').checked; }
+function toggleSameAddr(){
+  $('shipRow').hidden = $('sameAddr').checked;
+  if ($('sameAddr').checked) document.querySelector('[data-v="ship"]').textContent = document.querySelector('[data-v="bill"]').textContent;
+}
 function showNote(){ $('noteBtn').hidden = true; $('noteWrap').hidden = false; $('description').focus(); }
 
 function fmt(iso){ const [y,m,d] = iso.split('-'); return d + '.' + m + '.' + y; }
@@ -468,6 +475,12 @@ function pickCust(i){
   selCust = CUSTOMERS[i];
   const n = CUSTOMERS[i];
   $('custName').textContent = n; $('custName').scrollLeft = 0; $('custIds').innerHTML = idsHtml(n); $('custMeta').innerHTML = metaHtml(i); $('custInitials').textContent = initials(n);
+  // Adres seçenekleri seçilen cariye göre: ilk adres fatura, birden çok adresi olanda ikincisi teslimat
+  const addrs = CUST_ADDR[n] || [ADDR];
+  PICKERS.bill.opts = PICKERS.ship.opts = addrs;
+  document.querySelector('[data-v="bill"]').textContent = addrs[0];
+  document.querySelector('[data-v="ship"]').textContent = addrs[1] || addrs[0];
+  $('sameAddr').checked = addrs.length === 1; $('shipRow').hidden = addrs.length === 1;
   $('custSearch').hidden = true; $('custSel').hidden = false; $('salesRow').hidden = false;
   $('main').classList.remove('need-cust');
   $('custQ').blur();
