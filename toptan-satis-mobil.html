@@ -423,9 +423,12 @@ function applyDue(){
   if (sel) $('dueDate').value = addDays($('processDate').value, +sel.dataset.d);
   updateDueHint();
 }
+// Vade tarihi elle seçilip hazır günlere uymazsa gün sayısı en başta seçili düğme olarak çıkar
 function customDue(){
-  const n = daysBetween($('processDate').value, $('dueDate').value);
-  document.querySelectorAll('[data-group="due"] button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.d === n));
+  const g = document.querySelector('[data-group="due"]'), n = daysBetween($('processDate').value, $('dueDate').value);
+  g.querySelector('.custom')?.remove();
+  if (n > 0 && !g.querySelector('[data-d="' + n + '"]')) g.insertAdjacentHTML('afterbegin', '<button class="custom" aria-pressed="false" data-d="' + n + '">' + n + '</button>');
+  g.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.d === n));
   updateDueHint();
 }
 function updateDueHint(){
@@ -434,6 +437,7 @@ function updateDueHint(){
 }
 // Varsayılan vade 7 gün: yeni müşteride ve vadeli ödeme yeniden açılınca buna döner
 function resetDue(){
+  document.querySelector('[data-group="due"] .custom')?.remove();
   document.querySelectorAll('[data-group="due"] button').forEach(b => b.setAttribute('aria-pressed', b.dataset.d === '7'));
   applyDue();
 }
@@ -449,7 +453,7 @@ document.querySelectorAll('[data-group]').forEach(g => g.addEventListener('click
     $('rateWrap').hidden = b.dataset.rate === '1';
     $('rateNote').textContent = 'Kur: ' + b.dataset.rate;
   }
-  if (g.dataset.group === 'due') applyDue();
+  if (g.dataset.group === 'due'){ if (!b.classList.contains('custom')) g.querySelector('.custom')?.remove(); applyDue(); }
 }));
 
 // Türkçe harf ve büyük/küçük harf duyarsız arama: "ozel", "ÖZEL", "özel" aynı sonucu verir. Uzunluk korunur, vurgulama için önemli.
