@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#009eb5">
+<meta name="theme-color" content="#24399a">
 <title>Sipariş Oluştur</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Ana renk sipariş türüne göre: Dental #009eb5, Ecza #00588c (body[data-depot]) */
+  /* Ana renk sipariş türüne göre: Dental sistemin varsayılan mavisi #24399a, Ecza #009eb5 (body[data-depot]) */
   /* --brand-strong: yazı taşıyan yerler için koyu ton (beyaz/açık zemine karşı ≥4,5:1 kontrast) */
-  --brand:#009eb5; --brand-strong:#007a8c; --brand-ink:#006a7a; --brand-soft:#e6f6f9; --brand-glow:rgba(0,158,181,.45);
+  --brand:#24399a; --brand-strong:#24399a; --brand-ink:#1b2c7a; --brand-soft:#eef1fb; --brand-glow:rgba(36,57,154,.45);
   --bg-body:#f1f5f9; --card:#fff; --text:#0f172a; --text-2:#475569; --muted:#64748b;
   --border:#e2e8f0; --border-2:#cbd5e1; --ok:#16a34a; --danger:#dc2626;
   --r-card:12px; --r-ctl:10px; --tap:42px;
 }
-body[data-depot="ecza"]{--brand:#00588c;--brand-strong:#00588c;--brand-ink:#004670;--brand-soft:#e6eff5;--brand-glow:rgba(0,88,140,.45)}
+body[data-depot="ecza"]{--brand:#009eb5;--brand-strong:#007a8c;--brand-ink:#006a7a;--brand-soft:#e6f6f9;--brand-glow:rgba(0,158,181,.45)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;overflow-x:hidden}
 body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:var(--bg-body);color:var(--text);font-size:15px;line-height:1.4;
@@ -674,7 +674,7 @@ function toggleCredit(){ $('dueWrap').hidden = !$('isCreditSale').checked; if ($
 document.querySelectorAll('[data-group]').forEach(g => g.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
   g.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
-  if (g.dataset.group === 'depot'){ document.body.dataset.depot = depot(); document.querySelector('meta[name=theme-color]').content = depot() === 'ecza' ? '#00588c' : '#009eb5'; $('custQ').placeholder = 'Ad, VKN/TC, ' + (depot() === 'ecza' ? 'GLN' : 'ÜTS') + ' ara'; renderList(false); if (selCust) $('custIds').innerHTML = idsHtml(selCust); }
+  if (g.dataset.group === 'depot'){ document.body.dataset.depot = depot(); document.querySelector('meta[name=theme-color]').content = depot() === 'ecza' ? '#009eb5' : '#24399a'; $('custQ').placeholder = 'Ad, VKN/TC, ' + (depot() === 'ecza' ? 'GLN' : 'ÜTS') + ' ara'; renderList(false); if (selCust) $('custIds').innerHTML = idsHtml(selCust); }
   if (g.dataset.group === 'cur'){
     $('exchangeRate').value = b.dataset.rate;
     $('rateWrap').hidden = b.dataset.rate === '1';
