@@ -118,6 +118,17 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .cs-item:first-child{border-top:0}
 .cs-item:active,.cs-item.hl{background:var(--brand-soft)}
 .cs-item .avatar{width:36px;height:36px;font-size:13px}
+.cs-item{position:relative;z-index:1;background:var(--card);user-select:none;-webkit-user-select:none;transition:transform .22s cubic-bezier(.2,.8,.2,1)}
+.cs-item.swiping{transition:none}
+.cs-item .avatar,.cs-item .nm{touch-action:pan-y}  /* yatay kaydırma satırı oynatır, bilgi şeritleri kendi içinde kayar */
+#custList{position:relative}
+/* Kaydırınca arkada beliren eylem: sağa Seç (yeşil), sola Düzenle (lacivert) */
+.swipe-bg{position:absolute;left:12px;right:12px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-radius:10px;color:#fff;font-weight:700;font-size:13px;background:var(--border-2)}
+.swipe-bg[data-dir="sel"]{background:var(--ok)}
+.swipe-bg[data-dir="edit"]{background:var(--brand)}
+.swipe-bg[data-dir="sel"] .sw-edit,.swipe-bg[data-dir="edit"] .sw-sel{visibility:hidden}
+.swipe-bg span{transition:transform .15s}
+.swipe-bg.arm span{transform:scale(1.15)}
 .avatar.fly{position:fixed;z-index:60;margin:0;transform-origin:0 0;pointer-events:none}
 /* Avatar = düzenle: farede üstüne gelince kalem olur, dokunmatikte köşede kalem rozeti durur */
 .av-edit{position:relative;transition:background .15s}
@@ -659,7 +670,7 @@ const emptyHtml = q => '<div class="cs-empty">“' + esc(q) + '” ile eşleşen
 function custItem(i, k, anim){
   const n = CUSTOMERS[i], w = custWord, at = w ? CUST_N[i].indexOf(w) : -1;
   const label = at < 0 ? esc(n) : esc(n.slice(0, at)) + '<mark>' + esc(n.slice(at, at + w.length)) + '</mark>' + esc(n.slice(at + w.length));
-  return '<button class="cs-item' + (k === 0 && custQuery ? ' hl' : '') + (anim ? ' in" style="--i:' + Math.min(k % CUST_PAGE, 12) : '') + '" role="option" onclick="custClick(event, ' + i + ')"><span class="avatar av-edit" title="Müşteriyi düzenle"><span class="ini">' + esc(initials(n)) + '</span><svg class="pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></span><span class="tx"><span class="ids meta">' + metaHtml(i) + '</span><span class="nm">' + label + '</span><span class="ids">' + idsHtml(n) + '</span></span></button>';
+  return '<button class="cs-item' + (k === 0 && custQuery ? ' hl' : '') + (anim ? ' in" style="--i:' + Math.min(k % CUST_PAGE, 12) : '') + '" data-i="' + i + '" role="option" onclick="custClick(event, ' + i + ')"><span class="avatar av-edit" title="Müşteriyi düzenle"><span class="ini">' + esc(initials(n)) + '</span><svg class="pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></span><span class="tx"><span class="ids meta">' + metaHtml(i) + '</span><span class="nm">' + label + '</span><span class="ids">' + idsHtml(n) + '</span></span></button>';
 }
 function setHead(){ $('custHead').textContent = custQuery ? custTotal.toLocaleString('tr') + ' sonuç' : 'Müşteriler (' + custTotal.toLocaleString('tr') + ')'; }
 function renderList(anim){
@@ -805,7 +816,7 @@ function saveEdit(e){
   toast('Müşteri bilgileri güncellendi');
 }
 // Listede avatara dokunmak düzenlemeyi açar, satırın geri kalanı müşteriyi seçer
-function custClick(e, i){ pickFly(i, e.currentTarget.querySelector('.avatar')); if (e.target.closest('.av-edit')) openEdit(i); }  // avatar: seç + düzenle
+function custClick(e, i){ if (e.currentTarget.dataset.swiped) return; pickFly(i, e.currentTarget.querySelector('.avatar')); if (e.target.closest('.av-edit')) openEdit(i); }  // avatar: seç + düzenle
 // Seçince avatar listedeki yerinden karttaki yerine kayar ("seçtim" hissi)
 function pickFly(i, av){
   const a = av && av.getBoundingClientRect();
@@ -878,6 +889,52 @@ document.addEventListener('pointerdown', e => {
 }, { passive: true });
 
 Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, goStep, runSearch, custKey, clearCust, pickCust, changeCust, clearSel, editCust, custClick, openEdit, saveEdit, queueCust, searchBtn, newCust });
+
+// Listede satırı kaydırma: sağa → Seç, sola → Düzenle (80 px eşiği geçince bırakınca çalışır)
+(() => {
+  const L = $('custList');
+  let it = null, x0 = 0, y0 = 0, dx = 0, mode = null, bg = null;
+  L.addEventListener('pointerdown', e => {
+    const t = e.target.closest('.cs-item');
+    if (!t || e.button || e.target.closest('.ids')) return;
+    it = t; x0 = e.clientX; y0 = e.clientY; dx = 0; mode = null;
+  });
+  L.addEventListener('pointermove', e => {
+    if (!it) return;
+    const mx = e.clientX - x0, my = e.clientY - y0;
+    if (!mode){
+      if (Math.abs(mx) < 8 && Math.abs(my) < 8) return;
+      mode = Math.abs(mx) > Math.abs(my) ? 'x' : 'y';
+      if (mode === 'y'){ it = null; return; }  // dikey hareket: liste kaysın
+      it.setPointerCapture(e.pointerId);
+      it.classList.remove('in'); it.classList.add('swiping');
+      bg = document.createElement('div');
+      bg.className = 'swipe-bg'; bg.setAttribute('aria-hidden', 'true');
+      bg.innerHTML = '<span class="sw-sel">✓ Seç</span><span class="sw-edit">Düzenle ✎</span>';
+      bg.style.top = it.offsetTop + 'px'; bg.style.height = it.offsetHeight + 'px';
+      L.insertBefore(bg, it);
+    }
+    dx = Math.max(-120, Math.min(120, mx));
+    it.style.transform = 'translateX(' + dx + 'px)';
+    bg.dataset.dir = dx > 0 ? 'sel' : 'edit';
+    bg.classList.toggle('arm', Math.abs(dx) > 80);
+  });
+  const end = () => {
+    if (!it) return;
+    const t = it, d = dx, b = bg;
+    it = null; bg = null;
+    if (mode !== 'x') return;
+    t.classList.remove('swiping'); t.style.transform = '';
+    t.dataset.swiped = '1';  // kaydırmanın ardından gelen tıklama seçim yapmasın
+    setTimeout(() => { delete t.dataset.swiped; b && b.remove(); }, 230);
+    if (Math.abs(d) > 80){
+      const i = +t.dataset.i;
+      if (d > 0) pickFly(i, t.querySelector('.avatar')); else { pickCust(i); openEdit(i); }
+    }
+  };
+  L.addEventListener('pointerup', end);
+  L.addEventListener('pointercancel', end);
+})();
 
 // Liste sonuna yaklaşınca sonraki 50 eklenir
 $('custList').addEventListener('scroll', e => { const l = e.target; if (l.scrollTop + l.clientHeight > l.scrollHeight - 300) moreCust(); }, { passive: true });
