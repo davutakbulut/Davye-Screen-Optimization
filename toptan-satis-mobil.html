@@ -152,7 +152,8 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .cs-progress.on::before{animation:indet 1.1s ease-in-out infinite}
 @keyframes indet{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
 .cs-wait{display:flex;align-items:center;justify-content:center;gap:8px;margin:6px 0 4px;padding:7px 12px;border-radius:20px;background:var(--brand-soft);color:var(--brand);font-size:13px;font-weight:600;animation:csIn .25s ease-out both}
-.dots{display:inline-flex;gap:3px}
+#custWaitTxt{animation:csIn .3s ease-out both;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.dots{display:inline-flex;gap:3px;flex:none}
 .dots i{width:5px;height:5px;border-radius:50%;background:currentColor;animation:dot 1s ease-in-out infinite}
 .dots i:nth-child(2){animation-delay:.15s}
 .dots i:nth-child(3){animation-delay:.3s}
@@ -697,14 +698,33 @@ function renderList(anim){
   setHead();
   L.innerHTML = custHits.length ? custHits.map((i, k) => custItem(i, k, anim)).join('') : (custQuery ? emptyHtml(custQuery) : '');
 }
+// Beklerken dönen cümleler; 5 sn'den sonra yavaşlığı kabul eden cümlelere geçer
+function waitLines(slow){
+  const n = CUSTOMERS.length.toLocaleString('tr'), q = $('custQ').value.trim();
+  return slow
+    ? ['Bağlantı yavaş, bekliyoruz', 'Hâlâ buradayız, sonuçlar yolda', 'Biraz daha sabır, getiriyoruz']
+    : [q ? '“' + q + '” için ' + n + ' müşteri taranıyor' : n + ' müşteri içinden aranıyor', 'Elimizdeki verilere bir bakalım', 'Kayıtlar getiriliyor'];
+}
 function setLoading(on){
-  clearTimeout(custSlow); clearTimeout(custSlow2); clearTimeout(custSlow3);
+  clearTimeout(custSlow); clearTimeout(custSlow2); clearInterval(custSlow3);
   const L = $('custList');
   if (!on){ $('custSearchBtn').classList.remove('loading'); $('custProg').classList.remove('on'); $('custWait').hidden = true; L.removeAttribute('aria-busy'); return; }
   L.setAttribute('aria-busy', 'true');
   // Gecikme uzadıkça kullanıcıya beklediğimizi söyleyen mesaj çıkar, 5 sn'yi geçince yavaş bağlantı olduğunu belirtir
-  custSlow2 = setTimeout(() => { $('custWaitTxt').textContent = 'Müşteriler getiriliyor'; $('custWait').hidden = false; }, 1500);
-  custSlow3 = setTimeout(() => { $('custWaitTxt').textContent = 'Bağlantı yavaş, bekliyoruz'; }, 5000);
+  const t0 = Date.now();
+  custSlow2 = setTimeout(() => {
+    $('custWait').hidden = false;
+    let k = 0, wasSlow = false;
+    const show = () => {
+      const slow = Date.now() - t0 > 5000;
+      if (slow !== wasSlow){ k = 0; wasSlow = slow; }  // yavaş cümlelere baştan başla
+      const list = waitLines(slow), el = $('custWaitTxt');
+      el.textContent = list[k++ % list.length];
+      el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';  // her cümlede yumuşak geçiş
+    };
+    show();
+    custSlow3 = setInterval(show, 2200);
+  }, 1500);
   // 300 ms'den hızlı gelen cevapta gösterge hiç görünmez, ekran titremez
   custSlow = setTimeout(() => {
     $('custSearchBtn').classList.add('loading');
