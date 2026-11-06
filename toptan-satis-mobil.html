@@ -58,7 +58,10 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .cust{display:flex;align-items:center;gap:12px;padding:14px}
 .avatar{width:48px;height:48px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700;font-size:17px;flex:none}
 .cust .tx{flex:1;min-width:0}
-.cust .nm{font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Uzun cari adı: 2 satır görünür, kalanı yana kaydırılarak okunur (taşan metin sağdaki sütuna akar) */
+.cust .nm{font-size:17px;font-weight:700;line-height:1.3;height:2.6em;column-width:100vw;column-gap:16px;column-fill:auto;
+  overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain}
+.cust .nm::-webkit-scrollbar{display:none}
 .cust .sub{font-size:13px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pill-btn{height:36px;padding:0 14px;border-radius:18px;background:var(--brand-soft);color:var(--brand);font-weight:600;font-size:14px;flex:none}
 
@@ -148,9 +151,9 @@ textarea{resize:vertical;min-height:80px}
   <!-- 1. Müşteri: en sık değişen, en üstte -->
   <section class="card" aria-label="Müşteri">
     <div class="cust">
-      <div class="avatar" id="custInitials">DA</div>
+      <div class="avatar" id="custInitials">İA</div>
       <div class="tx">
-        <div class="nm" id="custName">davut akbulut</div>
+        <div class="nm" id="custName" tabindex="0">T.C. İSTANBUL AYDIN ÜNİVERSİTESİ AĞIZ VE DİŞ SAĞLIĞI UYGULAMA VE ARAŞ. MERKEZİ</div>
         <div class="sub">Satış Sorumlusu: <b id="salesName">DAVUT AKBULUT</b></div>
       </div>
       <button class="pill-btn" onclick="toast('Müşteri arama açılır')">Değiştir</button>
