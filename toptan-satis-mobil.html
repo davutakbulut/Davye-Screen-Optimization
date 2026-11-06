@@ -75,6 +75,22 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .seg-type{background:var(--border);padding:4px}
 .seg-type button{min-height:48px;font-size:16px}
 .seg-type button[aria-pressed="true"]{background:var(--brand);color:#fff}
+/* Müşteri arama */
+.cs{padding:12px}
+.cs-box{display:flex;align-items:center;gap:8px;min-height:52px;padding:0 6px 0 12px;border:2px solid var(--brand);border-radius:var(--r-ctl);color:var(--muted)}
+.cs-box input{border:0;outline:0;padding:0;min-height:48px;flex:1;min-width:0}
+.cs-box input:focus{outline:0}
+.cs-box input::-webkit-search-cancel-button{display:none}
+.cs-clear{width:40px;height:40px;border-radius:50%;color:var(--muted);font-size:16px}
+.cs-h{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding:12px 2px 4px}
+.cs-item{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:6px 2px;text-align:left;border-top:1px solid var(--border)}
+.cs-item:first-child{border-top:0}
+.cs-item:active,.cs-item.hl{background:var(--brand-soft)}
+.cs-item .avatar{width:36px;height:36px;font-size:13px}
+.cs-item .nm{flex:1;min-width:0;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cs-item mark{background:#fef08a;color:inherit;border-radius:2px}
+.cs-empty{padding:16px 2px;color:var(--muted);font-size:14px}
+main.need-cust > section:not(#custCard){opacity:.4;pointer-events:none}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chips button{min-height:40px;padding:0 14px;border-radius:20px;border:1px solid var(--border-2);font-weight:600;font-size:14px;color:var(--text-2)}
 .chips button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
@@ -142,23 +158,34 @@ textarea{resize:vertical;min-height:80px}
 <div class="steps" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
 <div class="step-label">Adım 1/3 · Fatura Bilgileri → Ürün Seçimi → Kargo Bilgileri ve Gönderim</div>
 
-<main>
+<main class="need-cust" id="main">
   <!-- 0. Sipariş türü: hangi depoya gireceğini belirler -->
   <div class="seg seg-type" data-group="depot" role="group" aria-label="Sipariş türü">
     <button aria-pressed="true" data-depot="dental">Dental Sipariş</button><button aria-pressed="false" data-depot="ecza">Ecza Sipariş</button>
   </div>
 
   <!-- 1. Müşteri: en sık değişen, en üstte -->
-  <section class="card" aria-label="Müşteri">
-    <div class="cust">
-      <div class="avatar" id="custInitials">İA</div>
+  <section class="card" id="custCard" aria-label="Müşteri">
+    <!-- Arama durumu: sayfa açılınca odak burada -->
+    <div class="cs" id="custSearch">
+      <label class="cs-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input id="custQ" type="search" placeholder="Müşteri ara (ad, unvan)" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"
+          aria-label="Müşteri ara" aria-controls="custList" oninput="renderCust()" onkeydown="custKey(event)">
+        <button type="button" class="cs-clear" id="custClear" hidden aria-label="Aramayı temizle" onclick="clearCust()">✕</button>
+      </label>
+      <div class="cs-h" id="custHead"></div>
+      <div id="custList" role="listbox" aria-label="Müşteriler"></div>
+    </div>
+    <div class="cust" id="custSel" hidden>
+      <div class="avatar" id="custInitials">DA</div>
       <div class="tx">
-        <div class="nm" id="custName" tabindex="0">T.C. İSTANBUL AYDIN ÜNİVERSİTESİ AĞIZ VE DİŞ SAĞLIĞI UYGULAMA VE ARAŞ. MERKEZİ</div>
+        <div class="nm" id="custName" tabindex="0">davut akbulut</div>
         <div class="sub">Satış Sorumlusu: <b id="salesName">DAVUT AKBULUT</b></div>
       </div>
-      <button class="pill-btn" onclick="toast('Müşteri arama açılır')">Değiştir</button>
+      <button class="pill-btn" onclick="changeCust()">Değiştir</button>
     </div>
-    <button class="row" onclick="openPicker('sales')">
+    <button class="row" id="salesRow" hidden onclick="openPicker('sales')">
       <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M10 2h4v4h-4zM8.5 17c.5-1.7 1.9-2.5 3.5-2.5s3 .8 3.5 2.5"/><circle cx="12" cy="11" r="2"/></svg></span>
       <span class="tx"><span class="lb">Satış Sorumlusu</span><span class="vl" data-v="sales">DAVUT AKBULUT</span></span>
       <svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
@@ -272,6 +299,8 @@ textarea{resize:vertical;min-height:80px}
 
 <script>
 // Seçenekler yalnızca ekrandaki gerçek değerlerdir (GEMINI.md E); canlıda API'den gelir.
+// Cari adları index.html'deki sipariş kartlarından (proje verisi); canlıda müşteri API'sinden gelir.
+const CUSTOMERS = ['T.C. İSTANBUL AYDIN ÜNİVERSİTESİ AĞIZ VE DİŞ SAĞLIĞI UYGULAMA VE ARAŞ. MERKEZİ','davut akbulut','AVRASYA DİŞ HASTANESİ LTD.','AYŞE KARACA','CAN DİŞ PROTEZ LABORATUVARI','DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ','DENTAL İSTANBUL A.Ş.','DENTAPOL DENTAL SAĞLIK HİZM. LTD.','DEPO KADİR ÖZDEMİR','DR. AHMET YILMAZ DİŞ KLİNİĞİ','DR. ALTAN DEMİREL','DR. BURAK ÖZKAN POLİKLİNİĞİ','DR. EMRE AKTAŞ KLİNİĞİ','DR. HAKAN ÖZKUL','DR. SELİM ERGÜN MUAYENEHANESİ','DR. TOLGA YILDIZ POLİKLİNİĞİ','DT. MİRDASH LLESHI','ERDİ EKİZ','ESTETİK DENT AĞIZ VE DİŞ SAĞLIĞI POL.','FATİH YİĞİT YİĞİT DENTAL','FEYZULLAH AHISKALI','GÖKSU DENTAL TİC. LTD.','GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ A.Ş.','KUTAY HOCA','KUTLU MEDİKAL LTD.','MARMARA İMPLANT VE DİŞ MERKEZİ','MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.','MEGA DENT POLİKLİNİĞİ A.Ş.','MEHMET CAN','MEHRAN AMINIFARD','MUHAMMET UĞUR DERE','SEMA DENTAL MEDİKAL TİC. LTD.','SERAP BOZTEKE','ÖZEL DENTAPARK POLİKLİNİĞİ','ÖZEL GEBZE ÇAPA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ','ÖZLEM DENTAL KLİNİĞİ A.Ş.','ÜLKÜ TÜRKMEN','ÜMİT VELİOĞLU'];
 const ADDR = 'Molla Gürani, Uygar Sokağı No:17 A, Fatih İstanbul Türkiye';
 const PICKERS = {
   sales:   { title: 'Satış Sorumlusu', opts: ['DAVUT AKBULUT'] },
@@ -338,19 +367,71 @@ document.querySelectorAll('[data-group]').forEach(g => g.addEventListener('click
   if (g.dataset.group === 'due') applyDue();
 }));
 
+// Türkçe harf ve büyük/küçük harf duyarsız arama: "ozel", "ÖZEL", "özel" aynı sonucu verir. Uzunluk korunur, vurgulama için önemli.
+function norm(t){ return t.toLocaleLowerCase('tr').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ı/g, 'i'); }
+const CUST_N = CUSTOMERS.map(norm);
+function initials(n){ return n.split(/\s+/).filter(w => !/\.$/.test(w)).slice(0, 2).map(w => w[0]).join('').toLocaleUpperCase('tr'); }
+function esc(t){ return t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function searchCust(q){
+  const words = norm(q).trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return CUSTOMERS.map((n, i) => i).slice(0, 6);
+  return CUST_N.map((n, i) => ({ i, n })).filter(o => words.every(w => o.n.includes(w)))
+    // Başta eşleşen, sonra kelime başında eşleşen öne
+    .sort((a, b) => (b.n.startsWith(words[0]) - a.n.startsWith(words[0])) || ((' ' + b.n).includes(' ' + words[0]) - (' ' + a.n).includes(' ' + words[0])))
+    .slice(0, 8).map(o => o.i);
+}
+
+let custHits = [];
+function renderCust(){
+  const q = $('custQ').value;
+  custHits = searchCust(q);
+  $('custClear').hidden = !q;
+  $('custHead').textContent = q.trim() ? custHits.length + ' sonuç' : 'Müşteriler (' + CUSTOMERS.length + ')';
+  const w = norm(q).trim().split(/\s+/)[0] || '';
+  $('custList').innerHTML = custHits.length ? custHits.map((i, k) => {
+    const n = CUSTOMERS[i], at = w ? CUST_N[i].indexOf(w) : -1;
+    const label = at < 0 ? esc(n) : esc(n.slice(0, at)) + '<mark>' + esc(n.slice(at, at + w.length)) + '</mark>' + esc(n.slice(at + w.length));
+    return '<button class="cs-item' + (k === 0 && q.trim() ? ' hl' : '') + '" role="option" onclick="pickCust(' + i + ')"><span class="avatar">' + esc(initials(n)) + '</span><span class="nm">' + label + '</span></button>';
+  }).join('') : '<div class="cs-empty">“' + esc(q.trim()) + '” ile eşleşen müşteri yok.</div>';
+}
+function custKey(e){
+  if (e.key === 'Enter' && custHits.length && $('custQ').value.trim()){ e.preventDefault(); pickCust(custHits[0]); }
+  if (e.key === 'Escape') clearCust();
+}
+function clearCust(){ $('custQ').value = ''; renderCust(); $('custQ').focus(); }
+function pickCust(i){
+  const n = CUSTOMERS[i];
+  $('custName').textContent = n; $('custName').scrollLeft = 0; $('custInitials').textContent = initials(n);
+  $('custSearch').hidden = true; $('custSel').hidden = false; $('salesRow').hidden = false;
+  $('main').classList.remove('need-cust');
+  $('custQ').blur();
+}
+function changeCust(){
+  $('custSearch').hidden = false; $('custSel').hidden = true; $('salesRow').hidden = true;
+  $('main').classList.add('need-cust');
+  clearCust();
+}
+
 let toastTimer;
 function toast(msg){ closeSheets(); const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 1800); }
 
 function saveHeader(){
+  if ($('main').classList.contains('need-cust')){ $('custQ').focus(); return toast('Önce müşteri seçin'); }
   if ($('isCreditSale').checked && $('dueDate').value < $('processDate').value) return toast('Vade tarihi işlem tarihinden önce olamaz');
   toast('Sipariş başlığı kaydedildi · Ürün ekleme adımı');
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(); });
 
-Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, applyDue, customDue, toggleCredit, toast, saveHeader });
+Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, showNote, applyDue, customDue, toggleCredit, toast, saveHeader, renderCust, custKey, clearCust, pickCust, changeCust });
 
-// self-check: vade hesabı
+renderCust();
+$('custQ').focus();
+
+// self-check: vade hesabı, Türkçe arama
+console.assert(norm('ÖZEL İĞDE ışık') === 'ozel igde isik' && CUSTOMERS.every((n, i) => CUST_N[i].length === n.length), 'norm uzunluğu bozuldu');
+console.assert(CUSTOMERS[searchCust('ozel gebze')[0]].startsWith('ÖZEL GEBZE') && searchCust('dent').length > 0, 'müşteri araması hatalı');
 console.assert(addDays('2026-11-06', 7) === '2026-11-13' && daysBetween('2026-11-06', '2026-11-13') === 7, 'vade hesabı hatalı');
 </script>
 </body>
