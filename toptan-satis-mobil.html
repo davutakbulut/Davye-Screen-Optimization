@@ -830,7 +830,8 @@ function pickFly(i, av){
   const a = av && av.getBoundingClientRect();
   pickCust(i);
   const dst = $('custInitials'), b = dst.getBoundingClientRect();
-  if (!a || !a.width || !b.width || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // Hareket azaltılmışsa veya cihaz belleği 2 GB ya da altındaysa (Chrome/Android bildirir) uçuş atlanır, seçim doğrudan olur
+  if (!a || !a.width || !b.width || matchMedia('(prefers-reduced-motion: reduce)').matches || navigator.deviceMemory <= 2) return;
   const c = document.createElement('div');
   c.className = 'avatar fly'; c.textContent = dst.textContent;
   Object.assign(c.style, { left: a.left + 'px', top: a.top + 'px', width: a.width + 'px', height: a.height + 'px', fontSize: getComputedStyle(av).fontSize });
