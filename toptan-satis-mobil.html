@@ -823,10 +823,11 @@ function custType(n){
 }
 function tagHtml(n){ const t = custType(n); return '<span class="ctype t-' + CTYPE_SLUG[t] + '">' + t + '</span>'; }
 function metaHtml(i, withTag){
-  if (withTag) return tagHtml(CUSTOMERS[i]) + metaHtml(i);
   const n = CUSTOMERS[i], l = CUST_LOC[n];
-  return '<span class="id-chip" title="Cari Kodu: ' + CUST_CODE[i] + '"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M4 9h16M4 15h16M10 3 8 21M16 3l-2 18\"/></svg><span class="mono">' + CUST_CODE[i] + '</span></span>'
-    + (l ? '<span class="id-chip" title="İlçe / İl"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z\"/><path d=\"M9 4v14M15 6v14\"/></svg>' + esc(l.filter(Boolean).join(' / ')) + '</span>' : '');
+  const code = '<span class="id-chip" title="Cari Kodu: ' + CUST_CODE[i] + '"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M4 9h16M4 15h16M10 3 8 21M16 3l-2 18\"/></svg><span class="mono">' + CUST_CODE[i] + '</span></span>';
+  const loc = (l ? '<span class="id-chip" title="İlçe / İl"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z\"/><path d=\"M9 4v14M15 6v14\"/></svg>' + esc(l.filter(Boolean).join(' / ')) + '</span>' : '');
+  // Aramada: tür, ilçe/il, en sonda cari kodu; diğer yerlerde: kod, ilçe/il
+  return withTag ? tagHtml(n) + loc + code : code + loc;
 }
 function idsHtml(n){
   const d = CUST_INFO[n]; if (!d) return '';
