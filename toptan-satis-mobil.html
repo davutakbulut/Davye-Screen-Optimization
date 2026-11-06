@@ -279,6 +279,12 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 .ad-loc svg{flex:none;color:var(--brand)}
 .opt .ad{flex:1;min-width:0}
 .pick-search{padding:0 16px 8px}
+.opt-cust{gap:10px;padding:8px 16px}
+.opt-cust .avatar{width:34px;height:34px;font-size:12px}
+.opt-cust .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.opt-cust .nm{font-weight:600}
+.opt-cust .ids{font-size:11px}
+.opt-cust .id-chip{height:22px}
 .pick-empty{padding:16px;color:var(--muted);font-size:14px;border-top:1px solid var(--border)}
 .opt mark{background:#fef08a;color:inherit;border-radius:2px}
 .opt-row{display:flex;align-items:center;border-top:1px solid var(--border)}
@@ -581,6 +587,29 @@ const PICKERS = {
   bill:    { title: 'Fatura Adresi', opts: [ADDR] }
 };
 
+// DEMO: uydurma satış sorumluları (gerçeklerle birlikte toplam 100). Satış sorumluları aynı zamanda müşteri hesabıdır:
+// cari kodu, ilçe/il, TC, vergi dairesi ve adres müşterilerdeki gibi tutulur ve görünür. Canlıda personel/cari servisinden gelir.
+const DEMO_SALES_LOC = {};
+(() => {
+  const F = ['AHMET', 'MEHMET', 'AYŞE', 'FATMA', 'MUSTAFA', 'EMİNE', 'ALİ', 'HATİCE', 'HÜSEYİN', 'ZEYNEP', 'HASAN', 'ELİF', 'İBRAHİM', 'MERVE', 'MURAT', 'BÜŞRA', 'ÖMER', 'ESRA', 'YUSUF', 'ŞEYMA', 'EMRE', 'GİZEM', 'BURAK', 'SELİN', 'CAN', 'DERYA', 'KEMAL', 'İREM', 'SERKAN', 'TUĞBA', 'OĞUZ'];
+  const L = ['YILMAZ', 'KAYA', 'DEMİR', 'ŞAHİN', 'ÇELİK', 'YILDIZ', 'YILDIRIM', 'ÖZTÜRK', 'AYDIN', 'ÖZDEMİR', 'ARSLAN', 'DOĞAN', 'KILIÇ', 'ASLAN', 'ÇETİN', 'KARA', 'KOÇ', 'KURT', 'ÖZKAN', 'ŞİMŞEK', 'POLAT', 'ÖZCAN', 'KORKMAZ', 'ÇAKIR', 'ERDOĞAN', 'YAVUZ', 'ACAR', 'AKTAŞ', 'GÜNEŞ', 'TEKİN'];
+  const D = [['Kadıköy', 'İstanbul'], ['Beşiktaş', 'İstanbul'], ['Çankaya', 'Ankara'], ['Karşıyaka', 'İzmir'], ['Nilüfer', 'Bursa'], ['Muratpaşa', 'Antalya'], ['Selçuklu', 'Konya'], ['Seyhan', 'Adana'], ['Şahinbey', 'Gaziantep'], ['Atakum', 'Samsun']];
+  // Kontrol haneleri kurala uygun TC kimlik no üretir
+  const tc = n => { const d = String(n).split('').map(Number), t = (((d[0] + d[2] + d[4] + d[6] + d[8]) * 7 - (d[1] + d[3] + d[5] + d[7])) % 10 + 10) % 10; return n + '' + t + (d.reduce((a, b) => a + b, 0) + t) % 10; };
+  const opts = PICKERS.sales.opts, used = new Set([...opts, ...CUSTOMERS].map(norm));
+  for (let k = 0; opts.length < 100; k++){
+    const name = F[k % F.length] + ' ' + L[(k * 7 + Math.floor(k / F.length)) % L.length];
+    if (used.has(norm(name))) continue;
+    used.add(norm(name));
+    const loc = D[k % D.length];
+    opts.push(name); CUSTOMERS.push(name);
+    CUST_INFO[name] = ['TC', tc(312450000 + k * 7919), loc[0] + ' V.D.', '', '', ''];
+    CUST_ADDR[name] = ['Cumhuriyet Mah. Atatürk Cad. No: ' + (k + 1) + ', ' + loc.join(' / ')];
+    DEMO_SALES_LOC[name] = loc;
+  }
+  opts.sort((a, b) => a.localeCompare(b, 'tr'));
+})();
+
 function $(id){ return document.getElementById(id); }
 function openSheet(id){ $('scrim').classList.add('open'); $(id).classList.add('open'); }
 function closeSheets(){ $('scrim').classList.remove('open'); document.querySelectorAll('.sheet.open').forEach(s => s.classList.remove('open')); }
@@ -598,7 +627,9 @@ function openPicker(key){
   const draw = q => {
   const w = norm(q).trim();
   $('pickList').innerHTML = '';
-  const shown = p.opts.filter(o => !w || norm(o).includes(w));
+  // Satış sorumlusunun bağlı müşteri hesabı: aramada onun kodu, TC'si ve ilçesi de eşleşir
+  const ci = o => key === 'sales' ? CUST_N.indexOf(norm(o)) : -1;
+  const shown = p.opts.filter(o => !w || norm(o).includes(w) || (ci(o) >= 0 && CUST_S[ci(o)].includes(w)));
   if (!shown.length) $('pickList').innerHTML = '<div class="pick-empty">“' + esc(q.trim()) + '” ile eşleşen kayıt yok</div>';
   shown.forEach(o => {
     const idx = p.opts.indexOf(o);
@@ -606,8 +637,11 @@ function openPicker(key){
     b.className = 'opt'; b.role = 'option';
     const at = w ? norm(o).indexOf(w) : -1;  // eşleşen kısım vurgulanır (norm harf sayısını korur)
     if (isAddr) b.innerHTML = '<span class="ad">' + addrHtml(o) + '</span>';
-    else if (at >= 0){ const d = disp(o); b.innerHTML = esc(d.slice(0, at)) + '<mark>' + esc(d.slice(at, at + w.length)) + '</mark>' + esc(d.slice(at + w.length)); }
-    else b.textContent = disp(o);
+    else {
+      const d = disp(o), label = at >= 0 ? esc(d.slice(0, at)) + '<mark>' + esc(d.slice(at, at + w.length)) + '</mark>' + esc(d.slice(at + w.length)) : esc(d), c = ci(o);
+      if (c >= 0){ b.classList.add('opt-cust'); b.innerHTML = '<span class="avatar">' + esc(initials(CUSTOMERS[c])) + '</span><span class="tx"><span class="ids meta">' + metaHtml(c) + '</span><span class="nm">' + label + '</span><span class="ids">' + idsHtml(CUSTOMERS[c]) + '</span></span>'; }
+      else b.innerHTML = label;
+    }
     b.setAttribute('aria-selected', o === cur);
     b.onclick = () => {
       if (isAddr) setAddr(key, o); else { vEl.dataset.raw = o; vEl.textContent = disp(o); }
@@ -738,6 +772,7 @@ function depot(){ return document.querySelector('[data-group="depot"] [aria-pres
 // İl/ilçe index.html sipariş verisinden; davut akbulut formdaki adresten.
 const CUST_LOC = {"ÜMİT VELİOĞLU": ["Kadıköy", "İstanbul"], "ÖZEL GEBZE ÇAPA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ": ["Gebze", "İstanbul"], "ERDİ EKİZ": ["Bakırköy", "İstanbul"], "DEPO KADİR ÖZDEMİR": ["Kadıköy", "İstanbul"], "SEMA DENTAL MEDİKAL TİC. LTD.": ["Maltepe", "İstanbul"], "FATİH YİĞİT YİĞİT DENTAL": ["Kartal", "İstanbul"], "ÜLKÜ TÜRKMEN": ["Beyoğlu", "İstanbul"], "FEYZULLAH AHISKALI": ["Zeytinburnu", "İstanbul"], "DR. HAKAN ÖZKUL": ["Nişantaşı", "İstanbul"], "KUTAY HOCA": ["Üsküdar", "İstanbul"], "DT. MİRDASH LLESHI": ["Şişli", "İstanbul"], "MEHRAN AMINIFARD": ["Beşiktaş", "İstanbul"], "MUHAMMET UĞUR DERE": ["Kadıköy", "İstanbul"], "DR. ALTAN DEMİREL": ["Bakırköy", "İstanbul"], "DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ": ["Maltepe", "İstanbul"], "ÖZEL DENTAPARK POLİKLİNİĞİ": ["Kadıköy", "İstanbul"], "SERAP BOZTEKE": ["Üsküdar", "İstanbul"], "DR. AHMET YILMAZ DİŞ KLİNİĞİ": ["Şişli", "İstanbul"], "DENTAPOL DENTAL SAĞLIK HİZM. LTD.": ["Bakırköy", "İstanbul"], "DR. EMRE AKTAŞ KLİNİĞİ": ["Beyoğlu", "İstanbul"], "KUTLU MEDİKAL LTD.": ["Fatih", "İstanbul"], "MEGA DENT POLİKLİNİĞİ A.Ş.": ["Kartal", "İstanbul"], "CAN DİŞ PROTEZ LABORATUVARI": ["Pendik", "İstanbul"], "AVRASYA DİŞ HASTANESİ LTD.": ["Zeytinburnu", "İstanbul"], "AYŞE KARACA": ["Ataşehir", "İstanbul"], "MARMARA İMPLANT VE DİŞ MERKEZİ": ["Ümraniye", "İstanbul"], "DR. SELİM ERGÜN MUAYENEHANESİ": ["Beylikdüzü", "İstanbul"], "DENTAL İSTANBUL A.Ş.": ["Beşiktaş", "İstanbul"], "GÖKSU DENTAL TİC. LTD.": ["Maltepe", "İstanbul"], "ÖZLEM DENTAL KLİNİĞİ A.Ş.": ["Beşiktaş", "İstanbul"], "DR. TOLGA YILDIZ POLİKLİNİĞİ": ["Sarıyer", "İstanbul"], "GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ A.Ş.": ["Sarıyer", "İstanbul"], "MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.": ["Beşiktaş", "İstanbul"], "DR. BURAK ÖZKAN POLİKLİNİĞİ": ["Beylikdüzü", "İstanbul"], "ESTETİK DENT AĞIZ VE DİŞ SAĞLIĞI POL.": ["Bakırköy", "İstanbul"], "MEHMET CAN": ["Kadıköy", "İstanbul"]};
 CUST_LOC['davut akbulut'] = ['Fatih', 'İstanbul'];
+Object.assign(CUST_LOC, DEMO_SALES_LOC);
 CUST_LOC['T.C. İSTANBUL AYDIN ÜNİVERSİTESİ AĞIZ VE DİŞ SAĞLIĞI UYGULAMA VE ARAŞ. MERKEZİ'] = ['Küçükçekmece', 'İstanbul']; // DEMO
 // DEMO: cari kodları uydurmadır (projede gerçek cari kodu yok), canlıda cari kartından gelmeli.
 const CUST_CODE = CUSTOMERS.map((n, i) => '120.01.' + String(i + 1).padStart(3, '0'));
