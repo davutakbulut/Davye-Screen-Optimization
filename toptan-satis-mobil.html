@@ -117,6 +117,7 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .cs-item:first-child{border-top:0}
 .cs-item:active,.cs-item.hl{background:var(--brand-soft)}
 .cs-item .avatar{width:36px;height:36px;font-size:13px}
+.avatar.fly{position:fixed;z-index:60;margin:0;transform-origin:0 0;pointer-events:none}
 /* Avatar = düzenle: farede üstüne gelince kalem olur, dokunmatikte köşede kalem rozeti durur */
 .av-edit{position:relative;transition:background .15s}
 .av-edit .pen{display:none}
@@ -706,12 +707,12 @@ function moreCust(){
 // Yazarken her harfte değil, kısa bir duraklamada sorar
 function queueCust(){ clearTimeout(custTimer); $('custClear').hidden = !$('custQ').value; custTimer = setTimeout(runSearch, 250); }
 function searchBtn(){
-  runSearch().then(ok => { if (ok && custQuery && custTotal === 1) pickCust(custHits[0]); else $('custQ').focus(); });  // tek sonuç: doğrudan seç
+  runSearch().then(ok => { if (ok && custQuery && custTotal === 1) pickFly(custHits[0], custList.querySelector('.cs-item .avatar')); else $('custQ').focus(); });  // tek sonuç: doğrudan seç
 }
 // shortcut: canlıda yeni müşteri formuna gider; şimdilik bildirim gösterir
 function newCust(){ const q = $('custQ').value.trim(); toast(q ? '“' + q + '” için yeni müşteri formu açılır' : 'Yeni müşteri formu açılır'); }
 function custKey(e){
-  if (e.key === 'Enter'){ e.preventDefault(); runSearch().then(ok => { if (ok && custQuery && custHits.length) pickCust(custHits[0]); }); }
+  if (e.key === 'Enter'){ e.preventDefault(); runSearch().then(ok => { if (ok && custQuery && custHits.length) pickFly(custHits[0], custList.querySelector('.cs-item .avatar')); }); }
   if (e.key === 'Escape') clearCust();
 }
 function clearCust(){ $('custQ').value = ''; runSearch(); $('custQ').focus(); }
@@ -774,7 +775,21 @@ function saveEdit(e){
   toast('Müşteri bilgileri güncellendi');
 }
 // Listede avatara dokunmak düzenlemeyi açar, satırın geri kalanı müşteriyi seçer
-function custClick(e, i){ pickCust(i); if (e.target.closest('.av-edit')) openEdit(i); }  // avatar: seç + düzenle
+function custClick(e, i){ pickFly(i, e.currentTarget.querySelector('.avatar')); if (e.target.closest('.av-edit')) openEdit(i); }  // avatar: seç + düzenle
+// Seçince avatar listedeki yerinden karttaki yerine kayar ("seçtim" hissi)
+function pickFly(i, av){
+  const a = av && av.getBoundingClientRect();
+  pickCust(i);
+  const dst = $('custInitials'), b = dst.getBoundingClientRect();
+  if (!a || !a.width || !b.width || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const c = document.createElement('div');
+  c.className = 'avatar fly'; c.textContent = dst.textContent;
+  Object.assign(c.style, { left: a.left + 'px', top: a.top + 'px', width: a.width + 'px', height: a.height + 'px', fontSize: getComputedStyle(av).fontSize });
+  document.body.appendChild(c);
+  dst.style.visibility = 'hidden';
+  c.animate([{ transform: 'none' }, { transform: 'translate(' + (b.left - a.left) + 'px,' + (b.top - a.top) + 'px) scale(' + (b.width / a.width) + ')' }],
+    { duration: 380, easing: 'cubic-bezier(.2,.8,.2,1)' }).onfinish = () => { c.remove(); dst.style.visibility = ''; };
+}
 function clearSel(){
   selCust = null;
   document.querySelectorAll('.addr-n').forEach(e => e.textContent = '');
