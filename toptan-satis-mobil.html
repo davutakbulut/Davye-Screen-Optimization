@@ -62,7 +62,17 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .cust .nm{font-size:17px;font-weight:700;line-height:1.3;height:2.6em;column-width:100vw;column-gap:16px;column-fill:auto;
   overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-x:contain}
 .cust .nm::-webkit-scrollbar{display:none}
-.cust .sub{font-size:13px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Kimlik bilgileri: TC/VKN, ÜTS yan yana, vergi dairesi en sağda */
+.cust{flex-wrap:wrap}
+.cust .ids{flex-basis:100%}
+.ids{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;font-size:12px;color:var(--text-2)}
+.ids:empty{display:none}
+.id-chip{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 7px;border-radius:6px;background:var(--bg-body);white-space:nowrap}
+.id-chip svg{color:var(--brand);flex:none}
+.id-chip.vd{margin-left:auto}
+.cs-item .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.cs-item .ids{font-size:11px}
+.cs-item .id-chip{height:22px}
 .pill-btn{height:36px;padding:0 14px;border-radius:18px;background:var(--brand-soft);color:var(--brand);font-weight:600;font-size:14px;flex:none}
 
 /* Segment kontrol (Vergi tipi, Para birimi) */
@@ -170,7 +180,7 @@ textarea{resize:vertical;min-height:80px}
     <div class="cs" id="custSearch">
       <label class="cs-box">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <input id="custQ" type="search" placeholder="Müşteri ara (ad, unvan)" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"
+        <input id="custQ" type="search" placeholder="Ad, VKN/TC veya ÜTS ile ara" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"
           aria-label="Müşteri ara" aria-controls="custList" oninput="renderCust()" onkeydown="custKey(event)">
         <button type="button" class="cs-clear" id="custClear" hidden aria-label="Aramayı temizle" onclick="clearCust()">✕</button>
       </label>
@@ -181,9 +191,9 @@ textarea{resize:vertical;min-height:80px}
       <div class="avatar" id="custInitials">DA</div>
       <div class="tx">
         <div class="nm" id="custName" tabindex="0">davut akbulut</div>
-        <div class="sub">Satış Sorumlusu: <b id="salesName">DAVUT AKBULUT</b></div>
       </div>
       <button class="pill-btn" onclick="changeCust()">Değiştir</button>
+      <div class="ids" id="custIds"></div>
     </div>
     <button class="row" id="salesRow" hidden onclick="openPicker('sales')">
       <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M10 2h4v4h-4zM8.5 17c.5-1.7 1.9-2.5 3.5-2.5s3 .8 3.5 2.5"/><circle cx="12" cy="11" r="2"/></svg></span>
@@ -301,6 +311,8 @@ textarea{resize:vertical;min-height:80px}
 // Seçenekler yalnızca ekrandaki gerçek değerlerdir (GEMINI.md E); canlıda API'den gelir.
 // Cari adları index.html'deki sipariş kartlarından (proje verisi); canlıda müşteri API'sinden gelir.
 const CUSTOMERS = ['T.C. İSTANBUL AYDIN ÜNİVERSİTESİ AĞIZ VE DİŞ SAĞLIĞI UYGULAMA VE ARAŞ. MERKEZİ','davut akbulut','AVRASYA DİŞ HASTANESİ LTD.','AYŞE KARACA','CAN DİŞ PROTEZ LABORATUVARI','DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ','DENTAL İSTANBUL A.Ş.','DENTAPOL DENTAL SAĞLIK HİZM. LTD.','DEPO KADİR ÖZDEMİR','DR. AHMET YILMAZ DİŞ KLİNİĞİ','DR. ALTAN DEMİREL','DR. BURAK ÖZKAN POLİKLİNİĞİ','DR. EMRE AKTAŞ KLİNİĞİ','DR. HAKAN ÖZKUL','DR. SELİM ERGÜN MUAYENEHANESİ','DR. TOLGA YILDIZ POLİKLİNİĞİ','DT. MİRDASH LLESHI','ERDİ EKİZ','ESTETİK DENT AĞIZ VE DİŞ SAĞLIĞI POL.','FATİH YİĞİT YİĞİT DENTAL','FEYZULLAH AHISKALI','GÖKSU DENTAL TİC. LTD.','GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ A.Ş.','KUTAY HOCA','KUTLU MEDİKAL LTD.','MARMARA İMPLANT VE DİŞ MERKEZİ','MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.','MEGA DENT POLİKLİNİĞİ A.Ş.','MEHMET CAN','MEHRAN AMINIFARD','MUHAMMET UĞUR DERE','SEMA DENTAL MEDİKAL TİC. LTD.','SERAP BOZTEKE','ÖZEL DENTAPARK POLİKLİNİĞİ','ÖZEL GEBZE ÇAPA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ','ÖZLEM DENTAL KLİNİĞİ A.Ş.','ÜLKÜ TÜRKMEN','ÜMİT VELİOĞLU'];
+// Cari kimlik bilgisi: [kimlik türü, no, vergi dairesi, ÜTS] (index.html sipariş verisinden)
+const CUST_INFO = {"ÜMİT VELİOĞLU": ["VKN", "5490309762", "Kadıköy V.D.", "2660005490309"], "ÖZEL GEBZE ÇAPA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ": ["VKN", "6850803026", "Gebze V.D.", "2660006850803"], "ERDİ EKİZ": ["VKN", "4448888888", "Bakırköy V.D.", "2660004448888"], "DEPO KADİR ÖZDEMİR": ["VKN", "1111111111", "Kadıköy V.D.", "2660001111111"], "SEMA DENTAL MEDİKAL TİC. LTD.": ["VKN", "7600986197", "Küçükyalı V.D.", "2660007600986"], "FATİH YİĞİT YİĞİT DENTAL": ["VKN", "58291049281", "Kartal V.D.", "2660005829104"], "ÜLKÜ TÜRKMEN": ["VKN", "54719732262", "Beyoğlu V.D.", "2660005471973"], "FEYZULLAH AHISKALI": ["VKN", "4918203918", "Zeytinburnu V.D.", "2660004918203"], "DR. HAKAN ÖZKUL": ["VKN", "7010104003", "Şişli V.D.", "2660007010104"], "KUTAY HOCA": ["VKN", "44421321321", "Üsküdar V.D.", "2660004442132"], "DT. MİRDASH LLESHI": ["VKN", "5091126687", "Şişli V.D.", "2660005091126"], "MEHRAN AMINIFARD": ["VKN", "4423222221", "Beşiktaş V.D.", "2660004423222"], "MUHAMMET UĞUR DERE": ["VKN", "1231203912", "Kadıköy V.D.", "2660001231203"], "DR. ALTAN DEMİREL": ["VKN", "29104829104", "Bakırköy V.D.", "2660002910482"], "DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ": ["VKN", "2921007027", "Maltepe V.D.", "2660002921007"], "ÖZEL DENTAPARK POLİKLİNİĞİ": ["VKN", "8472910482", "Kadıköy V.D.", "2660008472910"], "SERAP BOZTEKE": ["TC", "38491029481", "Üsküdar V.D.", "2660001928374"], "DR. AHMET YILMAZ DİŞ KLİNİĞİ": ["VKN", "29104829104", "Şişli V.D.", "2660003920194"], "DENTAPOL DENTAL SAĞLIK HİZM. LTD.": ["VKN", "39482019482", "Bakırköy V.D.", "2660009182734"], "DR. EMRE AKTAŞ KLİNİĞİ": ["VKN", "19482019481", "Beyoğlu V.D.", "2660004928172"], "KUTLU MEDİKAL LTD.": ["VKN", "58492019482", "Fatih V.D.", "2660005928173"], "MEGA DENT POLİKLİNİĞİ A.Ş.": ["VKN", "69482019481", "Kartal V.D.", "2660006928174"], "CAN DİŞ PROTEZ LABORATUVARI": ["VKN", "79482019482", "Pendik V.D.", "2660007928175"], "AVRASYA DİŞ HASTANESİ LTD.": ["VKN", "89482019483", "Zeytinburnu V.D.", "2660008928176"], "AYŞE KARACA": ["TC", "48291048291", "Ataşehir V.D.", "2660004829104"], "MARMARA İMPLANT VE DİŞ MERKEZİ": ["VKN", "99482019484", "Ümraniye V.D.", "2660009928177"], "DR. SELİM ERGÜN MUAYENEHANESİ": ["VKN", "10482019485", "Beylikdüzü V.D.", "2660001028178"], "DENTAL İSTANBUL A.Ş.": ["VKN", "20482019486", "Beşiktaş V.D.", "2660002028179"], "GÖKSU DENTAL TİC. LTD.": ["VKN", "30482019487", "Maltepe V.D.", "2660003028180"], "ÖZLEM DENTAL KLİNİĞİ A.Ş.": ["VKN", "40482019488", "Beşiktaş V.D.", "2660004028181"], "DR. TOLGA YILDIZ POLİKLİNİĞİ": ["VKN", "50482019489", "Sarıyer V.D.", "2660005028182"], "GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ A.Ş.": ["VKN", "60482019490", "Sarıyer V.D.", "2660006028183"], "MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.": ["VKN", "70482019491", "Beşiktaş V.D.", "2660007028184"], "DR. BURAK ÖZKAN POLİKLİNİĞİ": ["VKN", "80482019492", "Beylikdüzü V.D.", "2660008028185"], "ESTETİK DENT AĞIZ VE DİŞ SAĞLIĞI POL.": ["VKN", "90482019493", "Bakırköy V.D.", "2660009028186"], "MEHMET CAN": ["TC", "91827364501", "Kadıköy V.D.", "2660009182736"]};
 const ADDR = 'Molla Gürani, Uygar Sokağı No:17 A, Fatih İstanbul Türkiye';
 const PICKERS = {
   sales:   { title: 'Satış Sorumlusu', opts: ['DAVUT AKBULUT'] },
@@ -324,7 +336,6 @@ function openPicker(key){
     b.onclick = () => {
       const el = document.querySelector('[data-v="' + key + '"]');
       el.textContent = o;
-      if (key === 'sales') $('salesName').textContent = o;
       closeSheets();
     };
     $('pickList').appendChild(b);
@@ -373,10 +384,19 @@ const CUST_N = CUSTOMERS.map(norm);
 function initials(n){ return n.split(/\s+/).filter(w => !/\.$/.test(w)).slice(0, 2).map(w => w[0]).join('').toLocaleUpperCase('tr'); }
 function esc(t){ return t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
+const ID_ICON = {"TC": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><circle cx=\"9\" cy=\"11\" r=\"2\"/><path d=\"M6 16c.6-1.3 1.7-2 3-2s2.4.7 3 2M15 10h3M15 13h3\"/></svg>", "VKN": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6M9 16h3\"/></svg>", "UTS": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M3 5v14M7 5v14M11 5v14M14 5v14M18 5v14M21 5v14\"/></svg>", "VD": "<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M3 21h18M5 21V10M9 21V10M15 21V10M19 21V10M2 10l10-6 10 6z\"/></svg>"};
+function idsHtml(n){
+  const d = CUST_INFO[n]; if (!d) return '';
+  const chip = (k, lab, v, cls) => '<span class="id-chip' + (cls || '') + '" title="' + lab + ': ' + esc(v) + '" aria-label="' + lab + ' ' + esc(v) + '">' + ID_ICON[k] + '<span' + (cls ? '' : ' class="mono"') + '>' + esc(v) + '</span></span>';
+  return chip(d[0] === 'TC' ? 'TC' : 'VKN', d[0], d[1]) + chip('UTS', 'ÜTS', d[3]) + chip('VD', 'Vergi Dairesi', d[2], ' vd');
+}
+// Ada ek olarak TC/VKN, ÜTS ve vergi dairesiyle de aranır
+const CUST_S = CUSTOMERS.map(n => norm(n + ' ' + (CUST_INFO[n] || []).join(' ')));
+
 function searchCust(q){
   const words = norm(q).trim().split(/\s+/).filter(Boolean);
   if (!words.length) return CUSTOMERS.map((n, i) => i).slice(0, 6);
-  return CUST_N.map((n, i) => ({ i, n })).filter(o => words.every(w => o.n.includes(w)))
+  return CUST_N.map((n, i) => ({ i, n })).filter(o => words.every(w => CUST_S[o.i].includes(w)))
     // Başta eşleşen, sonra kelime başında eşleşen öne
     .sort((a, b) => (b.n.startsWith(words[0]) - a.n.startsWith(words[0])) || ((' ' + b.n).includes(' ' + words[0]) - (' ' + a.n).includes(' ' + words[0])))
     .slice(0, 8).map(o => o.i);
@@ -392,7 +412,7 @@ function renderCust(){
   $('custList').innerHTML = custHits.length ? custHits.map((i, k) => {
     const n = CUSTOMERS[i], at = w ? CUST_N[i].indexOf(w) : -1;
     const label = at < 0 ? esc(n) : esc(n.slice(0, at)) + '<mark>' + esc(n.slice(at, at + w.length)) + '</mark>' + esc(n.slice(at + w.length));
-    return '<button class="cs-item' + (k === 0 && q.trim() ? ' hl' : '') + '" role="option" onclick="pickCust(' + i + ')"><span class="avatar">' + esc(initials(n)) + '</span><span class="nm">' + label + '</span></button>';
+    return '<button class="cs-item' + (k === 0 && q.trim() ? ' hl' : '') + '" role="option" onclick="pickCust(' + i + ')"><span class="avatar">' + esc(initials(n)) + '</span><span class="tx"><span class="nm">' + label + '</span><span class="ids">' + idsHtml(n) + '</span></span></button>';
   }).join('') : '<div class="cs-empty">“' + esc(q.trim()) + '” ile eşleşen müşteri yok.</div>';
 }
 function custKey(e){
@@ -402,7 +422,7 @@ function custKey(e){
 function clearCust(){ $('custQ').value = ''; renderCust(); $('custQ').focus(); }
 function pickCust(i){
   const n = CUSTOMERS[i];
-  $('custName').textContent = n; $('custName').scrollLeft = 0; $('custInitials').textContent = initials(n);
+  $('custName').textContent = n; $('custName').scrollLeft = 0; $('custIds').innerHTML = idsHtml(n); $('custInitials').textContent = initials(n);
   $('custSearch').hidden = true; $('custSel').hidden = false; $('salesRow').hidden = false;
   $('main').classList.remove('need-cust');
   $('custQ').blur();
@@ -431,6 +451,7 @@ $('custQ').focus();
 
 // self-check: vade hesabı, Türkçe arama
 console.assert(norm('ÖZEL İĞDE ışık') === 'ozel igde isik' && CUSTOMERS.every((n, i) => CUST_N[i].length === n.length), 'norm uzunluğu bozuldu');
+console.assert(CUSTOMERS[searchCust('6850803026')[0]].startsWith('ÖZEL GEBZE') && idsHtml('davut akbulut') === '', 'kimlik araması hatalı');
 console.assert(CUSTOMERS[searchCust('ozel gebze')[0]].startsWith('ÖZEL GEBZE') && searchCust('dent').length > 0, 'müşteri araması hatalı');
 console.assert(addDays('2026-11-06', 7) === '2026-11-13' && daysBetween('2026-11-06', '2026-11-13') === 7, 'vade hesabı hatalı');
 </script>
