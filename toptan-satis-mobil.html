@@ -236,6 +236,9 @@ main:not(.need-cust) > section:nth-of-type(6){animation-delay:120ms}
 .note-info{display:flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:600;color:var(--muted)}
 .note-info svg{flex:none}
 #noteBtn2{border-top:1px solid var(--border)}
+/* Faturasız siparişte fatura açıklaması alanı yok (yazılan not saklanır, faturalıya dönünce geri gelir) */
+body[data-tax="faturasiz"] #noteBtn,body[data-tax="faturasiz"] #noteWrap{display:none!important}
+body[data-tax="faturasiz"] #noteBtn2{border-top:0}
 /* Seçili vade gününün yanında "gün" yazar */
 [data-group="due"] button[aria-pressed="true"]::after{content:"gün"}
 [data-group="due"] button[aria-pressed="true"]::before{width:13px;height:13px}
@@ -381,7 +384,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
-<body data-depot="dental">
+<body data-depot="dental" data-tax="faturali">
 
 <header class="topbar">
   <button class="icon-btn" aria-label="Menü"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
@@ -488,7 +491,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
     <div class="card-h">Fiyat ve ödeme</div>
     <div class="field">
       <div class="seg" data-group="tax" role="group" aria-label="Fatura tipi">
-        <button aria-pressed="true">Faturalı<span class="kdv" aria-label="artı KDV">+KDV</span></button><button aria-pressed="false">Faturasız</button>
+        <button aria-pressed="true" data-tax="faturali">Faturalı<span class="kdv" aria-label="artı KDV">+KDV</span></button><button aria-pressed="false" data-tax="faturasiz">Faturasız</button>
       </div>
     </div>
     <div class="switch-row" style="border-top:1px solid var(--border)">
@@ -763,7 +766,7 @@ function updateSteps(){
   const has = !$('main').classList.contains('need-cust');
   const addrOk = has && !!getAddr('bill').trim() && ($('sameAddr').checked || !!getAddr('ship').trim());
   const payOk = has && (!$('isCreditSale').checked || $('dueDate').value >= $('processDate').value);
-  const noteOk = has && !!($('description').value.trim() || $('orderNote').value.trim());
+  const noteOk = has && !!((document.body.dataset.tax !== 'faturasiz' && $('description').value.trim()) || $('orderNote').value.trim());
   [['1', has], ['2', addrOk], ['3', payOk], ['4', noteOk]].forEach(([n, ok]) => document.querySelector('.card[data-step="' + n + '"]').classList.toggle('done', ok));
 }
 function updateReady(){
@@ -790,6 +793,7 @@ function toggleCredit(){ $('dueWrap').hidden = !$('isCreditSale').checked; if ($
 document.querySelectorAll('[data-group]').forEach(g => g.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
   g.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  if (g.dataset.group === 'tax'){ document.body.dataset.tax = b.dataset.tax; updateSteps(); }  // faturasızda fatura açıklaması gizlenir
   if (g.dataset.group === 'depot'){ document.body.dataset.depot = depot(); $('selfPick').setAttribute('aria-disabled', depot() === 'ecza'); $('logoSvg').setAttribute('aria-label', depot() === 'ecza' ? 'Ecza' : 'Dental'); document.querySelector('meta[name=theme-color]').content = depot() === 'ecza' ? '#009eb5' : '#24399a'; $('custQ').placeholder = 'Ad, VKN/TC, ' + (depot() === 'ecza' ? 'GLN' : 'ÜTS') + ' ara'; renderList(false); if (selCust) $('custIds').innerHTML = tagHtml(selCust) + idsHtml(selCust); }
   if (g.dataset.group === 'cur'){
     $('exchangeRate').value = b.dataset.rate;
