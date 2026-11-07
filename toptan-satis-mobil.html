@@ -88,7 +88,6 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 /* Müşteri türü etiketi: türe göre sakin renkler, yazılar okunur koyulukta */
 .ctype{flex:none;display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;font-size:11px;font-weight:700;white-space:nowrap;background:#f1f5f9;color:#475569}
 .ctype.t-depo{background:#eef2ff;color:#4338ca}
-.bk{font-size:10px;font-weight:800;color:var(--muted)}
 .ctype.t-platform{background:#fdf2f8;color:#be185d}
 .ctype.t-hekim{background:#ecfeff;color:#0e7490}
 .ctype.t-doktor{background:#eff6ff;color:#1d4ed8}
@@ -813,7 +812,7 @@ function salesInfo(o){ return SALES_IDX[norm(o)]; }
 const MAP_ICON = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg>';
 function salesMeta(d){
   const loc = [d[4], d[5]].filter(Boolean).map(disp).join(' / ');
-  return (d[0] ? '<span class="id-chip" title="Bayi Kodu: ' + esc(d[0]) + '"><b class="bk">Bayi</b><span class="mono">' + esc(d[0]) + '</span></span>' : '')
+  return (d[0] ? '<span class="id-chip" title="Bayi Kodu: ' + esc(d[0]) + '"><span class="mono">' + esc(d[0]) + '</span></span>' : '')
     + (loc ? '<span class="id-chip" title="İlçe / İl">' + MAP_ICON + esc(loc) + '</span>' : '');
 }
 function salesIds(d){ return chip('TC', 'TC', realNo(d[2])) + chip('VKN', 'VKN', realNo(d[1])) + chip('VD', 'Vergi Dairesi', d[3] ? disp(d[3]) : '', ' vd') + (depot() === 'ecza' ? chip('GLN', 'GLN', realNo(d[7])) : chip('UTS', 'ÜTS', realNo(d[8]))); }
