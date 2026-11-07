@@ -236,6 +236,7 @@ main:not(.need-cust) > section:nth-of-type(6){animation-delay:120ms}
 .need-cust ~ .actionbar .primary .off{display:inline}
 /* Müşteri seçili ama fatura adresi yokken de gri; dokununca adres ekleme açılır */
 .primary .off2{display:none}
+main.need-addr .tick-row{display:none}  /* adres yokken "teslimat aynı" seçeneği anlamsız */
 .need-addr:not(.need-cust) ~ .actionbar .primary{background:var(--border);color:var(--muted)}
 .need-addr:not(.need-cust) ~ .actionbar .primary .on,.need-addr:not(.need-cust) ~ .actionbar .primary svg{display:none}
 .need-addr:not(.need-cust) ~ .actionbar .primary .off2{display:inline}
