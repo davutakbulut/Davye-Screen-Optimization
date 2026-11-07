@@ -81,6 +81,9 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 /* Müşteri kartı: ekranın en önemli bilgisi */
 .cust{display:flex;align-items:center;gap:12px;padding:14px}
 .avatar{width:48px;height:48px;border-radius:50%;background:var(--brand-strong);color:#fff;display:grid;place-items:center;font-weight:700;font-size:17px;flex:none}
+.org-line{display:flex;align-items:center;gap:5px;margin-top:2px;font-size:12px;color:var(--text-2);min-width:0}
+.org-line span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.org-line svg{flex:none;color:var(--brand)}
 .cust .tx{flex:1;min-width:0}
 /* Uzun cari adı: 2 satır görünür, kalanı yana kaydırılarak okunur (taşan metin sağdaki sütuna akar) */
 .cust .nm{font-size:15px;font-weight:700;line-height:1.3;height:2.6em;column-width:100vw;column-gap:16px;column-fill:auto;
@@ -458,6 +461,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
       <div class="tx">
         <div class="ids meta" id="custMeta"></div>
         <div class="nm" id="custName" tabindex="0">davut akbulut</div>
+        <div class="org-line" id="custOrg" hidden></div>
       </div>
       <div class="cust-acts">
         <button class="pill-btn" onclick="changeCust()" aria-label="Müşteriyi değiştir" title="Müşteriyi değiştir"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg></button>
@@ -594,6 +598,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
   <h2 id="editTitle">Müşteriyi düzenle</h2>
   <form class="ed" onsubmit="saveEdit(event)" novalidate>
     <label>Ad Soyad<input id="edName" autocomplete="off" placeholder="Faturaya yazılan ad, ör. Dt. Selin Rencüz"></label>
+    <label id="edOrgWrap">Bağlı olduğu kurum<input id="edOrg" autocomplete="off" placeholder="Ör. Özel Dentapark Polikliniği"></label>
     <label>Unvan<input id="edTitle" autocomplete="off" placeholder="Aramada görünür; boşsa ad soyad"></label>
     <div class="two">
       <label>TC kimlik no<input id="edTc" class="mono" inputmode="numeric" maxlength="11"></label>
@@ -885,6 +890,20 @@ const CUST_TITLE = {
   'DT. SELİN RENCÜZ': 'Dt. Selin Rencüz - Rencüzoğlu Ağız ve Diş Sağlığı',
   'DT. MEHMET CAN': 'Dt. Mehmet Can - Can Ağız ve Diş Sağlığı Muayenehanesi'
 };
+// Hekim, doktor ve eczacıların bağlı olduğu kurum (aramada gösterilmez). DEMO: canlıda cari kartından gelir.
+const ORG_TYPES = ['Diş Hekimi', 'Doktor', 'Eczacı'];
+const ORG_RE = /KLİNİĞİ|MERKEZİ|POLİKLİNİ|MUAYENEHANE|A\.Ş\.|LTD|HASTANE|ÜNİVERSİTE|LABORATUVAR/;  // kurumun kendisi olan cariler
+const CUST_ORG = {};
+function initOrgs(){
+  const clinics = ['ÖZEL DENTAPARK POLİKLİNİĞİ', 'MARMARA İMPLANT VE DİŞ MERKEZİ', 'AVRASYA DİŞ HASTANESİ LTD.', 'MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.', 'ÖZEL GEBZE ÇAPA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ', 'GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ A.Ş.'];
+  const pharmacies = ['Şifa Eczanesi', 'Hayat Eczanesi', 'Merkez Eczanesi', 'Güneş Eczanesi', 'Yeni Eczane', 'Deniz Eczanesi'];
+  CUSTOMERS.forEach((n, k) => {
+    const t = custType(n), u = n.toLocaleUpperCase('tr');
+    if (!ORG_TYPES.includes(t) || ORG_RE.test(u)) return;
+    const fromTitle = (CUST_TITLE[n] || '').split(' - ')[1];  // unvandaki firma adı
+    CUST_ORG[n] = fromTitle || (t === 'Eczacı' ? pharmacies : clinics)[k % 6];
+  });
+}
 function custType(n){
   return typeOf(n) || (CUST_TITLE[n] && typeOf(CUST_TITLE[n])) || (PICKERS.sales.opts.some(o => norm(o) === norm(n)) ? 'Satış Sorumlusu' : demoType(n));
 }
@@ -942,6 +961,7 @@ function idsHtml(n){
 // Ada ek olarak TC/VKN, ÜTS, GLN ve vergi dairesiyle de aranır
 const custHay = i => norm(CUSTOMERS[i] + ' ' + (CUST_TITLE[CUSTOMERS[i]] || '') + ' ' + custType(CUSTOMERS[i]) + ' ' + (CUST_INFO[CUSTOMERS[i]] || []).join(' ') + ' ' + CUST_CODE[i] + ' ' + (CUST_LOC[CUSTOMERS[i]] || []).join(' '));
 const CUST_S = CUSTOMERS.map((n, i) => custHay(i));
+initOrgs();
 
 function searchCust(q){
   const words = norm(q).trim().split(/\s+/).filter(Boolean);
@@ -1108,6 +1128,7 @@ function pickCust(i){
   const changed = selCust !== CUSTOMERS[i];  // vazgeçip aynı müşteriye dönünce vade korunur
   selCust = CUSTOMERS[i];
   const n = CUSTOMERS[i];
+  setOrg(n);
   $('custName').textContent = disp(n); $('custName').scrollLeft = 0; $('custIds').innerHTML = tagHtml(n) + idsHtml(n); $('custMeta').innerHTML = metaHtml(i); $('custInitials').textContent = initials(n);
   // Adres seçenekleri seçilen cariye göre: ilk adres fatura
   const addrs = CUST_ADDR[n] || [ADDR];
@@ -1134,7 +1155,8 @@ function openEdit(i){
   const n = CUSTOMERS[i], d = CUST_INFO[n] || ['VKN', '', '', '', ''], l = CUST_LOC[n] || ['', ''];
   const k = idPair(d);
   // Ad soyad ve unvan büyük/küçük harf kuralıyla gösterilir (kaydedince bu yazımla saklanır)
-  $('edName').value = disp(n); $('edTitle').value = CUST_TITLE[n] ? disp(CUST_TITLE[n]) : ''; $('edTc').value = k.tc; $('edVkn').value = k.vkn; $('edVd').value = d[2];
+  $('edName').value = disp(n); $('edTitle').value = CUST_TITLE[n] ? disp(CUST_TITLE[n]) : '';
+  $('edOrgWrap').hidden = !ORG_TYPES.includes(custType(n)) && !CUST_ORG[n]; $('edOrg').value = CUST_ORG[n] ? disp(CUST_ORG[n]) : '';  // yalnız hekim, doktor, eczacı $('edTc').value = k.tc; $('edVkn').value = k.vkn; $('edVd').value = d[2];
   $('edUts').value = d[3] || ''; $('edGln').value = d[4] || ''; $('edDist').value = l[0]; $('edCity').value = l[1];
   $('edErr').textContent = '';
   openSheet('editSheet');
@@ -1149,8 +1171,9 @@ function saveEdit(e){
     : v('edUts') && !/^\d{13}$/.test(v('edUts')) ? 'ÜTS no 13 haneli olmalı.'
     : v('edGln') && !/^\d{13}$/.test(v('edGln')) ? 'GLN no 13 haneli olmalı.' : '';
   if (err){ $('edErr').textContent = err; return; }
-  if (name !== old) for (const m of [CUST_INFO, CUST_LOC, CUST_ADDR, CUST_TITLE]) if (m[old]){ m[name] = m[old]; delete m[old]; }  // ada bağlı kayıtlar yeni ada taşınır
+  if (name !== old) for (const m of [CUST_INFO, CUST_LOC, CUST_ADDR, CUST_TITLE, CUST_ORG]) if (m[old]){ m[name] = m[old]; delete m[old]; }  // ada bağlı kayıtlar yeni ada taşınır
   if (v('edTitle')) CUST_TITLE[name] = v('edTitle'); else delete CUST_TITLE[name];
+  if (!$('edOrgWrap').hidden){ if (v('edOrg')) CUST_ORG[name] = v('edOrg'); else delete CUST_ORG[name]; }
   CUSTOMERS[editIdx] = name; CUST_N[editIdx] = norm(name);
   const info = vkn ? ['VKN', vkn, v('edVd'), v('edUts'), v('edGln'), tcNo] : ['TC', tcNo, v('edVd'), v('edUts'), v('edGln'), ''];
   if (info.slice(1).some(Boolean)) CUST_INFO[name] = info; else delete CUST_INFO[name];
@@ -1159,6 +1182,7 @@ function saveEdit(e){
   custCache.clear();  // aramada eski bilgi kalmasın
   if (selCust === old){
     selCust = name;
+    setOrg(name);
     $('custName').textContent = disp(name); $('custIds').innerHTML = tagHtml(name) + idsHtml(name); $('custMeta').innerHTML = metaHtml(editIdx); $('custInitials').textContent = initials(name);
   }
   renderList(false);
@@ -1166,6 +1190,12 @@ function saveEdit(e){
   toast('Müşteri bilgileri güncellendi');
 }
 // Listede avatara dokunmak düzenlemeyi açar, satırın geri kalanı müşteriyi seçer
+// Seçili kartta bağlı kurum (varsa)
+function setOrg(n){
+  const o = CUST_ORG[n], el = $('custOrg');
+  el.hidden = !o;
+  el.innerHTML = o ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M10 9h4M12 7v4"/></svg><span>' + esc(disp(o)) + '</span>' : '';
+}
 function custClick(e, i){ if (e.currentTarget.dataset.swiped) return; pickFly(i, e.currentTarget.querySelector('.avatar')); if (e.target.closest('.av-edit')) openEdit(i); }  // avatar: seç + düzenle
 // Seçince avatar listedeki yerinden karttaki yerine kayar ("seçtim" hissi)
 function pickFly(i, av){
