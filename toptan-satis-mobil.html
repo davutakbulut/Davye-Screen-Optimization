@@ -834,8 +834,9 @@ function updateSteps(){
   const has = !$('main').classList.contains('need-cust');
   const addrOk = has && !!getAddr('bill').trim() && ($('sameAddr').checked || !!getAddr('ship').trim());
   $('main').classList.toggle('need-addr', !getAddr('bill').trim());
-  const payOk = has && (!$('isCreditSale').checked || $('dueDate').value >= $('processDate').value);
-  const noteOk = has && !!((document.body.dataset.tax !== 'faturasiz' && $('description').value.trim()) || $('orderNote').value.trim());
+  // Adımlar sırayla tamamlanır: önceki bitmeden sonraki yeşil olmaz
+  const payOk = addrOk && (!$('isCreditSale').checked || $('dueDate').value >= $('processDate').value);
+  const noteOk = payOk && !!((document.body.dataset.tax !== 'faturasiz' && $('description').value.trim()) || $('orderNote').value.trim());
   const steps = [['1', has], ['2', addrOk], ['3', payOk], ['4', noteOk]];
   steps.forEach(([n, ok]) => document.querySelector('.card[data-step="' + n + '"]').classList.toggle('done', ok));
   const done = steps.filter(x => x[1]).length;
