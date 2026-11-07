@@ -242,6 +242,14 @@ input:focus,textarea:focus{outline:2px solid var(--brand);outline-offset:1px;bor
 textarea{resize:vertical;min-height:80px}
 .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
 .two input{min-width:0}
+/* Tarih kutusu her telefonda aynı: tarih solda, sağda takvim ikonu, taşma yok.
+   iOS kendi genişliğini dayatıp taşırıyor, Android açılır menü oku koyuyordu; yerel görünüm kapatıldı.
+   Yerel takvim seçicisi kutunun tamamını kaplayan görünmez düğmeyle açılmaya devam eder. */
+input[type="date"]{-webkit-appearance:none;appearance:none;position:relative;display:block;min-width:0;max-width:100%;text-align:left;
+  padding-right:40px;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4'/%3E%3C/svg%3E") no-repeat right 12px center/18px}
+input[type="date"]::-webkit-date-and-time-value{text-align:left;margin:0}
+input[type="date"]::-webkit-calendar-picker-indicator{position:absolute;inset:0;width:auto;height:auto;margin:0;padding:0;opacity:0;cursor:pointer}
+input[type="date"]::-webkit-inner-spin-button,input[type="date"]::-webkit-clear-button{display:none}
 .two label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
 
 /* Anahtar */
