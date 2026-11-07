@@ -3,7 +3,7 @@
 ## Başlamadan önce oku
 1. Bu dosya
 2. [GEMINI.md](GEMINI.md) — tasarım ve davranış kuralları (A–U, A.1 responsive kural seti). **Asıl kural kaynağı budur.**
-3. İşin dokunduğu belge: [PRD](docs/PRD.md) · [Mimari](docs/ARCHITECTURE.md) · [Tasarım sistemi](docs/DESIGN_SYSTEM.md) · [Güvenlik](docs/SECURITY.md) · [Kod stili](docs/CODE_STYLE.md) · [Test](docs/TESTING.md)
+3. İşin dokunduğu belge: [PRD](docs/01-product-requirements.md) · [Mimari](docs/02-architecture.md) · [Tasarım sistemi](docs/03-design-system.md) · [Güvenlik](docs/04-security.md) · [Kod stili](docs/05-code-style.md) · [Test](docs/06-testing-and-release.md)
 
 ## Genel kurallar
 - Her düzenlemeden sonra commit + `main`'e push (geri dönülebilirlik). Commit mesajı: Türkçe, `feat:/fix:/refactor:/docs:` önekli.
