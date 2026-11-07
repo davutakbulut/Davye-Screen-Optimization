@@ -81,6 +81,9 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 /* Müşteri kartı: ekranın en önemli bilgisi */
 .cust{display:flex;align-items:center;gap:12px;padding:14px}
 .avatar{width:48px;height:48px;border-radius:50%;background:var(--brand-strong);color:#fff;display:grid;place-items:center;font-weight:700;font-size:17px;flex:none}
+.inv-title{display:flex;align-items:center;gap:5px;margin-top:2px;font-size:12px;color:var(--text-2);min-width:0}
+.inv-title span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inv-title svg{flex:none;color:var(--brand)}
 .cust .tx{flex:1;min-width:0}
 /* Uzun cari adı: 2 satır görünür, kalanı yana kaydırılarak okunur (taşan metin sağdaki sütuna akar) */
 .cust .nm{font-size:15px;font-weight:700;line-height:1.3;height:2.6em;column-width:100vw;column-gap:16px;column-fill:auto;
@@ -369,6 +372,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 .ed{display:flex;flex-direction:column;gap:10px;padding:0 16px 16px}
 .ed label{display:block;font-size:12px;font-weight:600;color:var(--text-2)}
 .ed label input,.ed label select{margin-top:4px}
+.ed-hint{display:block;margin-top:4px;font-size:11px;font-weight:500;color:var(--muted)}
 .ed-err{margin:0;min-height:18px;font-size:13px;font-weight:600;color:var(--danger)}
 .ed-acts{display:flex;gap:8px}
 .ed-cancel{height:46px;padding:0 18px;border-radius:12px;border:1px solid var(--border-2);font-weight:600}
@@ -458,6 +462,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
       <div class="tx">
         <div class="ids meta" id="custMeta"></div>
         <div class="nm" id="custName" tabindex="0">davut akbulut</div>
+        <div class="inv-title" id="custTitle" hidden></div>
       </div>
       <div class="cust-acts">
         <button class="pill-btn" onclick="changeCust()" aria-label="Müşteriyi değiştir" title="Müşteriyi değiştir"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg></button>
@@ -593,7 +598,8 @@ body.on-step2 .actionbar{transform:translateY(110%)}
   <div class="grab"></div>
   <h2 id="editTitle">Müşteriyi düzenle</h2>
   <form class="ed" onsubmit="saveEdit(event)" novalidate>
-    <label>Ad / Unvan<input id="edName" autocomplete="off"></label>
+    <label>Ad Soyad<input id="edName" autocomplete="off" placeholder="Listede ve aramada görünen ad"></label>
+    <label>Fatura unvanı<input id="edTitle" autocomplete="off" placeholder="Boş bırakılırsa ad soyad yazılır"><small class="ed-hint">Faturada bu yazar. Ör: Dt. Selin Rencüz - Rencüzoğlu Ağız ve Diş Sağlığı</small></label>
     <div class="two">
       <label>TC kimlik no<input id="edTc" class="mono" inputmode="numeric" maxlength="11"></label>
       <label>VKN<input id="edVkn" class="mono" inputmode="numeric" maxlength="10"></label>
@@ -637,7 +643,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 <script>
 // Seçenekler yalnızca ekrandaki gerçek değerlerdir (GEMINI.md E); canlıda API'den gelir.
 // Cari adları index.html'deki sipariş kartlarından (proje verisi); canlıda müşteri API'sinden gelir.
-const CUSTOMERS = ['T.C. İSTANBUL AYDIN ÜNİVERSİTESİ AĞIZ VE DİŞ SAĞLIĞI UYGULAMA VE ARAŞ. MERKEZİ','davut akbulut','AVRASYA DİŞ HASTANESİ LTD.','ECZ. AYŞE KARACA','CAN DİŞ PROTEZ LABORATUVARI','DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ','DENTAL İSTANBUL A.Ş.','DENTAPOL DENTAL SAĞLIK HİZM. LTD.','DEPO KADİR ÖZDEMİR','DR. AHMET YILMAZ DİŞ KLİNİĞİ','DR. DT. ALTAN DEMİREL','DR. BURAK ÖZKAN POLİKLİNİĞİ','DR. EMRE AKTAŞ KLİNİĞİ','DR. HAKAN ÖZKUL','DR. SELİM ERGÜN MUAYENEHANESİ','DR. TOLGA YILDIZ POLİKLİNİĞİ','DT. MİRDASH LLESHI','ERDİ EKİZ','ESTETİK DENT AĞIZ VE DİŞ SAĞLIĞI POL.','FATİH YİĞİT YİĞİT DENTAL','ECZ. FEYZULLAH AHISKALI','GÖKSU DENTAL TİC. LTD.','GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ A.Ş.','DR. KUTAY HOCA','KUTLU MEDİKAL LTD.','MARMARA İMPLANT VE DİŞ MERKEZİ','MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.','MEGA DENT POLİKLİNİĞİ A.Ş.','DT. MEHMET CAN','ECZ. MEHRAN AMINIFARD','DR. DT. MUHAMMET UĞUR DERE','SEMA DENTAL MEDİKAL TİC. LTD.','ECZ. SERAP BOZTEKE','ÖZEL DENTAPARK POLİKLİNİĞİ','ÖZEL GEBZE ÇAPA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ','ÖZLEM DENTAL KLİNİĞİ A.Ş.','ÜLKÜ TÜRKMEN','ÜMİT VELİOĞLU', 'PROF. DR. DT. SELİN AKSOY', 'PROF. DR. KEREM ULUSOY', 'DT. ZEYNEP ARSLAN', 'DT. BURAK KOÇAK', 'DR. DT. ELİF YAMAN', 'DR. OSMAN TEKİN', 'ECZ. MERVE TUNA', 'ECZ. CAN ERDEM'];
+const CUSTOMERS = ['T.C. İSTANBUL AYDIN ÜNİVERSİTESİ AĞIZ VE DİŞ SAĞLIĞI UYGULAMA VE ARAŞ. MERKEZİ','davut akbulut','AVRASYA DİŞ HASTANESİ LTD.','ECZ. AYŞE KARACA','CAN DİŞ PROTEZ LABORATUVARI','DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ','DENTAL İSTANBUL A.Ş.','DENTAPOL DENTAL SAĞLIK HİZM. LTD.','DEPO KADİR ÖZDEMİR','DR. AHMET YILMAZ DİŞ KLİNİĞİ','DR. DT. ALTAN DEMİREL','DR. BURAK ÖZKAN POLİKLİNİĞİ','DR. EMRE AKTAŞ KLİNİĞİ','DR. HAKAN ÖZKUL','DR. SELİM ERGÜN MUAYENEHANESİ','DR. TOLGA YILDIZ POLİKLİNİĞİ','DT. MİRDASH LLESHI','ERDİ EKİZ','ESTETİK DENT AĞIZ VE DİŞ SAĞLIĞI POL.','FATİH YİĞİT YİĞİT DENTAL','ECZ. FEYZULLAH AHISKALI','GÖKSU DENTAL TİC. LTD.','GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ A.Ş.','DR. KUTAY HOCA','KUTLU MEDİKAL LTD.','MARMARA İMPLANT VE DİŞ MERKEZİ','MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.','MEGA DENT POLİKLİNİĞİ A.Ş.','DT. MEHMET CAN','ECZ. MEHRAN AMINIFARD','DR. DT. MUHAMMET UĞUR DERE','SEMA DENTAL MEDİKAL TİC. LTD.','ECZ. SERAP BOZTEKE','ÖZEL DENTAPARK POLİKLİNİĞİ','ÖZEL GEBZE ÇAPA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ','ÖZLEM DENTAL KLİNİĞİ A.Ş.','ÜLKÜ TÜRKMEN','ÜMİT VELİOĞLU', 'PROF. DR. DT. SELİN AKSOY', 'PROF. DR. KEREM ULUSOY', 'DT. ZEYNEP ARSLAN', 'DT. BURAK KOÇAK', 'DR. DT. ELİF YAMAN', 'DR. OSMAN TEKİN', 'ECZ. MERVE TUNA', 'ECZ. CAN ERDEM', 'SELİN RENCÜZ'];
 // Cari kimlik bilgisi: [kimlik türü, no, vergi dairesi, ÜTS, GLN, ikinci kimlik no] (index.html sipariş verisinden)
 // Şahıs müşterilerin hem TC'si hem VKN'si olabilir: 6. alan, birinci kimlik VKN ise TC, TC ise VKN'dir.
 const CUST_INFO = {"ÜMİT VELİOĞLU": ["VKN", "5490309762", "Kadıköy V.D.", "2660005490309", "8680005490309"], "ÖZEL GEBZE ÇAPA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ": ["VKN", "6850803026", "Gebze V.D.", "2660006850803", "8680006850803"], "ERDİ EKİZ": ["VKN", "4448888888", "Bakırköy V.D.", "2660004448888", "8680004448888"], "DEPO KADİR ÖZDEMİR": ["VKN", "1111111111", "Kadıköy V.D.", "2660001111111", "-"], "SEMA DENTAL MEDİKAL TİC. LTD.": ["VKN", "7600986197", "Küçükyalı V.D.", "2660007600986", "8680007600986"], "FATİH YİĞİT YİĞİT DENTAL": ["VKN", "58291049281", "Kartal V.D.", "2660005829104", "8680005829104"], "ÜLKÜ TÜRKMEN": ["VKN", "54719732262", "Beyoğlu V.D.", "2660005471973", "-"], "ECZ. FEYZULLAH AHISKALI": ["VKN", "4918203918", "Zeytinburnu V.D.", "2660004918203", "8680004918203"], "DR. HAKAN ÖZKUL": ["VKN", "7010104003", "Şişli V.D.", "2660007010104", "8680007010104"], "DR. KUTAY HOCA": ["VKN", "44421321321", "Üsküdar V.D.", "2660004442132", "-"], "DT. MİRDASH LLESHI": ["VKN", "5091126687", "Şişli V.D.", "2660005091126", "8680005091126"], "ECZ. MEHRAN AMINIFARD": ["VKN", "4423222221", "Beşiktaş V.D.", "2660004423222", "-"], "DR. DT. MUHAMMET UĞUR DERE": ["VKN", "1231203912", "Kadıköy V.D.", "2660001231203", "-"], "DR. DT. ALTAN DEMİREL": ["VKN", "29104829104", "Bakırköy V.D.", "2660002910482", "8680002910482"], "DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ": ["VKN", "2921007027", "Maltepe V.D.", "2660002921007", "8680002921007"], "ÖZEL DENTAPARK POLİKLİNİĞİ": ["VKN", "8472910482", "Kadıköy V.D.", "2660008472910", "8680008472910"], "ECZ. SERAP BOZTEKE": ["TC", "38491029481", "Üsküdar V.D.", "2660001928374", "-"], "DR. AHMET YILMAZ DİŞ KLİNİĞİ": ["VKN", "29104829104", "Şişli V.D.", "2660003920194", "8680003920194"], "DENTAPOL DENTAL SAĞLIK HİZM. LTD.": ["VKN", "39482019482", "Bakırköy V.D.", "2660009182734", "8680009182734"], "DR. EMRE AKTAŞ KLİNİĞİ": ["VKN", "19482019481", "Beyoğlu V.D.", "2660004928172", "8680004928172"], "KUTLU MEDİKAL LTD.": ["VKN", "58492019482", "Fatih V.D.", "2660005928173", "8680005928173"], "MEGA DENT POLİKLİNİĞİ A.Ş.": ["VKN", "69482019481", "Kartal V.D.", "2660006928174", "8680006928174"], "CAN DİŞ PROTEZ LABORATUVARI": ["VKN", "79482019482", "Pendik V.D.", "2660007928175", "8680007928175"], "AVRASYA DİŞ HASTANESİ LTD.": ["VKN", "89482019483", "Zeytinburnu V.D.", "2660008928176", "8680008928176"], "ECZ. AYŞE KARACA": ["TC", "48291048291", "Ataşehir V.D.", "2660004829104", "-"], "MARMARA İMPLANT VE DİŞ MERKEZİ": ["VKN", "99482019484", "Ümraniye V.D.", "2660009928177", "8680009928177"], "DR. SELİM ERGÜN MUAYENEHANESİ": ["VKN", "10482019485", "Beylikdüzü V.D.", "2660001028178", "8680001028178"], "DENTAL İSTANBUL A.Ş.": ["VKN", "20482019486", "Beşiktaş V.D.", "2660002028179", "8680002028179"], "GÖKSU DENTAL TİC. LTD.": ["VKN", "30482019487", "Maltepe V.D.", "2660003028180", "8680003028180"], "ÖZLEM DENTAL KLİNİĞİ A.Ş.": ["VKN", "40482019488", "Beşiktaş V.D.", "2660004028181", "8680004028181"], "DR. TOLGA YILDIZ POLİKLİNİĞİ": ["VKN", "50482019489", "Sarıyer V.D.", "2660005028182", "8680005028182"], "GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ A.Ş.": ["VKN", "60482019490", "Sarıyer V.D.", "2660006028183", "8680006028183"], "MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.": ["VKN", "70482019491", "Beşiktaş V.D.", "2660007028184", "8680007028184"], "DR. BURAK ÖZKAN POLİKLİNİĞİ": ["VKN", "80482019492", "Beylikdüzü V.D.", "2660008028185", "8680008028185"], "ESTETİK DENT AĞIZ VE DİŞ SAĞLIĞI POL.": ["VKN", "90482019493", "Bakırköy V.D.", "2660009028186", "8680009028186"], "DT. MEHMET CAN": ["TC", "91827364501", "Kadıköy V.D.", "2660009182736", "-"]};
@@ -645,7 +651,7 @@ const CUST_INFO = {"ÜMİT VELİOĞLU": ["VKN", "5490309762", "Kadıköy V.D.", 
 CUST_INFO['T.C. İSTANBUL AYDIN ÜNİVERSİTESİ AĞIZ VE DİŞ SAĞLIĞI UYGULAMA VE ARAŞ. MERKEZİ'] = ['VKN', '0010475382', 'Küçükçekmece V.D.', '2660010475382', '8680010475382'];
 // Kaynak veride boş değer "-" olarak tutulmuş; boş sayılır (kutucuk ve form doğrulaması için)
 // DEMO: unvanlı uydurma müşteriler (Prof. Dr. Dt., Prof. Dr., Dt., Dr. Dt., Dr., Ecz.) — kimlik, adres ve konum bilgileri uydurmadır
-Object.assign(CUST_INFO, {"PROF. DR. DT. SELİN AKSOY": ["TC", "27431000096", "Şişli V.D.", "2660274310000", "8680274310000", ""], "PROF. DR. KEREM ULUSOY": ["TC", "27437553770", "Çankaya V.D.", "2660274375537", "8680274375537", ""], "DT. ZEYNEP ARSLAN": ["TC", "27444107492", "Karşıyaka V.D.", "2660274441074", "8680274441074", ""], "DT. BURAK KOÇAK": ["TC", "27450661124", "Nilüfer V.D.", "2660274506611", "8680274506611", ""], "DR. DT. ELİF YAMAN": ["TC", "27457214866", "Kozyatağı V.D.", "2660274572148", "8680274572148", ""], "DR. OSMAN TEKİN": ["TC", "27463768520", "Selçuk V.D.", "2660274637685", "8680274637685", ""], "ECZ. MERVE TUNA": ["TC", "27470322210", "Muratpaşa V.D.", "2660274703222", "8680274703222", ""], "ECZ. CAN ERDEM": ["TC", "27476875994", "Gaziler V.D.", "2660274768759", "8680274768759", ""]});
+Object.assign(CUST_INFO, {"SELİN RENCÜZ": ["TC", "38215604918", "Beşiktaş V.D.", "2660038215604", "8680038215604", ""], "PROF. DR. DT. SELİN AKSOY": ["TC", "27431000096", "Şişli V.D.", "2660274310000", "8680274310000", ""], "PROF. DR. KEREM ULUSOY": ["TC", "27437553770", "Çankaya V.D.", "2660274375537", "8680274375537", ""], "DT. ZEYNEP ARSLAN": ["TC", "27444107492", "Karşıyaka V.D.", "2660274441074", "8680274441074", ""], "DT. BURAK KOÇAK": ["TC", "27450661124", "Nilüfer V.D.", "2660274506611", "8680274506611", ""], "DR. DT. ELİF YAMAN": ["TC", "27457214866", "Kozyatağı V.D.", "2660274572148", "8680274572148", ""], "DR. OSMAN TEKİN": ["TC", "27463768520", "Selçuk V.D.", "2660274637685", "8680274637685", ""], "ECZ. MERVE TUNA": ["TC", "27470322210", "Muratpaşa V.D.", "2660274703222", "8680274703222", ""], "ECZ. CAN ERDEM": ["TC", "27476875994", "Gaziler V.D.", "2660274768759", "8680274768759", ""]});
 Object.values(CUST_INFO).forEach(d => d.forEach((v, i) => { if (v === '-') d[i] = ''; }));
 // DEMO: aşağıdaki ikinci kimlik numaraları uydurmadır (hem TC hem VKN görünümünü denemek için)
 CUST_INFO['ÜMİT VELİOĞLU'][5] = '25490309754';
@@ -658,7 +664,7 @@ const ADDR = 'Molla Gürani, Uygar Sokağı No:17 A, Fatih İstanbul Türkiye';
 const CUST_ADDR = {"ÜMİT VELİOĞLU": ["Bağdat Cad. No: 210 D: 4, Kadıköy / İstanbul", "Barbaros Bulvarı No: 44, Beşiktaş / İstanbul", "Halaskargazi Cad. No: 112 D: 6, Şişli / İstanbul", "Hakimiyeti Milliye Cad. No: 78, Üsküdar / İstanbul", "Barbaros Mah. Mor Sümbül Sok. No: 12, Ataşehir / İstanbul", "Söğütlüçeşme Cad. No: 98, Kadıköy / İstanbul"], "ÖZEL GEBZE ÇAPA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ": ["Hacı Halil Mah. Bağdat Cad. No: 512, Gebze / Kocaeli"], "ERDİ EKİZ": ["İncirli Cad. No: 88 D: 3, Bakırköy / İstanbul", "Fevzipaşa Cad. No: 142 D: 2, Fatih / İstanbul", "Batı Mah. Erol Kaya Cad. No: 64, Pendik / İstanbul", "Büyükdere Cad. No: 180, Maslak / Sarıyer / İstanbul"], "DEPO KADİR ÖZDEMİR": ["Davye Merkez Depo Masası, Kadıköy / İstanbul"], "SEMA DENTAL MEDİKAL TİC. LTD.": ["Bağlarbaşı Mah. İnönü Cad. No: 42, Maltepe / İstanbul"], "FATİH YİĞİT YİĞİT DENTAL": ["Kordonboyu Mah. Ankara Cad. No: 120, Kartal / İstanbul"], "ÜLKÜ TÜRKMEN": ["Cihangir Mah. Sıraselviler Cad. No: 91, Beyoğlu / İstanbul"], "ECZ. FEYZULLAH AHISKALI": ["Telsiz Mah. Balıklı Kazlıçeşme Yolu No: 14, Zeytinburnu / İstanbul"], "DR. HAKAN ÖZKUL": ["Valikonağı Cad. No: 88, Nişantaşı / Şişli / İstanbul"], "DR. KUTAY HOCA": ["Mimar Sinan Mah. Çavuşdere Cad. No: 28, Üsküdar / İstanbul"], "DT. MİRDASH LLESHI": ["Abide-i Hürriyet Cad. No: 154 D: 3, Şişli / İstanbul"], "ECZ. MEHRAN AMINIFARD": ["Nispetiye Cad. No: 62 D: 4, Levent / Beşiktaş / İstanbul"], "DR. DT. MUHAMMET UĞUR DERE": ["Moda Cad. No: 184 D: 2, Caferağa, Kadıköy / İstanbul"], "DR. DT. ALTAN DEMİREL": ["Yeşilköy Mah. İstasyon Cad. No: 48, Bakırköy / İstanbul"], "DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ": ["Altayçeşme Mah. Çam Sok. No: 18, Maltepe / İstanbul"], "ÖZEL DENTAPARK POLİKLİNİĞİ": ["Kadıköy / İstanbul"], "ECZ. SERAP BOZTEKE": ["Üsküdar / İstanbul"], "DR. AHMET YILMAZ DİŞ KLİNİĞİ": ["Nişantaşı / İstanbul"], "DENTAPOL DENTAL SAĞLIK HİZM. LTD.": ["Ataköy / İstanbul"], "DR. EMRE AKTAŞ KLİNİĞİ": ["Cihangir / İstanbul"], "KUTLU MEDİKAL LTD.": ["Fatih / İstanbul"], "MEGA DENT POLİKLİNİĞİ A.Ş.": ["Kartal / İstanbul"], "CAN DİŞ PROTEZ LABORATUVARI": ["Pendik / İstanbul"], "AVRASYA DİŞ HASTANESİ LTD.": ["Zeytinburnu / İstanbul"], "ECZ. AYŞE KARACA": ["Ataşehir / İstanbul"], "MARMARA İMPLANT VE DİŞ MERKEZİ": ["Alemdağ Cad. No: 154, Ümraniye / İstanbul"], "DR. SELİM ERGÜN MUAYENEHANESİ": ["Cumhuriyet Cad. No: 22, Beylikdüzü / İstanbul"], "DENTAL İSTANBUL A.Ş.": ["Levent / İstanbul"], "GÖKSU DENTAL TİC. LTD.": ["Maltepe / İstanbul"], "ÖZLEM DENTAL KLİNİĞİ A.Ş.": ["Barbaros Bulvarı No: 88, Beşiktaş / İstanbul"], "DR. TOLGA YILDIZ POLİKLİNİĞİ": ["Tarabya / İstanbul"], "GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ A.Ş.": ["Büyükdere Cad. No: 120, Maslak / İstanbul"], "MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.": ["Levent / İstanbul"], "DR. BURAK ÖZKAN POLİKLİNİĞİ": ["Beylikdüzü / İstanbul"], "ESTETİK DENT AĞIZ VE DİŞ SAĞLIĞI POL.": ["Bakırköy / İstanbul"], "DT. MEHMET CAN": ["Kadıköy / İstanbul"]};
 // Uzun adres görünüm denemesi için kullanıcının verdiği adres ilk sıraya eklendi
 // DEMO: kaynak veride yalnızca ilçe/il olan adreslere uydurma mahalle/cadde eklendi (canlıda cari adres kaydından gelir)
-Object.assign(CUST_ADDR, {"PROF. DR. DT. SELİN AKSOY": ["Halaskargazi Mah. Rumeli Cad. No: 48 K: 4, Şişli / İstanbul"], "PROF. DR. KEREM ULUSOY": ["Kavaklıdere Mah. Tunalı Hilmi Cad. No: 77, Çankaya / Ankara"], "DT. ZEYNEP ARSLAN": ["Bostanlı Mah. Cemal Gürsel Cad. No: 312 D: 2, Karşıyaka / İzmir"], "DT. BURAK KOÇAK": ["Fethiye Mah. Fatih Sultan Mehmet Bulvarı No: 140, Nilüfer / Bursa"], "DR. DT. ELİF YAMAN": ["Suadiye Mah. Bağdat Cad. No: 402 D: 6, Kadıköy / İstanbul"], "DR. OSMAN TEKİN": ["Feritpaşa Mah. Kule Cad. No: 21, Selçuklu / Konya"], "ECZ. MERVE TUNA": ["Şirinyalı Mah. Lara Cad. No: 115, Muratpaşa / Antalya"], "ECZ. CAN ERDEM": ["Körfez Mah. Atatürk Bulvarı No: 266, Atakum / Samsun"]});  // DEMO unvanlı müşteriler
+Object.assign(CUST_ADDR, {"SELİN RENCÜZ": ["Sinanpaşa Mah. Ihlamurdere Cad. No: 33 D: 2, Beşiktaş / İstanbul"], "PROF. DR. DT. SELİN AKSOY": ["Halaskargazi Mah. Rumeli Cad. No: 48 K: 4, Şişli / İstanbul"], "PROF. DR. KEREM ULUSOY": ["Kavaklıdere Mah. Tunalı Hilmi Cad. No: 77, Çankaya / Ankara"], "DT. ZEYNEP ARSLAN": ["Bostanlı Mah. Cemal Gürsel Cad. No: 312 D: 2, Karşıyaka / İzmir"], "DT. BURAK KOÇAK": ["Fethiye Mah. Fatih Sultan Mehmet Bulvarı No: 140, Nilüfer / Bursa"], "DR. DT. ELİF YAMAN": ["Suadiye Mah. Bağdat Cad. No: 402 D: 6, Kadıköy / İstanbul"], "DR. OSMAN TEKİN": ["Feritpaşa Mah. Kule Cad. No: 21, Selçuklu / Konya"], "ECZ. MERVE TUNA": ["Şirinyalı Mah. Lara Cad. No: 115, Muratpaşa / Antalya"], "ECZ. CAN ERDEM": ["Körfez Mah. Atatürk Bulvarı No: 266, Atakum / Samsun"]});  // DEMO unvanlı müşteriler
 const DEMO_STREET = {"ÖZEL DENTAPARK POLİKLİNİĞİ": "Caferağa Mah. Moda Cad. No: 41", "ECZ. SERAP BOZTEKE": "Altunizade Mah. Kısıklı Cad. No: 18 D: 3", "DR. AHMET YILMAZ DİŞ KLİNİĞİ": "Teşvikiye Mah. Valikonağı Cad. No: 92 K: 2", "DENTAPOL DENTAL SAĞLIK HİZM. LTD.": "Ataköy 7-8-9-10. Kısım Mah. Çobançeşme Cad. No: 14", "DR. EMRE AKTAŞ KLİNİĞİ": "Cihangir Mah. Sıraselviler Cad. No: 63 D: 5", "KUTLU MEDİKAL LTD.": "Akşemsettin Mah. Fevzipaşa Cad. No: 27", "MEGA DENT POLİKLİNİĞİ A.Ş.": "Kordonboyu Mah. Ankara Cad. No: 112", "CAN DİŞ PROTEZ LABORATUVARI": "Batı Mah. Ankara Cad. No: 58 D: 4", "AVRASYA DİŞ HASTANESİ LTD.": "Merkezefendi Mah. Mevlana Cad. No: 9", "ECZ. AYŞE KARACA": "Barbaros Mah. Halk Cad. No: 34 D: 12", "DENTAL İSTANBUL A.Ş.": "Levent Mah. Büyükdere Cad. No: 185", "GÖKSU DENTAL TİC. LTD.": "Bağlarbaşı Mah. Bağdat Cad. No: 310", "DR. TOLGA YILDIZ POLİKLİNİĞİ": "Tarabya Mah. Haydar Aliyev Cad. No: 22", "MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.": "Levent Mah. Çarşı Cad. No: 7 K: 3", "DR. BURAK ÖZKAN POLİKLİNİĞİ": "Cumhuriyet Mah. Atatürk Bulvarı No: 76", "ESTETİK DENT AĞIZ VE DİŞ SAĞLIĞI POL.": "Zeytinlik Mah. İstanbul Cad. No: 15", "DT. MEHMET CAN": "Fenerbahçe Mah. Bağdat Cad. No: 214 D: 8"};
 for (const [n, st] of Object.entries(DEMO_STREET)) if (CUST_ADDR[n]) CUST_ADDR[n] = CUST_ADDR[n].map(a => a.includes(',') ? a : st + ', ' + a);
 CUST_ADDR['davut akbulut'] = ['Ergenekon Mahallesi, Harbiye Alanı, Cumhuriyet Cd. Kamilzade paşa pasajı kapı numarası:12 Itır Apartmanı  No:179 1. Kat Daire 2, 34367 Şişli/İstanbul', ADDR];
@@ -872,13 +878,27 @@ function depot(){ return document.querySelector('[data-group="depot"] [aria-pres
 // İl/ilçe index.html sipariş verisinden; davut akbulut formdaki adresten.
 const CUST_LOC = {"ÜMİT VELİOĞLU": ["Kadıköy", "İstanbul"], "ÖZEL GEBZE ÇAPA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ": ["Gebze", "İstanbul"], "ERDİ EKİZ": ["Bakırköy", "İstanbul"], "DEPO KADİR ÖZDEMİR": ["Kadıköy", "İstanbul"], "SEMA DENTAL MEDİKAL TİC. LTD.": ["Maltepe", "İstanbul"], "FATİH YİĞİT YİĞİT DENTAL": ["Kartal", "İstanbul"], "ÜLKÜ TÜRKMEN": ["Beyoğlu", "İstanbul"], "ECZ. FEYZULLAH AHISKALI": ["Zeytinburnu", "İstanbul"], "DR. HAKAN ÖZKUL": ["Nişantaşı", "İstanbul"], "DR. KUTAY HOCA": ["Üsküdar", "İstanbul"], "DT. MİRDASH LLESHI": ["Şişli", "İstanbul"], "ECZ. MEHRAN AMINIFARD": ["Beşiktaş", "İstanbul"], "DR. DT. MUHAMMET UĞUR DERE": ["Kadıköy", "İstanbul"], "DR. DT. ALTAN DEMİREL": ["Bakırköy", "İstanbul"], "DENTA NORA AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ": ["Maltepe", "İstanbul"], "ÖZEL DENTAPARK POLİKLİNİĞİ": ["Kadıköy", "İstanbul"], "ECZ. SERAP BOZTEKE": ["Üsküdar", "İstanbul"], "DR. AHMET YILMAZ DİŞ KLİNİĞİ": ["Şişli", "İstanbul"], "DENTAPOL DENTAL SAĞLIK HİZM. LTD.": ["Bakırköy", "İstanbul"], "DR. EMRE AKTAŞ KLİNİĞİ": ["Beyoğlu", "İstanbul"], "KUTLU MEDİKAL LTD.": ["Fatih", "İstanbul"], "MEGA DENT POLİKLİNİĞİ A.Ş.": ["Kartal", "İstanbul"], "CAN DİŞ PROTEZ LABORATUVARI": ["Pendik", "İstanbul"], "AVRASYA DİŞ HASTANESİ LTD.": ["Zeytinburnu", "İstanbul"], "ECZ. AYŞE KARACA": ["Ataşehir", "İstanbul"], "MARMARA İMPLANT VE DİŞ MERKEZİ": ["Ümraniye", "İstanbul"], "DR. SELİM ERGÜN MUAYENEHANESİ": ["Beylikdüzü", "İstanbul"], "DENTAL İSTANBUL A.Ş.": ["Beşiktaş", "İstanbul"], "GÖKSU DENTAL TİC. LTD.": ["Maltepe", "İstanbul"], "ÖZLEM DENTAL KLİNİĞİ A.Ş.": ["Beşiktaş", "İstanbul"], "DR. TOLGA YILDIZ POLİKLİNİĞİ": ["Sarıyer", "İstanbul"], "GÜLÜŞ AĞIZ VE DİŞ SAĞLIĞI POLİKLİNİĞİ A.Ş.": ["Sarıyer", "İstanbul"], "MEDİPORT DİŞ SAĞLIK MERKEZİ A.Ş.": ["Beşiktaş", "İstanbul"], "DR. BURAK ÖZKAN POLİKLİNİĞİ": ["Beylikdüzü", "İstanbul"], "ESTETİK DENT AĞIZ VE DİŞ SAĞLIĞI POL.": ["Bakırköy", "İstanbul"], "DT. MEHMET CAN": ["Kadıköy", "İstanbul"]};
 CUST_LOC['davut akbulut'] = ['Fatih', 'İstanbul'];
-Object.assign(CUST_LOC, {"PROF. DR. DT. SELİN AKSOY": ["Şişli", "İstanbul"], "PROF. DR. KEREM ULUSOY": ["Çankaya", "Ankara"], "DT. ZEYNEP ARSLAN": ["Karşıyaka", "İzmir"], "DT. BURAK KOÇAK": ["Nilüfer", "Bursa"], "DR. DT. ELİF YAMAN": ["Kadıköy", "İstanbul"], "DR. OSMAN TEKİN": ["Selçuklu", "Konya"], "ECZ. MERVE TUNA": ["Muratpaşa", "Antalya"], "ECZ. CAN ERDEM": ["Atakum", "Samsun"]});  // DEMO unvanlı müşteriler
+Object.assign(CUST_LOC, {"SELİN RENCÜZ": ["Beşiktaş", "İstanbul"], "PROF. DR. DT. SELİN AKSOY": ["Şişli", "İstanbul"], "PROF. DR. KEREM ULUSOY": ["Çankaya", "Ankara"], "DT. ZEYNEP ARSLAN": ["Karşıyaka", "İzmir"], "DT. BURAK KOÇAK": ["Nilüfer", "Bursa"], "DR. DT. ELİF YAMAN": ["Kadıköy", "İstanbul"], "DR. OSMAN TEKİN": ["Selçuklu", "Konya"], "ECZ. MERVE TUNA": ["Muratpaşa", "Antalya"], "ECZ. CAN ERDEM": ["Atakum", "Samsun"]});  // DEMO unvanlı müşteriler
 CUST_LOC['T.C. İSTANBUL AYDIN ÜNİVERSİTESİ AĞIZ VE DİŞ SAĞLIĞI UYGULAMA VE ARAŞ. MERKEZİ'] = ['Küçükçekmece', 'İstanbul']; // DEMO
 // DEMO: cari kodları uydurmadır (projede gerçek cari kodu yok), canlıda cari kartından gelmeli.
 const CUST_CODE = CUSTOMERS.map((n, i) => '120.01.' + String(i + 1).padStart(3, '0'));
 // Müşteri türü addan çıkarılır. shortcut: canlıda türü cari kartındaki "cari tipi" alanı verir; bu kurallar o zaman kalkar.
 const CTYPE_SLUG = { 'Diş Deposu': 'depo', 'Diş Hekimi': 'hekim', 'Doktor': 'doktor', 'Eczacı': 'ecza', 'Hastane': 'hastane', 'Poliklinik': 'poli', 'Laboratuvar': 'lab', 'Satış Sorumlusu': 'satis' };
+// Fatura unvanı: faturada yazacak resmi ad. Boşsa listedeki ad soyad yazılır (ör. unvansız fatura ya da firma adıyla uzun unvan).
+// DEMO örnekleri; canlıda cari kartının "fatura unvanı" alanından gelir.
+const CUST_TITLE = {
+  'SELİN RENCÜZ': 'Dt. Selin Rencüz - Rencüzoğlu Ağız ve Diş Sağlığı',
+  'DT. MEHMET CAN': 'Dt. Mehmet Can - Can Ağız ve Diş Sağlığı Muayenehanesi',
+  'ECZ. AYŞE KARACA': 'Ayşe Karaca'
+};
 function custType(n){
+  return typeOf(n) || (CUST_TITLE[n] && typeOf(CUST_TITLE[n])) || (PICKERS.sales.opts.some(o => norm(o) === norm(n)) ? 'Satış Sorumlusu' : demoType(n));
+}
+function demoType(n){  // DEMO: unvanı olmayan şahıslara türü addan sabit biçimde dağıtır
+  const h = [...n.toLocaleUpperCase('tr')].reduce((a, c) => a + c.charCodeAt(0), 0);
+  return ['Diş Hekimi', 'Eczacı', 'Doktor'][h % 3];
+}
+function typeOf(n){
   const u = n.toLocaleUpperCase('tr');
   if (/HASTANE|ÜNİVERSİTE/.test(u)) return 'Hastane';
   if (/POLİKLİNİ|\bPOL\./.test(u)) return 'Poliklinik';
@@ -887,10 +907,7 @@ function custType(n){
   if (/^(PROF\. )?DR\./.test(u)) return 'Doktor';  // Dr., Dr. Dt., Prof. Dr., Prof. Dr. Dt.
   if (/^DT\.|KLİNİĞİ|MUAYENEHANE|DİŞ MERKEZİ|SAĞLIK MERKEZİ/.test(u)) return 'Diş Hekimi';
   if (/DEPO|DENTAL|MEDİKAL|TİC\.|A\.Ş\.|LTD/.test(u)) return 'Diş Deposu';
-  if (PICKERS.sales.opts.some(o => norm(o) === norm(n))) return 'Satış Sorumlusu';
-  // DEMO: unvanı olmayan şahıslara türü addan sabit biçimde dağıtır
-  const h = [...u].reduce((a, c) => a + c.charCodeAt(0), 0);
-  return ['Diş Hekimi', 'Eczacı', 'Doktor'][h % 3];
+  return null;
 }
 // Satış sorumlularının bilgileri (Bayi & Müşteri Güncelleme Paneli, "Diş Deposu" tipi, ada göre eşleştirildi; 100 kişi):
 // [bayi kodu, VKN, TC, vergi dairesi, ilçe, il, müşteri kodu, GLN, ÜTS]. Aynı rakamın tekrarı olan yer tutucu numaralar gösterilmez.
@@ -929,7 +946,7 @@ function idsHtml(n){
   return chip('TC', 'TC', k.tc) + chip('VKN', 'VKN', k.vkn) + chip('VD', 'Vergi Dairesi', d[2], ' vd') + (depot() === 'ecza' ? chip('GLN', 'GLN', d[4]) : chip('UTS', 'ÜTS', d[3]));
 }
 // Ada ek olarak TC/VKN, ÜTS, GLN ve vergi dairesiyle de aranır
-const custHay = i => norm(CUSTOMERS[i] + ' ' + custType(CUSTOMERS[i]) + ' ' + (CUST_INFO[CUSTOMERS[i]] || []).join(' ') + ' ' + CUST_CODE[i] + ' ' + (CUST_LOC[CUSTOMERS[i]] || []).join(' '));
+const custHay = i => norm(CUSTOMERS[i] + ' ' + (CUST_TITLE[CUSTOMERS[i]] || '') + ' ' + custType(CUSTOMERS[i]) + ' ' + (CUST_INFO[CUSTOMERS[i]] || []).join(' ') + ' ' + CUST_CODE[i] + ' ' + (CUST_LOC[CUSTOMERS[i]] || []).join(' '));
 const CUST_S = CUSTOMERS.map((n, i) => custHay(i));
 
 function searchCust(q){
@@ -1097,6 +1114,7 @@ function pickCust(i){
   const changed = selCust !== CUSTOMERS[i];  // vazgeçip aynı müşteriye dönünce vade korunur
   selCust = CUSTOMERS[i];
   const n = CUSTOMERS[i];
+  setInvTitle(n);
   $('custName').textContent = disp(n); $('custName').scrollLeft = 0; $('custIds').innerHTML = tagHtml(n) + idsHtml(n); $('custMeta').innerHTML = metaHtml(i); $('custInitials').textContent = initials(n);
   // Adres seçenekleri seçilen cariye göre: ilk adres fatura
   const addrs = CUST_ADDR[n] || [ADDR];
@@ -1122,7 +1140,8 @@ function openEdit(i){
   editIdx = i;
   const n = CUSTOMERS[i], d = CUST_INFO[n] || ['VKN', '', '', '', ''], l = CUST_LOC[n] || ['', ''];
   const k = idPair(d);
-  $('edName').value = n;  // formda resmi kayıt aynen gösterilir; kaydetmek yazımı değiştirmez $('edTc').value = k.tc; $('edVkn').value = k.vkn; $('edVd').value = d[2];
+  // Formda kayıt aynen gösterilir; kaydetmek yazımı değiştirmez
+  $('edName').value = n; $('edTitle').value = CUST_TITLE[n] || ''; $('edTc').value = k.tc; $('edVkn').value = k.vkn; $('edVd').value = d[2];
   $('edUts').value = d[3] || ''; $('edGln').value = d[4] || ''; $('edDist').value = l[0]; $('edCity').value = l[1];
   $('edErr').textContent = '';
   openSheet('editSheet');
@@ -1130,14 +1149,15 @@ function openEdit(i){
 function saveEdit(e){
   e.preventDefault();
   const v = id => $(id).value.trim(), name = v('edName'), tcNo = v('edTc'), vkn = v('edVkn'), old = CUSTOMERS[editIdx];
-  const err = !name ? 'Ad / unvan boş olamaz.'
+  const err = !name ? 'Ad soyad boş olamaz.'
     : CUSTOMERS.some((c, k) => k !== editIdx && norm(c) === norm(name)) ? 'Bu adla kayıtlı başka bir müşteri var.'
     : tcNo && !/^\d{11}$/.test(tcNo) ? 'TC kimlik no 11 haneli olmalı.'
     : vkn && !/^\d{10}$/.test(vkn) ? 'VKN 10 haneli olmalı.'
     : v('edUts') && !/^\d{13}$/.test(v('edUts')) ? 'ÜTS no 13 haneli olmalı.'
     : v('edGln') && !/^\d{13}$/.test(v('edGln')) ? 'GLN no 13 haneli olmalı.' : '';
   if (err){ $('edErr').textContent = err; return; }
-  if (name !== old) for (const m of [CUST_INFO, CUST_LOC, CUST_ADDR]) if (m[old]){ m[name] = m[old]; delete m[old]; }  // ada bağlı kayıtlar yeni ada taşınır
+  if (name !== old) for (const m of [CUST_INFO, CUST_LOC, CUST_ADDR, CUST_TITLE]) if (m[old]){ m[name] = m[old]; delete m[old]; }  // ada bağlı kayıtlar yeni ada taşınır
+  if (v('edTitle')) CUST_TITLE[name] = v('edTitle'); else delete CUST_TITLE[name];
   CUSTOMERS[editIdx] = name; CUST_N[editIdx] = norm(name);
   const info = vkn ? ['VKN', vkn, v('edVd'), v('edUts'), v('edGln'), tcNo] : ['TC', tcNo, v('edVd'), v('edUts'), v('edGln'), ''];
   if (info.slice(1).some(Boolean)) CUST_INFO[name] = info; else delete CUST_INFO[name];
@@ -1146,6 +1166,7 @@ function saveEdit(e){
   custCache.clear();  // aramada eski bilgi kalmasın
   if (selCust === old){
     selCust = name;
+    setInvTitle(name);
     $('custName').textContent = disp(name); $('custIds').innerHTML = tagHtml(name) + idsHtml(name); $('custMeta').innerHTML = metaHtml(editIdx); $('custInitials').textContent = initials(name);
   }
   renderList(false);
@@ -1153,6 +1174,12 @@ function saveEdit(e){
   toast('Müşteri bilgileri güncellendi');
 }
 // Listede avatara dokunmak düzenlemeyi açar, satırın geri kalanı müşteriyi seçer
+// Seçili kartta, fatura unvanı ad soyaddan farklıysa altında küçükçe gösterilir
+function setInvTitle(n){
+  const t = CUST_TITLE[n], el = $('custTitle');
+  el.hidden = !t || norm(t) === norm(n);
+  el.innerHTML = el.hidden ? '' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></svg><span>Faturada: ' + esc(t) + '</span>';
+}
 function custClick(e, i){ if (e.currentTarget.dataset.swiped) return; pickFly(i, e.currentTarget.querySelector('.avatar')); if (e.target.closest('.av-edit')) openEdit(i); }  // avatar: seç + düzenle
 // Seçince avatar listedeki yerinden karttaki yerine kayar ("seçtim" hissi)
 function pickFly(i, av){
