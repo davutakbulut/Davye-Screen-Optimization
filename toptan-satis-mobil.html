@@ -123,6 +123,8 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
   mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/contain no-repeat}
 /* Müşteri arama */
 .cs{padding:12px}
+.cs-lead{margin:0 2px 8px;font-size:14px;color:var(--text-2)}
+.cs-lead b{color:var(--text)}
 .cs-row{display:flex;gap:6px}
 .cs-btn{width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:var(--r-ctl);background:var(--brand-soft);color:var(--brand)}
 .cs-btn.primary-ic{background:var(--brand);color:#fff}
@@ -389,6 +391,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
   <section class="card" id="custCard" aria-label="Müşteri">
     <!-- Arama durumu: sayfa açılınca odak burada -->
     <div class="cs" id="custSearch">
+      <p class="cs-lead"><b>Sipariş kimin için?</b> Müşteriyi bularak başla.</p>
       <div class="cs-row">
       <label class="cs-box">
         <input id="custQ" type="search" placeholder="Ad, VKN/TC, ÜTS ara" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"
