@@ -88,6 +88,7 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 /* Müşteri türü etiketi: türe göre sakin renkler, yazılar okunur koyulukta */
 .ctype{flex:none;display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;font-size:11px;font-weight:700;white-space:nowrap;background:#f1f5f9;color:#475569}
 .ctype.t-depo{background:#eef2ff;color:#4338ca}
+.sales-code{margin-left:8px;padding:2px 7px;border-radius:6px;background:var(--bg-body);font-size:12px;font-weight:600;color:var(--text-2);vertical-align:2px}
 .ctype.t-platform{background:#fdf2f8;color:#be185d}
 .ctype.t-hekim{background:#ecfeff;color:#0e7490}
 .ctype.t-doktor{background:#eff6ff;color:#1d4ed8}
@@ -673,7 +674,7 @@ function openPicker(key){
     }
     b.setAttribute('aria-selected', o === cur);
     b.onclick = () => {
-      if (isAddr) setAddr(key, o); else { vEl.dataset.raw = o; vEl.textContent = disp(o); }
+      if (isAddr) setAddr(key, o); else if (key === 'sales') setSales(o); else { vEl.dataset.raw = o; vEl.textContent = disp(o); }
       closeSheets();
     };
     if (!isAddr) return $('pickList').appendChild(b);
@@ -832,6 +833,12 @@ function salesMeta(d){
     + (loc ? '<span class="id-chip" title="İlçe / İl">' + MAP_ICON + esc(loc) + '</span>' : '');
 }
 function salesIds(d){ return chip('TC', 'TC', realNo(d[2])) + chip('VKN', 'VKN', realNo(d[1])) + chip('VD', 'Vergi Dairesi', d[3] ? disp(d[3]) : '', ' vd') + (depot() === 'ecza' ? chip('GLN', 'GLN', realNo(d[7])) : chip('UTS', 'ÜTS', realNo(d[8]))); }
+// Seçili satış sorumlusu: adın yanında bayi kodu (varsa)
+function setSales(o){
+  const el = document.querySelector('[data-v="sales"]'), code = (salesInfo(o) || [])[0];
+  el.dataset.raw = o;
+  el.innerHTML = esc(disp(o)) + (code ? '<span class="sales-code mono" title="Bayi Kodu">#' + esc(code) + '</span>' : '');
+}
 // Satış sorumlusu türü: pazar yerleri "Platform", diğerleri "Depo"
 const PLATFORMS = new Set(['AMAZON TR', 'HEPSİ BURADA', 'DENTAL PİYASA', 'DAVYE .COM', 'Trendyol AŞ. ŞTİ.'].map(norm));
 function salesTag(o){ const p = PLATFORMS.has(norm(o)); return '<span class="ctype t-' + (p ? 'platform' : 'depo') + '">' + (p ? 'Platform' : 'Depo') + '</span>'; }
@@ -1009,7 +1016,7 @@ function pickSelf(){
   const i = CUSTOMERS.indexOf(ME.cust);
   if (i < 0) return toast('Hesabına bağlı müşteri kaydı bulunamadı');
   pickFly(i, $('selfIni'));
-  const sv = document.querySelector('[data-v="sales"]'); sv.dataset.raw = ME.name; sv.textContent = disp(ME.name);  // sipariş kendi adına
+  setSales(ME.name);  // sipariş kendi adına
 }
 $('selfIni').textContent = initials(ME.cust);
 $('selfName').textContent = disp(ME.name) + ' · kendi adıma sipariş';
