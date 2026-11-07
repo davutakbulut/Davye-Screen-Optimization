@@ -289,9 +289,10 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 /* Alt sayfa (bottom sheet) */
 .scrim{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:40;opacity:0;pointer-events:none;transition:opacity .2s}
 .scrim.open{opacity:1;pointer-events:auto}
-.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--card);border-radius:16px 16px 0 0;max-height:80vh;max-height:80dvh;overflow:auto;
+/* --kb: klavye yüksekliği, --vvh: görünen alan (iOS klavyesi açılınca pencereler klavyenin üstünde kalsın) */
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--card);border-radius:16px 16px 0 0;max-height:80vh;max-height:calc(var(--vvh,100dvh) * .85);overflow:auto;overscroll-behavior:contain;
   transform:translateY(100%);transition:transform .25s cubic-bezier(.2,.8,.2,1);padding-bottom:env(safe-area-inset-bottom)}
-.sheet.open{transform:none}
+.sheet.open{transform:none;bottom:var(--kb,0px)}  /* yalnızca açık pencere klavyenin üstüne itilir */
 .sheet .grab{width:40px;height:4px;border-radius:2px;background:var(--border-2);margin:8px auto}
 .sheet h2{font-size:16px;margin:4px 16px 8px}
 .opt{display:flex;align-items:center;gap:12px;width:100%;min-height:52px;padding:10px 16px;text-align:left;border-top:1px solid var(--border)}
@@ -302,7 +303,9 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 .ad-loc{display:flex;align-items:center;gap:4px;margin-top:2px;font-size:12px;font-weight:500;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ad-loc svg{flex:none;color:var(--brand)}
 .opt .ad{flex:1;min-width:0}
-.pick-search{padding:0 16px 8px}
+.pick-search{position:sticky;top:0;z-index:2;padding:4px 16px 8px;background:var(--card)}
+/* Aramalı listede yükseklik sabit: sonuç azalınca pencere küçülüp klavyenin altına inmez */
+.sheet.has-search{height:calc(var(--vvh,100dvh) * .85)}
 .opt-cust{gap:10px;padding:8px 16px}
 .opt-cust .avatar{width:34px;height:34px;font-size:12px}
 .opt-cust .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
@@ -630,6 +633,7 @@ function openPicker(key){
   const cur = isAddr ? getAddr(key) : (vEl.dataset.raw ?? vEl.textContent);
   $('pickTitle').textContent = p.title;
   $('pickSearch').hidden = !p.search;
+  $('pickSheet').classList.toggle('has-search', !!p.search);
   $('pickQ').value = '';
   $('pickQ').oninput = () => draw($('pickQ').value);
   $('pickQ').onkeydown = e => { if (e.key === 'Enter'){ e.preventDefault(); $('pickList').querySelector('.opt')?.click(); } };  // Enter ilk sonucu seçer
@@ -1122,6 +1126,16 @@ function goStep(n){
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(); });
+// iOS Safari'de klavye sayfanın sabit alt öğelerini örter; görünen alana göre klavye yüksekliği hesaplanır
+function fitKeyboard(){
+  const vv = window.visualViewport; if (!vv) return;
+  const kb = Math.max(0, Math.round(window.innerHeight - vv.height - vv.offsetTop));
+  document.documentElement.style.setProperty('--kb', kb + 'px');
+  document.documentElement.style.setProperty('--vvh', Math.round(vv.height) + 'px');
+}
+window.visualViewport?.addEventListener('resize', fitKeyboard);
+window.visualViewport?.addEventListener('scroll', fitKeyboard);
+fitKeyboard();
 // Destekleyen telefonlarda seçim ve ana düğmelerde çok kısa titreşim (iOS Safari desteklemez, sessizce atlanır)
 document.addEventListener('pointerdown', e => {
   if (e.pointerType === 'touch' && navigator.vibrate && e.target.closest('.primary, .seg button, .chips button, .cs-item, .cs-btn, .pill-btn, .grid-acts button')) navigator.vibrate(8);
