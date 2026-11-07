@@ -164,7 +164,8 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .cs-item .nm{flex:1;min-width:0;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .cs-item mark{background:#fef08a;color:inherit;border-radius:2px}
 /* Sonuç listesi kendi içinde kayar; arama kutusu üstte sabit kalır */
-#custList{max-height:min(420px,50vh);max-height:min(420px,50dvh);overflow-y:auto;overscroll-behavior:contain;margin:0 -12px -12px;padding:0 12px 8px;
+/* Liste uca ulaşınca kaydırma sayfaya geçer (dokunmatikte sayfa yukarı/aşağı kaydırılabilsin) */
+#custList{max-height:min(420px,50vh);max-height:min(420px,50dvh);overflow-y:auto;margin:0 -12px -12px;padding:0 12px 8px;
   -webkit-mask-image:linear-gradient(#000 calc(100% - 24px),transparent);mask-image:linear-gradient(#000 calc(100% - 24px),transparent)}
 .cs-progress{position:relative;height:3px;margin-top:8px;border-radius:2px;overflow:hidden;opacity:0;transition:opacity .2s}
 .cs-progress.on{opacity:1;background:var(--brand-soft)}
