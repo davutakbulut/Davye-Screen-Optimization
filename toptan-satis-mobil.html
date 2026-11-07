@@ -54,8 +54,14 @@ main{padding:12px 16px;display:flex;flex-direction:column;gap:12px;max-width:640
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-card)}
 .card[data-step]{position:relative}
 /* Adım numarası: kartın sol üst köşesinden hafif taşan rozet (müşteri 1, adres 2, fiyat-ödeme 3, açıklama 4) */
-.card[data-step]::before{content:attr(data-step);position:absolute;top:-8px;left:-6px;z-index:3;width:22px;height:22px;border-radius:50%;
+.card[data-step]::before{content:attr(data-step);position:absolute;top:-10px;left:-11px;z-index:3;width:22px;height:22px;border-radius:50%;
   display:grid;place-items:center;background:var(--brand-strong);color:#fff;font-size:12px;font-weight:800;box-shadow:0 0 0 3px var(--bg-body)}
+.card[data-step]::before{transition:background .3s}
+.card[data-step].done::before{background:var(--ok)}
+/* Tamamlanan adımda numaranın sağ altında küçük tik */
+.card[data-step].done::after{content:"";position:absolute;top:1px;left:2px;z-index:4;width:12px;height:12px;border-radius:50%;
+  background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316a34a' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/9px no-repeat;box-shadow:0 0 0 1.5px var(--ok);animation:tickPop .35s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes tickPop{from{transform:scale(0)}}
 .card-h{padding:12px 14px 4px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 
 /* Seçim satırı: tüm satır dokunulabilir, sağda ok */
@@ -721,9 +727,10 @@ function addrHtml(a){
   const i = a.lastIndexOf(','), st = i < 0 ? a : a.slice(0, i).trim(), loc = i < 0 ? '' : a.slice(i + 1).trim();
   return '<span class="ad-st">' + esc(st) + '</span>' + (loc ? '<span class="ad-loc"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>' + esc(loc) + '</span>' : '');
 }
-function setAddr(k, v){ const el = document.querySelector('[data-v="' + k + '"]'); el.dataset.raw = v; el.innerHTML = addrHtml(v); }
+function setAddr(k, v){ const el = document.querySelector('[data-v="' + k + '"]'); el.dataset.raw = v; el.innerHTML = addrHtml(v); updateSteps(); }
 function getAddr(k){ const el = document.querySelector('[data-v="' + k + '"]'); return el.dataset.raw ?? el.textContent; }
 function toggleSameAddr(){
+  setTimeout(updateSteps);
   $('shipRow').hidden = $('sameAddr').checked;
   if ($('sameAddr').checked) setAddr('ship', getAddr('bill'));
 }
@@ -751,7 +758,16 @@ function customDue(){
 }
 // Sipariş bilgileri tamamlanınca (müşteri, fatura adresi, geçerli vade) Kaydet düğmesi bir kez parlar
 let wasReady = false;
+// Kart adım numaraları tamamlanınca yeşil olur ve sağ altına tik gelir
+function updateSteps(){
+  const has = !$('main').classList.contains('need-cust');
+  const addrOk = has && !!getAddr('bill').trim() && ($('sameAddr').checked || !!getAddr('ship').trim());
+  const payOk = has && (!$('isCreditSale').checked || $('dueDate').value >= $('processDate').value);
+  const noteOk = has && !!($('description').value.trim() || $('orderNote').value.trim());
+  [['1', has], ['2', addrOk], ['3', payOk], ['4', noteOk]].forEach(([n, ok]) => document.querySelector('.card[data-step="' + n + '"]').classList.toggle('done', ok));
+}
 function updateReady(){
+  updateSteps();
   const ready = !$('main').classList.contains('need-cust') && !!getAddr('bill').trim()
     && (!$('isCreditSale').checked || $('dueDate').value >= $('processDate').value);
   if (ready && !wasReady){ const b = document.querySelector('.actionbar .primary'); b.classList.remove('glow'); void b.offsetWidth; b.classList.add('glow'); }
@@ -1149,6 +1165,7 @@ function goStep(n){
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(); });
+['description', 'orderNote'].forEach(id => $(id).addEventListener('input', updateSteps));
 // iOS Safari'de klavye sayfanın sabit alt öğelerini örter; görünen alana göre klavye yüksekliği hesaplanır
 function fitKeyboard(){
   const vv = window.visualViewport; if (!vv) return;
