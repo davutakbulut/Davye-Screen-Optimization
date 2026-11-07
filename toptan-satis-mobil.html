@@ -369,9 +369,6 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 .add-addr{display:flex;align-items:center;gap:8px;color:var(--brand);font-weight:600}
 .pick-empty{padding:16px;color:var(--muted);font-size:14px;border-top:1px solid var(--border)}
 .opt mark{background:#fef08a;color:inherit;border-radius:2px}
-.opt-row{display:flex;align-items:center;border-top:1px solid var(--border)}
-.opt-row .opt{border-top:0;flex:1;min-width:0;padding-left:10px}
-.opt-edit{width:28px;height:28px;margin-left:12px;flex:none;border-radius:7px;display:grid;place-items:center;background:var(--brand-soft);color:var(--brand)}
 .opt-form{display:flex;align-items:center;gap:6px;padding:8px 12px;border-top:1px solid var(--border);animation:csIn .2s ease-out both}
 .opt-form input{flex:1;min-width:0}
 .opt-form button{width:42px;height:42px;flex:none;border-radius:10px;font-size:16px;font-weight:700}
@@ -380,6 +377,13 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 .ed{display:flex;flex-direction:column;gap:10px;padding:0 16px 16px}
 .ed label{display:block;font-size:12px;font-weight:600;color:var(--text-2)}
 .ed label input,.ed label select{margin-top:4px}
+.ed-addrs{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.ed-addrs legend{padding:0;margin-bottom:4px;font-size:12px;font-weight:600;color:var(--text-2)}
+#edAddrs{display:flex;flex-direction:column;gap:8px}
+.ed-ar{display:flex;gap:6px;align-items:flex-start}
+.ed-ar textarea{flex:1;min-width:0;min-height:0;font-size:16px}
+.ed-del{width:44px;height:44px;flex:none;border-radius:10px;display:grid;place-items:center;border:1px solid var(--border-2);color:var(--danger)}
+.ed-add{display:flex;align-items:center;gap:6px;align-self:flex-start;min-height:40px;font-weight:600;color:var(--brand)}
 .ed-err{margin:0;min-height:18px;font-size:13px;font-weight:600;color:var(--danger)}
 .ed-acts{display:flex;gap:8px}
 .ed-cancel{height:46px;padding:0 18px;border-radius:12px;border:1px solid var(--border-2);font-weight:600}
@@ -621,6 +625,10 @@ body.on-step2 .actionbar{transform:translateY(110%)}
       <label>İlçe<input id="edDist"></label>
       <label>İl<input id="edCity"></label>
     </div>
+    <fieldset class="ed-addrs"><legend>Adresler</legend>
+      <div id="edAddrs"></div>
+      <button type="button" class="ed-add" onclick="edAddrRow('').querySelector('textarea').focus()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Adres ekle</button>
+    </fieldset>
     <p class="ed-err" id="edErr" role="alert"></p>
     <div class="ed-acts">
       <button type="button" class="ed-cancel" onclick="closeSheets()">Vazgeç</button>
@@ -710,7 +718,6 @@ function openPicker(key){
   const shown = p.opts.filter(o => !w || norm(o).includes(w) || (ci(o) >= 0 && CUST_S[ci(o)].includes(w)) || (key === 'sales' && (norm((PLATFORMS.has(norm(o)) ? 'platform ' : 'depo ') + (salesInfo(o) || []).join(' ')).includes(w))));
   if (!shown.length) $('pickList').innerHTML = '<div class="pick-empty">' + (isAddr && !p.opts.length ? 'Bu müşterinin kayıtlı adresi yok.' : '“' + esc(q.trim()) + '” ile eşleşen kayıt yok') + '</div>';
   shown.forEach(o => {
-    const idx = p.opts.indexOf(o);
     const b = document.createElement('button');
     b.className = 'opt'; b.role = 'option';
     const at = w ? norm(o).indexOf(w) : -1;  // eşleşen kısım vurgulanır (norm harf sayısını korur)
@@ -729,20 +736,12 @@ function openPicker(key){
       if (isAddr) setAddr(key, o); else if (key === 'sales') setSales(o); else { vEl.dataset.raw = o; vEl.textContent = disp(o); }
       closeSheets();
     };
-    if (!isAddr) return $('pickList').appendChild(b);
-    // Adreslerde başta düzenleme düğmesi: satır yerinde yazı kutusuna dönüşür
-    const row = document.createElement('div');
-    row.className = 'opt-row';
-    row.innerHTML = '<button type="button" class="opt-edit" aria-label="Adresi düzenle" title="Adresi düzenle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg></button>';
-    row.firstChild.onclick = () => editAddr(key, idx, row);
-    row.appendChild(b);
-    $('pickList').appendChild(row);
+    $('pickList').appendChild(b);
   });
-  if (isAddr){  // her zaman en altta: yeni adres satırı yerinde yazı kutusuna dönüşür
+  if (isAddr){  // sipariş ekranında adres yalnız seçilir ve eklenir; düzenleme/silme müşteri düzenleme formunda
     const add = document.createElement('div');
-    add.className = 'opt-row';
     add.innerHTML = '<button type="button" class="opt add-addr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Yeni adres ekle</button>';
-    add.firstChild.onclick = () => editAddr(key, p.opts.length, add);
+    add.firstChild.onclick = () => addAddr(key, add);
     $('pickList').appendChild(add);
     if (!p.opts.length) setTimeout(() => add.firstChild.click());  // adres yoksa doğrudan yazmaya başlar
   }
@@ -752,22 +751,22 @@ function openPicker(key){
   if (p.search) setTimeout(() => $('pickQ').focus(), 250);  // alt sayfa açıldıktan sonra klavye gelsin
 }
 
-// shortcut: düzenlenen adres yalnızca bu sayfadaki veriye yazılır, canlıda cari adres servisine gönderilmeli
-function editAddr(key, idx, row){
-  const opts = PICKERS[key].opts, old = opts[idx];
+// shortcut: eklenen adres yalnızca bu sayfadaki veriye yazılır, canlıda cari adres servisine gönderilmeli
+function addAddr(key, row){
+  const opts = PICKERS[key].opts;
   row.className = 'opt-form';
   row.innerHTML = '<input aria-label="Adres" autocomplete="street-address"><button type="button" class="of-ok" aria-label="Kaydet">✓</button><button type="button" class="of-no" aria-label="Vazgeç">✕</button>';
   const inp = row.querySelector('input');
-  inp.value = old ?? ''; inp.placeholder = 'Mahalle, cadde, no, ilçe / il'; inp.focus();
+  inp.placeholder = 'Mahalle, cadde, no, ilçe / il'; inp.focus();
   const save = () => {
     const v = inp.value.trim();
     if (!v){ inp.setCustomValidity('Adres boş olamaz'); inp.reportValidity(); return; }
-    opts[idx] = v;  // fatura ve teslimat aynı listeyi paylaşır
-    ['bill', 'ship'].forEach(k => { if (getAddr(k) === (old ?? '')) setAddr(k, v); });  // yeni adres yalnız boş alana yazılır
-    document.querySelectorAll('.addr-n').forEach(e => e.innerHTML = e.innerHTML.replace(/\d+\)$/, opts.length + ')'));
+    opts.push(v);  // fatura ve teslimat aynı listeyi paylaşır
+    ['bill', 'ship'].forEach(k => { if (!getAddr(k)) setAddr(k, v); });  // yeni adres yalnız boş alana yazılır
+    addrCount();
     openPicker(key);
     saveStore();
-    toast(old === undefined ? 'Adres eklendi' : 'Adres güncellendi');
+    toast('Adres eklendi');
   };
   row.querySelector('.of-ok').onclick = save;
   const back = () => opts.length ? openPicker(key) : closeSheets();  // adres yoksa seçici yeniden yazma kutusu açmasın
@@ -780,6 +779,8 @@ function addrHtml(a){
   const i = a.lastIndexOf(','), st = i < 0 ? a : a.slice(0, i).trim(), loc = i < 0 ? '' : a.slice(i + 1).trim();
   return '<span class="ad-st">' + esc(st) + '</span>' + (loc ? '<span class="ad-loc"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>' + esc(loc) + '</span>' : '');
 }
+// Kayıtlı adres sayısı (fatura ve teslimat başlığında)
+function addrCount(){ document.querySelectorAll('.addr-n').forEach(e => e.innerHTML = '(<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>' + PICKERS.bill.opts.length + ')'); }
 function setAddr(k, v){ const el = document.querySelector('[data-v="' + k + '"]'); el.dataset.raw = v; el.innerHTML = v ? addrHtml(v) : '<span class="no-addr">Kayıtlı adres yok · <b>Adres ekle</b></span>'; el.classList.toggle('empty', !v); updateSteps(); }
 function getAddr(k){ const el = document.querySelector('[data-v="' + k + '"]'); return el.dataset.raw ?? el.textContent; }
 function toggleSameAddr(){
@@ -1176,7 +1177,7 @@ function pickCust(i){
   // Adres seçenekleri seçilen cariye göre: ilk adres fatura
   const addrs = CUST_ADDR[n] || (CUST_ADDR[n] = []);  // adres yoksa boş: uydurma adres gösterilmez
   PICKERS.bill.opts = PICKERS.ship.opts = addrs;
-  document.querySelectorAll('.addr-n').forEach(e => e.innerHTML = '(<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>' + addrs.length + ')');  // kayıtlı adres sayısı
+  addrCount();
   setAddr('bill', addrs[0] || '');
   setAddr('ship', addrs[1] || addrs[0] || '');
   // Varsayılan: teslimat = fatura. Anahtar kapatılınca birden çok adresi olanda ikinci adres hazır gelir.
@@ -1199,10 +1200,23 @@ function openEdit(i){
   const k = idPair(d);
   // Ad soyad ve unvan büyük/küçük harf kuralıyla gösterilir (kaydedince bu yazımla saklanır)
   $('edName').value = disp(n); $('edTitle').value = CUST_TITLE[n] ? disp(CUST_TITLE[n]) : '';
-  $('edOrg').value = CUST_ORG[n] ? disp(CUST_ORG[n]) : '';  // her müşteride görünür; kurumu yoksa boş $('edTc').value = k.tc; $('edVkn').value = k.vkn; $('edVd').value = d[2];
+  $('edOrg').value = CUST_ORG[n] ? disp(CUST_ORG[n]) : '';  // her müşteride görünür; kurumu yoksa boş
+  $('edTc').value = k.tc; $('edVkn').value = k.vkn; $('edVd').value = d[2];
   $('edUts').value = d[3] || ''; $('edGln').value = d[4] || ''; $('edDist').value = l[0]; $('edCity').value = l[1];
+  $('edAddrs').innerHTML = '';
+  (CUST_ADDR[n] || []).forEach(edAddrRow);
   $('edErr').textContent = '';
   openSheet('editSheet');
+}
+// Formda bir adres satırı: yazı kutusu + sil. Değişiklik Kaydet'e basılana kadar uygulanmaz (Vazgeç geri alır).
+function edAddrRow(a){
+  const row = document.createElement('div');
+  row.className = 'ed-ar';
+  row.innerHTML = '<textarea rows="2" aria-label="Adres" autocomplete="street-address" placeholder="Mahalle, cadde, no, ilçe / il"></textarea><button type="button" class="ed-del" aria-label="Adresi sil" title="Adresi sil"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>';
+  row.firstChild.value = a;
+  row.lastChild.onclick = () => row.remove();
+  $('edAddrs').appendChild(row);
+  return row;
 }
 function saveEdit(e){
   e.preventDefault();
@@ -1221,12 +1235,19 @@ function saveEdit(e){
   const info = vkn ? ['VKN', vkn, v('edVd'), v('edUts'), v('edGln'), tcNo] : ['TC', tcNo, v('edVd'), v('edUts'), v('edGln'), ''];
   if (info.slice(1).some(Boolean)) CUST_INFO[name] = info; else delete CUST_INFO[name];
   if (v('edDist') || v('edCity')) CUST_LOC[name] = [v('edDist'), v('edCity')]; else delete CUST_LOC[name];
+  // shortcut: silinen adres bu sayfadan kalkar; canlıda silinmez, pasife alınır (eski fatura/gönderilerde kullanılmış olabilir)
+  const addrs = CUST_ADDR[name] || (CUST_ADDR[name] = []);
+  addrs.splice(0, addrs.length, ...[...$('edAddrs').querySelectorAll('textarea')].map(t => t.value.trim()).filter(Boolean));
   CUST_S[editIdx] = custHay(editIdx);
   custCache.clear();  // aramada eski bilgi kalmasın
   if (selCust === old){
     selCust = name;
     setOrg(name);
     $('custName').textContent = disp(name); $('custIds').innerHTML = tagHtml(name) + idsHtml(name); $('custMeta').innerHTML = metaHtml(editIdx); $('custInitials').textContent = initials(name);
+    // Seçili adres silindiyse ilk adrese döner (adres kalmadıysa boş durum)
+    PICKERS.bill.opts = PICKERS.ship.opts = addrs; addrCount();
+    if (!addrs.includes(getAddr('bill'))) setAddr('bill', addrs[0] || '');
+    if (!addrs.includes(getAddr('ship'))) setAddr('ship', $('sameAddr').checked ? getAddr('bill') : addrs[1] || addrs[0] || '');
   }
   renderList(false);
   closeSheets();
@@ -1346,7 +1367,7 @@ document.addEventListener('pointerdown', e => {
   if (e.pointerType === 'touch' && navigator.vibrate && e.target.closest('.primary, .seg button, .chips button, .cs-item, .cs-btn, .pill-btn, .grid-acts button')) navigator.vibrate(8);
 }, { passive: true });
 
-Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, editAddr, setAddr, getAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, resetStore, goStep, runSearch, custKey, clearCust, pickSelf, pickCust, changeCust, editCust, custClick, openEdit, saveEdit, queueCust, searchBtn, newCust });
+Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, addAddr, edAddrRow, setAddr, getAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, resetStore, goStep, runSearch, custKey, clearCust, pickSelf, pickCust, changeCust, editCust, custClick, openEdit, saveEdit, queueCust, searchBtn, newCust });
 
 // Listede satırı kaydırma: sağa → Seç, sola → Düzenle (80 px eşiği geçince bırakınca çalışır)
 (() => {
