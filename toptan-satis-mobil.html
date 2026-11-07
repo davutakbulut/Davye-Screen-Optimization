@@ -379,7 +379,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
 </header>
 
 <div class="steps" aria-hidden="true"><span class="on"></span><span></span><span></span></div>
-<div class="step-label" id="stepLabel">Adım 1/3 · Fatura Bilgileri → Ürün Seçimi → Kargo Bilgileri ve Gönderim</div>
+<div class="step-label" id="stepLabel">Adım 1/3 · Fatura → Ürün → Kargo &amp; Gönderim</div>
 
 <main class="need-cust" id="main">
   <!-- 0. Sipariş türü: hangi depoya gireceğini belirler -->
@@ -1117,7 +1117,7 @@ const STEP1_LABEL = document.getElementById('stepLabel').textContent;
 function goStep(n){
   const fwd = n === 2, out = fwd ? $('main') : $('step2'), inn = fwd ? $('step2') : $('main');
   document.querySelectorAll('.steps span').forEach((sp, k) => sp.classList.toggle('on', k < n));
-  $('stepLabel').textContent = fwd ? 'Adım 2/3 · Ürün Seçimi → Kargo Bilgileri ve Gönderim' : STEP1_LABEL;
+  $('stepLabel').textContent = fwd ? 'Adım 2/3 · Ürün → Kargo & Gönderim' : STEP1_LABEL;
   $('s2Cust').textContent = selCust ? disp(selCust) : '';
   document.body.classList.toggle('on-step2', fwd);
   const d = fwd ? 1 : -1, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
