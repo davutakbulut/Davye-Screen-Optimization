@@ -635,6 +635,7 @@ body.on-step2 .actionbar{transform:translateY(110%)}
     <button onclick="toast('Web ekranı')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>Web Ekranı</button>
     <button disabled><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg>Düzenle</button>
     <button onclick="toast('Sayfa detayları')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h0"/></svg>Sayfa Detayları</button>
+    <button onclick="resetStore()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Demo verisini sıfırla</button>
   </div>
 </div>
 
@@ -747,6 +748,7 @@ function editAddr(key, idx, row){
     opts[idx] = v;  // fatura ve teslimat aynı listeyi paylaşır
     ['bill', 'ship'].forEach(k => { if (getAddr(k) === old) setAddr(k, v); });
     openPicker(key);
+    saveStore();
     toast('Adres güncellendi');
   };
   row.querySelector('.of-ok').onclick = save;
@@ -962,6 +964,26 @@ function idsHtml(n){
 const custHay = i => norm(CUSTOMERS[i] + ' ' + (CUST_TITLE[CUSTOMERS[i]] || '') + ' ' + custType(CUSTOMERS[i]) + ' ' + (CUST_INFO[CUSTOMERS[i]] || []).join(' ') + ' ' + CUST_CODE[i] + ' ' + (CUST_LOC[CUSTOMERS[i]] || []).join(' '));
 const CUST_S = CUSTOMERS.map((n, i) => custHay(i));
 initOrgs();
+// --- Test için kalıcılık: müşteri ve adres düzenlemeleri tarayıcıya (localStorage) yazılır, tarayıcı verisi silinene kadar kalır ---
+// shortcut: canlıda kayıtlar sunucuya gider; bu yalnızca demo/test kolaylığıdır
+const STORE_KEY = 'davye-mobil-demo-v1';
+function saveStore(){
+  try { localStorage.setItem(STORE_KEY, JSON.stringify({ n: CUSTOMERS.length, customers: CUSTOMERS, info: CUST_INFO, loc: CUST_LOC, addr: CUST_ADDR, title: CUST_TITLE, org: CUST_ORG })); } catch (e) {}
+}
+function loadStore(){
+  let st;
+  try { st = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); } catch (e) { return; }
+  if (!st || st.n !== CUSTOMERS.length) return;  // kodda müşteri listesi değiştiyse eski kayıt yok sayılır
+  CUSTOMERS.splice(0, CUSTOMERS.length, ...st.customers);
+  for (const [m, v] of [[CUST_INFO, st.info], [CUST_LOC, st.loc], [CUST_ADDR, st.addr], [CUST_TITLE, st.title], [CUST_ORG, st.org]]){ for (const k in m) delete m[k]; Object.assign(m, v || {}); }
+  CUSTOMERS.forEach((n, i) => { CUST_N[i] = norm(n); CUST_S[i] = custHay(i); });
+}
+function resetStore(){
+  if (!confirm('Bu tarayıcıda yaptığın tüm müşteri ve adres düzenlemeleri silinip demo verisine dönülecek. Devam edilsin mi?')) return;
+  try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+  location.reload();
+}
+loadStore();
 
 function searchCust(q){
   const words = norm(q).trim().split(/\s+/).filter(Boolean);
@@ -1187,6 +1209,7 @@ function saveEdit(e){
   }
   renderList(false);
   closeSheets();
+  saveStore();
   toast('Müşteri bilgileri güncellendi');
 }
 // Listede avatara dokunmak düzenlemeyi açar, satırın geri kalanı müşteriyi seçer
@@ -1301,7 +1324,7 @@ document.addEventListener('pointerdown', e => {
   if (e.pointerType === 'touch' && navigator.vibrate && e.target.closest('.primary, .seg button, .chips button, .cs-item, .cs-btn, .pill-btn, .grid-acts button')) navigator.vibrate(8);
 }, { passive: true });
 
-Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, editAddr, setAddr, getAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, goStep, runSearch, custKey, clearCust, pickSelf, pickCust, changeCust, editCust, custClick, openEdit, saveEdit, queueCust, searchBtn, newCust });
+Object.assign(window, { openSheet, closeSheets, openPicker, toggleSameAddr, editAddr, setAddr, getAddr, showNote, noteBlur, applyDue, customDue, toggleCredit, toast, saveHeader, resetStore, goStep, runSearch, custKey, clearCust, pickSelf, pickCust, changeCust, editCust, custClick, openEdit, saveEdit, queueCust, searchBtn, newCust });
 
 // Listede satırı kaydırma: sağa → Seç, sola → Düzenle (80 px eşiği geçince bırakınca çalışır)
 (() => {
