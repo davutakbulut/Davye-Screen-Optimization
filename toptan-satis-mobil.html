@@ -812,7 +812,7 @@ function salesInfo(o){ return SALES_IDX[norm(o)]; }
 const MAP_ICON = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg>';
 function salesMeta(d){
   const loc = [d[4], d[5]].filter(Boolean).map(disp).join(' / ');
-  return (d[0] ? '<span class="id-chip" title="Bayi Kodu: ' + esc(d[0]) + '"><span class="mono">' + esc(d[0]) + '</span></span>' : '')
+  return (d[0] ? '<span class="id-chip" title="Bayi Kodu: ' + esc(d[0]) + '"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg><span class="mono">' + esc(d[0]) + '</span></span>' : '')
     + (loc ? '<span class="id-chip" title="İlçe / İl">' + MAP_ICON + esc(loc) + '</span>' : '');
 }
 function salesIds(d){ return chip('TC', 'TC', realNo(d[2])) + chip('VKN', 'VKN', realNo(d[1])) + chip('VD', 'Vergi Dairesi', d[3] ? disp(d[3]) : '', ' vd') + (depot() === 'ecza' ? chip('GLN', 'GLN', realNo(d[7])) : chip('UTS', 'ÜTS', realNo(d[8]))); }
