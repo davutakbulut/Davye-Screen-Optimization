@@ -1214,9 +1214,10 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(
   const NOTES = ['Hocamızın ürünleri temizlenip paketlerinde gelmesi rica olunur', 'Bugünkü birkaç siparişimin aynı kargoda gelmesini rica ederim',
     'İçine hediye olarak maske koyabilir miyiz?', 'Promosyon malzemelerimizden kargoya ekleyebilir misiniz?'];
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) { t.placeholder = 'Örn: ' + NOTES[0]; return; }
-  let n = 0, i = 0, del = false, timer;
+  let n = 0, i = 0, del = false, timer, visible = false;
   const tick = () => {
     if (document.activeElement === t || t.value) { t.placeholder = base; return; }  // kullanıcı yazarken karışmaz
+    if (!visible || document.hidden) return;  // ekranda değilse ya da uygulama arka plandaysa durur (pil)
     const s = NOTES[n];
     i += del ? -2 : 1;
     t.placeholder = 'Örn: ' + s.slice(0, Math.max(0, i));
@@ -1225,7 +1226,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(
     else if (del && i <= 0){ del = false; i = 0; n = (n + 1) % NOTES.length; wait = 400; }
     timer = setTimeout(tick, wait);
   };
-  const start = () => { clearTimeout(timer); if (!t.value) timer = setTimeout(tick, 600); };
+  const start = () => { clearTimeout(timer); if (!t.value && visible && !document.hidden) timer = setTimeout(tick, 600); };
+  new IntersectionObserver(e => { visible = e[0].isIntersecting; visible ? start() : clearTimeout(timer); }).observe(t);
+  document.addEventListener('visibilitychange', () => document.hidden ? clearTimeout(timer) : start());
   t.addEventListener('focus', () => { clearTimeout(timer); t.placeholder = base; });
   t.addEventListener('blur', start);
   start();
