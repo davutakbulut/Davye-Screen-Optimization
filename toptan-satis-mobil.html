@@ -1156,7 +1156,7 @@ function openEdit(i){
   const k = idPair(d);
   // Ad soyad ve unvan büyük/küçük harf kuralıyla gösterilir (kaydedince bu yazımla saklanır)
   $('edName').value = disp(n); $('edTitle').value = CUST_TITLE[n] ? disp(CUST_TITLE[n]) : '';
-  $('edOrgWrap').hidden = !ORG_TYPES.includes(custType(n)) && !CUST_ORG[n]; $('edOrg').value = CUST_ORG[n] ? disp(CUST_ORG[n]) : '';  // yalnız hekim, doktor, eczacı $('edTc').value = k.tc; $('edVkn').value = k.vkn; $('edVd').value = d[2];
+  $('edOrg').value = CUST_ORG[n] ? disp(CUST_ORG[n]) : '';  // her müşteride görünür; kurumu yoksa boş $('edTc').value = k.tc; $('edVkn').value = k.vkn; $('edVd').value = d[2];
   $('edUts').value = d[3] || ''; $('edGln').value = d[4] || ''; $('edDist').value = l[0]; $('edCity').value = l[1];
   $('edErr').textContent = '';
   openSheet('editSheet');
@@ -1173,7 +1173,7 @@ function saveEdit(e){
   if (err){ $('edErr').textContent = err; return; }
   if (name !== old) for (const m of [CUST_INFO, CUST_LOC, CUST_ADDR, CUST_TITLE, CUST_ORG]) if (m[old]){ m[name] = m[old]; delete m[old]; }  // ada bağlı kayıtlar yeni ada taşınır
   if (v('edTitle')) CUST_TITLE[name] = v('edTitle'); else delete CUST_TITLE[name];
-  if (!$('edOrgWrap').hidden){ if (v('edOrg')) CUST_ORG[name] = v('edOrg'); else delete CUST_ORG[name]; }
+  if (v('edOrg')) CUST_ORG[name] = v('edOrg'); else delete CUST_ORG[name];
   CUSTOMERS[editIdx] = name; CUST_N[editIdx] = norm(name);
   const info = vkn ? ['VKN', vkn, v('edVd'), v('edUts'), v('edGln'), tcNo] : ['TC', tcNo, v('edVd'), v('edUts'), v('edGln'), ''];
   if (info.slice(1).some(Boolean)) CUST_INFO[name] = info; else delete CUST_INFO[name];
