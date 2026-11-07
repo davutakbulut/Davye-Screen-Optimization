@@ -304,6 +304,7 @@ input[type="date"]::-webkit-inner-spin-button,input[type="date"]::-webkit-clear-
 .actionbar .icon-btn{width:46px;height:46px;border:1px solid var(--border-2);border-radius:12px}
 .primary{flex:1;height:46px;border-radius:12px;background:var(--brand-strong);color:#fff;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px}
 .primary:active{background:var(--brand-ink)}
+.spark{position:fixed;z-index:60;border-radius:50%;pointer-events:none}
 /* Kaydet düğmesi tamamlanan adım oranında soldan sağa yeşille dolar (--prog: 0..1, yumuşak geçiş) */
 @property --prog{syntax:'<number>';inherits:false;initial-value:0}
 .actionbar .primary{background:linear-gradient(90deg,#15803d calc(var(--prog) * 100%),var(--brand-strong) calc(var(--prog) * 100%));transition:--prog .5s cubic-bezier(.2,.8,.2,1)}
@@ -775,6 +776,24 @@ function customDue(){
 }
 // Sipariş bilgileri tamamlanınca (müşteri, fatura adresi, geçerli vade) Kaydet düğmesi bir kez parlar
 let wasReady = false;
+let wasFull = false;
+// Tüm adımlar tamamlanınca: düğme zıplar, ok ileri itilir, minik kıvılcımlar saçılır (sonraki aşamaya hazır)
+function celebrate(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const b = document.querySelector('.actionbar .primary'), r = b.getBoundingClientRect();
+  b.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.05)' }, { transform: 'scale(.98)' }, { transform: 'scale(1)' }], { duration: 450, easing: 'ease-out' });
+  b.querySelector(':scope > svg')?.animate([{ transform: 'none' }, { transform: 'translateX(6px)' }, { transform: 'none' }, { transform: 'translateX(6px)' }, { transform: 'none' }], { duration: 700, easing: 'ease-in-out' });
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2, colors = ['#facc15', '#86efac', '#fde047', '#22c55e'];
+  for (let k = 0; k < 12; k++){
+    const d = document.createElement('i'), a = (k / 12) * Math.PI * 2 + Math.random() * .4, dist = 40 + Math.random() * 50, sz = 4 + Math.random() * 4;
+    d.className = 'spark';
+    Object.assign(d.style, { left: cx + 'px', top: cy + 'px', width: sz + 'px', height: sz + 'px', background: colors[k % colors.length] });
+    document.body.appendChild(d);
+    d.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: 1 }, { transform: 'translate(calc(-50% + ' + Math.cos(a) * dist + 'px), calc(-50% + ' + Math.sin(a) * dist * .6 + 'px)) scale(.2)', opacity: 0 }],
+      { duration: 600 + Math.random() * 250, easing: 'cubic-bezier(.2,.8,.2,1)' }).onfinish = () => d.remove();
+  }
+  navigator.vibrate?.(12);
+}
 // Kart adım numaraları tamamlanınca yeşil olur ve sağ altına tik gelir
 function updateSteps(){
   const has = !$('main').classList.contains('need-cust');
@@ -783,7 +802,10 @@ function updateSteps(){
   const noteOk = has && !!((document.body.dataset.tax !== 'faturasiz' && $('description').value.trim()) || $('orderNote').value.trim());
   const steps = [['1', has], ['2', addrOk], ['3', payOk], ['4', noteOk]];
   steps.forEach(([n, ok]) => document.querySelector('.card[data-step="' + n + '"]').classList.toggle('done', ok));
-  document.querySelector('.actionbar .primary').style.setProperty('--prog', steps.filter(x => x[1]).length / 4);
+  const done = steps.filter(x => x[1]).length;
+  document.querySelector('.actionbar .primary').style.setProperty('--prog', done / 4);
+  if (done === 4 && !wasFull) setTimeout(celebrate, 450);  // dolum bittiğinde
+  wasFull = done === 4;
 }
 function updateReady(){
   updateSteps();
